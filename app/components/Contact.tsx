@@ -220,7 +220,7 @@ export default function Contact() {
         <AnimateIn delay={220}>
           <div className="mb-14 md:mb-20">
             <motion.a
-              href="mailto:contact@aicmode.com"
+              href="mailto:aicmode0405@gmail.com"
               className="group inline-flex items-center gap-4 px-9 py-4 text-[10px] tracking-[0.35em] text-white uppercase"
               style={{
                 border: '1px solid rgba(255,255,255,0.15)',
