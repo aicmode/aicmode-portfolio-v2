@@ -105,8 +105,8 @@ export default function About() {
                 className="text-sm leading-relaxed"
                 style={{ color: '#484848', fontStyle: 'italic', letterSpacing: '0.015em', borderLeft: '2px solid rgba(124,58,237,0.3)', paddingLeft: '16px' }}
               >
-                "Design shaped by music, film,<br />
-                and the streets of the world."
+                &ldquo;Design shaped by music, film,<br />
+                and the streets of the world.&rdquo;
               </blockquote>
 
               {/* Stats */}

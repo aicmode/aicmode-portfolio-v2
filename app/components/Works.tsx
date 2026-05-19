@@ -17,7 +17,9 @@ const projects = [
     colorLabel: 'MAGENTA / BLUE',
     accent: '#d8d8d8',
     tint: '#ff2d6b',
-    image: '/works/pulse.svg',
+    image: '/works/images/pulse.png',
+    width: 1054,
+    height: 1492,
     url: 'https://aicmode.github.io/Pulse/',
   },
   {
@@ -29,7 +31,9 @@ const projects = [
     colorLabel: 'GOLD / ESPRESSO',
     accent: '#c69b54',
     tint: '#2d1a12',
-    image: '/works/noir-cafe.svg',
+    image: '/works/images/noir-cafe.png',
+    width: 1054,
+    height: 1492,
     url: 'https://aicmode.github.io/noir-cafe/',
   },
   {
@@ -41,7 +45,9 @@ const projects = [
     colorLabel: 'STEEL CYAN / SILVER',
     accent: '#87aeb8',
     tint: '#101c22',
-    image: '/works/lumi-grooming.svg',
+    image: '/works/images/lumi-grooming.png',
+    width: 1055,
+    height: 1491,
     url: 'https://aicmode.github.io/Lumi-Tails/',
   },
   {
@@ -53,7 +59,9 @@ const projects = [
     colorLabel: 'SMOKE VIOLET / PEARL',
     accent: '#b19bc8',
     tint: '#17111d',
-    image: '/works/aura.svg',
+    image: '/works/images/aura.png',
+    width: 1063,
+    height: 1480,
     url: 'https://aicmode.github.io/AURA/',
   },
   {
@@ -65,7 +73,9 @@ const projects = [
     colorLabel: 'MOON PINK / PLUM',
     accent: '#d99ab8',
     tint: '#24101d',
-    image: '/works/tsuki-usagi-wagashi.svg',
+    image: '/works/images/tsuki-usagi-wagashi.png',
+    width: 1055,
+    height: 1491,
     url: 'https://aicmode.github.io/tsuki-usagi-wagashi/',
   },
 ] as const
@@ -92,133 +102,94 @@ function ArrowIcon() {
 function WorkPoster({ project, index }: { project: (typeof projects)[number]; index: number }) {
   return (
     <motion.article
-      className="work-card editorial-work-card group relative overflow-hidden border bg-[#030303]"
+      className="work-card editorial-work-card group relative overflow-hidden bg-[#030303]"
       style={{
         '--work-accent': project.accent,
         '--work-tint': project.tint,
       } as CSSProperties}
-      initial={{ opacity: 0, y: 72 }}
+      initial={false}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.16 }}
       transition={{ duration: 1.25, delay: index * 0.08, ease }}
       whileHover="hover"
       animate="rest"
     >
-      <div className="editorial-work-noise pointer-events-none absolute inset-0 z-30" />
-      <div className="pointer-events-none absolute inset-0 z-20 bg-[linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.28)_42%,rgba(0,0,0,0.94)_100%)]" />
-      <div className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle_at_75%_18%,var(--work-tint),transparent_38%)] opacity-70" />
+      <motion.a
+        href={project.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block"
+        aria-label={`Open ${project.title}`}
+      >
+        <motion.div
+          className="editorial-poster-shell relative overflow-hidden"
+          variants={{
+            rest: { y: 0 },
+            hover: { y: -10 },
+          }}
+          transition={{ duration: 1.15, ease }}
+        >
+          <Image
+            src={project.image}
+            alt={`${project.title} editorial poster`}
+            width={project.width}
+            height={project.height}
+            sizes="(min-width: 1280px) 520px, (min-width: 768px) 45vw, 92vw"
+            className="editorial-poster-image h-auto w-full"
+            priority={index < 2}
+          />
+        </motion.div>
 
-      <div className="relative z-40 grid min-h-[760px] grid-rows-[auto_1fr_auto] p-5 sm:min-h-[860px] sm:p-8 lg:min-h-[920px] lg:p-12">
-        <div className="flex items-start justify-between gap-5">
-          <div className="flex min-w-0 items-center gap-4">
-            <span className="font-mono text-2xl leading-none text-white/70 sm:text-3xl">{project.number}</span>
-            <span className="h-px w-12 bg-white/26 sm:w-24" />
-          </div>
-          <p className="max-w-[48%] text-right text-[10px] font-medium uppercase leading-5 tracking-[0.32em] text-white/66 sm:tracking-[0.48em]">
-            {project.category}
-          </p>
-        </div>
-
-        <div className="relative mt-12 grid min-h-0 grid-rows-[auto_minmax(280px,1fr)] gap-8 md:grid-cols-[0.9fr_1.1fr] md:grid-rows-none md:gap-14 lg:mt-16">
-          <div className="relative z-20 flex flex-col justify-center">
-            <motion.div
-              variants={{
-                rest: { y: 0 },
-                hover: { y: -8 },
-              }}
-              transition={{ duration: 1.2, ease }}
-            >
-              <h3 className="work-title editorial-work-kicker text-[clamp(3.15rem,13vw,6.1rem)] font-black leading-[0.9] text-white md:text-[clamp(5.2rem,8.5vw,8.6rem)]">
-                {project.title}
-              </h3>
-              <p className="mt-5 text-[12px] font-semibold uppercase leading-6 tracking-[0.38em] text-[color:var(--work-accent)] sm:text-sm sm:tracking-[0.58em]">
+        <div className="editorial-work-meta flex items-start justify-between gap-5 px-1 pt-5 sm:pt-6">
+          <div className="min-w-0">
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-[11px] text-white/44">{project.number}</span>
+              <span className="h-px w-10 bg-white/16" />
+              <p className="truncate text-[10px] font-semibold uppercase tracking-[0.34em] text-[color:var(--work-accent)]">
                 {project.subtitle}
               </p>
-
-              <div className="mt-12 h-px w-20 bg-white/42" />
-              <p className="mt-9 max-w-[24rem] font-mono text-lg leading-9 text-white/58 sm:text-xl">
-                {project.text}
-              </p>
-            </motion.div>
+            </div>
+            <h3 className="mt-2 truncate text-xl font-semibold tracking-[-0.01em] text-white sm:text-2xl">{project.title}</h3>
+            <p className="mt-2 max-w-[30rem] text-sm leading-6 text-white/48">{project.text}</p>
           </div>
 
-          <motion.div
-            className="work-image editorial-work-visual relative min-h-[300px] overflow-hidden border border-white/[0.06] bg-black md:min-h-full"
+          <motion.span
+            className="editorial-work-button inline-flex h-11 w-11 shrink-0 items-center justify-center border border-white/18 text-white/72"
             variants={{
-              rest: { scale: 1 },
-              hover: { scale: 1.018 },
+              rest: { borderColor: 'rgba(255,255,255,0.18)' },
+              hover: { borderColor: project.accent, color: project.accent },
             }}
-            transition={{ duration: 1.55, ease }}
+            transition={{ duration: 0.9, ease }}
+            aria-hidden="true"
           >
-            <motion.div
-              className="relative h-full w-full"
-              variants={{
-                rest: { y: 0 },
-                hover: { y: -12 },
-              }}
-              transition={{ duration: 1.55, ease }}
-            >
-              <Image
-                src={project.image}
-                alt={`${project.title} visual`}
-                fill
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-cover"
-              />
-            </motion.div>
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.52),transparent_34%,rgba(0,0,0,0.24))]" />
-            <div className="absolute inset-y-0 left-[28%] hidden w-px bg-white/[0.08] md:block" />
-            <div className="absolute inset-y-0 left-[56%] hidden w-px bg-white/[0.06] md:block" />
-          </motion.div>
-        </div>
-
-        <div className="relative z-40 mt-12 border-t border-white/[0.08] pt-8 sm:mt-14">
-          <p className="mb-8 text-[11px] font-medium uppercase tracking-[0.44em] text-white/64" style={{ color: project.accent }}>
-            {project.colorLabel}
-          </p>
-
-          <motion.a
-            href={project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="work-link editorial-work-button relative flex min-h-16 w-full items-center justify-between overflow-hidden border border-white/42 px-6 text-[12px] font-semibold uppercase tracking-[0.48em] text-white/82 sm:min-h-20 sm:px-8 sm:text-sm"
-            variants={{
-              rest: { borderColor: 'rgba(255,255,255,0.42)' },
-              hover: { borderColor: project.accent },
-            }}
-            transition={{ duration: 1, ease }}
-          >
-            <span className="relative z-10">VIEW SITE</span>
             <ArrowIcon />
-          </motion.a>
+          </motion.span>
         </div>
-      </div>
+      </motion.a>
     </motion.article>
   )
 }
 
 export default function Works() {
   return (
-    <section id="works" className="works editorial-works-section relative overflow-x-hidden bg-[#010101] px-3 py-24 sm:px-6 md:px-10 md:py-36">
+    <section id="works" className="works editorial-works-section relative overflow-x-hidden bg-[#010101] px-4 py-24 sm:px-6 md:px-10 md:py-36">
       <div className="editorial-page-noise pointer-events-none absolute inset-0 opacity-[0.13]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/[0.08]" />
 
-      <div className="relative mx-auto max-w-[1500px]">
-        <AnimateIn>
-          <div className="mb-14 flex items-end justify-between gap-8 border-b border-white/[0.08] pb-8 md:mb-20">
-            <div>
-              <p className="mb-5 text-[10px] uppercase tracking-[0.48em] text-white/38">Selected Works</p>
-              <h2 className="text-[clamp(4.5rem,16vw,12rem)] font-black uppercase leading-[0.8] text-white">
-                Works
-              </h2>
-            </div>
-            <p className="hidden max-w-sm text-right text-sm leading-8 text-white/42 md:block">
-              Five visual systems framed as dark editorial campaign posters.
-            </p>
+      <div className="relative mx-auto max-w-[1420px]">
+        <div className="mb-14 flex items-end justify-between gap-8 border-b border-white/[0.08] pb-8 md:mb-20">
+          <div>
+            <p className="mb-5 text-[10px] uppercase tracking-[0.48em] text-white/38">Selected Works</p>
+            <h2 className="text-[clamp(4.5rem,16vw,12rem)] font-black uppercase leading-[0.8] text-white">
+              Works
+            </h2>
           </div>
-        </AnimateIn>
+          <p className="hidden max-w-sm text-right text-sm leading-8 text-white/42 md:block">
+            Five visual systems framed as dark editorial campaign posters.
+          </p>
+        </div>
 
-        <div className="mx-auto grid max-w-[1160px] grid-cols-1 gap-7 md:gap-10">
+        <div className="editorial-poster-grid mx-auto grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 lg:gap-x-10 lg:gap-y-20 xl:grid-cols-3">
           {projects.map((project, index) => (
             <WorkPoster key={project.number} project={project} index={index} />
           ))}
