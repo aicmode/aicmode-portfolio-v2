@@ -92,7 +92,7 @@ function ArrowIcon() {
 function WorkPoster({ project, index }: { project: (typeof projects)[number]; index: number }) {
   return (
     <motion.article
-      className="editorial-work-card group relative overflow-hidden border bg-[#030303]"
+      className="work-card editorial-work-card group relative overflow-hidden border bg-[#030303]"
       style={{
         '--work-accent': project.accent,
         '--work-tint': project.tint,
@@ -108,7 +108,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
       <div className="pointer-events-none absolute inset-0 z-20 bg-[linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.28)_42%,rgba(0,0,0,0.94)_100%)]" />
       <div className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle_at_75%_18%,var(--work-tint),transparent_38%)] opacity-70" />
 
-      <div className="relative z-40 grid min-h-[760px] grid-rows-[auto_1fr_auto] p-5 sm:min-h-[840px] sm:p-8 lg:min-h-[900px] lg:p-10">
+      <div className="relative z-40 grid min-h-[760px] grid-rows-[auto_1fr_auto] p-5 sm:min-h-[860px] sm:p-8 lg:min-h-[920px] lg:p-12">
         <div className="flex items-start justify-between gap-5">
           <div className="flex min-w-0 items-center gap-4">
             <span className="font-mono text-2xl leading-none text-white/70 sm:text-3xl">{project.number}</span>
@@ -119,7 +119,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
           </p>
         </div>
 
-        <div className="relative mt-12 grid min-h-0 grid-rows-[auto_minmax(230px,1fr)] gap-8 md:grid-cols-[0.95fr_1.05fr] md:grid-rows-none md:gap-10">
+        <div className="relative mt-12 grid min-h-0 grid-rows-[auto_minmax(280px,1fr)] gap-8 md:grid-cols-[0.9fr_1.1fr] md:grid-rows-none md:gap-14 lg:mt-16">
           <div className="relative z-20 flex flex-col justify-center">
             <motion.div
               variants={{
@@ -128,7 +128,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
               }}
               transition={{ duration: 1.2, ease }}
             >
-              <h3 className="editorial-work-kicker text-[clamp(3.2rem,14vw,6.8rem)] font-black uppercase leading-[0.88] text-white md:text-[clamp(4.6rem,7.5vw,8.8rem)]">
+              <h3 className="work-title editorial-work-kicker text-[clamp(3.15rem,13vw,6.1rem)] font-black leading-[0.9] text-white md:text-[clamp(5.2rem,8.5vw,8.6rem)]">
                 {project.title}
               </h3>
               <p className="mt-5 text-[12px] font-semibold uppercase leading-6 tracking-[0.38em] text-[color:var(--work-accent)] sm:text-sm sm:tracking-[0.58em]">
@@ -143,7 +143,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
           </div>
 
           <motion.div
-            className="editorial-work-visual relative min-h-[260px] overflow-hidden border border-white/[0.06] bg-black md:min-h-full"
+            className="work-image editorial-work-visual relative min-h-[300px] overflow-hidden border border-white/[0.06] bg-black md:min-h-full"
             variants={{
               rest: { scale: 1 },
               hover: { scale: 1.018 },
@@ -181,7 +181,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="editorial-work-button relative flex min-h-16 w-full items-center justify-between overflow-hidden border border-white/42 px-6 text-[12px] font-semibold uppercase tracking-[0.48em] text-white/82 sm:min-h-20 sm:px-8 sm:text-sm"
+            className="work-link editorial-work-button relative flex min-h-16 w-full items-center justify-between overflow-hidden border border-white/42 px-6 text-[12px] font-semibold uppercase tracking-[0.48em] text-white/82 sm:min-h-20 sm:px-8 sm:text-sm"
             variants={{
               rest: { borderColor: 'rgba(255,255,255,0.42)' },
               hover: { borderColor: project.accent },
@@ -199,7 +199,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
 
 export default function Works() {
   return (
-    <section id="works" className="editorial-works-section relative overflow-x-hidden bg-[#010101] px-3 py-24 sm:px-6 md:px-10 md:py-36">
+    <section id="works" className="works editorial-works-section relative overflow-x-hidden bg-[#010101] px-3 py-24 sm:px-6 md:px-10 md:py-36">
       <div className="editorial-page-noise pointer-events-none absolute inset-0 opacity-[0.13]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/[0.08]" />
 
@@ -218,7 +218,7 @@ export default function Works() {
           </div>
         </AnimateIn>
 
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-7">
+        <div className="mx-auto grid max-w-[1160px] grid-cols-1 gap-7 md:gap-10">
           {projects.map((project, index) => (
             <WorkPoster key={project.number} project={project} index={index} />
           ))}
