@@ -28,6 +28,18 @@ function ThreadsIcon() {
   )
 }
 
+function NoteIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-5 h-5 flex-shrink-0">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <polyline points="14 2 14 8 20 8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <line x1="16" y1="13" x2="8" y2="13" strokeWidth="1.5" strokeLinecap="round"/>
+      <line x1="16" y1="17" x2="8" y2="17" strokeWidth="1.5" strokeLinecap="round"/>
+      <line x1="10" y1="9" x2="8" y2="9" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  )
+}
+
 const socials = [
   {
     href: 'https://www.instagram.com/aicmode',
@@ -56,6 +68,15 @@ const socials = [
     glow: 'rgba(255,255,255,0.07)',
     border: 'rgba(255,255,255,0.12)',
   },
+  {
+    href: 'https://note.com/aicmode',
+    icon: <NoteIcon />,
+    label: 'note',
+    handle: 'AICMODE',
+    desc: 'AI × Web × Creative Notes',
+    glow: 'rgba(100,120,255,0.2)',
+    border: 'rgba(120,100,255,0.28)',
+  },
 ]
 
 function SocialCard({
@@ -72,19 +93,17 @@ function SocialCard({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-center gap-5 px-6 py-5 w-full sm:w-auto flex-1"
+      className="group flex items-center gap-5 px-6 py-5 w-full"
       style={{
         border: `1px solid rgba(255,255,255,0.07)`,
         background: 'rgba(255,255,255,0.02)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
         textDecoration: 'none',
-        minWidth: '210px',
-        maxWidth: '320px',
       }}
       whileHover={{
         borderColor: border,
-        y: -3,
+        y: -6,
         boxShadow: `0 0 40px ${glow}, 0 12px 40px rgba(0,0,0,0.5)`,
         transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
       }}
@@ -240,7 +259,7 @@ export default function Contact() {
 
         {/* ── Social cards ── */}
         <AnimateIn delay={340}>
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {socials.map((s) => (
               <SocialCard key={s.label} {...s} />
             ))}
