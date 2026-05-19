@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion'
 
 export default function Hero() {
-  const lightRef = useRef<HTMLDivElement>(null)
+  const lightRef  = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
 
   const { scrollYProgress } = useScroll({
@@ -31,6 +31,7 @@ export default function Hero() {
 
   return (
     <section
+      id="top"
       ref={sectionRef}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#080808]"
     >

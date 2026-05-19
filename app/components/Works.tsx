@@ -510,7 +510,7 @@ function ProjectCard({
         style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0.025) 0%, transparent 100%)' }}
       />
       <div className="absolute top-5 left-5 z-20" style={{ width: '28px', height: '1.5px', background: 'rgba(255,255,255,0.45)' }} />
-      <span className="absolute top-4 right-5 font-mono text-[10px] z-20" style={{ color: 'rgba(255,255,255,0.18)' }}>
+      <span className="absolute top-4 right-２font-mono text-[10px] z-20" style={{ color: 'rgba(255,255,255,0.18)' }}>
         {project.number}
       </span>
       <div className="absolute bottom-5 left-5 w-2 h-2 rounded-full animate-pulse-glow z-20" style={{ background: project.dot }} />
