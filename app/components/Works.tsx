@@ -22,6 +22,14 @@ function PhoneIcon() {
   )
 }
 
+function ArrowIcon() {
+  return (
+    <svg className="w-2.5 h-2.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M17 7l-10 10M17 7H7m10 0v10" />
+    </svg>
+  )
+}
+
 /* ── Data ── */
 interface ProjectData {
   id: number
@@ -32,8 +40,7 @@ interface ProjectData {
   dot: string
   number: string
   url: string | null
-  mockupType: 'macbook' | 'iphone'
-  modalLabel: string
+  defaultPreview: 'desktop' | 'mobile'
 }
 
 const projects: readonly ProjectData[] = [
@@ -46,8 +53,7 @@ const projects: readonly ProjectData[] = [
     dot: '#ff2d6b',
     number: '01',
     url: 'https://aicmode.github.io/pulse/',
-    mockupType: 'macbook',
-    modalLabel: 'Mobile Preview',
+    defaultPreview: 'desktop',
   },
   {
     id: 2,
@@ -58,8 +64,7 @@ const projects: readonly ProjectData[] = [
     dot: '#c9a227',
     number: '02',
     url: 'https://aicmode.github.io/noir-cafe/',
-    mockupType: 'macbook',
-    modalLabel: 'Mobile Preview',
+    defaultPreview: 'desktop',
   },
   {
     id: 3,
@@ -70,8 +75,7 @@ const projects: readonly ProjectData[] = [
     dot: '#e879f9',
     number: '03',
     url: 'https://aicmode.github.io/Lumi-Tails/',
-    mockupType: 'macbook',
-    modalLabel: 'Mobile Preview',
+    defaultPreview: 'desktop',
   },
   {
     id: 4,
@@ -82,8 +86,7 @@ const projects: readonly ProjectData[] = [
     dot: '#38bdf8',
     number: '04',
     url: null,
-    mockupType: 'iphone',
-    modalLabel: 'iPhone Preview',
+    defaultPreview: 'mobile',
   },
   {
     id: 5,
@@ -94,8 +97,7 @@ const projects: readonly ProjectData[] = [
     dot: '#c084fc',
     number: '05',
     url: null,
-    mockupType: 'iphone',
-    modalLabel: 'UI Detail',
+    defaultPreview: 'mobile',
   },
 ]
 
@@ -264,71 +266,6 @@ function IPhoneMockup({ colors, dot }: { colors: readonly [string, string, strin
   )
 }
 
-/* ── Large iPhone mockup (modal) ── */
-function ModalPhone({ colors, dot }: { colors: readonly [string, string, string]; dot: string }) {
-  return (
-    <div style={{ width: '160px', position: 'relative' }}>
-      <div style={{
-        background: 'linear-gradient(160deg, #282828, #181818)',
-        border: '2.5px solid rgba(255,255,255,0.13)',
-        borderRadius: '36px',
-        padding: '10px 7px',
-        boxShadow: `0 32px 80px rgba(0,0,0,0.8), 0 0 0 0.5px rgba(255,255,255,0.05) inset`,
-      }}>
-        <div style={{ width: '50px', height: '14px', background: '#000', borderRadius: '10px', margin: '0 auto 6px' }} />
-        <div style={{
-          height: '240px',
-          borderRadius: '22px',
-          background: `linear-gradient(160deg, ${colors[0]} 0%, ${colors[1]} 55%, ${colors[2]}55 100%)`,
-          overflow: 'hidden',
-          position: 'relative',
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 12px 5px' }}>
-            <div style={{ width: '26px', height: '4px', background: 'rgba(255,255,255,0.4)', borderRadius: '2px' }} />
-            <div style={{ display: 'flex', gap: '4px' }}>
-              {[0, 1, 2].map(i => <div key={i} style={{ width: '8px', height: '4px', background: 'rgba(255,255,255,0.25)', borderRadius: '1px' }} />)}
-            </div>
-          </div>
-          <div style={{ padding: '14px 12px' }}>
-            <div style={{ width: '65%', height: '11px', background: 'rgba(255,255,255,0.6)', borderRadius: '3px', marginBottom: '6px' }} />
-            <div style={{ width: '45%', height: '6px', background: 'rgba(255,255,255,0.25)', borderRadius: '2px', marginBottom: '16px' }} />
-            <div style={{
-              width: '100%', height: '82px',
-              background: 'rgba(255,255,255,0.05)',
-              border: `1px solid ${dot}22`,
-              borderRadius: '8px',
-              marginBottom: '8px',
-            }} />
-            <div style={{ display: 'flex', gap: '6px' }}>
-              {[0.09, 0.06].map((o, i) => (
-                <div key={i} style={{ flex: 1, height: '38px', background: `rgba(255,255,255,${o})`, borderRadius: '6px', border: '1px solid rgba(255,255,255,0.06)' }} />
-              ))}
-            </div>
-          </div>
-          <div className="animate-shimmer" style={{
-            position: 'absolute', top: 0, bottom: 0, width: '35%',
-            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent)',
-            pointerEvents: 'none',
-          }} />
-          <div style={{
-            position: 'absolute', bottom: 0, left: 0, right: 0, height: '44px',
-            background: `linear-gradient(to bottom, transparent, ${colors[0]}ee)`,
-          }} />
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'center', padding: '7px 0 3px' }}>
-          <div style={{ width: '38px', height: '4px', background: 'rgba(255,255,255,0.2)', borderRadius: '3px' }} />
-        </div>
-      </div>
-      <div style={{
-        position: 'absolute', bottom: '-14px', left: '50%', transform: 'translateX(-50%)',
-        width: '120px', height: '36px',
-        background: `radial-gradient(ellipse at center, ${dot}40 0%, transparent 70%)`,
-        filter: 'blur(16px)',
-      }} />
-    </div>
-  )
-}
-
 /* ── Live overlay ── */
 function LiveOverlay() {
   return (
@@ -398,114 +335,40 @@ function ComingSoonOverlay({ dot }: { dot: string }) {
   )
 }
 
-/* ── Mobile preview modal ── */
-function MobilePreviewModal({
-  project,
-  onClose,
+/* ── Preview toggle button ── */
+function ToggleBtn({
+  active,
+  dot,
+  onClick,
+  label,
+  children,
 }: {
-  project: ProjectData | null
-  onClose: () => void
+  active: boolean
+  dot: string
+  onClick: () => void
+  label: string
+  children: React.ReactNode
 }) {
-  useEffect(() => {
-    if (!project) return
-    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
-    document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
-  }, [project, onClose])
-
   return (
-    <AnimatePresence>
-      {project && (
-        <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center px-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
-          onClick={onClose}
-        >
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background: 'rgba(4,4,4,0.95)',
-              backdropFilter: 'blur(28px)',
-              WebkitBackdropFilter: 'blur(28px)',
-            }}
-          />
-
-          {/* Content */}
-          <motion.div
-            className="relative z-10 flex flex-col items-center"
-            initial={{ opacity: 0, scale: 0.88, y: 24 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.88, y: 24 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            onClick={e => e.stopPropagation()}
-          >
-            {/* Close */}
-            <button
-              onClick={onClose}
-              className="absolute -top-14 right-0 flex items-center gap-2.5 group/close"
-            >
-              <span
-                className="text-[8px] tracking-[0.5em] uppercase group-hover/close:text-white transition-colors duration-200"
-                style={{ color: '#444' }}
-              >
-                ESC
-              </span>
-              <div style={{ width: '1px', height: '14px', background: 'rgba(255,255,255,0.12)' }} />
-              <svg
-                className="w-3.5 h-3.5 group-hover/close:text-white transition-colors duration-200"
-                style={{ color: '#444' }}
-                fill="none" stroke="currentColor" viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            {/* Header */}
-            <div className="text-center mb-10">
-              <p
-                className="text-[7px] tracking-[0.55em] uppercase mb-3"
-                style={{ color: 'rgba(255,255,255,0.2)' }}
-              >
-                {project.number} — Mobile UI
-              </p>
-              <h3
-                className="font-black text-white tracking-[-0.02em] mb-3"
-                style={{ fontSize: 'clamp(1.4rem, 4vw, 2rem)' }}
-              >
-                {project.title}
-              </h3>
-              <div className="flex items-center justify-center gap-3">
-                <div style={{ height: '1px', width: '22px', background: project.dot + '60' }} />
-                <p className="text-[8px] tracking-[0.45em] uppercase" style={{ color: project.dot }}>
-                  {project.modalLabel}
-                </p>
-                <div style={{ height: '1px', width: '22px', background: project.dot + '60' }} />
-              </div>
-            </div>
-
-            {/* Large phone */}
-            <ModalPhone colors={project.colors} dot={project.dot} />
-
-            {/* Tags */}
-            <div className="flex flex-wrap justify-center gap-2 mt-10">
-              {project.tags.map(tag => (
-                <span
-                  key={tag}
-                  className="text-[7px] tracking-[0.35em] px-3 py-1 uppercase"
-                  style={{ border: '1px solid rgba(255,255,255,0.07)', color: '#383838' }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      className="flex items-center justify-center"
+      style={{
+        width: '34px',
+        height: '34px',
+        border: 'none',
+        cursor: 'pointer',
+        borderRadius: '5px',
+        color: active ? dot : 'rgba(255,255,255,0.18)',
+        background: active ? `${dot}14` : 'transparent',
+        boxShadow: active ? `0 0 10px ${dot}55, 0 0 22px ${dot}22` : 'none',
+        transition: 'color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease',
+      }}
+    >
+      {children}
+    </button>
   )
 }
 
@@ -575,13 +438,11 @@ function SlideNav({
 function ProjectCard({
   project,
   index,
-  onModalOpen,
   onScrollNext,
   setRef,
 }: {
   project: ProjectData
   index: number
-  onModalOpen: () => void
   onScrollNext: () => void
   setRef: (el: HTMLDivElement | null) => void
 }) {
@@ -589,6 +450,7 @@ function ProjectCard({
   const isLast = index === projects.length - 1
   const nextProject = !isLast ? projects[index + 1] : null
   const cardRef = useRef<HTMLDivElement | null>(null)
+  const [previewMode, setPreviewMode] = useState<'desktop' | 'mobile'>(project.defaultPreview)
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return
@@ -613,18 +475,36 @@ function ProjectCard({
     cardRef.current.style.setProperty('--glow-opacity', '0')
   }, [])
 
-  const thumbnailContent = (
+  const mockupContent = (
     <>
-      <div
-        className="absolute inset-0 transition-transform duration-700 group-hover:scale-105"
-        style={{
-          background: `linear-gradient(145deg, ${project.colors[0]} 0%, ${project.colors[1]} 52%, ${project.colors[2]}66 100%)`,
-        }}
-      />
-      {project.mockupType === 'macbook'
-        ? <MacBookMockup colors={project.colors} dot={project.dot} />
-        : <IPhoneMockup colors={project.colors} dot={project.dot} />
-      }
+      {/* Animated mockup */}
+      <AnimatePresence mode="wait">
+        {previewMode === 'desktop' ? (
+          <motion.div
+            key="desktop"
+            className="absolute inset-0"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <MacBookMockup colors={project.colors} dot={project.dot} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="mobile"
+            className="absolute inset-0"
+            initial={{ opacity: 0, scale: 0.88 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <IPhoneMockup colors={project.colors} dot={project.dot} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Static decorations */}
       <div
         className="absolute inset-x-0 top-0 h-1/2 pointer-events-none"
         style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0.025) 0%, transparent 100%)' }}
@@ -678,18 +558,17 @@ function ProjectCard({
             target="_blank"
             rel="noopener noreferrer"
             className="relative overflow-hidden block"
-            style={{ height: '220px', background: '#0d0d0d', textDecoration: 'none', flexShrink: 0 }}
+            style={{ height: '220px', background: `linear-gradient(145deg, ${project.colors[0]} 0%, ${project.colors[1]} 52%, ${project.colors[2]}66 100%)`, textDecoration: 'none', flexShrink: 0 }}
           >
-            {thumbnailContent}
+            {mockupContent}
           </a>
         ) : (
-          <button
-            onClick={onModalOpen}
-            className="relative overflow-hidden w-full"
-            style={{ height: '220px', background: '#0d0d0d', padding: 0, border: 'none', cursor: 'pointer', flexShrink: 0, display: 'block' }}
+          <div
+            className="relative overflow-hidden"
+            style={{ height: '220px', background: `linear-gradient(145deg, ${project.colors[0]} 0%, ${project.colors[1]} 52%, ${project.colors[2]}66 100%)`, flexShrink: 0 }}
           >
-            {thumbnailContent}
-          </button>
+            {mockupContent}
+          </div>
         )}
 
         {/* Card body */}
@@ -716,62 +595,72 @@ function ProjectCard({
 
           {/* Footer */}
           <div className="mt-5">
-            {/* Action buttons */}
-            <div className="flex items-center gap-2">
-              <div
-                style={{ width: '14px', height: '1px', background: project.dot, flexShrink: 0 }}
-              />
-              {isLive && (
-                <a
-                  href={project.url!}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-[8px] tracking-[0.28em] uppercase px-2.5 py-1.5"
-                  style={{
-                    border: '1px solid rgba(255,255,255,0.09)',
-                    color: 'rgba(255,255,255,0.35)',
-                    textDecoration: 'none',
-                    transition: 'color 0.25s ease, border-color 0.25s ease',
-                  }}
-                  onMouseEnter={e => {
-                    const el = e.currentTarget as HTMLAnchorElement
-                    el.style.color = 'rgba(255,255,255,0.85)'
-                    el.style.borderColor = 'rgba(255,255,255,0.24)'
-                  }}
-                  onMouseLeave={e => {
-                    const el = e.currentTarget as HTMLAnchorElement
-                    el.style.color = 'rgba(255,255,255,0.35)'
-                    el.style.borderColor = 'rgba(255,255,255,0.09)'
-                  }}
+            {/* Action row */}
+            <div className="flex items-center justify-between gap-3">
+
+              {/* Left: live site link or coming soon badge */}
+              <div className="flex items-center gap-2 min-w-0">
+                <div style={{ width: '14px', height: '1px', background: project.dot, flexShrink: 0 }} />
+                {isLive ? (
+                  <a
+                    href={project.url!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-[8px] tracking-[0.28em] uppercase px-2.5 py-1.5 whitespace-nowrap"
+                    style={{
+                      border: '1px solid rgba(255,255,255,0.09)',
+                      color: 'rgba(255,255,255,0.35)',
+                      textDecoration: 'none',
+                      transition: 'color 0.25s ease, border-color 0.25s ease',
+                    }}
+                    onMouseEnter={e => {
+                      const el = e.currentTarget as HTMLAnchorElement
+                      el.style.color = 'rgba(255,255,255,0.85)'
+                      el.style.borderColor = 'rgba(255,255,255,0.24)'
+                    }}
+                    onMouseLeave={e => {
+                      const el = e.currentTarget as HTMLAnchorElement
+                      el.style.color = 'rgba(255,255,255,0.35)'
+                      el.style.borderColor = 'rgba(255,255,255,0.09)'
+                    }}
+                  >
+                    <span>Live Site</span>
+                    <ArrowIcon />
+                  </a>
+                ) : (
+                  <span
+                    className="text-[8px] tracking-[0.28em] uppercase px-2.5 py-1.5 whitespace-nowrap select-none"
+                    style={{
+                      border: `1px solid ${project.dot}28`,
+                      color: `${project.dot}55`,
+                      pointerEvents: 'none',
+                    }}
+                  >
+                    Coming Soon
+                  </span>
+                )}
+              </div>
+
+              {/* Right: desktop / mobile preview toggle */}
+              <div className="flex items-center gap-0.5 flex-shrink-0">
+                <ToggleBtn
+                  active={previewMode === 'desktop'}
+                  dot={project.dot}
+                  onClick={() => setPreviewMode('desktop')}
+                  label="Desktop preview"
                 >
                   <LaptopIcon />
-                  <span>Live</span>
-                </a>
-              )}
-              <button
-                onClick={onModalOpen}
-                className="flex items-center gap-1.5 text-[8px] tracking-[0.28em] uppercase px-2.5 py-1.5"
-                style={{
-                  border: '1px solid rgba(255,255,255,0.07)',
-                  color: 'rgba(255,255,255,0.22)',
-                  transition: 'color 0.25s ease, border-color 0.25s ease',
-                  background: 'none',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={e => {
-                  const el = e.currentTarget as HTMLButtonElement
-                  el.style.color = 'rgba(255,255,255,0.65)'
-                  el.style.borderColor = 'rgba(255,255,255,0.2)'
-                }}
-                onMouseLeave={e => {
-                  const el = e.currentTarget as HTMLButtonElement
-                  el.style.color = 'rgba(255,255,255,0.22)'
-                  el.style.borderColor = 'rgba(255,255,255,0.07)'
-                }}
-              >
-                <PhoneIcon />
-                <span>{project.mockupType === 'macbook' ? 'Mobile' : project.modalLabel}</span>
-              </button>
+                </ToggleBtn>
+                <div style={{ width: '1px', height: '14px', background: 'rgba(255,255,255,0.06)' }} />
+                <ToggleBtn
+                  active={previewMode === 'mobile'}
+                  dot={project.dot}
+                  onClick={() => setPreviewMode('mobile')}
+                  label="Mobile preview"
+                >
+                  <PhoneIcon />
+                </ToggleBtn>
+              </div>
             </div>
 
             {/* Next project navigation */}
@@ -844,7 +733,6 @@ function ProjectCard({
 /* ── Works section ── */
 export default function Works() {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [modalProject, setModalProject] = useState<ProjectData | null>(null)
   const cardRefs = useRef<(HTMLDivElement | null)[]>(Array(projects.length).fill(null) as (HTMLDivElement | null)[])
 
   useEffect(() => {
@@ -871,14 +759,6 @@ export default function Works() {
     const top = el.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.15
     window.scrollTo({ top, behavior: 'smooth' })
     setActiveIndex(index)
-  }, [])
-
-  const openModal = useCallback((project: ProjectData) => {
-    setModalProject(project)
-  }, [])
-
-  const closeModal = useCallback(() => {
-    setModalProject(null)
   }, [])
 
   return (
@@ -921,7 +801,6 @@ export default function Works() {
               key={project.id}
               project={project}
               index={i}
-              onModalOpen={() => openModal(project)}
               onScrollNext={() => scrollToCard(Math.min(i + 1, projects.length - 1))}
               setRef={el => { cardRefs.current[i] = el }}
             />
@@ -933,9 +812,6 @@ export default function Works() {
           <SlideNav activeIndex={activeIndex} onNavigate={scrollToCard} />
         </AnimateIn>
       </div>
-
-      {/* ── Modal ── */}
-      <MobilePreviewModal project={modalProject} onClose={closeModal} />
     </section>
   )
 }
