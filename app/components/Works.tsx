@@ -6,7 +6,7 @@ import AnimateIn from './AnimateIn'
 /* ── Icons ── */
 function LaptopIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-3.5 h-3.5 flex-shrink-0">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-4 h-4 flex-shrink-0">
       <rect x="2" y="3" width="20" height="14" rx="2" strokeWidth="1.5" />
       <path d="M2 20h20" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
@@ -15,16 +15,16 @@ function LaptopIcon() {
 
 function PhoneIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-3 h-3 flex-shrink-0">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-3.5 h-3.5 flex-shrink-0">
       <rect x="5" y="2" width="14" height="20" rx="3" strokeWidth="1.5" />
       <circle cx="12" cy="18.5" r="0.75" fill="currentColor" strokeWidth="0" />
     </svg>
   )
 }
 
-function ArrowIcon() {
+function ArrowUpRightIcon({ className }: { className?: string }) {
   return (
-    <svg className="w-2.5 h-2.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className={className ?? 'w-3 h-3 flex-shrink-0'} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M17 7l-10 10M17 7H7m10 0v10" />
     </svg>
   )
@@ -271,20 +271,19 @@ function LiveOverlay() {
   return (
     <div
       className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100"
-      style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', transition: 'opacity 0.4s ease' }}
+      style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(6px)', transition: 'opacity 0.4s ease' }}
     >
       <div
-        className="flex items-center gap-2.5 px-5 py-2.5"
+        className="flex items-center gap-2.5 px-6 py-3"
         style={{
-          border: '1px solid rgba(255,255,255,0.24)',
-          background: 'rgba(255,255,255,0.07)',
-          backdropFilter: 'blur(16px)',
+          border: '1px solid rgba(255,255,255,0.28)',
+          background: 'rgba(255,255,255,0.08)',
+          backdropFilter: 'blur(20px)',
+          boxShadow: '0 0 30px rgba(255,255,255,0.06)',
         }}
       >
-        <span className="text-[10px] tracking-[0.38em] text-white font-medium uppercase">Live Site</span>
-        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 7l-10 10M17 7H7m10 0v10" />
-        </svg>
+        <span className="text-[10px] tracking-[0.42em] text-white font-medium uppercase">Live Site</span>
+        <ArrowUpRightIcon className="w-3 h-3 text-white" />
       </div>
     </div>
   )
@@ -335,6 +334,42 @@ function ComingSoonOverlay({ dot }: { dot: string }) {
   )
 }
 
+/* ── Live Site button ── */
+function LiveSiteButton({ url, dot }: { url: string; dot: string }) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <motion.a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="flex items-center gap-2 text-[9px] tracking-[0.3em] uppercase whitespace-nowrap select-none"
+      style={{
+        padding: '10px 16px',
+        minHeight: '42px',
+        border: `1px solid ${hovered ? 'rgba(255,255,255,0.32)' : 'rgba(255,255,255,0.1)'}`,
+        color: hovered ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.4)',
+        background: hovered ? 'rgba(255,255,255,0.06)' : 'transparent',
+        boxShadow: hovered
+          ? `0 0 24px rgba(255,255,255,0.07), 0 0 48px ${dot}14, inset 0 0 12px rgba(255,255,255,0.02)`
+          : 'none',
+        textDecoration: 'none',
+        transition: 'color 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.35s ease',
+      }}
+    >
+      <span>Live Site</span>
+      <motion.span
+        animate={{ x: hovered ? 2 : 0, y: hovered ? -2 : 0 }}
+        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+        style={{ display: 'flex' }}
+      >
+        <ArrowUpRightIcon />
+      </motion.span>
+    </motion.a>
+  )
+}
+
 /* ── Preview toggle button ── */
 function ToggleBtn({
   active,
@@ -349,22 +384,37 @@ function ToggleBtn({
   label: string
   children: React.ReactNode
 }) {
+  const [hovered, setHovered] = useState(false)
   return (
     <button
       type="button"
       onClick={onClick}
       aria-label={label}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       className="flex items-center justify-center"
       style={{
-        width: '34px',
-        height: '34px',
-        border: 'none',
+        width: '38px',
+        height: '38px',
+        border: active
+          ? `1px solid ${dot}44`
+          : hovered
+          ? '1px solid rgba(255,255,255,0.14)'
+          : '1px solid transparent',
         cursor: 'pointer',
-        borderRadius: '5px',
-        color: active ? dot : 'rgba(255,255,255,0.18)',
-        background: active ? `${dot}14` : 'transparent',
-        boxShadow: active ? `0 0 10px ${dot}55, 0 0 22px ${dot}22` : 'none',
-        transition: 'color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease',
+        borderRadius: '7px',
+        color: active ? dot : hovered ? 'rgba(255,255,255,0.38)' : 'rgba(255,255,255,0.1)',
+        background: active
+          ? `${dot}1c`
+          : hovered
+          ? 'rgba(255,255,255,0.04)'
+          : 'transparent',
+        boxShadow: active
+          ? `0 0 14px ${dot}66, 0 0 32px ${dot}2a, inset 0 0 10px ${dot}0d`
+          : hovered
+          ? '0 0 10px rgba(255,255,255,0.04)'
+          : 'none',
+        transition: 'all 0.28s ease',
       }}
     >
       {children}
@@ -421,7 +471,6 @@ function SlideNav({
         })}
       </div>
 
-      {/* Active label */}
       <div className="hidden md:flex items-center gap-2 ml-1">
         <span className="font-mono text-[7px] tracking-[0.4em] text-zinc-700 uppercase">
           {projects[activeIndex]?.number}
@@ -462,9 +511,9 @@ function ProjectCard({
 
   const handleMouseEnter = useCallback(() => {
     if (!cardRef.current) return
-    cardRef.current.style.borderColor = 'rgba(255,255,255,0.18)'
-    cardRef.current.style.transform = 'scale(1.018) translateY(-4px)'
-    cardRef.current.style.boxShadow = `0 0 48px ${project.dot}1a, 0 24px 60px rgba(0,0,0,0.75)`
+    cardRef.current.style.borderColor = `${project.dot}38`
+    cardRef.current.style.transform = 'scale(1.024) translateY(-7px)'
+    cardRef.current.style.boxShadow = `0 0 0 1px ${project.dot}20, 0 0 60px ${project.dot}16, 0 28px 80px rgba(0,0,0,0.85)`
   }, [project.dot])
 
   const handleMouseLeave = useCallback(() => {
@@ -477,7 +526,6 @@ function ProjectCard({
 
   const mockupContent = (
     <>
-      {/* Animated mockup */}
       <AnimatePresence mode="wait">
         {previewMode === 'desktop' ? (
           <motion.div
@@ -504,13 +552,12 @@ function ProjectCard({
         )}
       </AnimatePresence>
 
-      {/* Static decorations */}
       <div
         className="absolute inset-x-0 top-0 h-1/2 pointer-events-none"
         style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0.025) 0%, transparent 100%)' }}
       />
       <div className="absolute top-5 left-5 z-20" style={{ width: '28px', height: '1.5px', background: 'rgba(255,255,255,0.45)' }} />
-      <span className="absolute top-4 right-２font-mono text-[10px] z-20" style={{ color: 'rgba(255,255,255,0.18)' }}>
+      <span className="absolute top-4 right-4 font-mono text-[10px] z-20" style={{ color: 'rgba(255,255,255,0.18)' }}>
         {project.number}
       </span>
       <div className="absolute bottom-5 left-5 w-2 h-2 rounded-full animate-pulse-glow z-20" style={{ background: project.dot }} />
@@ -521,10 +568,10 @@ function ProjectCard({
   return (
     <motion.div
       className="flex flex-col h-full"
-      initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
+      initial={{ opacity: 0, y: 56, filter: 'blur(12px)' }}
       whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.9, delay: index * 0.09, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0.08 }}
+      transition={{ duration: 1.0, delay: index * 0.13, ease: [0.22, 1, 0.36, 1] }}
     >
       <div
         ref={el => { cardRef.current = el; setRef(el) }}
@@ -535,7 +582,7 @@ function ProjectCard({
         style={{
           background: '#111111',
           border: '1px solid rgba(255,255,255,0.06)',
-          transition: 'transform 0.5s cubic-bezier(0.22,1,0.36,1), border-color 0.4s ease, box-shadow 0.5s ease',
+          transition: 'transform 0.55s cubic-bezier(0.22,1,0.36,1), border-color 0.4s ease, box-shadow 0.55s ease',
           '--glow-x': '50%',
           '--glow-y': '50%',
           '--glow-opacity': '0',
@@ -545,7 +592,7 @@ function ProjectCard({
         <div
           className="pointer-events-none absolute inset-0 transition-opacity duration-300"
           style={{
-            background: `radial-gradient(280px circle at var(--glow-x) var(--glow-y), ${project.dot}12, transparent 70%)`,
+            background: `radial-gradient(300px circle at var(--glow-x) var(--glow-y), ${project.dot}14, transparent 70%)`,
             opacity: 'var(--glow-opacity)' as unknown as number,
             zIndex: 10,
           }}
@@ -558,14 +605,23 @@ function ProjectCard({
             target="_blank"
             rel="noopener noreferrer"
             className="relative overflow-hidden block"
-            style={{ height: '220px', background: `linear-gradient(145deg, ${project.colors[0]} 0%, ${project.colors[1]} 52%, ${project.colors[2]}66 100%)`, textDecoration: 'none', flexShrink: 0 }}
+            style={{
+              height: '228px',
+              background: `linear-gradient(145deg, ${project.colors[0]} 0%, ${project.colors[1]} 52%, ${project.colors[2]}66 100%)`,
+              textDecoration: 'none',
+              flexShrink: 0,
+            }}
           >
             {mockupContent}
           </a>
         ) : (
           <div
             className="relative overflow-hidden"
-            style={{ height: '220px', background: `linear-gradient(145deg, ${project.colors[0]} 0%, ${project.colors[1]} 52%, ${project.colors[2]}66 100%)`, flexShrink: 0 }}
+            style={{
+              height: '228px',
+              background: `linear-gradient(145deg, ${project.colors[0]} 0%, ${project.colors[1]} 52%, ${project.colors[2]}66 100%)`,
+              flexShrink: 0,
+            }}
           >
             {mockupContent}
           </div>
@@ -574,7 +630,7 @@ function ProjectCard({
         {/* Card body */}
         <div className="flex flex-col flex-1 p-5 md:p-6" style={{ position: 'relative', zIndex: 1 }}>
           <div className="flex-1">
-            <p className="text-[10px] tracking-[0.32em] mb-1.5 uppercase" style={{ color: '#484848' }}>
+            <p className="text-[10px] tracking-[0.32em] mb-2 uppercase" style={{ color: '#484848' }}>
               {project.genre}
             </p>
             <h3 className="text-base md:text-lg font-bold text-white leading-snug mb-3">
@@ -595,41 +651,16 @@ function ProjectCard({
 
           {/* Footer */}
           <div className="mt-5">
-            {/* Action row */}
-            <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
 
               {/* Left: live site link or coming soon badge */}
-              <div className="flex items-center gap-2 min-w-0">
+              <div className="flex items-center gap-2 flex-1 min-w-0">
                 <div style={{ width: '14px', height: '1px', background: project.dot, flexShrink: 0 }} />
                 {isLive ? (
-                  <a
-                    href={project.url!}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-[8px] tracking-[0.28em] uppercase px-2.5 py-1.5 whitespace-nowrap"
-                    style={{
-                      border: '1px solid rgba(255,255,255,0.09)',
-                      color: 'rgba(255,255,255,0.35)',
-                      textDecoration: 'none',
-                      transition: 'color 0.25s ease, border-color 0.25s ease',
-                    }}
-                    onMouseEnter={e => {
-                      const el = e.currentTarget as HTMLAnchorElement
-                      el.style.color = 'rgba(255,255,255,0.85)'
-                      el.style.borderColor = 'rgba(255,255,255,0.24)'
-                    }}
-                    onMouseLeave={e => {
-                      const el = e.currentTarget as HTMLAnchorElement
-                      el.style.color = 'rgba(255,255,255,0.35)'
-                      el.style.borderColor = 'rgba(255,255,255,0.09)'
-                    }}
-                  >
-                    <span>Live Site</span>
-                    <ArrowIcon />
-                  </a>
+                  <LiveSiteButton url={project.url!} dot={project.dot} />
                 ) : (
                   <span
-                    className="text-[8px] tracking-[0.28em] uppercase px-2.5 py-1.5 whitespace-nowrap select-none"
+                    className="text-[8px] tracking-[0.28em] uppercase px-3 py-2.5 whitespace-nowrap select-none"
                     style={{
                       border: `1px solid ${project.dot}28`,
                       color: `${project.dot}55`,
@@ -641,8 +672,8 @@ function ProjectCard({
                 )}
               </div>
 
-              {/* Right: desktop / mobile preview toggle */}
-              <div className="flex items-center gap-0.5 flex-shrink-0">
+              {/* Right: desktop / mobile preview toggle — pushed to far right */}
+              <div className="flex items-center gap-1 flex-shrink-0 ml-auto">
                 <ToggleBtn
                   active={previewMode === 'desktop'}
                   dot={project.dot}
@@ -651,7 +682,7 @@ function ProjectCard({
                 >
                   <LaptopIcon />
                 </ToggleBtn>
-                <div style={{ width: '1px', height: '14px', background: 'rgba(255,255,255,0.06)' }} />
+                <div style={{ width: '1px', height: '16px', background: 'rgba(255,255,255,0.06)' }} />
                 <ToggleBtn
                   active={previewMode === 'mobile'}
                   dot={project.dot}
@@ -762,7 +793,7 @@ export default function Works() {
   }, [])
 
   return (
-    <section id="works" className="py-24 md:py-40 px-5 md:px-12 bg-[#080808]">
+    <section id="works" className="py-28 md:py-44 px-4 md:px-12 bg-[#080808]">
       <div className="max-w-7xl mx-auto">
 
         {/* ── Header ── */}
@@ -795,7 +826,7 @@ export default function Works() {
         </AnimateIn>
 
         {/* ── Grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {projects.map((project, i) => (
             <ProjectCard
               key={project.id}
