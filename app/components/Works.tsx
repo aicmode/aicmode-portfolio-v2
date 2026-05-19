@@ -20,7 +20,7 @@ const projects = [
     image: '/works/images/pulse.png',
     width: 1054,
     height: 1492,
-    url: 'https://aicmode.github.io/Pulse/',
+    url: 'https://aicmode.github.io/pulse/',
   },
   {
     number: '02',
