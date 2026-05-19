@@ -14,7 +14,28 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "AICMODE — Web Design × AI",
-  description: "AI × Overseas Culture inspired portfolio by AICMODE.",
+  description:
+    "AI × Overseas Culture inspired portfolio by AICMODE. Creative web design combining artificial intelligence with global creative culture.",
+  keywords: ["web design", "AI design", "portfolio", "AICMODE", "creative studio", "Next.js", "overseas culture"],
+  authors: [{ name: "AICMODE" }],
+  creator: "AICMODE",
+  openGraph: {
+    title: "AICMODE — Web Design × AI",
+    description:
+      "AI × Overseas Culture inspired portfolio by AICMODE. Creative web design combining artificial intelligence with global culture.",
+    siteName: "AICMODE",
+    locale: "ja_JP",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AICMODE — Web Design × AI",
+    description: "AI × Overseas Culture inspired portfolio by AICMODE.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

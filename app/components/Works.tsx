@@ -6,6 +6,7 @@ const projects = [
     id: 1,
     title: 'Pulse Festival',
     genre: 'Music Festival / Event',
+    tags: ['Music', 'Event', 'Web'],
     colors: ['#1a0010', '#8b0038', '#ff2d6b'],
     dot: '#ff2d6b',
     number: '01',
@@ -15,6 +16,7 @@ const projects = [
     id: 2,
     title: 'NOIR Café',
     genre: 'Café / Branding',
+    tags: ['Branding', 'F&B', 'Web'],
     colors: ['#0a0800', '#2a1f00', '#c9a227'],
     dot: '#c9a227',
     number: '02',
@@ -24,6 +26,7 @@ const projects = [
     id: 3,
     title: 'Lumi Tails',
     genre: 'Pet Care / E-commerce',
+    tags: ['E-commerce', 'Pet', 'Web'],
     colors: ['#1a0020', '#5b1a8a', '#e879f9'],
     dot: '#e879f9',
     number: '03',
@@ -33,6 +36,7 @@ const projects = [
     id: 4,
     title: 'AURA',
     genre: 'Beauty / Wellness',
+    tags: ['Beauty', 'Wellness', 'Brand'],
     colors: ['#000d1a', '#0a2a4a', '#38bdf8'],
     dot: '#38bdf8',
     number: '04',
@@ -42,6 +46,7 @@ const projects = [
     id: 5,
     title: 'Tsuki Usagi Wagashi',
     genre: 'Japanese Sweets / Culture',
+    tags: ['Japanese', 'Culture', 'EC'],
     colors: ['#0f0010', '#3d1060', '#c084fc'],
     dot: '#c084fc',
     number: '05',
@@ -51,29 +56,100 @@ const projects = [
 
 type Project = (typeof projects)[number]
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const cardContent = (
+function LiveOverlay() {
+  return (
     <div
-      className="group relative flex flex-col h-full overflow-hidden card-hover-glow"
+      className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-400"
+      style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(3px)' }}
+    >
+      <div
+        className="flex items-center gap-2.5 px-5 py-2.5"
+        style={{
+          border: '1px solid rgba(255,255,255,0.28)',
+          background: 'rgba(255,255,255,0.08)',
+          backdropFilter: 'blur(12px)',
+          transition: 'all 0.3s ease',
+        }}
+      >
+        <span className="text-[11px] tracking-[0.35em] text-white font-medium uppercase">Live Site</span>
+        <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 7l-10 10M17 7H7m10 0v10" />
+        </svg>
+      </div>
+    </div>
+  )
+}
+
+function ComingSoonOverlay({ dot }: { dot: string }) {
+  return (
+    <>
+      {/* Scanlines */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.18) 3px, rgba(0,0,0,0.18) 4px)',
+        }}
+      />
+      {/* Moving scan light */}
+      <div
+        className="absolute inset-x-0 h-28 pointer-events-none scan-line"
+        style={{
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.035) 50%, transparent 100%)',
+        }}
+      />
+      {/* Badge */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <span
+          className="text-[9px] tracking-[0.5em] uppercase px-4 py-1.5 block text-center whitespace-nowrap"
+          style={{
+            border: `1px solid ${dot}50`,
+            color: dot,
+            background: `${dot}12`,
+            backdropFilter: 'blur(4px)',
+          }}
+        >
+          In Production
+        </span>
+      </div>
+    </>
+  )
+}
+
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const isLive = !!project.url
+
+  const inner = (
+    <div
+      className={`group relative flex flex-col h-full overflow-hidden ${!isLive ? 'animate-shadow-pulse' : ''}`}
       style={{
         background: '#111111',
         border: '1px solid rgba(255,255,255,0.06)',
-        transition: 'transform 0.4s cubic-bezier(0.22,1,0.36,1), border-color 0.4s ease, box-shadow 0.4s ease',
-        cursor: project.url ? 'pointer' : 'default',
+        transition: isLive
+          ? 'transform 0.45s cubic-bezier(0.22,1,0.36,1), border-color 0.4s ease, box-shadow 0.45s ease'
+          : undefined,
+        cursor: isLive ? 'pointer' : 'default',
       }}
-      data-dot={project.dot}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget as HTMLElement
-        el.style.borderColor = 'rgba(255,255,255,0.22)'
-        el.style.transform = 'scale(1.025)'
-        el.style.boxShadow = `0 0 32px ${project.dot}22, 0 8px 40px rgba(0,0,0,0.6)`
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget as HTMLElement
-        el.style.borderColor = 'rgba(255,255,255,0.06)'
-        el.style.transform = 'scale(1)'
-        el.style.boxShadow = 'none'
-      }}
+      onMouseEnter={
+        isLive
+          ? (e) => {
+              const el = e.currentTarget as HTMLElement
+              el.style.borderColor = 'rgba(255,255,255,0.2)'
+              el.style.transform = 'scale(1.022) translateY(-3px)'
+              el.style.boxShadow = `0 0 44px ${project.dot}22, 0 24px 64px rgba(0,0,0,0.7)`
+            }
+          : undefined
+      }
+      onMouseLeave={
+        isLive
+          ? (e) => {
+              const el = e.currentTarget as HTMLElement
+              el.style.borderColor = 'rgba(255,255,255,0.06)'
+              el.style.transform = 'scale(1) translateY(0)'
+              el.style.boxShadow = 'none'
+            }
+          : undefined
+      }
     >
       {/* Thumbnail */}
       <div className="relative overflow-hidden" style={{ height: '220px' }}>
@@ -83,105 +159,80 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             background: `linear-gradient(145deg, ${project.colors[0]} 0%, ${project.colors[1]} 50%, ${project.colors[2]} 100%)`,
           }}
         />
-        <div
-          className="absolute"
-          style={{
-            bottom: '-40px',
-            right: '-40px',
-            width: '180px',
-            height: '180px',
-            borderRadius: '50%',
-            border: '1px solid rgba(255,255,255,0.12)',
-          }}
-        />
-        <div
-          className="absolute"
-          style={{
-            bottom: '-70px',
-            right: '-70px',
-            width: '260px',
-            height: '260px',
-            borderRadius: '50%',
-            border: '1px solid rgba(255,255,255,0.06)',
-          }}
-        />
-        <div
-          className="absolute top-5 left-5"
-          style={{
-            width: '36px',
-            height: '1.5px',
-            background: 'rgba(255,255,255,0.5)',
-          }}
-        />
-        <span
-          className="absolute top-4 right-5 font-mono text-[11px]"
-          style={{ color: 'rgba(255,255,255,0.25)' }}
-        >
+
+        {isLive ? <LiveOverlay /> : <ComingSoonOverlay dot={project.dot} />}
+
+        {/* Decorative rings */}
+        <div className="absolute" style={{ bottom: '-40px', right: '-40px', width: '180px', height: '180px', borderRadius: '50%', border: '1px solid rgba(255,255,255,0.1)' }} />
+        <div className="absolute" style={{ bottom: '-72px', right: '-72px', width: '268px', height: '268px', borderRadius: '50%', border: '1px solid rgba(255,255,255,0.05)' }} />
+
+        {/* Top accent */}
+        <div className="absolute top-5 left-5" style={{ width: '32px', height: '1.5px', background: 'rgba(255,255,255,0.5)' }} />
+        <span className="absolute top-4 right-5 font-mono text-[10px]" style={{ color: 'rgba(255,255,255,0.22)' }}>
           {project.number}
         </span>
-        <div
-          className="absolute bottom-5 left-5 w-2 h-2 rounded-full animate-pulse-glow"
-          style={{ background: project.dot }}
-        />
-        {/* External link indicator */}
-        {project.url && (
-          <div
-            className="absolute top-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{
-              background: 'rgba(0,0,0,0.6)',
-              backdropFilter: 'blur(8px)',
-              padding: '4px 12px',
-              border: '1px solid rgba(255,255,255,0.15)',
-            }}
-          >
-            <span className="text-[9px] tracking-[0.3em] text-white/60 uppercase">Open Site</span>
-          </div>
-        )}
+        <div className="absolute bottom-5 left-5 w-2 h-2 rounded-full animate-pulse-glow" style={{ background: project.dot }} />
       </div>
 
       {/* Card body */}
       <div className="flex flex-col flex-1 p-5 md:p-6">
         <div className="flex-1">
-          <p
-            className="text-[10px] tracking-[0.3em] mb-2 uppercase"
-            style={{ color: '#525252' }}
-          >
+          <p className="text-[10px] tracking-[0.32em] mb-1.5 uppercase" style={{ color: '#484848' }}>
             {project.genre}
           </p>
-          <h3 className="text-base md:text-lg font-bold text-white leading-snug">
+          <h3 className="text-base md:text-lg font-bold text-white leading-snug mb-3">
             {project.title}
           </h3>
+          {/* Tags */}
+          <div className="flex flex-wrap gap-1.5">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-[9px] tracking-[0.18em] px-2 py-0.5 uppercase"
+                style={{ border: '1px solid rgba(255,255,255,0.07)', color: '#3a3a3a' }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
-        <div className="mt-5 md:mt-6 flex items-center justify-between">
+
+        <div className="mt-5 flex items-center justify-between">
           <div
-            className="h-[1px] transition-all duration-500 group-hover:w-10"
-            style={{ width: '24px', background: project.dot }}
+            className="h-[1px] transition-all duration-500 group-hover:w-12"
+            style={{ width: '20px', background: project.dot }}
           />
-          <span
-            className="text-[11px] tracking-[0.2em] uppercase transition-colors duration-300"
-            style={{ color: project.url ? '#525252' : '#303030' }}
-          >
-            {project.url ? 'View Project →' : 'Coming Soon'}
-          </span>
+          {isLive ? (
+            <span
+              className="text-[11px] tracking-[0.22em] uppercase transition-colors duration-300 group-hover:text-white"
+              style={{ color: '#484848' }}
+            >
+              View Project →
+            </span>
+          ) : (
+            <span className="text-[10px] tracking-[0.25em] font-mono" style={{ color: '#252525' }}>
+              ─ ─ ─
+            </span>
+          )}
         </div>
       </div>
     </div>
   )
 
   return (
-    <AnimateIn delay={index * 90} className="flex flex-col h-full">
-      {project.url ? (
+    <AnimateIn delay={index * 85} className="flex flex-col h-full">
+      {isLive ? (
         <a
-          href={project.url}
+          href={project.url!}
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-col h-full"
           style={{ textDecoration: 'none' }}
         >
-          {cardContent}
+          {inner}
         </a>
       ) : (
-        cardContent
+        inner
       )}
     </AnimateIn>
   )
@@ -189,10 +240,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
 export default function Works() {
   return (
-    <section
-      id="works"
-      className="py-24 md:py-40 px-5 md:px-12 bg-[#080808]"
-    >
+    <section id="works" className="py-24 md:py-40 px-5 md:px-12 bg-[#080808]">
       <div className="max-w-7xl mx-auto">
         <AnimateIn>
           <div className="mb-14 md:mb-20">
