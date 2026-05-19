@@ -1,145 +1,131 @@
 'use client'
+
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import AnimateIn from './AnimateIn'
 
-/* ── Data ── */
 const projects = [
   {
     id: 1,
     number: '01',
-    title: 'Pulse Festival',
-    genre: 'Music Festival / Event',
-    tags: ['Music', 'Event', 'Web'],
-    description: 'A high-energy music festival landing page built for immersive digital experiences and bold visual storytelling.',
-    dot: '#ff2d6b',
+    title: 'Pulse',
+    genre: 'Music Festival',
+    tags: ['Event', 'Music', 'Landing'],
+    description:
+      'A high-voltage festival website shaped around kinetic contrast, bold typography, and immersive event energy.',
+    accent: '#ff2d6b',
+    thumbnail: '/works/pulse.svg',
     url: 'https://aicmode.github.io/Pulse/',
   },
   {
     id: 2,
     number: '02',
     title: 'NOIR Café',
-    genre: 'Café / Branding',
-    tags: ['Branding', 'F&B', 'Web'],
-    description: 'Dark aesthetic café branding fusing moody visuals with a refined typographic identity.',
-    dot: '#c9a227',
+    genre: 'Café Branding',
+    tags: ['Brand', 'Food', 'Editorial'],
+    description:
+      'A dark luxury café experience with cinematic mood, refined typography, and a quiet premium atmosphere.',
+    accent: '#c9a227',
+    thumbnail: '/works/noir-cafe.svg',
     url: 'https://aicmode.github.io/noir-cafe/',
   },
   {
     id: 3,
     number: '03',
-    title: 'Lumi Tails',
-    genre: 'Pet Care / E-commerce',
-    tags: ['E-commerce', 'Pet', 'Web'],
-    description: 'Playful yet polished e-commerce experience for a premium pet care brand with a pastel-neon identity.',
-    dot: '#e879f9',
+    title: 'LUMI Grooming',
+    genre: 'Pet Care',
+    tags: ['Beauty', 'Pet', 'Service'],
+    description:
+      'A polished grooming brand interface balancing soft luminosity, approachable warmth, and premium service cues.',
+    accent: '#65f4ff',
+    thumbnail: '/works/lumi-grooming.svg',
     url: 'https://aicmode.github.io/Lumi-Tails/',
   },
   {
     id: 4,
     number: '04',
     title: 'AURA',
-    genre: 'Beauty / Wellness',
-    tags: ['Beauty', 'Wellness', 'Brand'],
-    description: 'Serene beauty and wellness brand with a clean, aspirational visual language and spa-inspired palette.',
-    dot: '#38bdf8',
+    genre: 'Beauty Wellness',
+    tags: ['Wellness', 'Beauty', 'Brand'],
+    description:
+      'A calm beauty and wellness website designed with ethereal gradients, spacious rhythm, and aspirational clarity.',
+    accent: '#a78bfa',
+    thumbnail: '/works/aura.svg',
     url: 'https://aicmode.github.io/AURA/',
   },
   {
     id: 5,
     number: '05',
     title: 'Tsuki Usagi Wagashi',
-    genre: 'Japanese Sweets / Culture',
-    tags: ['Japanese', 'Culture', 'EC'],
-    description: 'Traditional Japanese wagashi brand reimagined with contemporary digital elegance and artisanal craftsmanship.',
-    dot: '#c084fc',
+    genre: 'Japanese Sweets',
+    tags: ['Culture', 'Wagashi', 'EC'],
+    description:
+      'A contemporary wagashi storefront that reframes craft, seasonality, and Japanese elegance for a digital audience.',
+    accent: '#f7b7d8',
+    thumbnail: '/works/tsuki-usagi-wagashi.svg',
     url: 'https://aicmode.github.io/tsuki-usagi-wagashi/',
   },
 ] as const
 
-/* ── Arrow icon ── */
 function ArrowUpRight() {
   return (
-    <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className="h-3.5 w-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M17 7l-10 10M17 7H7m10 0v10" />
     </svg>
   )
 }
 
-/* ── Project card ── */
 function ProjectCard({ project, index }: { project: (typeof projects)[number]; index: number }) {
   return (
     <motion.article
-      initial={{ opacity: 0, y: 52, filter: 'blur(10px)' }}
+      initial={{ opacity: 0, y: 44, filter: 'blur(12px)' }}
       whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 1.0, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -6, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } }}
-      className="group relative flex flex-col"
+      viewport={{ once: true, amount: 0.18 }}
+      transition={{ duration: 0.9, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -8 }}
+      className="group relative overflow-hidden border border-white/[0.08] bg-[#0b0b0d]"
       style={{
-        background: '#0f0f0f',
-        border: '1px solid rgba(255,255,255,0.06)',
-        transition: 'border-color 0.4s ease, box-shadow 0.45s ease',
-      }}
-      onMouseEnter={e => {
-        const el = e.currentTarget as HTMLElement
-        el.style.borderColor = `${project.dot}35`
-        el.style.boxShadow = `0 0 60px ${project.dot}12, 0 24px 64px rgba(0,0,0,0.8)`
-      }}
-      onMouseLeave={e => {
-        const el = e.currentTarget as HTMLElement
-        el.style.borderColor = 'rgba(255,255,255,0.06)'
-        el.style.boxShadow = 'none'
+        boxShadow: '0 28px 90px rgba(0,0,0,0.45)',
       }}
     >
-      {/* Neon top accent */}
       <div
-        className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: `linear-gradient(to right, transparent, ${project.dot}80, transparent)` }}
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: `radial-gradient(circle at 50% 0%, ${project.accent}22, transparent 44%)`,
+        }}
       />
 
-      <div className="flex flex-col flex-1 p-7 md:p-9">
-        {/* Top row: number + dot */}
-        <div className="flex items-center justify-between mb-6">
-          <span
-            className="font-mono text-[10px] tracking-[0.4em]"
-            style={{ color: 'rgba(255,255,255,0.18)' }}
-          >
-            {project.number}
-          </span>
-          <div
-            className="w-1.5 h-1.5 rounded-full"
-            style={{
-              background: project.dot,
-              boxShadow: `0 0 8px ${project.dot}bb`,
-            }}
-          />
+      <div className="relative aspect-[16/10] overflow-hidden bg-black">
+        <Image
+          src={project.thumbnail}
+          alt={`${project.title} thumbnail`}
+          fill
+          sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
+          className="object-cover transition duration-700 group-hover:scale-[1.035]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b0d] via-transparent to-black/10" />
+        <div className="absolute left-4 top-4 flex items-center gap-2 md:left-5 md:top-5">
+          <span className="font-mono text-[10px] text-white/55">{project.number}</span>
+          <span className="h-px w-7" style={{ backgroundColor: `${project.accent}99` }} />
         </div>
+      </div>
 
-        {/* Genre */}
-        <p
-          className="text-[9px] tracking-[0.45em] uppercase mb-3"
-          style={{ color: 'rgba(255,255,255,0.28)' }}
-        >
-          {project.genre}
-        </p>
+      <div className="relative flex min-h-[300px] flex-col p-5 sm:p-6 md:p-7">
+        <p className="mb-3 text-[10px] uppercase tracking-[0.34em] text-white/35">{project.genre}</p>
 
-        {/* Title */}
-        <h3
-          className="font-bold text-white leading-tight mb-4"
-          style={{ fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)', letterSpacing: '-0.01em' }}
-        >
+        <h3 className="mb-4 text-2xl font-black leading-tight text-white sm:text-[1.7rem] md:text-[1.9rem]">
           {project.title}
         </h3>
 
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mb-5">
+        <div className="mb-5 flex flex-wrap gap-2">
           {project.tags.map(tag => (
             <span
               key={tag}
-              className="text-[8px] tracking-[0.22em] uppercase px-2.5 py-1"
+              className="border px-3 py-1.5 text-[9px] uppercase tracking-[0.24em]"
               style={{
-                border: `1px solid ${project.dot}28`,
-                color: `${project.dot}88`,
+                borderColor: `${project.accent}36`,
+                color: `${project.accent}cc`,
+                backgroundColor: `${project.accent}0f`,
               }}
             >
               {tag}
@@ -147,67 +133,28 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
           ))}
         </div>
 
-        {/* Description */}
-        <p
-          className="text-[11px] leading-relaxed flex-1"
-          style={{ color: 'rgba(255,255,255,0.3)', letterSpacing: '0.02em' }}
-        >
+        <p className="max-w-[34rem] flex-1 text-sm leading-7 text-white/48 md:text-[0.92rem]">
           {project.description}
         </p>
 
-        {/* Footer: accent line + LIVE SITE */}
-        <div
-          className="flex items-center justify-between mt-8 pt-6"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
-        >
-          <div
-            className="h-px flex-1 mr-4"
-            style={{
-              background: `linear-gradient(to right, ${project.dot}55, transparent)`,
-              maxWidth: '48px',
-            }}
+        <div className="mt-8 flex items-center justify-between gap-4 border-t border-white/[0.07] pt-5">
+          <span
+            className="h-px w-12 transition-all duration-500 group-hover:w-20"
+            style={{ background: `linear-gradient(90deg, ${project.accent}, transparent)` }}
           />
-
           <motion.a
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 select-none"
+            className="inline-flex min-h-11 items-center justify-center gap-2 border border-white/15 px-5 text-[10px] font-semibold uppercase tracking-[0.3em] text-white/70 transition duration-300 hover:border-white/35 hover:bg-white/[0.06] hover:text-white focus:outline-none focus-visible:border-white focus-visible:text-white"
+            whileHover={{ x: 2 }}
+            whileTap={{ scale: 0.98 }}
             style={{
-              padding: '10px 20px',
-              minHeight: '42px',
-              border: '1px solid rgba(255,255,255,0.12)',
-              color: 'rgba(255,255,255,0.45)',
-              fontSize: '9px',
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              transition: 'color 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.35s ease',
-            }}
-            whileHover={{
-              color: 'rgba(255,255,255,0.95)',
-            }}
-            onMouseEnter={e => {
-              const el = e.currentTarget as HTMLElement
-              el.style.borderColor = 'rgba(255,255,255,0.3)'
-              el.style.background = 'rgba(255,255,255,0.05)'
-              el.style.boxShadow = `0 0 20px rgba(255,255,255,0.06), 0 0 40px ${project.dot}12`
-            }}
-            onMouseLeave={e => {
-              const el = e.currentTarget as HTMLElement
-              el.style.borderColor = 'rgba(255,255,255,0.12)'
-              el.style.background = 'transparent'
-              el.style.boxShadow = 'none'
+              boxShadow: `0 0 0 transparent`,
             }}
           >
-            <span>Live Site</span>
-            <motion.span
-              style={{ display: 'flex' }}
-              whileHover={{ x: 2, y: -2 }}
-              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <ArrowUpRight />
-            </motion.span>
+            <span>VIEW SITE</span>
+            <ArrowUpRight />
           </motion.a>
         </div>
       </div>
@@ -215,59 +162,38 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
   )
 }
 
-/* ── Works section ── */
 export default function Works() {
   return (
-    <section id="works" className="py-28 md:py-44 px-4 md:px-12 bg-[#080808]">
-      <div className="max-w-6xl mx-auto">
+    <section id="works" className="relative overflow-hidden bg-[#070708] px-4 py-24 sm:px-6 md:px-12 md:py-40">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <div className="pointer-events-none absolute left-1/2 top-20 h-[360px] w-[min(760px,92vw)] -translate-x-1/2 bg-[radial-gradient(circle,rgba(255,255,255,0.055),transparent_65%)]" />
 
-        {/* Header */}
+      <div className="relative mx-auto max-w-7xl">
         <AnimateIn>
-          <div className="mb-16 md:mb-24">
-            <div className="flex items-center gap-4 mb-5">
-              <p className="text-[10px] tracking-[0.55em] text-zinc-600 uppercase">
-                Selected Works
-              </p>
-              <div style={{
-                flex: 1,
-                height: '1px',
-                background: 'linear-gradient(to right, rgba(255,255,255,0.06), transparent)',
-                maxWidth: '80px',
-              }} />
-              <span className="font-mono text-[10px] text-zinc-700">
-                {String(projects.length).padStart(2, '0')}
-              </span>
+          <div className="mb-12 md:mb-18">
+            <div className="mb-5 flex items-center gap-4">
+              <p className="text-[10px] uppercase tracking-[0.55em] text-zinc-600">Selected Works</p>
+              <div className="h-px w-16 bg-gradient-to-r from-white/10 to-transparent" />
+              <span className="font-mono text-[10px] text-zinc-700">{String(projects.length).padStart(2, '0')}</span>
             </div>
-            <h2
-              className="font-black text-white leading-none mb-5"
-              style={{ fontSize: 'clamp(3rem, 7vw, 6rem)', letterSpacing: '-0.02em' }}
-            >
-              Works
-            </h2>
-            <p className="text-[11px] tracking-[0.22em] uppercase" style={{ color: '#2a2a2a' }}>
-              Web Design · Branding · Creative Direction
+            <h2 className="mb-5 text-5xl font-black leading-none text-white sm:text-6xl md:text-8xl">Works</h2>
+            <p className="max-w-xl text-[11px] uppercase leading-6 tracking-[0.24em] text-white/25">
+              Web Design / Branding / Creative Direction
             </p>
           </div>
         </AnimateIn>
 
-        {/* Grid: 1 col mobile, 2 col PC */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-          {projects.map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i} />
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 xl:grid-cols-3">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </div>
 
-        {/* Footer label */}
         <AnimateIn delay={400}>
-          <div
-            className="mt-14 md:mt-20 pt-8 flex items-center gap-4"
-            style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}
-          >
-            <span className="text-[8px] tracking-[0.5em] text-zinc-800 uppercase font-mono">
-              AICMODE
-            </span>
-            <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to right, rgba(255,255,255,0.04), transparent)' }} />
-            <span className="text-[8px] tracking-[0.4em] text-zinc-800 uppercase font-mono">
+          <div className="mt-12 flex items-center gap-4 border-t border-white/[0.05] pt-8 md:mt-18">
+            <span className="font-mono text-[8px] uppercase tracking-[0.5em] text-zinc-800">AICMODE</span>
+            <div className="h-px flex-1 bg-gradient-to-r from-white/[0.05] to-transparent" />
+            <span className="font-mono text-[8px] uppercase tracking-[0.4em] text-zinc-800">
               {new Date().getFullYear()}
             </span>
           </div>

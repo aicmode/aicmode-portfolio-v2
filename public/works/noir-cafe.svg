@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">NOIR Cafe thumbnail</title>
+  <desc id="desc">Dark luxury cafe website visual with gold lighting and editorial composition.</desc>
+  <defs>
+    <radialGradient id="gold" cx="50%" cy="34%" r="55%">
+      <stop offset="0" stop-color="#c9a227" stop-opacity="0.38"/>
+      <stop offset="0.45" stop-color="#443316" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#050505" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cup" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b2b2b"/>
+      <stop offset="1" stop-color="#080808"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="750" fill="#070707"/>
+  <rect width="1200" height="750" fill="url(#gold)"/>
+  <rect x="78" y="72" width="1044" height="606" fill="none" stroke="#ffffff" stroke-opacity="0.09"/>
+  <path d="M735 255h190c0 104-41 168-95 168s-95-64-95-168z" fill="url(#cup)" stroke="#c9a227" stroke-opacity="0.5" stroke-width="2"/>
+  <path d="M925 288c70 0 70 96 0 96" fill="none" stroke="#c9a227" stroke-opacity="0.48" stroke-width="18"/>
+  <ellipse cx="830" cy="255" rx="95" ry="22" fill="#141414" stroke="#c9a227" stroke-opacity="0.7"/>
+  <ellipse cx="830" cy="253" rx="62" ry="11" fill="#c9a227" opacity="0.24"/>
+  <path d="M760 202c-25-43 28-56 0-98M830 198c-28-50 32-65 4-118M900 202c-24-41 26-56 0-98" fill="none" stroke="#c9a227" stroke-opacity="0.35" stroke-width="5" filter="url(#soft)"/>
+  <text x="98" y="182" fill="#ffffff" font-family="Georgia, 'Times New Roman', serif" font-size="82" font-weight="700">NOIR</text>
+  <text x="104" y="232" fill="#c9a227" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="9">CAFE BRANDING</text>
+  <text x="104" y="552" fill="#ffffff" fill-opacity="0.62" font-family="Arial, Helvetica, sans-serif" font-size="18" letter-spacing="4">DARK ROAST / MINIMAL LUXURY</text>
+  <path d="M100 590h350" stroke="#c9a227" stroke-width="2" opacity="0.65"/>
+</svg>
