@@ -14,7 +14,7 @@ const projects = [
     subtitle: 'FESTIVAL UI',
     category: 'FESTIVAL SYSTEM',
     text: 'Sound, velocity, and nightlife contrast.',
-    colorLabel: 'MAGENTA / BLUE',
+    colorLabel: 'Magenta / Blue',
     accent: '#d8d8d8',
     tint: '#ff2d6b',
     image: '/works/images/pulse.png',
@@ -28,7 +28,7 @@ const projects = [
     subtitle: 'CAFÉ BRANDING',
     category: 'HOSPITALITY IDENTITY',
     text: 'Evening hospitality with editorial restraint.',
-    colorLabel: 'GOLD / ESPRESSO',
+    colorLabel: 'Gold / Espresso',
     accent: '#c69b54',
     tint: '#2d1a12',
     image: '/works/images/noir-cafe.png',
@@ -42,7 +42,7 @@ const projects = [
     subtitle: 'GROOMING STUDIO',
     category: 'PREMIUM CARE',
     text: 'Precision grooming with a restrained metallic edge.',
-    colorLabel: 'STEEL CYAN / SILVER',
+    colorLabel: 'Steel Cyan / Silver',
     accent: '#87aeb8',
     tint: '#101c22',
     image: '/works/images/lumi-grooming.png',
@@ -56,7 +56,7 @@ const projects = [
     subtitle: 'BEAUTY WELLNESS',
     category: 'BEAUTY RITUAL',
     text: 'A beauty ritual treated like a fashion film.',
-    colorLabel: 'SMOKE VIOLET / PEARL',
+    colorLabel: 'Smoke Violet / Pearl',
     accent: '#b19bc8',
     tint: '#17111d',
     image: '/works/images/aura.png',
@@ -70,13 +70,27 @@ const projects = [
     subtitle: 'WAGASHI STORE',
     category: 'CULTURAL COMMERCE',
     text: 'Seasonal craft under a darker moon.',
-    colorLabel: 'MOON PINK / PLUM',
+    colorLabel: 'Moon Pink / Plum',
     accent: '#d99ab8',
     tint: '#24101d',
     image: '/works/images/tsuki-usagi-wagashi.png',
     width: 1055,
     height: 1491,
     url: 'https://aicmode.github.io/tsuki-usagi-wagashi/',
+  },
+  {
+    number: '06',
+    title: 'LUXE MEMBERS',
+    subtitle: 'REACT APP',
+    category: 'Luxury Members Experience / React App',
+    text: 'Members-only fashion with private collections and reservations.',
+    colorLabel: 'React / Vite / CSS / Vercel',
+    accent: '#d7b878',
+    tint: '#20130f',
+    image: '/works/images/luxe-members.png',
+    width: 1055,
+    height: 1491,
+    url: 'https://luxe-members.vercel.app',
   },
 ] as const
 
@@ -151,6 +165,10 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
             </div>
             <h3 className="mt-2 truncate text-xl font-semibold tracking-[-0.01em] text-white sm:text-2xl">{project.title}</h3>
             <p className="mt-2 max-w-[30rem] text-sm leading-6 text-white/48">{project.text}</p>
+            <p className="mt-3 space-y-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.26em] text-white/28">
+              <span className="block">{project.category}</span>
+              <span className="block text-[color:var(--work-accent)] opacity-70">{project.colorLabel}</span>
+            </p>
           </div>
 
           <motion.span
@@ -185,7 +203,7 @@ export default function Works() {
             </h2>
           </div>
           <p className="hidden max-w-sm text-right text-sm leading-8 text-white/42 md:block">
-            Five visual systems framed as dark editorial campaign posters.
+            Six visual systems framed as dark editorial campaign posters.
           </p>
         </div>
 
