@@ -7,7 +7,7 @@ const influences = [
 ]
 
 const stats = [
-  { num: '5+', label: 'Projects' },
+  { num: '6+', label: 'Projects' },
   { num: 'AI', label: 'Powered' },
   { num: '2026', label: 'Active' },
 ]
