@@ -9,6 +9,21 @@ const ease = [0.13, 0.86, 0.18, 1] as const
 
 const projects = [
   {
+    number: '07',
+    title: 'SAINT AVE',
+    subtitle: 'CINEMATIC EDITORIAL',
+    category: 'Luxury Fashion Brand / Cinematic Editorial',
+    text: '海外ラグジュアリーブランドをイメージした、シネマティックなファッションブランドサイト。高級感・静けさ・都会的な空気感を重視し、GSAPアニメーションやLookbook演出を実装。',
+    colorLabel: 'GSAP / Lookbook / Luxury UI',
+    accent: '#d6c08a',
+    tint: '#17110b',
+    image: '/works/images/saint-ave.png',
+    width: 1122,
+    height: 1402,
+    url: 'https://aicmode.github.io/saint-ave/',
+    featured: true,
+  },
+  {
     number: '01',
     title: 'PULSE',
     subtitle: 'FESTIVAL UI',
@@ -114,9 +129,13 @@ function ArrowIcon() {
 }
 
 function WorkPoster({ project, index }: { project: (typeof projects)[number]; index: number }) {
+  const isFeatured = 'featured' in project && project.featured
+
   return (
     <motion.article
-      className="work-card editorial-work-card group relative overflow-hidden bg-[#030303]"
+      className={`work-card editorial-work-card group relative overflow-hidden bg-[#030303] ${
+        isFeatured ? 'featured-work-card md:col-span-2 xl:col-span-2' : ''
+      }`}
       style={{
         '--work-accent': project.accent,
         '--work-tint': project.tint,
@@ -172,7 +191,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
           </div>
 
           <motion.span
-            className="editorial-work-button inline-flex h-11 w-11 shrink-0 items-center justify-center border border-white/18 text-white/72"
+            className="editorial-work-button inline-flex h-11 shrink-0 items-center justify-center gap-2 border border-white/18 px-3 text-white/72"
             variants={{
               rest: { borderColor: 'rgba(255,255,255,0.18)' },
               hover: { borderColor: project.accent, color: project.accent },
@@ -180,6 +199,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
             transition={{ duration: 0.9, ease }}
             aria-hidden="true"
           >
+            <span className="text-[8px] font-semibold uppercase tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">Open Site</span>
             <ArrowIcon />
           </motion.span>
         </div>
@@ -203,7 +223,7 @@ export default function Works() {
             </h2>
           </div>
           <p className="hidden max-w-sm text-right text-sm leading-8 text-white/42 md:block">
-            Six visual systems framed as dark editorial campaign posters.
+            Seven visual systems framed as dark editorial campaign posters.
           </p>
         </div>
 
