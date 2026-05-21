@@ -9,6 +9,21 @@ const ease = [0.13, 0.86, 0.18, 1] as const
 
 const projects = [
   {
+    number: '09',
+    title: 'KISSA MATCHA',
+    subtitle: 'LUXURY MATCHA BRAND',
+    category: 'Luxury Matcha Brand',
+    text: '京都・宇治の伝統と現代の美意識を融合した高級抹茶ブランドLP。和モダンなデザインと上質な写真表現により、抹茶文化の魅力とブランドストーリーを伝えるサイト。',
+    colorLabel: 'HTML / CSS / JavaScript / Responsive Design',
+    accent: '#d7c894',
+    tint: '#15240d',
+    image: '/works/images/kissa-matcha.svg',
+    width: 1055,
+    height: 1491,
+    url: 'https://aicmode.github.io/MATCHA/',
+    featured: true,
+  },
+  {
     number: '08',
     title: 'DEERIFY',
     subtitle: 'WILDLIFE PHOTOGRAPHY',
@@ -21,7 +36,6 @@ const projects = [
     width: 726,
     height: 1024,
     url: 'https://aicmode.github.io/Deerify/',
-    featured: true,
   },
   {
     number: '04',
@@ -237,7 +251,7 @@ export default function Works() {
             </h2>
           </div>
           <p className="hidden max-w-sm text-right text-sm leading-8 text-white/42 md:block">
-            Eight visual systems framed as dark editorial campaign posters.
+            Nine visual systems framed as dark editorial campaign posters.
           </p>
         </div>
 
