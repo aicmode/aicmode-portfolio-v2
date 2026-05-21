@@ -9,7 +9,20 @@ const ease = [0.13, 0.86, 0.18, 1] as const
 
 const projects = [
   {
-    number: '09',
+    title: 'SWEET MEMORIES',
+    subtitle: 'VINTAGE BAKERY',
+    category: 'Vintage Bakery / Nostalgic Dessert Brand',
+    text: '懐かしい記憶と焼き菓子をテーマにした架空のスイーツブランドサイト。海外のヴィンテージベーカリーやポラロイド写真から着想を得て、ノスタルジックで温かみのある世界観を表現。',
+    colorLabel: 'HTML / CSS / JavaScript / Vintage Design',
+    accent: '#d4a574',
+    tint: '#1a0d08',
+    image: '/works/images/sweet-memories.png',
+    width: 1055,
+    height: 1491,
+    url: 'https://aicmode.github.io/Sweet-Memories/',
+    featured: true,
+  },
+  {
     title: 'KISSA MATCHA',
     subtitle: 'LUXURY MATCHA BRAND',
     category: 'Luxury Matcha Brand',
@@ -21,10 +34,8 @@ const projects = [
     width: 1055,
     height: 1491,
     url: 'https://aicmode.github.io/MATCHA/',
-    featured: true,
   },
   {
-    number: '08',
     title: 'DEERIFY',
     subtitle: 'WILDLIFE PHOTOGRAPHY',
     category: 'Wildlife Photography / Luxury Outdoor Experience',
@@ -38,7 +49,6 @@ const projects = [
     url: 'https://aicmode.github.io/Deerify/',
   },
   {
-    number: '04',
     title: 'AURA',
     subtitle: 'BEAUTY WELLNESS',
     category: 'BEAUTY RITUAL',
@@ -52,7 +62,6 @@ const projects = [
     url: 'https://aicmode.github.io/AURA/',
   },
   {
-    number: '03',
     title: 'LUMI Grooming',
     subtitle: 'GROOMING STUDIO',
     category: 'PREMIUM CARE',
@@ -66,7 +75,6 @@ const projects = [
     url: 'https://aicmode.github.io/Lumi-Tails/',
   },
   {
-    number: '06',
     title: 'LUXE MEMBERS',
     subtitle: 'REACT APP',
     category: 'Luxury Members Experience / React App',
@@ -80,7 +88,6 @@ const projects = [
     url: 'https://luxe-members.vercel.app',
   },
   {
-    number: '07',
     title: 'SAINT AVE',
     subtitle: 'CINEMATIC EDITORIAL',
     category: 'Luxury Fashion Brand / Cinematic Editorial',
@@ -94,7 +101,6 @@ const projects = [
     url: 'https://aicmode.github.io/saint-ave/',
   },
   {
-    number: '02',
     title: 'NOIR CAFÉ',
     subtitle: 'CAFÉ BRANDING',
     category: 'HOSPITALITY IDENTITY',
@@ -108,7 +114,6 @@ const projects = [
     url: 'https://aicmode.github.io/noir-cafe/',
   },
   {
-    number: '05',
     title: 'Tsuki Usagi Wagashi',
     subtitle: 'WAGASHI STORE',
     category: 'CULTURAL COMMERCE',
@@ -122,7 +127,6 @@ const projects = [
     url: 'https://aicmode.github.io/tsuki-usagi-wagashi/',
   },
   {
-    number: '01',
     title: 'PULSE',
     subtitle: 'FESTIVAL UI',
     category: 'FESTIVAL SYSTEM',
@@ -204,8 +208,6 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
         <div className="editorial-work-meta flex items-start justify-between gap-5 px-1 pt-5 sm:pt-6">
           <div className="min-w-0">
             <div className="flex items-center gap-3">
-              <span className="font-mono text-[11px] text-white/44">{project.number}</span>
-              <span className="h-px w-10 bg-white/16" />
               <p className="truncate text-[10px] font-semibold uppercase tracking-[0.34em] text-[color:var(--work-accent)]">
                 {project.subtitle}
               </p>
@@ -251,13 +253,13 @@ export default function Works() {
             </h2>
           </div>
           <p className="hidden max-w-sm text-right text-sm leading-8 text-white/42 md:block">
-            Nine visual systems framed as dark editorial campaign posters.
+            Ten visual systems framed as dark editorial campaign posters.
           </p>
         </div>
 
         <div className="editorial-poster-grid mx-auto grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 lg:gap-x-10 lg:gap-y-20 xl:grid-cols-3">
           {projects.map((project, index) => (
-            <WorkPoster key={project.number} project={project} index={index} />
+            <WorkPoster key={project.title} project={project} index={index} />
           ))}
         </div>
 
