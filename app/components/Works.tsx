@@ -247,13 +247,19 @@ export default function Works() {
       <div className="relative mx-auto max-w-[1420px]">
         <div className="mb-14 flex items-end justify-between gap-8 border-b border-white/[0.08] pb-8 md:mb-20">
           <div>
-            <p className="mb-5 text-[10px] uppercase tracking-[0.48em] text-white/38">Selected Works</p>
+            <p className="mb-5 text-[10px] uppercase tracking-[0.48em] text-white/38">Web Design Works</p>
             <h2 className="text-[clamp(4.5rem,16vw,12rem)] font-black uppercase leading-[0.8] text-white">
               Works
             </h2>
+            <p
+              className="mt-4 text-[10px] md:text-[11px] uppercase tracking-[0.44em]"
+              style={{ color: 'rgba(212,175,55,0.65)' }}
+            >
+              10+ Projects Completed
+            </p>
           </div>
           <p className="hidden max-w-sm text-right text-sm leading-8 text-white/42 md:block">
-            Ten visual systems framed as dark editorial campaign posters.
+            Dark editorial campaign posters — each a distinct visual world.
           </p>
         </div>
 

@@ -11,12 +11,12 @@ export default function Hero() {
     offset: ['start start', 'end start'],
   })
 
-  const contentY     = useTransform(scrollYProgress, [0, 1], ['0%',  '18%'])
+  const contentY       = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
   const contentOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0])
-  const contentBlurPx = useTransform(scrollYProgress, [0, 0.45], [0, 6])
-  const contentBlur   = useMotionTemplate`blur(${contentBlurPx}px)`
-  const bgScale      = useTransform(scrollYProgress, [0, 1], [1, 1.06])
-  const scrollOpacity = useTransform(scrollYProgress, [0, 0.18], [0.45, 0])
+  const contentBlurPx  = useTransform(scrollYProgress, [0, 0.45], [0, 6])
+  const contentBlur    = useMotionTemplate`blur(${contentBlurPx}px)`
+  const bgScale        = useTransform(scrollYProgress, [0, 1], [1, 1.06])
+  const scrollOpacity  = useTransform(scrollYProgress, [0, 0.18], [0.45, 0])
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -42,7 +42,7 @@ export default function Hero() {
         style={{ zIndex: 2, transition: 'background 0.1s ease' }}
       />
 
-      {/* Ambient orbs — scale on scroll */}
+      {/* Ambient orbs */}
       <motion.div style={{ scale: bgScale }} className="absolute inset-0 pointer-events-none">
         <div
           className="absolute animate-orb-1"
@@ -99,83 +99,159 @@ export default function Hero() {
 
       {/* Content — parallax + blur on scroll */}
       <motion.div
-        className="relative z-10 text-center px-5 md:px-6 select-none w-full max-w-full"
+        className="relative z-10 w-full max-w-7xl mx-auto px-5 md:px-8 lg:px-12"
         style={{ y: contentY, opacity: contentOpacity, filter: contentBlur }}
       >
-        {/* Label */}
-        <motion.div
-          initial={{ opacity: 0, y: 10, filter: 'blur(6px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <p className="text-[9px] md:text-[10px] tracking-[0.85em] text-zinc-600 mb-6 md:mb-8 uppercase">
-            Portfolio · 2026
-          </p>
-        </motion.div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center select-none">
 
-        {/* Main title */}
-        <motion.div
-          initial={{ opacity: 0, y: 52, filter: 'blur(12px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 1.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <h1
-            className="font-black leading-none tracking-tight"
-            style={{
-              fontSize: 'clamp(2.8rem, 14vw, 18rem)',
-              letterSpacing: '-0.03em',
-              background: 'linear-gradient(160deg, #ffffff 0%, rgba(255,255,255,0.82) 45%, rgba(200,200,220,0.6) 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
-          >
-            AICMODE
-          </h1>
-        </motion.div>
-
-        {/* Subtitle */}
-        <motion.div
-          initial={{ opacity: 0, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, filter: 'blur(0px)' }}
-          transition={{ duration: 1, delay: 0.72, ease: 'easeOut' }}
-        >
-          <p className="mt-5 md:mt-7 text-[9px] md:text-[11px] tracking-[0.42em] text-zinc-500 uppercase">
-            Web Design × AI × Overseas Culture
-          </p>
-        </motion.div>
-
-        {/* CTA */}
-        <motion.div
-          className="mt-10 md:mt-14 flex items-center justify-center gap-4"
-          initial={{ opacity: 0, y: 22, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 1, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <motion.a
-            href="#works"
-            className="group inline-flex items-center gap-3 px-8 md:px-10 py-3.5 md:py-4 text-[10px] md:text-[11px] tracking-[0.32em] text-white uppercase"
-            style={{
-              border: '1px solid rgba(255,255,255,0.18)',
-              background: 'transparent',
-            }}
-            whileHover={{
-              background: '#ffffff',
-              borderColor: '#ffffff',
-              color: '#080808',
-              boxShadow: '0 0 60px rgba(255,255,255,0.14), 0 0 100px rgba(109,40,217,0.1)',
-              transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
-            }}
-          >
-            View Works
-            <svg
-              className="w-3 h-3 md:w-3.5 md:h-3.5 group-hover:translate-y-0.5 transition-transform duration-300"
-              fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          {/* Left: branding */}
+          <div className="text-center lg:text-left">
+            <motion.p
+              className="text-[9px] md:text-[10px] tracking-[0.85em] text-zinc-600 mb-6 md:mb-8 uppercase"
+              initial={{ opacity: 0, y: 10, filter: 'blur(6px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
-            </svg>
-          </motion.a>
-        </motion.div>
+              Portfolio · 2026
+            </motion.p>
+
+            <motion.h1
+              className="font-black leading-none tracking-tight"
+              style={{
+                fontSize: 'clamp(2.8rem, 7vw, 6.5rem)',
+                letterSpacing: '-0.03em',
+                background: 'linear-gradient(160deg, #ffffff 0%, rgba(255,255,255,0.82) 45%, rgba(200,200,220,0.6) 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+              initial={{ opacity: 0, y: 52, filter: 'blur(12px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ duration: 1.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            >
+              AICMODE
+            </motion.h1>
+
+            <motion.p
+              className="mt-5 md:mt-7 text-[9px] md:text-[11px] tracking-[0.42em] text-zinc-500 uppercase"
+              initial={{ opacity: 0, filter: 'blur(4px)' }}
+              animate={{ opacity: 1, filter: 'blur(0px)' }}
+              transition={{ duration: 1, delay: 0.72, ease: 'easeOut' }}
+            >
+              Web Design × AI × Overseas Culture
+            </motion.p>
+
+            <motion.div
+              className="mt-10 md:mt-14 flex items-center justify-center lg:justify-start gap-4"
+              initial={{ opacity: 0, y: 22, filter: 'blur(4px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ duration: 1, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <motion.a
+                href="#works"
+                className="group inline-flex items-center gap-3 px-8 md:px-10 py-3.5 md:py-4 text-[10px] md:text-[11px] tracking-[0.32em] text-white uppercase"
+                style={{
+                  border: '1px solid rgba(255,255,255,0.18)',
+                  background: 'transparent',
+                }}
+                whileHover={{
+                  background: '#ffffff',
+                  borderColor: '#ffffff',
+                  color: '#080808',
+                  boxShadow: '0 0 60px rgba(255,255,255,0.14), 0 0 100px rgba(109,40,217,0.1)',
+                  transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+                }}
+              >
+                View Works
+                <svg
+                  className="w-3 h-3 md:w-3.5 md:h-3.5 group-hover:translate-y-0.5 transition-transform duration-300"
+                  fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+                </svg>
+              </motion.a>
+            </motion.div>
+          </div>
+
+          {/* Right: Achievement card */}
+          <motion.div
+            className="flex justify-center lg:justify-end"
+            initial={{ opacity: 0, x: 40, filter: 'blur(14px)' }}
+            animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 1.5, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div
+              className="relative flex flex-col items-center justify-center py-12 sm:py-16 px-14 sm:px-20 rounded-2xl"
+              style={{
+                border: '1px solid rgba(212,175,55,0.18)',
+                background:
+                  'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,175,55,0.07) 0%, transparent 70%), rgba(255,255,255,0.018)',
+                backdropFilter: 'blur(12px)',
+                boxShadow:
+                  '0 0 90px rgba(212,175,55,0.07), 0 50px 130px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06)',
+                minWidth: '240px',
+              }}
+            >
+              {/* Number */}
+              <div
+                className="font-black leading-none text-white"
+                style={{
+                  fontSize: 'clamp(5.5rem, 13vw, 10rem)',
+                  letterSpacing: '-0.045em',
+                  textShadow:
+                    '0 0 50px rgba(212,175,55,0.22), 0 0 100px rgba(212,175,55,0.10)',
+                }}
+              >
+                10+
+              </div>
+
+              {/* Label */}
+              <div
+                className="font-bold text-white text-center"
+                style={{
+                  fontSize: 'clamp(1.6rem, 4vw, 2.8rem)',
+                  letterSpacing: '-0.02em',
+                  marginTop: '-0.05em',
+                }}
+              >
+                Works
+              </div>
+
+              {/* Divider */}
+              <div
+                className="my-4 sm:my-5"
+                style={{
+                  width: '40px',
+                  height: '1px',
+                  background: 'rgba(212,175,55,0.35)',
+                }}
+              />
+
+              {/* Subtitle */}
+              <p
+                className="text-[10px] tracking-[0.38em] uppercase text-center"
+                style={{ color: 'rgba(212,175,55,0.75)' }}
+              >
+                Web Design Projects
+              </p>
+
+              {/* Footer */}
+              <div className="mt-5 flex items-center gap-2">
+                <div
+                  className="w-1.5 h-1.5 rounded-full animate-pulse-glow"
+                  style={{ background: 'rgba(212,175,55,0.55)' }}
+                />
+                <p
+                  className="text-[9px] tracking-[0.3em] uppercase"
+                  style={{ color: 'rgba(255,255,255,0.25)' }}
+                >
+                  Projects Completed
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+        </div>
       </motion.div>
 
       {/* Scroll indicator */}
