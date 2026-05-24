@@ -9,6 +9,20 @@ const ease = [0.13, 0.86, 0.18, 1] as const
 
 const projects = [
   {
+    title: 'LUNA Restaurant',
+    subtitle: 'RESTAURANT / FINE DINING',
+    category: 'Restaurant / Fine Dining',
+    text: '高級ファインダイニングレストランを想定した架空のレストランサイト。上質な料理写真と洗練された空間演出を軸に、メニュー紹介、シェフ紹介、ギャラリー、予約導線まで丁寧に設計し、特別な食体験を求めるブランドの世界観を上品に表現。',
+    colorLabel: 'Champagne Gold / Noir / Fine Dining UI',
+    accent: '#d7b66f',
+    tint: '#1b0f13',
+    image: '/works/images/luna-restaurant.png',
+    width: 1054,
+    height: 1492,
+    url: 'https://aicmode.github.io/LUNA-Restaurant/',
+    featured: true,
+  },
+  {
     title: 'URBN Hair Studio',
     subtitle: 'BEAUTY / HAIR SALON',
     category: 'Beauty / Hair Salon',
@@ -20,7 +34,6 @@ const projects = [
     width: 1055,
     height: 1491,
     url: 'https://aicmode.github.io/URBN-Hair-Studio/',
-    featured: true,
   },
   {
     title: 'Evergreen Medical Center',
