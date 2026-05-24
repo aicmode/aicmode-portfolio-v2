@@ -9,6 +9,20 @@ const ease = [0.13, 0.86, 0.18, 1] as const
 
 const projects = [
   {
+    title: 'URBN Hair Studio',
+    subtitle: 'BEAUTY / HAIR SALON',
+    category: 'Beauty / Hair Salon',
+    text: '都会的で洗練された高級ヘアサロンをコンセプトにした架空の美容室サイト。ブラック・ホワイト・ベージュを基調に、海外サロンのような上質な空気感を表現。サービス紹介、スタイリスト紹介、スタイルギャラリー、予約導線などを実装し、実案件レベルを意識したブランドサイトとして制作。',
+    colorLabel: 'Black / White / Beige',
+    accent: '#d8c4a0',
+    tint: '#16120d',
+    image: '/works/images/urbn-hair-studio.png',
+    width: 1055,
+    height: 1491,
+    url: 'https://aicmode.github.io/URBN-Hair-Studio/',
+    featured: true,
+  },
+  {
     title: 'Evergreen Medical Center',
     subtitle: 'HEALTHCARE / MEDICAL',
     category: 'Healthcare / Medical',
@@ -33,7 +47,6 @@ const projects = [
     width: 1055,
     height: 1491,
     url: 'https://aicmode.github.io/Sweet-Memories/',
-    featured: true,
   },
   {
     title: 'KISSA MATCHA',
