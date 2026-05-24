@@ -9,6 +9,19 @@ const ease = [0.13, 0.86, 0.18, 1] as const
 
 const projects = [
   {
+    title: 'Evergreen Medical Center',
+    subtitle: 'HEALTHCARE / MEDICAL',
+    category: 'Healthcare / Medical',
+    text: 'アメリカの先進的な医療機関をイメージして制作したクリニックサイト。清潔感と信頼感を重視し、診療案内・医師紹介・予約導線を分かりやすく設計。海外の医療サイトらしい余白設計と洗練されたUIで、安心して利用できる医療体験を表現しています。',
+    colorLabel: 'HTML / CSS / JavaScript / Medical UI',
+    accent: '#7ac4dc',
+    tint: '#0d1e2e',
+    image: '/works/images/evergreen-medical.png',
+    width: 1055,
+    height: 1491,
+    url: 'https://aicmode.github.io/Evergreen-Medical-Center/',
+  },
+  {
     title: 'SWEET MEMORIES',
     subtitle: 'VINTAGE BAKERY',
     category: 'Vintage Bakery / Nostalgic Dessert Brand',
