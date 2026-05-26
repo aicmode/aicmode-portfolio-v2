@@ -321,7 +321,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
           </div>
 
           <motion.span
-            className={`editorial-work-button inline-flex h-11 shrink-0 items-center justify-center gap-2 border border-white/18 px-3 text-white/72${isKissaPremium ? ' kissa-premium-button' : ''}`}
+            className="editorial-work-button inline-flex h-11 shrink-0 items-center justify-center gap-2 border border-white/18 px-3 text-white/72"
             variants={{
               rest: { borderColor: 'rgba(255,255,255,0.18)' },
               hover: { borderColor: project.accent, color: project.accent },
