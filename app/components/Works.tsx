@@ -19,7 +19,7 @@ const projects = [
     image: '/works/images/sunset-bagel.jpg',
     width: 2200,
     height: 1464,
-    url: 'https://aicmode.github.io/SUNSET-BAGEL/',
+    url: 'https://aesthetic-rolypoly-3a91ae.netlify.app/',
     buttonLabel: 'View Project',
     isNew: true,
     isSpecial: true,
