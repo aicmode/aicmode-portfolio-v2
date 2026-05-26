@@ -20,6 +20,8 @@ const projects = [
     width: 1055,
     height: 1491,
     url: 'https://aicmode.github.io/BROOKLYN-BREAD-CO./',
+    isNew: true,
+    isSpecial: true,
   },
   {
     title: 'LUNA Restaurant',
@@ -214,12 +216,14 @@ function ArrowIcon() {
 
 function WorkPoster({ project, index }: { project: (typeof projects)[number]; index: number }) {
   const isFeatured = 'featured' in project && project.featured
+  const isSpecial = 'isSpecial' in project && project.isSpecial
+  const isNew = 'isNew' in project && project.isNew
 
   return (
     <motion.article
-      className={`work-card editorial-work-card group relative overflow-hidden bg-[#030303] ${
-        isFeatured ? 'featured-work-card md:col-span-2 xl:col-span-2' : ''
-      }`}
+      className={`work-card editorial-work-card group relative overflow-hidden bg-[#030303]${
+        isFeatured ? ' featured-work-card md:col-span-2 xl:col-span-2' : ''
+      }${isSpecial ? ' bakery-special-card' : ''}`}
       style={{
         '--work-accent': project.accent,
         '--work-tint': project.tint,
@@ -238,6 +242,8 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
         className="block"
         aria-label={`Open ${project.title}`}
       >
+        {isNew && <span className="bakery-new-badge">NEW</span>}
+
         <motion.div
           className="editorial-poster-shell relative overflow-hidden"
           variants={{
@@ -246,15 +252,28 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
           }}
           transition={{ duration: 1.15, ease }}
         >
-          <Image
-            src={project.image}
-            alt={`${project.title} editorial poster`}
-            width={project.width}
-            height={project.height}
-            sizes="(min-width: 1280px) 520px, (min-width: 768px) 45vw, 92vw"
-            className="editorial-poster-image h-auto w-full"
-            priority={index < 2}
-          />
+          {isSpecial ? (
+            <div className="bakery-image-frame">
+              <Image
+                src={project.image}
+                alt={`${project.title} editorial poster`}
+                fill
+                sizes="(min-width: 1280px) 520px, (min-width: 768px) 45vw, 92vw"
+                className="bakery-poster-image"
+                priority={index < 2}
+              />
+            </div>
+          ) : (
+            <Image
+              src={project.image}
+              alt={`${project.title} editorial poster`}
+              width={project.width}
+              height={project.height}
+              sizes="(min-width: 1280px) 520px, (min-width: 768px) 45vw, 92vw"
+              className="editorial-poster-image h-auto w-full"
+              priority={index < 2}
+            />
+          )}
         </motion.div>
 
         <div className="editorial-work-meta flex items-start justify-between gap-5 px-1 pt-5 sm:pt-6">
@@ -264,7 +283,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
                 {project.subtitle}
               </p>
             </div>
-            <h3 className="mt-2 truncate text-xl font-semibold tracking-[-0.01em] text-white sm:text-2xl">{project.title}</h3>
+            <h3 className={`mt-2 truncate font-semibold tracking-[-0.02em] text-white${isSpecial ? ' bakery-card-title' : ' text-xl sm:text-2xl tracking-[-0.01em]'}`}>{project.title}</h3>
             <p className="mt-2 max-w-[30rem] text-sm leading-6 text-white/48">{project.text}</p>
             <p className="mt-3 space-y-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.26em] text-white/28">
               <span className="block">{project.category}</span>
