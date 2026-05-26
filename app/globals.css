@@ -349,6 +349,122 @@ a { -webkit-tap-highlight-color: transparent; }
   transform: translateX(130%);
 }
 
+/* ─────────────────────────────────────
+   KISSA MATCHA — premium matcha card
+───────────────────────────────────── */
+.kissa-premium-card {
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(212, 188, 130, 0.16), transparent 34%),
+    linear-gradient(145deg, rgba(6, 24, 14, 0.98) 0%, rgba(3, 8, 5, 0.98) 48%, rgba(0, 0, 0, 1) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(212, 188, 130, 0.18),
+    0 26px 74px rgba(0, 0, 0, 0.52);
+}
+
+.kissa-premium-card:hover {
+  box-shadow:
+    inset 0 0 0 1px rgba(212, 188, 130, 0.34),
+    0 34px 92px rgba(0, 0, 0, 0.58),
+    0 18px 44px rgba(67, 94, 45, 0.12);
+}
+
+.kissa-premium-card > a {
+  padding: 12px;
+}
+
+.kissa-premium-card .editorial-poster-shell {
+  border-color: rgba(222, 193, 115, 0.54);
+  border-radius: 17px;
+  background: #07130c;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 246, 194, 0.1),
+    0 18px 48px rgba(0, 0, 0, 0.52);
+}
+
+.kissa-premium-card .editorial-poster-shell::before {
+  background:
+    linear-gradient(180deg, rgba(255, 241, 180, 0.08), transparent 22%, rgba(0, 0, 0, 0.28) 100%),
+    linear-gradient(90deg, rgba(212, 188, 130, 0.1), transparent 18%, transparent 82%, rgba(212, 188, 130, 0.08));
+  opacity: 0.9;
+}
+
+.kissa-premium-card .editorial-poster-shell::after {
+  background: linear-gradient(112deg, transparent 0%, rgba(230, 202, 126, 0.2) 46%, transparent 58%);
+}
+
+.kissa-premium-card:hover .editorial-poster-shell {
+  box-shadow:
+    inset 0 0 0 1px rgba(242, 220, 144, 0.2),
+    0 26px 64px rgba(0, 0, 0, 0.62);
+}
+
+.kissa-premium-card .editorial-poster-image {
+  border-radius: 16px;
+  filter: saturate(1.02) contrast(1.06) brightness(0.95);
+  transform: scale(1.001);
+}
+
+.kissa-premium-card:hover .editorial-poster-image {
+  filter: saturate(1.08) contrast(1.08) brightness(1.01);
+  transform: scale(1.035);
+}
+
+.kissa-premium-card .editorial-work-meta {
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 1.25rem 0.25rem 0.35rem;
+}
+
+.kissa-premium-subtitle {
+  color: rgba(226, 204, 142, 0.82);
+  font-family: Georgia, 'Times New Roman', serif;
+  letter-spacing: 0.14em;
+  line-height: 1.6;
+  overflow: visible;
+  text-transform: none;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.kissa-premium-title {
+  color: #f3e6b8;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.55rem, 3.1vw, 2rem);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-shadow: 0 1px 18px rgba(212, 188, 130, 0.16);
+}
+
+.kissa-premium-card .editorial-work-meta > div > p:nth-of-type(2) {
+  color: rgba(255, 255, 255, 0.56);
+}
+
+.kissa-premium-tags span:first-child {
+  color: rgba(255, 255, 255, 0.34);
+}
+
+.kissa-premium-tags span:last-child {
+  color: rgba(226, 204, 142, 0.78);
+  letter-spacing: 0.2em;
+  opacity: 1;
+}
+
+.kissa-premium-button {
+  align-self: flex-start;
+  border-color: rgba(226, 204, 142, 0.52);
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(226, 204, 142, 0.18), rgba(85, 72, 29, 0.18));
+  color: rgba(246, 229, 173, 0.86);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 10px 24px rgba(0, 0, 0, 0.26);
+}
+
+.kissa-premium-button::before {
+  background: linear-gradient(110deg, transparent 0%, rgba(255, 234, 166, 0.22) 45%, transparent 60%);
+}
+
 @media (max-width: 640px) {
   .editorial-work-card {
     border-radius: 4px;
@@ -367,6 +483,61 @@ a { -webkit-tap-highlight-color: transparent; }
     letter-spacing: 0.24em;
     padding: 8px 9px;
   }
+
+  .kissa-premium-card {
+    border-radius: 18px;
+  }
+
+  .kissa-premium-card > a {
+    padding: 10px;
+  }
+
+  .kissa-premium-card .editorial-poster-shell,
+  .kissa-premium-card .editorial-poster-image {
+    border-radius: 14px;
+  }
+
+  .kissa-premium-card .editorial-work-meta {
+    gap: 0.9rem;
+  }
+
+  .kissa-premium-button {
+    height: 2.75rem;
+    width: 100%;
+  }
+
+  .kissa-premium-title {
+    font-size: 1.42rem;
+    letter-spacing: 0.09em;
+  }
+
+  .kissa-premium-subtitle {
+    max-width: 100%;
+    letter-spacing: 0.1em;
+  }
+}
+
+/* ─────────────────────────────────────
+   KISSA MATCHA — photo image frame
+───────────────────────────────────── */
+.kissa-image-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1055 / 1491;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.kissa-poster-image {
+  object-fit: cover;
+  object-position: center 35%;
+  transition:
+    transform 1400ms cubic-bezier(0.13, 0.86, 0.18, 1),
+    filter 1400ms cubic-bezier(0.13, 0.86, 0.18, 1);
+}
+
+.kissa-premium-card:hover .kissa-poster-image {
+  transform: scale(1.04);
 }
 
 /* ─────────────────────────────────────

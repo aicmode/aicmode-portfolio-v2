@@ -93,16 +93,17 @@ const projects = [
   },
   {
     title: 'KISSA MATCHA',
-    subtitle: 'LUXURY MATCHA BRAND',
+    subtitle: 'Kyoto Uji Luxury Matcha Brand Site',
     category: 'Luxury Matcha Brand',
     text: '京都・宇治の伝統と現代の美意識を融合した、高級抹茶ブランドLP。和モダンな配色と静かなアニメーションで、上質なブランド体験を表現。',
-    colorLabel: 'HTML / CSS / JavaScript / Responsive Design',
+    colorLabel: 'HTML / CSS / JavaScript / Responsive',
     accent: '#d4bc82',
     tint: '#181008',
-    image: '/works/images/kissa-matcha.svg',
-    width: 1055,
-    height: 1491,
+    image: '/works/images/kissa-matcha.png',
+    width: 1536,
+    height: 1024,
     url: 'https://aicmode.github.io/MATCHA/',
+    isKissaPremium: true,
   },
   {
     title: 'DEERIFY',
@@ -233,13 +234,14 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
   const isFeatured = 'featured' in project && project.featured
   const isSpecial = 'isSpecial' in project && project.isSpecial
   const isNew = 'isNew' in project && project.isNew
+  const isKissaPremium = 'isKissaPremium' in project && project.isKissaPremium
   const buttonLabel = 'buttonLabel' in project ? project.buttonLabel : 'Open Site'
 
   return (
     <motion.article
       className={`work-card editorial-work-card group relative overflow-hidden bg-[#030303]${
         isFeatured ? ' featured-work-card md:col-span-2 xl:col-span-2' : ''
-      }${isSpecial ? ' bakery-special-card' : ''}`}
+      }${isSpecial ? ' bakery-special-card' : ''}${isKissaPremium ? ' kissa-premium-card' : ''}`}
       style={{
         '--work-accent': project.accent,
         '--work-tint': project.tint,
@@ -279,6 +281,17 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
                 priority={index < 2}
               />
             </div>
+          ) : isKissaPremium ? (
+            <div className="kissa-image-frame">
+              <Image
+                src={project.image}
+                alt={`${project.title} editorial poster`}
+                fill
+                sizes="(min-width: 1280px) 520px, (min-width: 768px) 45vw, 92vw"
+                className="kissa-poster-image editorial-poster-image"
+                priority={index < 2}
+              />
+            </div>
           ) : (
             <Image
               src={project.image}
@@ -295,20 +308,20 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
         <div className="editorial-work-meta flex items-start justify-between gap-5 px-1 pt-5 sm:pt-6">
           <div className="min-w-0">
             <div className="flex items-center gap-3">
-              <p className="truncate text-[10px] font-semibold uppercase tracking-[0.34em] text-[color:var(--work-accent)]">
+              <p className={`${isKissaPremium ? '' : 'truncate uppercase '}text-[10px] font-semibold tracking-[0.34em] text-[color:var(--work-accent)]${isKissaPremium ? ' kissa-premium-subtitle' : ''}`}>
                 {project.subtitle}
               </p>
             </div>
-            <h3 className={`mt-2 truncate font-semibold tracking-[-0.02em] text-white${isSpecial ? ' bakery-card-title' : ' text-xl sm:text-2xl tracking-[-0.01em]'}`}>{project.title}</h3>
+            <h3 className={`mt-2 font-semibold tracking-[-0.02em] text-white${isKissaPremium ? '' : ' truncate'}${isSpecial ? ' bakery-card-title' : ' text-xl sm:text-2xl tracking-[-0.01em]'}${isKissaPremium ? ' kissa-premium-title' : ''}`}>{project.title}</h3>
             <p className="mt-2 max-w-[30rem] text-sm leading-6 text-white/48">{project.text}</p>
-            <p className="mt-3 space-y-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.26em] text-white/28">
+            <p className={`mt-3 space-y-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.26em] text-white/28${isKissaPremium ? ' kissa-premium-tags' : ''}`}>
               <span className="block">{project.category}</span>
               <span className="block text-[color:var(--work-accent)] opacity-70">{project.colorLabel}</span>
             </p>
           </div>
 
           <motion.span
-            className="editorial-work-button inline-flex h-11 shrink-0 items-center justify-center gap-2 border border-white/18 px-3 text-white/72"
+            className={`editorial-work-button inline-flex h-11 shrink-0 items-center justify-center gap-2 border border-white/18 px-3 text-white/72${isKissaPremium ? ' kissa-premium-button' : ''}`}
             variants={{
               rest: { borderColor: 'rgba(255,255,255,0.18)' },
               hover: { borderColor: project.accent, color: project.accent },
