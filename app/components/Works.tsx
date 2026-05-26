@@ -285,7 +285,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
             <div className="kissa-image-frame">
               <Image
                 src={project.image}
-                alt={`${project.title} editorial poster`}
+                alt={`${project.title} matcha photo`}
                 fill
                 sizes="(min-width: 1280px) 520px, (min-width: 768px) 45vw, 92vw"
                 className="kissa-poster-image editorial-poster-image"

@@ -523,14 +523,14 @@ a { -webkit-tap-highlight-color: transparent; }
 .kissa-image-frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 1055 / 1491;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
   border-radius: 16px;
 }
 
 .kissa-poster-image {
   object-fit: cover;
-  object-position: center 35%;
+  object-position: center center;
   transition:
     transform 1400ms cubic-bezier(0.13, 0.86, 0.18, 1),
     filter 1400ms cubic-bezier(0.13, 0.86, 0.18, 1);
