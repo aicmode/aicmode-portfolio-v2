@@ -9,6 +9,22 @@ const ease = [0.13, 0.86, 0.18, 1] as const
 
 const projects = [
   {
+    title: 'SUNSET BAGEL',
+    subtitle: 'BAKERY / CAFÉ BRAND WEBSITE',
+    category: 'Bakery / Café Brand Website',
+    text: 'カリフォルニア西海岸のライフスタイルから着想を得た、ベーグル専門店のブランドサイト。ベーグル、コーヒー、海辺の朝をテーマに、写真・タイポグラフィ・余白を活かした海外ベーカリー風デザインを制作。',
+    colorLabel: 'HTML / CSS / JavaScript',
+    accent: '#f0a04a',
+    tint: '#241006',
+    image: '/works/images/sunset-bagel.jpg',
+    width: 2200,
+    height: 1464,
+    url: 'https://aicmode.github.io/SUNSET-BAGEL/',
+    buttonLabel: 'View Project',
+    isNew: true,
+    isSpecial: true,
+  },
+  {
     title: 'BROOKLYN BREAD CO.',
     subtitle: 'BAKERY WEBSITE CONCEPT',
     category: 'Bakery Website Concept',
@@ -20,7 +36,6 @@ const projects = [
     width: 1055,
     height: 1491,
     url: 'https://aicmode.github.io/BROOKLYN-BREAD-CO./',
-    isNew: true,
     isSpecial: true,
   },
   {
@@ -218,6 +233,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
   const isFeatured = 'featured' in project && project.featured
   const isSpecial = 'isSpecial' in project && project.isSpecial
   const isNew = 'isNew' in project && project.isNew
+  const buttonLabel = 'buttonLabel' in project ? project.buttonLabel : 'Open Site'
 
   return (
     <motion.article
@@ -300,7 +316,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
             transition={{ duration: 0.9, ease }}
             aria-hidden="true"
           >
-            <span className="text-[8px] font-semibold uppercase tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">Open Site</span>
+            <span className="text-[8px] font-semibold uppercase tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">{buttonLabel}</span>
             <ArrowIcon />
           </motion.span>
         </div>
