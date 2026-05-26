@@ -195,38 +195,6 @@ export default function Contact() {
           </div>
         </AnimateIn>
 
-        {/* ── CTA ── */}
-        <AnimateIn delay={220}>
-          <div className="mb-14 md:mb-20">
-            <motion.a
-              href="mailto:aicmode0405@gmail.com"
-              className="group inline-flex items-center gap-4 px-9 py-4 text-[10px] tracking-[0.35em] text-white uppercase"
-              style={{
-                border: '1px solid rgba(255,255,255,0.15)',
-                background: 'rgba(255,255,255,0.03)',
-                backdropFilter: 'blur(12px)',
-              }}
-              whileHover={{
-                background: '#ffffff',
-                borderColor: '#ffffff',
-                boxShadow: '0 0 60px rgba(255,255,255,0.12), 0 0 120px rgba(109,40,217,0.08)',
-                transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
-              }}
-            >
-              <span className="group-hover:text-black" style={{ transition: 'color 0.35s ease' }}>
-                Start a Project
-              </span>
-              <svg
-                className="w-3.5 h-3.5 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                style={{ color: '#fff', transition: 'all 0.3s ease' }}
-                fill="none" stroke="currentColor" viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 7l-10 10M17 7H7m10 0v10" />
-              </svg>
-            </motion.a>
-          </div>
-        </AnimateIn>
-
         {/* ── Divider ── */}
         <AnimateIn delay={280}>
           <div className="mb-8 md:mb-10 flex items-center gap-6">
