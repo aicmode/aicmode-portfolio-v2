@@ -9,6 +9,19 @@ const ease = [0.13, 0.86, 0.18, 1] as const
 
 const projects = [
   {
+    title: 'BROOKLYN BREAD CO.',
+    subtitle: 'BAKERY WEBSITE CONCEPT',
+    category: 'Bakery Website Concept',
+    text: 'ニューヨーク・ブルックリンのベーカリーカルチャーをイメージした、高級感と温かみを両立した複数ページ構成のベーカリーサイト。ブランドストーリー、メニュー、ギャラリー、アクセス情報などを掲載し、実案件を想定した6ページ構成で制作。',
+    colorLabel: 'HTML / CSS / JavaScript',
+    accent: '#c8923a',
+    tint: '#1a0c04',
+    image: '/works/images/brooklyn-bread-co.svg',
+    width: 1055,
+    height: 1491,
+    url: 'https://aicmode.github.io/BROOKLYN-BREAD-CO./',
+  },
+  {
     title: 'LUNA Restaurant',
     subtitle: 'RESTAURANT / FINE DINING',
     category: 'Restaurant / Fine Dining',
@@ -177,19 +190,6 @@ const projects = [
     width: 1054,
     height: 1492,
     url: 'https://aicmode.github.io/pulse/',
-  },
-  {
-    title: 'BROOKLYN BREAD CO.',
-    subtitle: 'BAKERY WEBSITE CONCEPT',
-    category: 'Bakery Website Concept',
-    text: 'ニューヨーク・ブルックリンのベーカリーカルチャーをイメージした、高級感と温かみを両立した複数ページ構成のベーカリーサイト。ブランドストーリー、メニュー、ギャラリー、アクセス情報などを掲載し、実案件を想定した6ページ構成で制作。',
-    colorLabel: 'HTML / CSS / JavaScript',
-    accent: '#c8923a',
-    tint: '#1a0c04',
-    image: '/works/images/brooklyn-bread-co.svg',
-    width: 1055,
-    height: 1491,
-    url: 'https://aicmode.github.io/BROOKLYN-BREAD-CO./',
   },
 ] as const
 

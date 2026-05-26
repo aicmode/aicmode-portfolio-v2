@@ -1,139 +1,303 @@
 <svg width="1055" height="1491" viewBox="0 0 1055 1491" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <radialGradient id="warmGlow" cx="50%" cy="48%" r="50%">
-      <stop offset="0%" stop-color="#c8923a" stop-opacity=".20"/>
-      <stop offset="55%" stop-color="#8b5e28" stop-opacity=".08"/>
-      <stop offset="100%" stop-color="#130a04" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="noiseFilter" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency=".72" numOctaves="3" stitchTiles="stitch"/>
+    <!-- Blur filters for atmospheric glow -->
+    <filter id="blur24" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+    <filter id="blur14" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+    <filter id="blur8" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+
+    <!-- Grain texture for photographic feel -->
+    <filter id="grain" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="3" stitchTiles="stitch"/>
       <feColorMatrix type="saturate" values="0"/>
     </filter>
-    <pattern id="grain" width="180" height="180" patternUnits="userSpaceOnUse">
-      <rect width="180" height="180" filter="url(#noiseFilter)" opacity=".5"/>
-    </pattern>
+
+    <!-- Hero text-side darkening -->
+    <linearGradient id="textShield" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"  stop-color="#09060a" stop-opacity="0.78"/>
+      <stop offset="52%" stop-color="#09060a" stop-opacity="0.40"/>
+      <stop offset="100%" stop-color="#09060a" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Hero bottom fade into sections below -->
+    <linearGradient id="heroFade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#09060a" stop-opacity="0"/>
+      <stop offset="72%" stop-color="#09060a" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#09060a" stop-opacity="0.92"/>
+    </linearGradient>
+
+    <!-- Nav darkening gradient -->
+    <linearGradient id="navFade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#000" stop-opacity="0.70"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Product card photo gradients -->
+    <radialGradient id="pCard1" cx="48%" cy="52%" r="52%">
+      <stop offset="0%"  stop-color="#c86828" stop-opacity="0.92"/>
+      <stop offset="45%" stop-color="#7a3c14" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#180a04" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="pCard2" cx="52%" cy="56%" r="50%">
+      <stop offset="0%"  stop-color="#d8922e" stop-opacity="0.88"/>
+      <stop offset="42%" stop-color="#9a5018" stop-opacity="0.70"/>
+      <stop offset="100%" stop-color="#180a04" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="pCard3" cx="50%" cy="50%" r="48%">
+      <stop offset="0%"  stop-color="#38180a" stop-opacity="0.96"/>
+      <stop offset="50%" stop-color="#220e06" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#0e0604" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 
-  <!-- Base background -->
-  <rect width="1055" height="1491" fill="#0e0804"/>
+  <!-- ══════════════════════════════════════ -->
+  <!--  MASTER BACKGROUND                     -->
+  <!-- ══════════════════════════════════════ -->
+  <rect width="1055" height="1491" fill="#09060a"/>
 
-  <!-- Outer card border -->
-  <rect x="44" y="44" width="967" height="1403" rx="18" fill="#180e06" stroke="#C8923A" stroke-opacity=".28" stroke-width="2"/>
+  <!-- ══════════════════════════════════════ -->
+  <!--  HERO — Atmospheric bread photography  -->
+  <!-- ══════════════════════════════════════ -->
+  <rect x="0" y="0" width="1055" height="715" fill="#0e0908"/>
 
-  <!-- Inner panel -->
-  <rect x="88" y="92" width="879" height="1307" rx="8" fill="#130a04" stroke="#E8C87A" stroke-opacity=".11"/>
+  <!-- Sourdough loaf warm mass — right-center -->
+  <ellipse cx="680" cy="400" rx="420" ry="330" fill="#b8681e" fill-opacity="0.38" filter="url(#blur24)"/>
+  <!-- Crust highlight — top of loaf -->
+  <ellipse cx="620" cy="300" rx="200" ry="140" fill="#f0b840" fill-opacity="0.28" filter="url(#blur24)"/>
+  <!-- Crust golden sheen -->
+  <ellipse cx="590" cy="280" rx="110" ry="72" fill="#fad468" fill-opacity="0.20" filter="url(#blur14)"/>
 
-  <!-- Warm radial glow -->
-  <rect x="88" y="92" width="879" height="1307" fill="url(#warmGlow)"/>
+  <!-- Croissant warm mass — far right -->
+  <ellipse cx="870" cy="440" rx="230" ry="180" fill="#e0a030" fill-opacity="0.32" filter="url(#blur24)"/>
+  <ellipse cx="850" cy="380" rx="120" ry="80" fill="#f8c850" fill-opacity="0.20" filter="url(#blur14)"/>
 
-  <!-- Top atmospheric sweep -->
-  <path d="M115 290C248 168 402 132 528 166C670 202 784 302 878 468V92H115V290Z" fill="#C8923A" fill-opacity=".10"/>
+  <!-- Coffee cup — lower right shadow -->
+  <ellipse cx="960" cy="620" rx="140" ry="100" fill="#1e0e06" fill-opacity="0.90" filter="url(#blur8)"/>
+  <ellipse cx="950" cy="600" rx="65" ry="60" fill="#2e1a0a" fill-opacity="0.85"/>
 
-  <!-- Bottom atmospheric sweep -->
-  <path d="M88 1165C205 1068 348 1028 502 1055C686 1086 828 1174 967 1322V1399H88V1165Z" fill="#C8923A" fill-opacity=".07"/>
+  <!-- Ambient studio light — top-right origin -->
+  <ellipse cx="900" cy="-20" rx="520" ry="380" fill="#c87a28" fill-opacity="0.10" filter="url(#blur24)"/>
 
-  <!-- Navigation bar mockup -->
-  <rect x="115" y="132" width="825" height="58" rx="6" fill="#1e1208" fill-opacity=".9"/>
-  <text x="175" y="169" fill="#C8923A" font-family="Georgia, serif" font-size="17" letter-spacing="4" font-weight="bold">BBC</text>
-  <text x="530" y="169" text-anchor="middle" fill="#E8C87A" fill-opacity=".42" font-family="Arial, Helvetica, sans-serif" font-size="11" letter-spacing="5">HOME  MENU  STORY  VISIT</text>
-  <circle cx="880" cy="161" r="14" fill="#C8923A" fill-opacity=".18" stroke="#C8923A" stroke-opacity=".4" stroke-width="1"/>
-  <text x="880" y="166" text-anchor="middle" fill="#C8923A" fill-opacity=".8" font-family="Arial, sans-serif" font-size="9" letter-spacing="1">BOOK</text>
+  <!-- Scattered flour — faint -->
+  <ellipse cx="500" cy="620" rx="280" ry="60" fill="#f5e8d0" fill-opacity="0.04" filter="url(#blur14)"/>
 
-  <!-- Divider line top -->
-  <path d="M231 315H824" stroke="#E8C87A" stroke-opacity=".22"/>
+  <!-- Grain overlay — photographic texture -->
+  <rect x="0" y="0" width="1055" height="715" fill="#a08060" filter="url(#grain)" opacity="0.065"/>
 
-  <!-- Title block -->
-  <text x="527" y="264" text-anchor="middle" fill="#EFE5C4" font-family="Georgia, 'Times New Roman', serif" font-size="72" letter-spacing="12">BROOKLYN</text>
-  <text x="527" y="357" text-anchor="middle" fill="#C8923A" font-family="Georgia, 'Times New Roman', serif" font-size="60" letter-spacing="16">BREAD CO.</text>
+  <!-- Left shield for text readability -->
+  <rect x="0" y="0" width="1055" height="715" fill="url(#textShield)"/>
 
-  <!-- Central oven glow rings -->
-  <circle cx="528" cy="700" r="330" fill="#1e0e06"/>
-  <circle cx="528" cy="700" r="274" fill="#261308" stroke="#C8923A" stroke-opacity=".20" stroke-width="2"/>
-  <circle cx="528" cy="700" r="218" fill="#3c1f08"/>
-  <circle cx="528" cy="700" r="184" fill="#c8923a" fill-opacity=".11"/>
-  <circle cx="528" cy="700" r="380" stroke="#E8C87A" stroke-opacity=".07" stroke-width="1"/>
-  <circle cx="528" cy="700" r="425" stroke="#E8C87A" stroke-opacity=".04" stroke-width="1"/>
+  <!-- Bottom fade into next section -->
+  <rect x="0" y="0" width="1055" height="715" fill="url(#heroFade)"/>
 
-  <!-- Croissant main shape -->
-  <path d="M372 650 Q394 566 464 536 Q534 506 604 537 Q674 568 694 652 Q714 736 682 806 Q660 854 612 872 Q564 890 528 885 Q492 890 444 872 Q396 854 374 806 Q348 736 372 650Z" fill="#c8923a" fill-opacity=".24" stroke="#c8923a" stroke-opacity=".45" stroke-width="1.5"/>
 
-  <!-- Croissant top highlight -->
-  <path d="M404 626 Q434 566 494 545 Q558 524 616 554 Q578 535 528 538 Q472 540 436 576 Q412 598 402 626Z" fill="#f0d890" fill-opacity=".32"/>
+  <!-- ══════════════════════════════════════ -->
+  <!--  NAVIGATION                            -->
+  <!-- ══════════════════════════════════════ -->
+  <rect x="0" y="0" width="1055" height="108" fill="url(#navFade)"/>
 
-  <!-- Croissant inner ridge lines -->
-  <path d="M424 656 Q450 606 500 586 Q554 566 604 590" stroke="#e8c87a" stroke-opacity=".22" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-  <path d="M410 694 Q436 646 488 626 Q546 604 600 628" stroke="#e8c87a" stroke-opacity=".15" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <!-- Logo -->
+  <text x="52" y="52"
+        fill="#f5e8d0"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="15"
+        letter-spacing="4.5"
+        fill-opacity="0.96">BROOKLYN BREAD CO.</text>
 
-  <!-- Left bread roll -->
-  <ellipse cx="335" cy="790" rx="58" ry="42" fill="#c8923a" fill-opacity=".20" stroke="#c8923a" stroke-opacity=".32" stroke-width="1.2"/>
-  <path d="M292 776 Q310 758 335 757 Q360 758 378 776" stroke="#e8c87a" stroke-opacity=".28" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-  <path d="M298 792 Q318 782 335 782 Q352 782 372 792" stroke="#e8c87a" stroke-opacity=".15" stroke-width="1" fill="none" stroke-linecap="round"/>
+  <!-- Nav dot separator -->
+  <circle cx="604" cy="44" r="2.5" fill="#c8923a" fill-opacity="0.45"/>
 
-  <!-- Right bread roll -->
-  <ellipse cx="721" cy="790" rx="58" ry="42" fill="#c8923a" fill-opacity=".20" stroke="#c8923a" stroke-opacity=".32" stroke-width="1.2"/>
-  <path d="M678 776 Q696 758 721 757 Q746 758 764 776" stroke="#e8c87a" stroke-opacity=".28" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-  <path d="M684 792 Q704 782 721 782 Q738 782 758 792" stroke="#e8c87a" stroke-opacity=".15" stroke-width="1" fill="none" stroke-linecap="round"/>
+  <!-- Nav links -->
+  <text x="634" y="51" fill="#e8d4b0" fill-opacity="0.50"
+        font-family="'Helvetica Neue', Arial, sans-serif" font-size="11" letter-spacing="4">MENU</text>
+  <text x="722" y="51" fill="#e8d4b0" fill-opacity="0.50"
+        font-family="'Helvetica Neue', Arial, sans-serif" font-size="11" letter-spacing="4">STORY</text>
+  <text x="815" y="51" fill="#e8d4b0" fill-opacity="0.50"
+        font-family="'Helvetica Neue', Arial, sans-serif" font-size="11" letter-spacing="4">VISIT</text>
 
-  <!-- Wheat stalks left -->
-  <g opacity=".34">
-    <line x1="254" y1="935" x2="254" y2="832" stroke="#c8923a" stroke-width="1.5"/>
-    <ellipse cx="254" cy="824" rx="9" ry="15" fill="#c8923a" transform="rotate(-12 254 824)"/>
-    <ellipse cx="244" cy="843" rx="8" ry="13" fill="#c8923a" transform="rotate(-28 244 843)"/>
-    <ellipse cx="264" cy="845" rx="8" ry="13" fill="#c8923a" transform="rotate(14 264 845)"/>
-    <ellipse cx="244" cy="864" rx="8" ry="13" fill="#c8923a" transform="rotate(-28 244 864)"/>
-    <ellipse cx="264" cy="866" rx="8" ry="13" fill="#c8923a" transform="rotate(14 264 866)"/>
-  </g>
-  <g opacity=".24">
-    <line x1="282" y1="942" x2="275" y2="838" stroke="#c8923a" stroke-width="1.5"/>
-    <ellipse cx="275" cy="830" rx="8" ry="14" fill="#c8923a" transform="rotate(-8 275 830)"/>
-    <ellipse cx="266" cy="848" rx="7" ry="12" fill="#c8923a" transform="rotate(-24 266 848)"/>
-    <ellipse cx="284" cy="850" rx="7" ry="12" fill="#c8923a" transform="rotate(10 284 850)"/>
-  </g>
+  <!-- ORDER button pill -->
+  <rect x="904" y="26" width="106" height="34" rx="17"
+        fill="none" stroke="#c8923a" stroke-opacity="0.58" stroke-width="1.2"/>
+  <text x="957" y="48" text-anchor="middle" fill="#c8923a" fill-opacity="0.88"
+        font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" letter-spacing="3.5">ORDER</text>
 
-  <!-- Wheat stalks right -->
-  <g opacity=".34">
-    <line x1="801" y1="935" x2="801" y2="832" stroke="#c8923a" stroke-width="1.5"/>
-    <ellipse cx="801" cy="824" rx="9" ry="15" fill="#c8923a" transform="rotate(12 801 824)"/>
-    <ellipse cx="791" cy="843" rx="8" ry="13" fill="#c8923a" transform="rotate(-14 791 843)"/>
-    <ellipse cx="811" cy="845" rx="8" ry="13" fill="#c8923a" transform="rotate(28 811 845)"/>
-    <ellipse cx="791" cy="864" rx="8" ry="13" fill="#c8923a" transform="rotate(-14 791 864)"/>
-    <ellipse cx="811" cy="866" rx="8" ry="13" fill="#c8923a" transform="rotate(28 811 866)"/>
-  </g>
-  <g opacity=".24">
-    <line x1="773" y1="942" x2="780" y2="838" stroke="#c8923a" stroke-width="1.5"/>
-    <ellipse cx="780" cy="830" rx="8" ry="14" fill="#c8923a" transform="rotate(8 780 830)"/>
-    <ellipse cx="771" cy="848" rx="7" ry="12" fill="#c8923a" transform="rotate(-10 771 848)"/>
-    <ellipse cx="789" cy="850" rx="7" ry="12" fill="#c8923a" transform="rotate(24 789 850)"/>
-  </g>
 
-  <!-- Steam wisps above croissant -->
-  <path d="M490 526 Q484 500 492 477 Q500 454 495 432" stroke="#e8c87a" stroke-opacity=".20" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-  <path d="M528 521 Q522 495 530 472 Q538 449 533 427" stroke="#e8c87a" stroke-opacity=".20" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-  <path d="M566 526 Q560 500 568 477 Q576 454 571 432" stroke="#e8c87a" stroke-opacity=".20" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- ══════════════════════════════════════ -->
+  <!--  HERO HEADLINE                         -->
+  <!-- ══════════════════════════════════════ -->
 
-  <!-- Divider line bottom -->
-  <path d="M231 1083H824" stroke="#E8C87A" stroke-opacity=".22"/>
+  <!-- Eyebrow label -->
+  <text x="52" y="395"
+        fill="#c8923a" fill-opacity="0.60"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="11" letter-spacing="7">BROOKLYN · NEW YORK · EST. 2018</text>
 
-  <!-- Lower text block -->
-  <text x="527" y="1134" text-anchor="middle" fill="#C8923A" fill-opacity=".85" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="8">BROOKLYN × NEW YORK BAKERY</text>
-  <text x="527" y="1188" text-anchor="middle" fill="#E8C87A" fill-opacity=".44" font-family="Arial, Helvetica, sans-serif" font-size="14" letter-spacing="6">ARTISAN BREADS · PASTRIES · COMMUNITY</text>
+  <!-- Main headline -->
+  <text x="48" y="505"
+        fill="#f5e8d0" fill-opacity="0.96"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="136" letter-spacing="-3">BAKED</text>
+  <text x="48" y="641"
+        fill="#c8923a" fill-opacity="0.92"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="136" letter-spacing="-3">FRESH.</text>
 
-  <!-- Thin separator -->
-  <path d="M363 1240H692" stroke="#C8923A" stroke-opacity=".18"/>
+  <!-- CTA button -->
+  <rect x="52" y="666" width="168" height="40" rx="2" fill="#c8923a" fill-opacity="0.88"/>
+  <text x="136" y="691" text-anchor="middle"
+        fill="#1a0904"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="10" font-weight="700" letter-spacing="3.5">EXPLORE MENU</text>
 
-  <!-- Tech / page count -->
-  <text x="527" y="1296" text-anchor="middle" fill="#E8C87A" fill-opacity=".34" font-family="Arial, Helvetica, sans-serif" font-size="12" letter-spacing="5">HTML  CSS  JAVASCRIPT  ·  6 PAGES</text>
+  <!-- Subtle scroll indicator -->
+  <line x1="527" y1="697" x2="527" y2="720" stroke="#c8923a" stroke-opacity="0.22" stroke-width="1"/>
+  <circle cx="527" cy="723" r="3" fill="none" stroke="#c8923a" stroke-opacity="0.22" stroke-width="1"/>
 
-  <!-- Corner marker decorations -->
-  <g opacity=".42">
-    <rect x="152" y="178" width="57" height="57" stroke="#C8923A" stroke-opacity=".34" fill="none"/>
-    <rect x="846" y="1256" width="57" height="57" stroke="#C8923A" stroke-opacity=".34" fill="none"/>
-    <line x1="876" y1="178" x2="876" y2="266" stroke="#C8923A" stroke-opacity=".28"/>
-    <line x1="920" y1="222" x2="832" y2="222" stroke="#C8923A" stroke-opacity=".28"/>
-    <line x1="179" y1="1237" x2="179" y2="1325" stroke="#C8923A" stroke-opacity=".28"/>
-    <line x1="223" y1="1281" x2="135" y2="1281" stroke="#C8923A" stroke-opacity=".28"/>
-  </g>
 
-  <!-- Grain texture overlay -->
-  <rect x="88" y="92" width="879" height="1307" rx="8" fill="url(#grain)" opacity=".16"/>
+  <!-- ══════════════════════════════════════ -->
+  <!--  PRODUCTS SECTION  (715 – 1050px)      -->
+  <!-- ══════════════════════════════════════ -->
+  <rect x="0" y="715" width="1055" height="335" fill="#0d0907"/>
+
+  <!-- Section label -->
+  <text x="52" y="772"
+        fill="#c8923a" fill-opacity="0.40"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="9.5" letter-spacing="6.5">FRESH FROM THE OVEN TODAY</text>
+
+  <!-- Rule -->
+  <line x1="52" y1="785" x2="1003" y2="785" stroke="#c8923a" stroke-opacity="0.10"/>
+
+
+  <!-- ── Card 1 : Country Sourdough ── -->
+  <rect x="52"  y="803" width="303" height="235" rx="3" fill="#140b05"/>
+  <!-- photo area -->
+  <rect x="52"  y="803" width="303" height="148" rx="3" fill="#1e0e07"/>
+  <rect x="52"  y="803" width="303" height="148" rx="3" fill="url(#pCard1)"/>
+  <!-- crust highlight -->
+  <ellipse cx="168" cy="848" rx="60" ry="36" fill="#fcd068" fill-opacity="0.18" filter="url(#blur8)"/>
+  <!-- score lines -->
+  <path d="M106 860 Q152 830 218 852" stroke="#fae094" stroke-opacity="0.26" stroke-width="2.5"
+        fill="none" stroke-linecap="round"/>
+  <path d="M100 882 Q148 854 214 876" stroke="#fae094" stroke-opacity="0.14" stroke-width="1.8"
+        fill="none" stroke-linecap="round"/>
+  <!-- text area -->
+  <rect x="52"  y="946" width="303" height="92" rx="3" fill="#0f0805"/>
+  <line x1="52" y1="948" x2="355" y2="948" stroke="#c8923a" stroke-opacity="0.07"/>
+  <text x="70"  y="985" fill="#f5e8d0" fill-opacity="0.88"
+        font-family="Georgia, serif" font-size="15" letter-spacing="1">Country Sourdough</text>
+  <text x="70"  y="1007" fill="#c8923a" fill-opacity="0.52"
+        font-family="Arial, sans-serif" font-size="9" letter-spacing="5">SIGNATURE · $9</text>
+
+
+  <!-- ── Card 2 : Butter Croissant ── -->
+  <rect x="373" y="803" width="303" height="235" rx="3" fill="#120a05"/>
+  <rect x="373" y="803" width="303" height="148" rx="3" fill="#1b0d06"/>
+  <rect x="373" y="803" width="303" height="148" rx="3" fill="url(#pCard2)"/>
+  <!-- highlight -->
+  <ellipse cx="530" cy="850" rx="70" ry="42" fill="#f8c248" fill-opacity="0.18" filter="url(#blur8)"/>
+  <!-- layer lines -->
+  <path d="M426 868 Q490 836 576 860" stroke="#fada80" stroke-opacity="0.22" stroke-width="2.5"
+        fill="none" stroke-linecap="round"/>
+  <path d="M430 890 Q494 860 580 884" stroke="#fada80" stroke-opacity="0.12" stroke-width="1.8"
+        fill="none" stroke-linecap="round"/>
+  <!-- text area -->
+  <rect x="373" y="946" width="303" height="92" rx="3" fill="#0e0804"/>
+  <line x1="373" y1="948" x2="676" y2="948" stroke="#c8923a" stroke-opacity="0.07"/>
+  <text x="391" y="985" fill="#f5e8d0" fill-opacity="0.88"
+        font-family="Georgia, serif" font-size="15" letter-spacing="1">Butter Croissant</text>
+  <text x="391" y="1007" fill="#c8923a" fill-opacity="0.52"
+        font-family="Arial, sans-serif" font-size="9" letter-spacing="5">DAILY BAKED · $5</text>
+
+
+  <!-- ── Card 3 : Artisan Coffee ── -->
+  <rect x="694" y="803" width="309" height="235" rx="3" fill="#110905"/>
+  <rect x="694" y="803" width="309" height="148" rx="3" fill="#170c06"/>
+  <rect x="694" y="803" width="309" height="148" rx="3" fill="url(#pCard3)"/>
+  <!-- cup shape -->
+  <ellipse cx="849" cy="884" rx="52" ry="48" fill="#2c1508" fill-opacity="0.92"/>
+  <ellipse cx="849" cy="876" rx="42" ry="38" fill="#1e1006" fill-opacity="0.96"/>
+  <ellipse cx="849" cy="869" rx="32" ry="26" fill="#160c06" fill-opacity="1"/>
+  <!-- latte art suggestion -->
+  <path d="M840 865 Q845 861 852 865 Q857 869 852 873 Q845 877 839 873 Q835 869 840 865Z"
+        fill="#6a4028" fill-opacity="0.40"/>
+  <!-- rim highlight -->
+  <ellipse cx="849" cy="840" rx="42" ry="5" fill="#c8923a" fill-opacity="0.08"/>
+  <!-- steam wisps -->
+  <path d="M838 812 Q833 800 838 789" stroke="#e8d0a8" stroke-opacity="0.11"
+        stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <path d="M849 810 Q844 798 849 787" stroke="#e8d0a8" stroke-opacity="0.09"
+        stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <path d="M860 812 Q855 800 860 789" stroke="#e8d0a8" stroke-opacity="0.07"
+        stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- text area -->
+  <rect x="694" y="946" width="309" height="92" rx="3" fill="#0c0805"/>
+  <line x1="694" y1="948" x2="1003" y2="948" stroke="#c8923a" stroke-opacity="0.07"/>
+  <text x="712" y="985" fill="#f5e8d0" fill-opacity="0.88"
+        font-family="Georgia, serif" font-size="15" letter-spacing="1">Artisan Coffee</text>
+  <text x="712" y="1007" fill="#c8923a" fill-opacity="0.52"
+        font-family="Arial, sans-serif" font-size="9" letter-spacing="5">SINGLE ORIGIN · $6</text>
+
+
+  <!-- ══════════════════════════════════════ -->
+  <!--  BRAND STATEMENT  (1050 – 1280px)      -->
+  <!-- ══════════════════════════════════════ -->
+  <rect x="0" y="1050" width="1055" height="230" fill="#0b0806"/>
+
+  <line x1="52" y1="1062" x2="1003" y2="1062" stroke="#c8923a" stroke-opacity="0.12"/>
+
+  <text x="527" y="1138" text-anchor="middle"
+        fill="#f5e8d0" fill-opacity="0.68"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="27" letter-spacing="1">Crafted with tradition.</text>
+  <text x="527" y="1178" text-anchor="middle"
+        fill="#f5e8d0" fill-opacity="0.68"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="27" letter-spacing="1">Baked with love.</text>
+
+  <text x="527" y="1232" text-anchor="middle"
+        fill="#c8923a" fill-opacity="0.36"
+        font-family="Arial, sans-serif" font-size="9" letter-spacing="7">EST. 2018  ·  BROOKLYN  ·  NEW YORK</text>
+
+  <line x1="52" y1="1272" x2="1003" y2="1272" stroke="#c8923a" stroke-opacity="0.09"/>
+
+
+  <!-- ══════════════════════════════════════ -->
+  <!--  VISIT SECTION  (1280 – 1491px)        -->
+  <!-- ══════════════════════════════════════ -->
+  <rect x="0" y="1280" width="1055" height="211" fill="#0a0706"/>
+
+  <!-- Hours column -->
+  <text x="52"  y="1328" fill="#c8923a" fill-opacity="0.36"
+        font-family="Arial, sans-serif" font-size="9" letter-spacing="6">HOURS</text>
+  <text x="52"  y="1368" fill="#f5e8d0" fill-opacity="0.64"
+        font-family="Georgia, serif" font-size="14" letter-spacing="0.5">Mon – Fri  7am – 6pm</text>
+  <text x="52"  y="1393" fill="#f5e8d0" fill-opacity="0.64"
+        font-family="Georgia, serif" font-size="14" letter-spacing="0.5">Sat – Sun  8am – 4pm</text>
+
+  <!-- Location column -->
+  <text x="560" y="1328" fill="#c8923a" fill-opacity="0.36"
+        font-family="Arial, sans-serif" font-size="9" letter-spacing="6">LOCATION</text>
+  <text x="560" y="1368" fill="#f5e8d0" fill-opacity="0.64"
+        font-family="Georgia, serif" font-size="14" letter-spacing="0.5">142 Smith Street</text>
+  <text x="560" y="1393" fill="#f5e8d0" fill-opacity="0.64"
+        font-family="Georgia, serif" font-size="14" letter-spacing="0.5">Brooklyn, NY 11201</text>
+
+  <!-- Directions CTA -->
+  <rect x="52" y="1424" width="200" height="38" rx="2"
+        fill="none" stroke="#c8923a" stroke-opacity="0.40" stroke-width="1.2"/>
+  <text x="152" y="1448" text-anchor="middle"
+        fill="#c8923a" fill-opacity="0.72"
+        font-family="Arial, sans-serif" font-size="10" letter-spacing="4">GET DIRECTIONS  →</text>
+
+  <!-- Footer rule + copyright -->
+  <line x1="0" y1="1481" x2="1055" y2="1481" stroke="#c8923a" stroke-opacity="0.07"/>
+  <text x="527" y="1490" text-anchor="middle"
+        fill="#f5e8d0" fill-opacity="0.14"
+        font-family="Arial, sans-serif" font-size="8" letter-spacing="4">BROOKLYN BREAD CO.  ©  2024</text>
 </svg>
