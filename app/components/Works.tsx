@@ -186,7 +186,7 @@ const projects = [
     colorLabel: 'HTML / CSS / JavaScript',
     accent: '#c8923a',
     tint: '#1a0c04',
-    image: '/works/images/brooklyn-bread-co.png',
+    image: '/works/images/brooklyn-bread-co.svg',
     width: 1055,
     height: 1491,
     url: 'https://aicmode.github.io/BROOKLYN-BREAD-CO./',
