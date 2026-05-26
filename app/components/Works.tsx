@@ -20,7 +20,7 @@ const projects = [
     width: 2200,
     height: 1464,
     url: 'https://aesthetic-rolypoly-3a91ae.netlify.app/',
-    buttonLabel: 'View Project',
+    buttonLabel: 'Open Site',
     isNew: true,
     isSpecial: true,
   },
