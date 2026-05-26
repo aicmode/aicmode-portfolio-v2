@@ -16,7 +16,7 @@ const projects = [
     colorLabel: 'HTML / CSS / JavaScript',
     accent: '#f0a04a',
     tint: '#241006',
-    image: '/works/images/sunset-bagel.jpg',
+    image: '/works/images/bagel.png',
     width: 2200,
     height: 1464,
     url: 'https://aesthetic-rolypoly-3a91ae.netlify.app/',
