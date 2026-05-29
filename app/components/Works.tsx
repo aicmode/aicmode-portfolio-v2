@@ -12,7 +12,7 @@ const projects = [
     title: 'GREENROOT ENERGY',
     subtitle: 'Renewable Energy Corporate Website',
     category: 'Renewable Energy Corporate Website',
-    text: 'Premium renewable energy corporate website focused on sustainability, innovation, and environmental responsibility.',
+    text: '持続可能な未来をテーマに制作した、再生可能エネルギー企業向けコーポレートサイトです。森林とテクノロジーの融合を表現し、環境配慮・革新性・信頼感を兼ね備えたブランドイメージを構築しています。',
     colorLabel: 'Dark Green / Gold / Responsive',
     accent: '#d4af37',
     tint: '#052116',
