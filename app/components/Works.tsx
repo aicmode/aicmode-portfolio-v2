@@ -9,6 +9,21 @@ const ease = [0.13, 0.86, 0.18, 1] as const
 
 const projects = [
   {
+    title: 'NEW YORK PIZZA HOUSE',
+    subtitle: 'PIZZA EC WEBSITE',
+    category: 'Pizza EC Website',
+    text: 'ニューヨークスタイルのピザ店をテーマにした、カート機能付きECサイトデモ。',
+    colorLabel: 'HTML / CSS / JavaScript',
+    accent: '#e8631a',
+    tint: '#1a0500',
+    image: '/works/images/new-york-pizza-house.png',
+    width: 1055,
+    height: 1491,
+    url: 'https://aicmode.github.io/New-York-Pizza-House/',
+    buttonLabel: 'Open Site',
+    isNew: true,
+  },
+  {
     title: 'SUNSET BAGEL',
     subtitle: 'BAKERY / CAFÉ BRAND WEBSITE',
     category: 'Bakery / Café Brand Website',
