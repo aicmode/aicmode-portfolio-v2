@@ -9,6 +9,22 @@ const ease = [0.13, 0.86, 0.18, 1] as const
 
 const projects = [
   {
+    title: 'GREENROOT ENERGY',
+    subtitle: 'Renewable Energy Corporate Website',
+    category: 'Renewable Energy Corporate Website',
+    text: 'Premium renewable energy corporate website focused on sustainability, innovation, and environmental responsibility.',
+    colorLabel: 'Dark Green / Gold / Responsive',
+    accent: '#d4af37',
+    tint: '#052116',
+    image: '/works/images/greenroot-energy.png',
+    width: 1440,
+    height: 1900,
+    url: 'https://aicmode.github.io/GREENROOT-ENERGY/',
+    buttonLabel: 'Open Site',
+    isNew: true,
+    isGreenrootPremium: true,
+  },
+  {
     title: 'NEW YORK PIZZA HOUSE',
     subtitle: 'PIZZA EC WEBSITE',
     category: 'Pizza EC Website',
@@ -250,13 +266,16 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
   const isSpecial = 'isSpecial' in project && project.isSpecial
   const isNew = 'isNew' in project && project.isNew
   const isKissaPremium = 'isKissaPremium' in project && project.isKissaPremium
+  const isGreenrootPremium = 'isGreenrootPremium' in project && project.isGreenrootPremium
   const buttonLabel = 'buttonLabel' in project ? project.buttonLabel : 'Open Site'
 
   return (
     <motion.article
       className={`work-card editorial-work-card group relative overflow-hidden bg-[#030303]${
         isFeatured ? ' featured-work-card md:col-span-2 xl:col-span-2' : ''
-      }${isSpecial ? ' bakery-special-card' : ''}${isKissaPremium ? ' kissa-premium-card' : ''}`}
+      }${isSpecial ? ' bakery-special-card' : ''}${isKissaPremium ? ' kissa-premium-card' : ''}${
+        isGreenrootPremium ? ' greenroot-premium-card' : ''
+      }`}
       style={{
         '--work-accent': project.accent,
         '--work-tint': project.tint,
@@ -323,13 +342,13 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
         <div className="editorial-work-meta flex items-start justify-between gap-5 px-1 pt-5 sm:pt-6">
           <div className="min-w-0">
             <div className="flex items-center gap-3">
-              <p className={`${isKissaPremium ? '' : 'truncate uppercase '}text-[10px] font-semibold tracking-[0.34em] text-[color:var(--work-accent)]${isKissaPremium ? ' kissa-premium-subtitle' : ''}`}>
+              <p className={`${isKissaPremium || isGreenrootPremium ? '' : 'truncate uppercase '}text-[10px] font-semibold tracking-[0.34em] text-[color:var(--work-accent)]${isKissaPremium ? ' kissa-premium-subtitle' : ''}${isGreenrootPremium ? ' greenroot-premium-subtitle' : ''}`}>
                 {project.subtitle}
               </p>
             </div>
-            <h3 className={`mt-2 font-semibold tracking-[-0.02em] text-white${isKissaPremium ? '' : ' truncate'}${isSpecial ? ' bakery-card-title' : ' text-xl sm:text-2xl tracking-[-0.01em]'}${isKissaPremium ? ' kissa-premium-title' : ''}`}>{project.title}</h3>
+            <h3 className={`mt-2 font-semibold tracking-[-0.02em] text-white${isKissaPremium || isGreenrootPremium ? '' : ' truncate'}${isSpecial ? ' bakery-card-title' : ' text-xl sm:text-2xl tracking-[-0.01em]'}${isKissaPremium ? ' kissa-premium-title' : ''}${isGreenrootPremium ? ' greenroot-premium-title' : ''}`}>{project.title}</h3>
             <p className="mt-2 max-w-[30rem] text-sm leading-6 text-white/48">{project.text}</p>
-            <p className={`mt-3 space-y-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.26em] text-white/28${isKissaPremium ? ' kissa-premium-tags' : ''}`}>
+            <p className={`mt-3 space-y-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.26em] text-white/28${isKissaPremium ? ' kissa-premium-tags' : ''}${isGreenrootPremium ? ' greenroot-premium-tags' : ''}`}>
               <span className="block">{project.category}</span>
               <span className="block text-[color:var(--work-accent)] opacity-70">{project.colorLabel}</span>
             </p>

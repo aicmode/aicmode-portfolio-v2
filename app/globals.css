@@ -449,6 +449,82 @@ a { -webkit-tap-highlight-color: transparent; }
   opacity: 1;
 }
 
+.greenroot-premium-card {
+  background:
+    radial-gradient(circle at 16% 0%, rgba(212, 175, 55, 0.18), transparent 30%),
+    radial-gradient(circle at 82% 16%, rgba(29, 112, 72, 0.18), transparent 34%),
+    linear-gradient(145deg, rgba(3, 28, 18, 0.98) 0%, rgba(2, 12, 8, 0.98) 48%, rgba(0, 0, 0, 1) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(212, 175, 55, 0.18),
+    0 30px 92px rgba(0, 0, 0, 0.58);
+}
+
+.greenroot-premium-card:hover {
+  box-shadow:
+    inset 0 0 0 1px rgba(212, 175, 55, 0.36),
+    0 42px 118px rgba(0, 0, 0, 0.68),
+    0 18px 54px rgba(7, 80, 48, 0.16);
+}
+
+.greenroot-premium-card > a {
+  padding: 12px;
+}
+
+.greenroot-premium-card .editorial-poster-shell {
+  border-color: rgba(212, 175, 55, 0.42);
+  background: #04170f;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 239, 178, 0.08),
+    0 20px 58px rgba(0, 0, 0, 0.58);
+}
+
+.greenroot-premium-card .editorial-poster-shell::before {
+  background:
+    linear-gradient(180deg, rgba(255, 236, 160, 0.08), transparent 18%, rgba(0, 0, 0, 0.28) 100%),
+    linear-gradient(90deg, rgba(212, 175, 55, 0.1), transparent 18%, transparent 82%, rgba(43, 126, 81, 0.12));
+  opacity: 0.9;
+}
+
+.greenroot-premium-card .editorial-poster-shell::after {
+  background: linear-gradient(112deg, transparent 0%, rgba(232, 203, 116, 0.22) 46%, transparent 58%);
+}
+
+.greenroot-premium-card .editorial-poster-image {
+  filter: saturate(1.04) contrast(1.08) brightness(0.92);
+}
+
+.greenroot-premium-card:hover .editorial-poster-image {
+  filter: saturate(1.1) contrast(1.1) brightness(0.99);
+  transform: scale(1.022);
+}
+
+.greenroot-premium-card .editorial-work-meta {
+  padding: 1.3rem 0.25rem 0.35rem;
+}
+
+.greenroot-premium-subtitle {
+  color: rgba(224, 192, 98, 0.84);
+  letter-spacing: 0.2em;
+  line-height: 1.65;
+  text-transform: uppercase;
+}
+
+.greenroot-premium-title {
+  color: #f4e4ad;
+  font-size: clamp(1.55rem, 3.1vw, 2.15rem);
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 22px rgba(212, 175, 55, 0.18);
+}
+
+.greenroot-premium-tags span:first-child {
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.greenroot-premium-tags span:last-child {
+  color: rgba(224, 192, 98, 0.8);
+  opacity: 1;
+}
+
 @media (max-width: 640px) {
   .editorial-work-card {
     border-radius: 4px;
@@ -493,6 +569,23 @@ a { -webkit-tap-highlight-color: transparent; }
   .kissa-premium-subtitle {
     max-width: 100%;
     letter-spacing: 0.1em;
+  }
+
+  .greenroot-premium-card > a {
+    padding: 10px;
+  }
+
+  .greenroot-premium-card .editorial-work-meta {
+    gap: 0.9rem;
+  }
+
+  .greenroot-premium-title {
+    font-size: 1.4rem;
+    letter-spacing: 0.04em;
+  }
+
+  .greenroot-premium-subtitle {
+    letter-spacing: 0.12em;
   }
 }
 
