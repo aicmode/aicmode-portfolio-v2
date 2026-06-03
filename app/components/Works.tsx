@@ -21,7 +21,6 @@ const projects = [
     height: 1492,
     url: 'https://aicmode.github.io/CORE-45/',
     buttonLabel: 'Open Site',
-    isNew: true,
   },
   {
     title: 'GREENROOT ENERGY',
@@ -36,7 +35,6 @@ const projects = [
     height: 1900,
     url: 'https://aicmode.github.io/GREENROOT-ENERGY/',
     buttonLabel: 'Open Site',
-    isNew: true,
     isGreenrootPremium: true,
   },
   {
@@ -52,7 +50,6 @@ const projects = [
     height: 1491,
     url: 'https://aicmode.github.io/New-York-Pizza-House/',
     buttonLabel: 'Open Site',
-    isNew: true,
   },
   {
     title: 'SUNSET BAGEL',
@@ -67,7 +64,6 @@ const projects = [
     height: 1464,
     url: 'https://aesthetic-rolypoly-3a91ae.netlify.app/',
     buttonLabel: 'Open Site',
-    isNew: true,
     isSpecial: true,
   },
   {
@@ -279,7 +275,6 @@ function ArrowIcon() {
 function WorkPoster({ project, index }: { project: (typeof projects)[number]; index: number }) {
   const isFeatured = 'featured' in project && project.featured
   const isSpecial = 'isSpecial' in project && project.isSpecial
-  const isNew = 'isNew' in project && project.isNew
   const isKissaPremium = 'isKissaPremium' in project && project.isKissaPremium
   const isGreenrootPremium = 'isGreenrootPremium' in project && project.isGreenrootPremium
   const buttonLabel = 'buttonLabel' in project ? project.buttonLabel : 'Open Site'
@@ -309,7 +304,6 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
         className="block"
         aria-label={`Open ${project.title}`}
       >
-        {isNew && <span className="bakery-new-badge">NEW</span>}
 
         <motion.div
           className="editorial-poster-shell relative overflow-hidden"
