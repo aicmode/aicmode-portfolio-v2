@@ -9,6 +9,21 @@ const ease = [0.13, 0.86, 0.18, 1] as const
 
 const projects = [
   {
+    title: 'CORE 45',
+    subtitle: 'Premium Fitness Studio',
+    category: 'Premium Fitness Studio',
+    text: '海外のブティックジムをイメージした、黒ベースの高級フィットネススタジオLPです。45分間の集中トレーニングを軸に、パーソナルトレーニング、ピラティス、コンディショニングを組み合わせた都会的なブランドサイトとして制作しました。',
+    colorLabel: 'Black / Charcoal / Lime Green',
+    accent: '#b8ff3d',
+    tint: '#07110a',
+    image: '/works/images/core-45.png',
+    width: 1054,
+    height: 1492,
+    url: 'https://aicmode.github.io/CORE-45/',
+    buttonLabel: 'Open Site',
+    isNew: true,
+  },
+  {
     title: 'GREENROOT ENERGY',
     subtitle: 'Renewable Energy Corporate Website',
     category: 'Renewable Energy Corporate Website',
