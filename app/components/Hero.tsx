@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef } from 'react'
-import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 
 export default function Hero() {
   const lightRef  = useRef<HTMLDivElement>(null)
@@ -13,8 +13,6 @@ export default function Hero() {
 
   const contentY       = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
   const contentOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0])
-  const contentBlurPx  = useTransform(scrollYProgress, [0, 0.45], [0, 6])
-  const contentBlur    = useMotionTemplate`blur(${contentBlurPx}px)`
   const bgScale        = useTransform(scrollYProgress, [0, 1], [1, 1.06])
   const scrollOpacity  = useTransform(scrollYProgress, [0, 0.18], [0.45, 0])
 
@@ -97,10 +95,10 @@ export default function Hero() {
         }}
       />
 
-      {/* Content — parallax + blur on scroll */}
+      {/* Content — subtle parallax on scroll (no blur, stays crisp) */}
       <motion.div
         className="relative z-10 w-full max-w-7xl mx-auto px-5 md:px-8 lg:px-12"
-        style={{ y: contentY, opacity: contentOpacity, filter: contentBlur }}
+        style={{ y: contentY, opacity: contentOpacity }}
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center select-none">
 
