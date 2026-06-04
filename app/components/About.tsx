@@ -7,9 +7,9 @@ const influences = [
 ]
 
 const stats = [
-  { num: '10+', label: 'Projects' },
-  { num: 'AI', label: 'Powered' },
-  { num: '2026', label: 'Active' },
+  { top: 'WEB', bottom: 'Design' },
+  { top: 'AI', bottom: 'Powered' },
+  { top: '2026', bottom: 'Active' },
 ]
 
 export default function About() {
@@ -111,20 +111,20 @@ export default function About() {
 
               {/* Stats */}
               <div className="grid grid-cols-3 gap-3 md:gap-4">
-                {stats.map(({ num, label }) => (
+                {stats.map(({ top, bottom }) => (
                   <div
-                    key={label}
+                    key={bottom}
                     className="text-center py-4"
                     style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
                   >
                     <div
-                      className="font-black text-white mb-1"
-                      style={{ fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', letterSpacing: '-0.02em' }}
+                      className="font-black text-white mb-1 uppercase"
+                      style={{ fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', letterSpacing: '-0.01em' }}
                     >
-                      {num}
+                      {top}
                     </div>
                     <div className="text-[9px] tracking-[0.35em] uppercase" style={{ color: '#383838' }}>
-                      {label}
+                      {bottom}
                     </div>
                   </div>
                 ))}
