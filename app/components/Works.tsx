@@ -272,17 +272,49 @@ function ArrowIcon() {
   )
 }
 
+function getProjectMeta(project: (typeof projects)[number], index: number) {
+  const category = project.category.toLowerCase()
+  const title = project.title.toLowerCase()
+  const tags = ['Responsive', 'AI Assisted']
+  let projectType = 'Brand Site'
+
+  if (category.includes('ec') || category.includes('commerce') || title.includes('pizza')) {
+    projectType = 'EC'
+  } else if (category.includes('corporate') || category.includes('medical')) {
+    projectType = 'Multi Page'
+  } else if (
+    category.includes('lp') ||
+    category.includes('landing') ||
+    category.includes('studio') ||
+    category.includes('wellness')
+  ) {
+    projectType = 'LP'
+  }
+
+  if (index < 6 && !tags.includes('Brand Site')) tags.unshift('Brand Site')
+  if (projectType === 'EC') tags.unshift('EC')
+  if (projectType === 'Multi Page') tags.unshift('Multi Page')
+  if (projectType === 'LP') tags.unshift('Landing Page')
+
+  return {
+    projectType,
+    tags: [...new Set(tags)].slice(0, 4),
+    isFeatured: index < 6 || ('featured' in project && project.featured),
+  }
+}
+
 function WorkPoster({ project, index }: { project: (typeof projects)[number]; index: number }) {
-  const isFeatured = 'featured' in project && project.featured
+  const isWideFeatured = 'featured' in project && project.featured
   const isSpecial = 'isSpecial' in project && project.isSpecial
   const isKissaPremium = 'isKissaPremium' in project && project.isKissaPremium
   const isGreenrootPremium = 'isGreenrootPremium' in project && project.isGreenrootPremium
   const buttonLabel = 'buttonLabel' in project ? project.buttonLabel : 'Open Site'
+  const meta = getProjectMeta(project, index)
 
   return (
     <motion.article
       className={`work-card editorial-work-card group relative overflow-hidden bg-[#030303]${
-        isFeatured ? ' featured-work-card md:col-span-2 xl:col-span-2' : ''
+        isWideFeatured ? ' featured-work-card md:col-span-2 xl:col-span-2' : ''
       }${isSpecial ? ' bakery-special-card' : ''}${isKissaPremium ? ' kissa-premium-card' : ''}${
         isGreenrootPremium ? ' greenroot-premium-card' : ''
       }`}
@@ -313,6 +345,12 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
           }}
           transition={{ duration: 1.15, ease }}
         >
+          {meta.isFeatured ? (
+            <div className="pointer-events-none absolute left-4 top-4 z-10 border border-white/18 bg-black/70 px-3 py-2 text-[8px] font-bold uppercase leading-none tracking-[0.34em] text-white/58 backdrop-blur-md">
+              FEATURED
+            </div>
+          ) : null}
+
           {isSpecial ? (
             <div className="bakery-image-frame">
               <Image
@@ -357,6 +395,19 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
             </div>
             <h3 className={`mt-2 font-semibold tracking-[-0.02em] text-white${isKissaPremium || isGreenrootPremium ? '' : ' truncate'}${isSpecial ? ' bakery-card-title' : ' text-xl sm:text-2xl tracking-[-0.01em]'}${isKissaPremium ? ' kissa-premium-title' : ''}${isGreenrootPremium ? ' greenroot-premium-title' : ''}`}>{project.title}</h3>
             <p className="mt-2 max-w-[30rem] text-sm leading-6 text-white/48">{project.text}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <span className="border border-[color:var(--work-accent)]/35 bg-white/[0.025] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.28em] text-[color:var(--work-accent)]/80">
+                Project Type · {meta.projectType}
+              </span>
+              {meta.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.24em] text-white/38"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
             <p className={`mt-3 space-y-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.26em] text-white/28${isKissaPremium ? ' kissa-premium-tags' : ''}${isGreenrootPremium ? ' greenroot-premium-tags' : ''}`}>
               <span className="block">{project.category}</span>
               <span className="block text-[color:var(--work-accent)] opacity-70">{project.colorLabel}</span>
@@ -388,9 +439,9 @@ export default function Works() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/[0.08]" />
 
       <div className="relative mx-auto max-w-[1420px]">
-        <div className="mb-14 flex items-end justify-between gap-8 border-b border-white/[0.08] pb-8 md:mb-20">
+        <div className="mb-14 flex flex-col gap-8 border-b border-white/[0.08] pb-8 md:mb-20 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="mb-5 text-[10px] uppercase tracking-[0.48em] text-white/38">Web Design Works</p>
+            <p className="mb-5 text-[10px] uppercase tracking-[0.48em] text-white/38">Selected Web Design Works</p>
             <h2 className="text-[clamp(4.5rem,16vw,12rem)] font-black uppercase leading-[0.8] text-white">
               Works
             </h2>
@@ -401,8 +452,9 @@ export default function Works() {
               10+ Projects Completed
             </p>
           </div>
-          <p className="hidden max-w-sm text-right text-sm leading-8 text-white/42 md:block">
-            Dark editorial campaign posters — each a distinct visual world.
+          <p className="max-w-xl text-sm leading-8 text-white/46 lg:text-right">
+            飲食店、美容、医療、EC、ブランドサイトなど、実案件を想定して制作したWebデザイン作品です。
+            見た目の美しさだけでなく、第一印象・信頼感・導線・スマホ表示まで意識して構成しています。
           </p>
         </div>
 
@@ -413,12 +465,20 @@ export default function Works() {
         </div>
 
         <AnimateIn delay={300}>
-          <div className="mt-14 flex items-center gap-4 border-t border-white/[0.07] pt-8 md:mt-20">
-            <span className="font-mono text-[8px] uppercase tracking-[0.5em] text-white/18">AICMODE</span>
-            <div className="h-px flex-1 bg-gradient-to-r from-white/[0.07] to-transparent" />
-            <span className="font-mono text-[8px] uppercase tracking-[0.4em] text-white/18">
-              {new Date().getFullYear()}
-            </span>
+          <div className="mt-14 flex flex-col gap-6 border-t border-white/[0.07] pt-8 md:mt-20 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex items-center gap-4">
+              <span className="font-mono text-[8px] uppercase tracking-[0.5em] text-white/18">AICMODE</span>
+              <div className="h-px flex-1 bg-gradient-to-r from-white/[0.07] to-transparent" />
+              <span className="font-mono text-[8px] uppercase tracking-[0.4em] text-white/18">
+                {new Date().getFullYear()}
+              </span>
+            </div>
+            <a
+              href="#contact"
+              className="inline-flex w-full items-center justify-center border border-white/14 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.34em] text-white/70 transition duration-500 hover:border-[rgba(212,175,55,0.45)] hover:text-white hover:shadow-[0_0_44px_rgba(212,175,55,0.08)] sm:w-auto"
+            >
+              START A PROJECT
+            </a>
           </div>
         </AnimateIn>
       </div>

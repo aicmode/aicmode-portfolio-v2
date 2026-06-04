@@ -141,14 +141,28 @@ export default function Hero() {
             </motion.p>
 
             <motion.div
-              className="mt-10 md:mt-14 flex items-center justify-center lg:justify-start gap-4"
+              className="mx-auto mt-6 max-w-[34rem] lg:mx-0"
+              initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ duration: 1, delay: 0.82, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <p className="text-[10px] md:text-[12px] font-semibold uppercase tracking-[0.28em] text-white/72">
+                Freelance Web Design for Brands, Shops, and Creators.
+              </p>
+              <p className="mt-4 text-sm leading-7 text-white/46 md:text-[15px] md:leading-8">
+                海外カルチャーとAIを活かし、店舗・サービス・個人ブランドの世界観が伝わるWebサイトを制作します。
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="mt-10 md:mt-14 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center lg:justify-start"
               initial={{ opacity: 0, y: 22, filter: 'blur(4px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               transition={{ duration: 1, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
             >
               <motion.a
                 href="#works"
-                className="group inline-flex items-center gap-3 px-8 md:px-10 py-3.5 md:py-4 text-[10px] md:text-[11px] tracking-[0.32em] text-white uppercase"
+                className="group inline-flex items-center justify-center gap-3 px-8 py-3.5 text-[10px] uppercase tracking-[0.32em] text-white md:px-10 md:py-4 md:text-[11px]"
                 style={{
                   border: '1px solid rgba(255,255,255,0.18)',
                   background: 'transparent',
@@ -161,12 +175,34 @@ export default function Hero() {
                   transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
                 }}
               >
-                View Works
+                VIEW WORKS
                 <svg
                   className="w-3 h-3 md:w-3.5 md:h-3.5 group-hover:translate-y-0.5 transition-transform duration-300"
                   fill="none" stroke="currentColor" viewBox="0 0 24 24"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+                </svg>
+              </motion.a>
+              <motion.a
+                href="#contact"
+                className="group inline-flex items-center justify-center gap-3 px-8 py-3.5 text-[10px] uppercase tracking-[0.3em] text-[#080808] md:px-10 md:py-4 md:text-[11px]"
+                style={{
+                  border: '1px solid rgba(212,175,55,0.48)',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.96), rgba(212,175,55,0.82))',
+                  boxShadow: '0 0 36px rgba(212,175,55,0.12), inset 0 1px 0 rgba(255,255,255,0.55)',
+                }}
+                whileHover={{
+                  y: -2,
+                  boxShadow: '0 0 60px rgba(212,175,55,0.24), 0 0 110px rgba(109,40,217,0.12)',
+                  transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+                }}
+              >
+                START A PROJECT
+                <svg
+                  className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 md:h-3.5 md:w-3.5"
+                  fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 7l-10 10M17 7H7m10 0v10" />
                 </svg>
               </motion.a>
             </motion.div>

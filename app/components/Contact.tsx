@@ -58,6 +58,21 @@ const socials = [
   },
 ]
 
+const inquiries = [
+  {
+    title: 'Website Design',
+    text: '店舗・サービス・個人ブランド向けのWebサイト制作。',
+  },
+  {
+    title: 'Landing Page',
+    text: '商品・サービスの魅力を伝えるLP制作。',
+  },
+  {
+    title: 'Creative Direction',
+    text: '世界観、配色、構成、ビジュアルの方向性づくり。',
+  },
+]
+
 function SocialCard({
   href,
   icon,
@@ -184,7 +199,11 @@ export default function Contact() {
 
         {/* ── Copy ── */}
         <AnimateIn delay={160}>
-          <div className="mb-10 md:mb-16" style={{ maxWidth: '520px' }}>
+          <div className="mb-10 md:mb-16 max-w-3xl">
+            <p className="mb-5 text-sm leading-7 text-white/46 md:text-base md:leading-8">
+              Webサイト制作、LP制作、ブランドサイト、ポートフォリオサイトなど、お気軽にご相談ください。
+              世界観のあるデザインと、AIを活用したスピード感のある制作で、ブランドの魅力が伝わるWebサイトを目指します。
+            </p>
             <p className="text-sm md:text-base leading-relaxed mb-2" style={{ color: '#585858' }}>
               AI × Design × Overseas Culture — blending technology<br />
               with a global creative perspective.
@@ -195,8 +214,64 @@ export default function Contact() {
           </div>
         </AnimateIn>
 
+        {/* ── Project inquiry ── */}
+        <AnimateIn delay={240}>
+          <div className="mb-12 md:mb-16">
+            <div className="mb-6 flex items-center justify-between gap-6">
+              <p className="text-[10px] uppercase tracking-[0.5em] text-white/42">
+                Project Inquiry
+              </p>
+              <div className="h-px flex-1 bg-gradient-to-l from-white/[0.07] to-transparent" />
+            </div>
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-4">
+              {inquiries.map((item) => (
+                <motion.div
+                  key={item.title}
+                  className="border border-white/[0.08] bg-white/[0.018] px-5 py-6 backdrop-blur-xl"
+                  whileHover={{
+                    y: -5,
+                    borderColor: 'rgba(212,175,55,0.22)',
+                    boxShadow: '0 24px 70px rgba(0,0,0,0.42), 0 0 44px rgba(212,175,55,0.055)',
+                    transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
+                  }}
+                >
+                  <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.34em] text-white/76">
+                    {item.title}
+                  </p>
+                  <p className="text-sm leading-7 text-white/42">
+                    {item.text}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+            <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <motion.a
+                href="https://www.instagram.com/aicmode"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center border px-7 py-4 text-[10px] font-semibold uppercase tracking-[0.34em] text-[#080808]"
+                style={{
+                  borderColor: 'rgba(212,175,55,0.5)',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.96), rgba(212,175,55,0.82))',
+                  boxShadow: '0 0 44px rgba(212,175,55,0.12), inset 0 1px 0 rgba(255,255,255,0.5)',
+                }}
+                whileHover={{
+                  y: -2,
+                  boxShadow: '0 0 72px rgba(212,175,55,0.22), 0 0 110px rgba(109,40,217,0.10)',
+                  transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
+                }}
+              >
+                CONTACT / DM
+              </motion.a>
+              <p className="text-[10px] uppercase tracking-[0.28em] text-white/26">
+                Instagram DM is open for project inquiries.
+              </p>
+            </div>
+          </div>
+        </AnimateIn>
+
         {/* ── Divider ── */}
-        <AnimateIn delay={280}>
+        <AnimateIn delay={360}>
           <div className="mb-8 md:mb-10 flex items-center gap-6">
             <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to right, rgba(255,255,255,0.06), transparent)' }} />
             <span className="text-[9px] tracking-[0.45em] text-zinc-700 uppercase whitespace-nowrap">Connect</span>
@@ -205,7 +280,7 @@ export default function Contact() {
         </AnimateIn>
 
         {/* ── Social cards ── */}
-        <AnimateIn delay={340}>
+        <AnimateIn delay={420}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
             {socials.map((s, i) => (
               <div key={s.label} className={i === 2 ? 'sm:col-span-2' : ''}>
