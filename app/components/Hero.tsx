@@ -116,10 +116,9 @@ export default function Hero() {
             </motion.p>
 
             <motion.h1
-              className="font-black leading-none tracking-tight"
+              className="font-black leading-none text-[5.5rem] sm:text-[7rem] md:text-[8.5rem] lg:text-[9rem] xl:text-[10.5rem]"
               style={{
-                fontSize: 'clamp(2.8rem, 7vw, 6.5rem)',
-                letterSpacing: '-0.03em',
+                letterSpacing: '0',
                 background: 'linear-gradient(160deg, #ffffff 0%, rgba(255,255,255,0.82) 45%, rgba(200,200,220,0.6) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -129,7 +128,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               transition={{ duration: 1.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
-              AICMODE
+              AIC
             </motion.h1>
 
             <motion.p
