@@ -229,12 +229,12 @@ export default function Hero() {
       {/* Content — subtle parallax on scroll (no blur, stays crisp) */}
       <motion.div
         className="relative z-10 w-full max-w-7xl mx-auto px-5 md:px-8 lg:px-12"
-        style={{ y: contentY, opacity: contentOpacity }}
+        style={{ y: contentY }}
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center select-none">
 
-          {/* Left: branding */}
-          <div className="text-center lg:text-left">
+          {/* Left: branding — fades out on scroll */}
+          <motion.div className="text-center lg:text-left" style={{ opacity: contentOpacity }}>
             <motion.p
               className="text-[9px] md:text-[10px] tracking-[0.85em] text-zinc-600 mb-6 md:mb-8 uppercase"
               initial={{ opacity: 0, y: 10 }}
@@ -335,7 +335,7 @@ export default function Hero() {
                 </svg>
               </motion.a>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* Right: Achievement card */}
           <motion.div
