@@ -9,6 +9,21 @@ const ease = [0.13, 0.86, 0.18, 1] as const
 
 const projects = [
   {
+    title: 'BLACKLINE DETAILING',
+    subtitle: 'Premium Auto Care / Landing Page',
+    category: 'Premium Auto Care / Landing Page',
+    text: '黒を基調にした海外ガレージ風の高級カーケアブランドサイトです。洗車、コーティング、内装クリーニングをプレミアムに見せるため、光沢・反射・メタリック感を意識して制作しました。',
+    colorLabel: 'Black / Charcoal / Silver / Metallic',
+    accent: '#c7cdd3',
+    tint: '#07090b',
+    image: '/works/images/blackline-detailing.png',
+    width: 1024,
+    height: 1536,
+    url: 'https://aicmode.github.io/BLACKLINE-DETAILING/',
+    buttonLabel: 'Open Site',
+    isBlacklinePremium: true,
+  },
+  {
     title: 'CORE 45',
     subtitle: 'Premium Fitness Studio',
     category: 'Premium Fitness Studio',
@@ -308,6 +323,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
   const isSpecial = 'isSpecial' in project && project.isSpecial
   const isKissaPremium = 'isKissaPremium' in project && project.isKissaPremium
   const isGreenrootPremium = 'isGreenrootPremium' in project && project.isGreenrootPremium
+  const isBlacklinePremium = 'isBlacklinePremium' in project && project.isBlacklinePremium
   const buttonLabel = 'buttonLabel' in project ? project.buttonLabel : 'Open Site'
   const meta = getProjectMeta(project, index)
 
@@ -317,6 +333,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
         isWideFeatured ? ' featured-work-card md:col-span-2 xl:col-span-2' : ''
       }${isSpecial ? ' bakery-special-card' : ''}${isKissaPremium ? ' kissa-premium-card' : ''}${
         isGreenrootPremium ? ' greenroot-premium-card' : ''
+      }${isBlacklinePremium ? ' blackline-premium-card' : ''
       }`}
       style={{
         '--work-accent': project.accent,
@@ -389,11 +406,11 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
         <div className="editorial-work-meta flex items-start justify-between gap-5 px-1 pt-5 sm:pt-6">
           <div className="min-w-0">
             <div className="flex items-center gap-3">
-              <p className={`${isKissaPremium || isGreenrootPremium ? '' : 'truncate uppercase '}text-[10px] font-semibold tracking-[0.34em] text-[color:var(--work-accent)]${isKissaPremium ? ' kissa-premium-subtitle' : ''}${isGreenrootPremium ? ' greenroot-premium-subtitle' : ''}`}>
+              <p className={`${isKissaPremium || isGreenrootPremium || isBlacklinePremium ? '' : 'truncate uppercase '}text-[10px] font-semibold tracking-[0.34em] text-[color:var(--work-accent)]${isKissaPremium ? ' kissa-premium-subtitle' : ''}${isGreenrootPremium ? ' greenroot-premium-subtitle' : ''}${isBlacklinePremium ? ' blackline-premium-subtitle' : ''}`}>
                 {project.subtitle}
               </p>
             </div>
-            <h3 className={`mt-2 font-semibold tracking-[-0.02em] text-white${isKissaPremium || isGreenrootPremium ? '' : ' truncate'}${isSpecial ? ' bakery-card-title' : ' text-xl sm:text-2xl tracking-[-0.01em]'}${isKissaPremium ? ' kissa-premium-title' : ''}${isGreenrootPremium ? ' greenroot-premium-title' : ''}`}>{project.title}</h3>
+            <h3 className={`mt-2 font-semibold tracking-[-0.02em] text-white${isKissaPremium || isGreenrootPremium || isBlacklinePremium ? '' : ' truncate'}${isSpecial ? ' bakery-card-title' : ' text-xl sm:text-2xl tracking-[-0.01em]'}${isKissaPremium ? ' kissa-premium-title' : ''}${isGreenrootPremium ? ' greenroot-premium-title' : ''}${isBlacklinePremium ? ' blackline-premium-title' : ''}`}>{project.title}</h3>
             <p className="mt-2 max-w-[30rem] text-sm leading-6 text-white/48">{project.text}</p>
             <div className="mt-4 flex flex-wrap gap-2">
               <span className="border border-[color:var(--work-accent)]/35 bg-white/[0.025] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.28em] text-[color:var(--work-accent)]/80">
@@ -408,7 +425,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
                 </span>
               ))}
             </div>
-            <p className={`mt-3 space-y-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.26em] text-white/28${isKissaPremium ? ' kissa-premium-tags' : ''}${isGreenrootPremium ? ' greenroot-premium-tags' : ''}`}>
+            <p className={`mt-3 space-y-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.26em] text-white/28${isKissaPremium ? ' kissa-premium-tags' : ''}${isGreenrootPremium ? ' greenroot-premium-tags' : ''}${isBlacklinePremium ? ' blackline-premium-tags' : ''}`}>
               <span className="block">{project.category}</span>
               <span className="block text-[color:var(--work-accent)] opacity-70">{project.colorLabel}</span>
             </p>
