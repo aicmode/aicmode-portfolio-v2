@@ -366,7 +366,7 @@ export default function Hero() {
                     '0 0 50px rgba(212,175,55,0.22), 0 0 100px rgba(212,175,55,0.10)',
                 }}
               >
-                10+
+                20+
               </div>
 
               {/* Label */}

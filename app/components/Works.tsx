@@ -9,6 +9,22 @@ const ease = [0.13, 0.86, 0.18, 1] as const
 
 const projects = [
   {
+    title: 'VELVET CREAM',
+    subtitle: 'Luxury Ice Cream Brand Website',
+    category: 'Luxury Ice Cream Brand Website',
+    text: '海外の高級デザートブランドをイメージした、プレミアムアイスクリームの大規模ブランドサイトです。フレーバー紹介、ブランドストーリー、素材紹介、ギフト導線、ショップページまで構成し、食品ブランドとしての世界観と販売導線を意識して制作しました。',
+    colorLabel: 'Black / Cream / Gold / Luxury',
+    accent: '#d8bd7c',
+    tint: '#120d08',
+    image: '/works/images/velvet-cream.png',
+    width: 1086,
+    height: 1448,
+    url: 'https://aicmode.github.io/VELVET-CREAM/',
+    buttonLabel: 'Open Site',
+    tags: ['Brand Site', 'Food', 'Gift', 'Luxury', 'Multi Page'],
+    isVelvetPremium: true,
+  },
+  {
     title: 'BLACKLINE DETAILING',
     subtitle: 'Premium Auto Care / Landing Page',
     category: 'Premium Auto Care / Landing Page',
@@ -288,6 +304,14 @@ function ArrowIcon() {
 }
 
 function getProjectMeta(project: (typeof projects)[number], index: number) {
+  if ('tags' in project) {
+    return {
+      projectType: null,
+      tags: project.tags,
+      isFeatured: index < 6 || ('featured' in project && project.featured),
+    }
+  }
+
   const category = project.category.toLowerCase()
   const title = project.title.toLowerCase()
   const tags = ['Responsive', 'AI Assisted']
@@ -324,6 +348,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
   const isKissaPremium = 'isKissaPremium' in project && project.isKissaPremium
   const isGreenrootPremium = 'isGreenrootPremium' in project && project.isGreenrootPremium
   const isBlacklinePremium = 'isBlacklinePremium' in project && project.isBlacklinePremium
+  const isVelvetPremium = 'isVelvetPremium' in project && project.isVelvetPremium
   const buttonLabel = 'buttonLabel' in project ? project.buttonLabel : 'Open Site'
   const meta = getProjectMeta(project, index)
 
@@ -333,7 +358,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
         isWideFeatured ? ' featured-work-card md:col-span-2 xl:col-span-2' : ''
       }${isSpecial ? ' bakery-special-card' : ''}${isKissaPremium ? ' kissa-premium-card' : ''}${
         isGreenrootPremium ? ' greenroot-premium-card' : ''
-      }${isBlacklinePremium ? ' blackline-premium-card' : ''
+      }${isBlacklinePremium ? ' blackline-premium-card' : ''}${isVelvetPremium ? ' velvet-premium-card' : ''
       }`}
       style={{
         '--work-accent': project.accent,
@@ -406,16 +431,18 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
         <div className="editorial-work-meta flex items-start justify-between gap-5 px-1 pt-5 sm:pt-6">
           <div className="min-w-0">
             <div className="flex items-center gap-3">
-              <p className={`${isKissaPremium || isGreenrootPremium || isBlacklinePremium ? '' : 'truncate uppercase '}text-[10px] font-semibold tracking-[0.34em] text-[color:var(--work-accent)]${isKissaPremium ? ' kissa-premium-subtitle' : ''}${isGreenrootPremium ? ' greenroot-premium-subtitle' : ''}${isBlacklinePremium ? ' blackline-premium-subtitle' : ''}`}>
+              <p className={`${isKissaPremium || isGreenrootPremium || isBlacklinePremium || isVelvetPremium ? '' : 'truncate uppercase '}text-[10px] font-semibold tracking-[0.34em] text-[color:var(--work-accent)]${isKissaPremium ? ' kissa-premium-subtitle' : ''}${isGreenrootPremium ? ' greenroot-premium-subtitle' : ''}${isBlacklinePremium ? ' blackline-premium-subtitle' : ''}${isVelvetPremium ? ' velvet-premium-subtitle' : ''}`}>
                 {project.subtitle}
               </p>
             </div>
-            <h3 className={`mt-2 font-semibold tracking-[-0.02em] text-white${isKissaPremium || isGreenrootPremium || isBlacklinePremium ? '' : ' truncate'}${isSpecial ? ' bakery-card-title' : ' text-xl sm:text-2xl tracking-[-0.01em]'}${isKissaPremium ? ' kissa-premium-title' : ''}${isGreenrootPremium ? ' greenroot-premium-title' : ''}${isBlacklinePremium ? ' blackline-premium-title' : ''}`}>{project.title}</h3>
+            <h3 className={`mt-2 font-semibold tracking-[-0.02em] text-white${isKissaPremium || isGreenrootPremium || isBlacklinePremium || isVelvetPremium ? '' : ' truncate'}${isSpecial ? ' bakery-card-title' : ' text-xl sm:text-2xl tracking-[-0.01em]'}${isKissaPremium ? ' kissa-premium-title' : ''}${isGreenrootPremium ? ' greenroot-premium-title' : ''}${isBlacklinePremium ? ' blackline-premium-title' : ''}${isVelvetPremium ? ' velvet-premium-title' : ''}`}>{project.title}</h3>
             <p className="mt-2 max-w-[30rem] text-sm leading-6 text-white/48">{project.text}</p>
             <div className="mt-4 flex flex-wrap gap-2">
-              <span className="border border-[color:var(--work-accent)]/35 bg-white/[0.025] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.28em] text-[color:var(--work-accent)]/80">
-                Project Type · {meta.projectType}
-              </span>
+              {meta.projectType ? (
+                <span className="border border-[color:var(--work-accent)]/35 bg-white/[0.025] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.28em] text-[color:var(--work-accent)]/80">
+                  Project Type · {meta.projectType}
+                </span>
+              ) : null}
               {meta.tags.map((tag) => (
                 <span
                   key={tag}
@@ -425,7 +452,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
                 </span>
               ))}
             </div>
-            <p className={`mt-3 space-y-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.26em] text-white/28${isKissaPremium ? ' kissa-premium-tags' : ''}${isGreenrootPremium ? ' greenroot-premium-tags' : ''}${isBlacklinePremium ? ' blackline-premium-tags' : ''}`}>
+            <p className={`mt-3 space-y-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.26em] text-white/28${isKissaPremium ? ' kissa-premium-tags' : ''}${isGreenrootPremium ? ' greenroot-premium-tags' : ''}${isBlacklinePremium ? ' blackline-premium-tags' : ''}${isVelvetPremium ? ' velvet-premium-tags' : ''}`}>
               <span className="block">{project.category}</span>
               <span className="block text-[color:var(--work-accent)] opacity-70">{project.colorLabel}</span>
             </p>
@@ -440,7 +467,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
             transition={{ duration: 0.9, ease }}
             aria-hidden="true"
           >
-            <span className="text-[8px] font-semibold uppercase tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">{buttonLabel}</span>
+            <span className="text-[8px] font-semibold tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">{buttonLabel}</span>
             <ArrowIcon />
           </motion.span>
         </div>
@@ -466,7 +493,7 @@ export default function Works() {
               className="mt-4 text-[10px] md:text-[11px] uppercase tracking-[0.44em]"
               style={{ color: 'rgba(212,175,55,0.65)' }}
             >
-              10+ Projects Completed
+              20+ Projects Completed
             </p>
           </div>
           <p className="max-w-xl text-sm leading-8 text-white/46 lg:text-right">
