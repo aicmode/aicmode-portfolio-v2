@@ -150,7 +150,7 @@ const projects = [
     height: 1492,
     url: 'https://aicmode.github.io/LUNA-Restaurant/',
     featured: true,
-    group: 'Websites',
+    group: 'LP Sites',
   },
   {
     title: 'URBN Hair Studio',
@@ -164,7 +164,7 @@ const projects = [
     width: 1055,
     height: 1491,
     url: 'https://aicmode.github.io/URBN-Hair-Studio/',
-    group: 'Websites',
+    group: 'LP Sites',
   },
   {
     title: 'Evergreen Medical Center',
@@ -178,7 +178,7 @@ const projects = [
     width: 1055,
     height: 1491,
     url: 'https://aicmode.github.io/Evergreen-Medical-Center/',
-    group: 'Websites',
+    group: 'LP Sites',
   },
   {
     title: 'SWEET MEMORIES',
@@ -207,7 +207,7 @@ const projects = [
     height: 1024,
     url: 'https://aicmode.github.io/MATCHA/',
     isKissaPremium: true,
-    group: 'Websites',
+    group: 'LP Sites',
   },
   {
     title: 'DEERIFY',
