@@ -9,6 +9,15 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Hide scrollbar for the Works category tab bar (keeps horizontal scroll on mobile) */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   background-color: #080808;
   color: #f0f0f0;

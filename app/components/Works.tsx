@@ -2,12 +2,31 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useMemo, useState } from 'react'
 import type { CSSProperties } from 'react'
 import AnimateIn from './AnimateIn'
 
 const ease = [0.13, 0.86, 0.18, 1] as const
 
+const CATEGORIES = ['All', 'LP Sites', 'Websites', 'EC Sites', 'Web Apps'] as const
+type Category = (typeof CATEGORIES)[number]
+
 const projects = [
+  {
+    title: 'NIGHT SHIFT CARE',
+    subtitle: 'NURSE SHIFT WEB APP',
+    category: 'Nurse Shift & Payroll Web App',
+    text: '看護師向けに、夜勤回数や給与情報の入力・確認を想定して制作した簡易Webアプリ。シフト管理、勤怠メモ、給与見積もりまで操作性を重視してまとめています。',
+    colorLabel: 'Web App / Dashboard UI / Responsive',
+    accent: '#5fd2c2',
+    tint: '#08201d',
+    image: '/works/images/night-shift-care.png',
+    width: 1080,
+    height: 1527,
+    url: 'https://aicmode.github.io/NIGHT-SHIFT-CARE/',
+    buttonLabel: 'Open Site',
+    group: 'Web Apps',
+  },
   {
     title: 'VELVET CREAM',
     subtitle: 'Luxury Ice Cream Brand Website',
@@ -23,6 +42,7 @@ const projects = [
     buttonLabel: 'Open Site',
     tags: ['Brand Site', 'Food', 'Gift', 'Luxury', 'Multi Page'],
     isVelvetPremium: true,
+    group: 'Websites',
   },
   {
     title: 'BLACKLINE DETAILING',
@@ -38,6 +58,7 @@ const projects = [
     url: 'https://aicmode.github.io/BLACKLINE-DETAILING/',
     buttonLabel: 'Open Site',
     isBlacklinePremium: true,
+    group: 'LP Sites',
   },
   {
     title: 'CORE 45',
@@ -52,6 +73,7 @@ const projects = [
     height: 1492,
     url: 'https://aicmode.github.io/CORE-45/',
     buttonLabel: 'Open Site',
+    group: 'LP Sites',
   },
   {
     title: 'GREENROOT ENERGY',
@@ -67,6 +89,7 @@ const projects = [
     url: 'https://aicmode.github.io/GREENROOT-ENERGY/',
     buttonLabel: 'Open Site',
     isGreenrootPremium: true,
+    group: 'Websites',
   },
   {
     title: 'NEW YORK PIZZA HOUSE',
@@ -81,6 +104,7 @@ const projects = [
     height: 1491,
     url: 'https://aicmode.github.io/New-York-Pizza-House/',
     buttonLabel: 'Open Site',
+    group: 'EC Sites',
   },
   {
     title: 'SUNSET BAGEL',
@@ -96,6 +120,7 @@ const projects = [
     url: 'https://aesthetic-rolypoly-3a91ae.netlify.app/',
     buttonLabel: 'Open Site',
     isSpecial: true,
+    group: 'Websites',
   },
   {
     title: 'BROOKLYN BREAD CO.',
@@ -110,6 +135,7 @@ const projects = [
     height: 1491,
     url: 'https://aicmode.github.io/BROOKLYN-BREAD-CO./',
     isSpecial: true,
+    group: 'Websites',
   },
   {
     title: 'LUNA Restaurant',
@@ -124,6 +150,7 @@ const projects = [
     height: 1492,
     url: 'https://aicmode.github.io/LUNA-Restaurant/',
     featured: true,
+    group: 'Websites',
   },
   {
     title: 'URBN Hair Studio',
@@ -137,6 +164,7 @@ const projects = [
     width: 1055,
     height: 1491,
     url: 'https://aicmode.github.io/URBN-Hair-Studio/',
+    group: 'Websites',
   },
   {
     title: 'Evergreen Medical Center',
@@ -150,6 +178,7 @@ const projects = [
     width: 1055,
     height: 1491,
     url: 'https://aicmode.github.io/Evergreen-Medical-Center/',
+    group: 'Websites',
   },
   {
     title: 'SWEET MEMORIES',
@@ -163,6 +192,7 @@ const projects = [
     width: 1055,
     height: 1491,
     url: 'https://aicmode.github.io/Sweet-Memories/',
+    group: 'EC Sites',
   },
   {
     title: 'KISSA MATCHA',
@@ -177,6 +207,7 @@ const projects = [
     height: 1024,
     url: 'https://aicmode.github.io/MATCHA/',
     isKissaPremium: true,
+    group: 'Websites',
   },
   {
     title: 'DEERIFY',
@@ -190,6 +221,7 @@ const projects = [
     width: 726,
     height: 1024,
     url: 'https://aicmode.github.io/Deerify/',
+    group: 'LP Sites',
   },
   {
     title: 'AURA',
@@ -203,6 +235,7 @@ const projects = [
     width: 1063,
     height: 1480,
     url: 'https://aicmode.github.io/AURA/',
+    group: 'LP Sites',
   },
   {
     title: 'LUMI Grooming',
@@ -216,6 +249,7 @@ const projects = [
     width: 1055,
     height: 1491,
     url: 'https://aicmode.github.io/Lumi-Tails/',
+    group: 'LP Sites',
   },
   {
     title: 'LUXE MEMBERS',
@@ -229,6 +263,7 @@ const projects = [
     width: 1055,
     height: 1491,
     url: 'https://luxe-members.vercel.app',
+    group: 'EC Sites',
   },
   {
     title: 'SAINT AVE',
@@ -242,6 +277,7 @@ const projects = [
     width: 1122,
     height: 1402,
     url: 'https://aicmode.github.io/saint-ave/',
+    group: 'LP Sites',
   },
   {
     title: 'NOIR CAFÉ',
@@ -255,6 +291,7 @@ const projects = [
     width: 1054,
     height: 1492,
     url: 'https://aicmode.github.io/noir-cafe/',
+    group: 'LP Sites',
   },
   {
     title: 'Tsuki Usagi Wagashi',
@@ -268,6 +305,7 @@ const projects = [
     width: 1055,
     height: 1491,
     url: 'https://aicmode.github.io/tsuki-usagi-wagashi/',
+    group: 'LP Sites',
   },
   {
     title: 'PULSE',
@@ -281,6 +319,7 @@ const projects = [
     width: 1054,
     height: 1492,
     url: 'https://aicmode.github.io/pulse/',
+    group: 'LP Sites',
   },
 ] as const
 
@@ -304,42 +343,13 @@ function ArrowIcon() {
 }
 
 function getProjectMeta(project: (typeof projects)[number], index: number) {
+  const isFeatured = index < 6 || ('featured' in project && project.featured)
+
   if ('tags' in project) {
-    return {
-      projectType: null,
-      tags: project.tags,
-      isFeatured: index < 6 || ('featured' in project && project.featured),
-    }
+    return { tags: project.tags, isFeatured }
   }
 
-  const category = project.category.toLowerCase()
-  const title = project.title.toLowerCase()
-  const tags = ['Responsive', 'AI Assisted']
-  let projectType = 'Brand Site'
-
-  if (category.includes('ec') || category.includes('commerce') || title.includes('pizza')) {
-    projectType = 'EC'
-  } else if (category.includes('corporate') || category.includes('medical')) {
-    projectType = 'Multi Page'
-  } else if (
-    category.includes('lp') ||
-    category.includes('landing') ||
-    category.includes('studio') ||
-    category.includes('wellness')
-  ) {
-    projectType = 'LP'
-  }
-
-  if (index < 6 && !tags.includes('Brand Site')) tags.unshift('Brand Site')
-  if (projectType === 'EC') tags.unshift('EC')
-  if (projectType === 'Multi Page') tags.unshift('Multi Page')
-  if (projectType === 'LP') tags.unshift('Landing Page')
-
-  return {
-    projectType,
-    tags: [...new Set(tags)].slice(0, 4),
-    isFeatured: index < 6 || ('featured' in project && project.featured),
-  }
+  return { tags: ['Responsive', 'AI Assisted'], isFeatured }
 }
 
 function WorkPoster({ project, index }: { project: (typeof projects)[number]; index: number }) {
@@ -438,11 +448,9 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
             <h3 className={`mt-2 font-semibold tracking-[-0.02em] text-white${isKissaPremium || isGreenrootPremium || isBlacklinePremium || isVelvetPremium ? '' : ' truncate'}${isSpecial ? ' bakery-card-title' : ' text-xl sm:text-2xl tracking-[-0.01em]'}${isKissaPremium ? ' kissa-premium-title' : ''}${isGreenrootPremium ? ' greenroot-premium-title' : ''}${isBlacklinePremium ? ' blackline-premium-title' : ''}${isVelvetPremium ? ' velvet-premium-title' : ''}`}>{project.title}</h3>
             <p className="mt-2 max-w-[30rem] text-sm leading-6 text-white/48">{project.text}</p>
             <div className="mt-4 flex flex-wrap gap-2">
-              {meta.projectType ? (
-                <span className="border border-[color:var(--work-accent)]/35 bg-white/[0.025] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.28em] text-[color:var(--work-accent)]/80">
-                  Project Type · {meta.projectType}
-                </span>
-              ) : null}
+              <span className="border border-[color:var(--work-accent)]/45 bg-[color:var(--work-accent)]/[0.08] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.28em] text-[color:var(--work-accent)]">
+                {project.group}
+              </span>
               {meta.tags.map((tag) => (
                 <span
                   key={tag}
@@ -477,13 +485,32 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
 }
 
 export default function Works() {
+  const [activeCategory, setActiveCategory] = useState<Category>('All')
+
+  const counts = useMemo(() => {
+    const map = { All: projects.length } as Record<Category, number>
+    for (const category of CATEGORIES) {
+      if (category === 'All') continue
+      map[category] = projects.filter((project) => project.group === category).length
+    }
+    return map
+  }, [])
+
+  const visibleProjects = useMemo(
+    () =>
+      projects
+        .map((project, index) => ({ project, index }))
+        .filter(({ project }) => activeCategory === 'All' || project.group === activeCategory),
+    [activeCategory],
+  )
+
   return (
     <section id="works" className="works editorial-works-section relative overflow-x-hidden bg-[#010101] px-4 py-24 sm:px-6 md:px-10 md:py-36">
       <div className="editorial-page-noise pointer-events-none absolute inset-0 opacity-[0.13]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/[0.08]" />
 
       <div className="relative mx-auto max-w-[1420px]">
-        <div className="mb-14 flex flex-col gap-8 border-b border-white/[0.08] pb-8 md:mb-20 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mb-12 flex flex-col gap-8 border-b border-white/[0.08] pb-8 md:mb-16 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="mb-5 text-[10px] uppercase tracking-[0.48em] text-white/38">Selected Web Design Works</p>
             <h2 className="text-[clamp(4.5rem,16vw,12rem)] font-black uppercase leading-[0.8] text-white">
@@ -502,11 +529,47 @@ export default function Works() {
           </p>
         </div>
 
-        <div className="editorial-poster-grid mx-auto grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 lg:gap-x-10 lg:gap-y-20 xl:grid-cols-3">
-          {projects.map((project, index) => (
+        <div className="works-tabs no-scrollbar -mx-4 mb-12 overflow-x-auto px-4 sm:mx-0 sm:px-0 md:mb-16">
+          <div className="flex min-w-max items-center gap-2 sm:flex-wrap sm:gap-2.5">
+            {CATEGORIES.map((category) => {
+              const isActive = activeCategory === category
+              return (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => setActiveCategory(category)}
+                  aria-pressed={isActive}
+                  className={`group/tab inline-flex items-center gap-2 whitespace-nowrap border px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.26em] transition-all duration-500 ${
+                    isActive
+                      ? 'border-[rgba(212,175,55,0.5)] bg-[rgba(212,175,55,0.07)] text-[rgba(212,175,55,0.95)] shadow-[0_0_30px_rgba(212,175,55,0.08)]'
+                      : 'border-white/10 text-white/45 hover:border-white/25 hover:text-white/80'
+                  }`}
+                >
+                  {category}
+                  <span
+                    className={`text-[8px] font-semibold tracking-[0.1em] tabular-nums transition-colors duration-500 ${
+                      isActive ? 'text-[rgba(212,175,55,0.65)]' : 'text-white/25'
+                    }`}
+                  >
+                    {counts[category]}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        <motion.div
+          key={activeCategory}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease }}
+          className="editorial-poster-grid mx-auto grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 lg:gap-x-10 lg:gap-y-20 xl:grid-cols-3"
+        >
+          {visibleProjects.map(({ project, index }) => (
             <WorkPoster key={project.title} project={project} index={index} />
           ))}
-        </div>
+        </motion.div>
 
         <AnimateIn delay={300}>
           <div className="mt-14 flex flex-col gap-6 border-t border-white/[0.07] pt-8 md:mt-20 lg:flex-row lg:items-center lg:justify-between">
