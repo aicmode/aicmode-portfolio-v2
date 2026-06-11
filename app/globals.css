@@ -1035,18 +1035,15 @@ a { -webkit-tap-highlight-color: transparent; }
 .kissa-premium-title,
 .greenroot-premium-title,
 .velvet-premium-title {
-  display: -webkit-box;
+  display: block;
   min-height: 3.1rem;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  overflow: visible;
   font-size: 1.45rem;
   line-height: 1.08;
-  text-overflow: ellipsis;
   white-space: normal;
 }
 
-.editorial-work-meta > div > p:first-of-type,
+.editorial-work-meta > div > div:first-of-type p,
 .blackline-premium-subtitle,
 .kissa-premium-subtitle,
 .greenroot-premium-subtitle,
@@ -1060,10 +1057,11 @@ a { -webkit-tap-highlight-color: transparent; }
   white-space: normal;
 }
 
-.editorial-work-meta > div > p:nth-of-type(2) {
+.editorial-work-meta > div > p:first-of-type {
   display: -webkit-box;
   min-height: 4.5rem;
   overflow: hidden;
+  overflow-wrap: anywhere;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   text-overflow: ellipsis;
@@ -1074,7 +1072,7 @@ a { -webkit-tap-highlight-color: transparent; }
   overflow: hidden;
 }
 
-.editorial-work-meta > div > p:nth-of-type(3) {
+.editorial-work-meta > div > p:nth-of-type(2) {
   display: -webkit-box;
   min-height: 2rem;
   overflow: hidden;
