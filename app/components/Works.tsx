@@ -122,7 +122,7 @@ const projects = [
     image: '/works/images/bagel.png',
     width: 2200,
     height: 1464,
-    url: 'https://aesthetic-rolypoly-3a91ae.netlify.app/',
+    url: 'https://aicmode.github.io/SUNSET-BAGEL/',
     buttonLabel: 'Open Site',
     isSpecial: true,
     group: 'Websites',
