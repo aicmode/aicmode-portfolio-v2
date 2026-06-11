@@ -273,7 +273,7 @@ a { -webkit-tap-highlight-color: transparent; }
 }
 
 .editorial-poster-grid {
-  align-items: start;
+  align-items: stretch;
 }
 
 .editorial-poster-shell {
@@ -324,6 +324,9 @@ a { -webkit-tap-highlight-color: transparent; }
 
 .editorial-poster-image {
   display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   filter: saturate(0.98) contrast(1.03) brightness(0.98);
   transform: scale(1.001);
   transition:
@@ -950,5 +953,162 @@ a { -webkit-tap-highlight-color: transparent; }
 
   .featured-work-card .editorial-work-meta p {
     max-width: 24rem;
+  }
+}
+
+/* ─────────────────────────────────────
+   Works: uniform card sizing
+───────────────────────────────────── */
+.editorial-work-card {
+  display: flex;
+  height: 38rem;
+}
+
+.editorial-work-card > a,
+.featured-work-card > a,
+.blackline-premium-card > a,
+.kissa-premium-card > a,
+.greenroot-premium-card > a,
+.velvet-premium-card > a {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.featured-work-card > a {
+  grid-template-columns: none;
+}
+
+.editorial-work-card .editorial-poster-shell,
+.featured-work-card .editorial-poster-shell,
+.blackline-premium-card .editorial-poster-shell,
+.kissa-premium-card .editorial-poster-shell,
+.greenroot-premium-card .editorial-poster-shell,
+.velvet-premium-card .editorial-poster-shell {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  height: auto;
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+
+.editorial-work-card .editorial-poster-image,
+.featured-work-card .editorial-poster-image,
+.blackline-premium-card .editorial-poster-image,
+.kissa-premium-card .editorial-poster-image,
+.greenroot-premium-card .editorial-poster-image,
+.velvet-premium-card .editorial-poster-image,
+.bakery-poster-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.editorial-work-meta,
+.featured-work-card .editorial-work-meta,
+.blackline-premium-card .editorial-work-meta,
+.kissa-premium-card .editorial-work-meta,
+.greenroot-premium-card .editorial-work-meta,
+.velvet-premium-card .editorial-work-meta {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 1.25rem 0.25rem 0.35rem;
+  overflow: hidden;
+}
+
+.editorial-work-meta > div {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.editorial-work-meta h3,
+.featured-work-card .editorial-work-meta h3,
+.bakery-card-title,
+.blackline-premium-title,
+.kissa-premium-title,
+.greenroot-premium-title,
+.velvet-premium-title {
+  display: -webkit-box;
+  min-height: 3.1rem;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 1.45rem;
+  line-height: 1.08;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.editorial-work-meta > div > p:first-of-type,
+.blackline-premium-subtitle,
+.kissa-premium-subtitle,
+.greenroot-premium-subtitle,
+.velvet-premium-subtitle {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.editorial-work-meta > div > p:nth-of-type(2) {
+  display: -webkit-box;
+  min-height: 4.5rem;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
+}
+
+.editorial-work-meta > div > div:nth-of-type(2) {
+  max-height: 3.9rem;
+  overflow: hidden;
+}
+
+.editorial-work-meta > div > p:nth-of-type(3) {
+  display: -webkit-box;
+  min-height: 2rem;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+}
+
+.editorial-work-button {
+  align-self: flex-start;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+@media (max-width: 767px) {
+  .editorial-work-card {
+    height: 36rem;
+  }
+
+  .editorial-work-card > a,
+  .featured-work-card > a,
+  .blackline-premium-card > a,
+  .kissa-premium-card > a,
+  .greenroot-premium-card > a,
+  .velvet-premium-card > a {
+    padding: 9px;
+  }
+
+  .editorial-work-card .editorial-poster-shell,
+  .featured-work-card .editorial-poster-shell,
+  .blackline-premium-card .editorial-poster-shell,
+  .kissa-premium-card .editorial-poster-shell,
+  .greenroot-premium-card .editorial-poster-shell,
+  .velvet-premium-card .editorial-poster-shell {
+    aspect-ratio: 16 / 10.5;
   }
 }

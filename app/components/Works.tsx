@@ -365,7 +365,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
   return (
     <motion.article
       className={`work-card editorial-work-card group relative overflow-hidden bg-[#030303]${
-        isWideFeatured ? ' featured-work-card md:col-span-2 xl:col-span-2' : ''
+        isWideFeatured ? ' featured-work-card' : ''
       }${isSpecial ? ' bakery-special-card' : ''}${isKissaPremium ? ' kissa-premium-card' : ''}${
         isGreenrootPremium ? ' greenroot-premium-card' : ''
       }${isBlacklinePremium ? ' blackline-premium-card' : ''}${isVelvetPremium ? ' velvet-premium-card' : ''
@@ -403,42 +403,19 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
             </div>
           ) : null}
 
-          {isSpecial ? (
-            <div className="bakery-image-frame">
-              <Image
-                src={project.image}
-                alt={`${project.title} editorial poster`}
-                fill
-                sizes="(min-width: 1280px) 520px, (min-width: 768px) 45vw, 92vw"
-                className="bakery-poster-image"
-                priority={index < 2}
-              />
-            </div>
-          ) : isKissaPremium ? (
-            <div className="kissa-image-frame">
-              <Image
-                src={project.image}
-                alt={`${project.title} matcha photo`}
-                fill
-                sizes="(min-width: 1280px) 520px, (min-width: 768px) 45vw, 92vw"
-                className="kissa-poster-image editorial-poster-image"
-                priority={index < 2}
-              />
-            </div>
-          ) : (
-            <Image
-              src={project.image}
-              alt={`${project.title} editorial poster`}
-              width={project.width}
-              height={project.height}
-              sizes="(min-width: 1280px) 520px, (min-width: 768px) 45vw, 92vw"
-              className="editorial-poster-image h-auto w-full"
-              priority={index < 2}
-            />
-          )}
+          <Image
+            src={project.image}
+            alt={`${project.title} editorial poster`}
+            fill
+            sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 92vw"
+            className={`editorial-poster-image${isSpecial ? ' bakery-poster-image' : ''}${
+              isKissaPremium ? ' kissa-poster-image' : ''
+            }`}
+            priority={index < 2}
+          />
         </motion.div>
 
-        <div className="editorial-work-meta flex items-start justify-between gap-5 px-1 pt-5 sm:pt-6">
+        <div className="editorial-work-meta flex gap-5 px-1 pt-5 sm:pt-6">
           <div className="min-w-0">
             <div className="flex items-center gap-3">
               <p className={`${isKissaPremium || isGreenrootPremium || isBlacklinePremium || isVelvetPremium ? '' : 'truncate uppercase '}text-[10px] font-semibold tracking-[0.34em] text-[color:var(--work-accent)]${isKissaPremium ? ' kissa-premium-subtitle' : ''}${isGreenrootPremium ? ' greenroot-premium-subtitle' : ''}${isBlacklinePremium ? ' blackline-premium-subtitle' : ''}${isVelvetPremium ? ' velvet-premium-subtitle' : ''}`}>
@@ -564,7 +541,7 @@ export default function Works() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease }}
-          className="editorial-poster-grid mx-auto grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 lg:gap-x-10 lg:gap-y-20 xl:grid-cols-3"
+          className="editorial-poster-grid mx-auto grid grid-cols-1 items-stretch gap-x-8 gap-y-14 md:grid-cols-2 lg:gap-x-10 lg:gap-y-20 xl:grid-cols-3"
         >
           {visibleProjects.map(({ project, index }) => (
             <WorkPoster key={project.title} project={project} index={index} />
