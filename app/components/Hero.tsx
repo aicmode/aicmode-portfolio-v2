@@ -34,7 +34,6 @@ export default function Hero() {
   const contentY       = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
   const contentOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0])
   const bgScale        = useTransform(scrollYProgress, [0, 1], [1, 1.06])
-  const scrollOpacity  = useTransform(scrollYProgress, [0, 0.18], [0.45, 0])
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -226,15 +225,13 @@ export default function Hero() {
         }}
       />
 
-      {/* Content — subtle parallax on scroll (no blur, stays crisp) */}
-      <motion.div
-        className="relative z-10 w-full max-w-7xl mx-auto px-5 md:px-8 lg:px-12"
-        style={{ y: contentY }}
-      >
+      {/* Content — the achievement card scrolls naturally so its text is never clipped.
+          Bottom padding below lg keeps the scroll indicator clear of the card footer. */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-5 md:px-8 lg:px-12 pt-28 pb-32 lg:py-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center select-none">
 
-          {/* Left: branding — fades out on scroll */}
-          <motion.div className="text-center lg:text-left" style={{ opacity: contentOpacity }}>
+          {/* Left: branding — subtle parallax + fade out on scroll */}
+          <motion.div className="text-center lg:text-left" style={{ opacity: contentOpacity, y: contentY }}>
             <motion.p
               className="text-[9px] md:text-[10px] tracking-[0.85em] text-zinc-600 mb-6 md:mb-8 uppercase"
               initial={{ opacity: 0, y: 10 }}
@@ -416,7 +413,7 @@ export default function Hero() {
           </motion.div>
 
         </div>
-      </motion.div>
+      </div>
 
       {/* Scroll indicator */}
       <motion.div
@@ -424,7 +421,6 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.45 }}
         transition={{ delay: 1.5, duration: 1.2 }}
-        style={{ opacity: scrollOpacity }}
       >
         <span className="text-[9px] tracking-[0.65em] text-zinc-600 uppercase">Scroll</span>
         <div className="w-[1px] h-10 md:h-12 overflow-hidden">
