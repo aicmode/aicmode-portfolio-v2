@@ -279,9 +279,9 @@ const projects = [
   },
   {
     title: 'SAINT AVE',
-    subtitle: 'CINEMATIC EDITORIAL',
-    category: 'Luxury Fashion Brand / Cinematic Editorial',
-    text: '海外ラグジュアリーブランドをイメージした、シネマティックなファッションブランドサイト。高級感・静けさ・都会的な空気感を重視し、GSAPアニメーションやLookbook演出を実装。',
+    subtitle: 'LUXURY STREET EC',
+    category: 'Luxury Street EC Site',
+    text: '深夜の都市と静かな高級感をテーマにした、ラグジュアリーストリート系ECサイトデザイン。',
     colorLabel: 'GSAP / Lookbook / Luxury UI',
     accent: '#d6c08a',
     tint: '#17110b',
@@ -290,7 +290,7 @@ const projects = [
     height: 1402,
     imagePosition: 'center 48%',
     url: 'https://aicmode.github.io/saint-ave/',
-    group: 'LP Sites',
+    group: 'EC Sites',
   },
   {
     title: 'NOIR CAFÉ',
