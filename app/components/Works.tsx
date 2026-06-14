@@ -310,8 +310,8 @@ const projects = [
   {
     title: 'Tsuki Usagi Wagashi',
     subtitle: 'WAGASHI STORE',
-    category: 'CULTURAL COMMERCE',
-    text: '月夜と季節の和菓子をテーマにした、架空の和菓子ブランドサイト。淡い月色と深い梅色を重ね、伝統の繊細さと現代的な購買体験を上品に表現。',
+    category: 'EC Site',
+    text: '和菓子ブランドの世界観を活かし、商品一覧・ギフトボックス・カート導線を備えたオンラインストア型サイト。',
     colorLabel: 'Moon Pink / Plum',
     accent: '#d99ab8',
     tint: '#24101d',
@@ -320,7 +320,7 @@ const projects = [
     height: 1491,
     imagePosition: 'center 52%',
     url: 'https://aicmode.github.io/tsuki-usagi-wagashi/',
-    group: 'LP Sites',
+    group: 'EC Sites',
   },
   {
     title: 'PULSE',
