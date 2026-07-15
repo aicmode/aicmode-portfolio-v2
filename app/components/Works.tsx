@@ -14,6 +14,23 @@ type Category = (typeof CATEGORIES)[number]
 
 const projects = [
   {
+    title: 'Date Calculator Tool',
+    subtitle: 'UTILITY WEB APP',
+    category: 'Date Calculator / Utility Web App',
+    text: '基準日と任意の日数を入力するだけで、「○日後」「○日前」の日付を曜日付きで計算できるWebツールです。結果コピー、履歴保存、リセット機能にも対応し、日常業務で素早く日付を確認できます。',
+    colorLabel: 'Web App / Utility Tool / Responsive',
+    accent: '#8fb7e8',
+    tint: '#0a1420',
+    image: unsplash('1506784983877-45594efa4cbe'),
+    width: 1080,
+    height: 1527,
+    imagePosition: 'center 50%',
+    url: 'https://aicmode.github.io/date-calculator-tool/',
+    buttonLabel: 'Open Site',
+    githubUrl: 'https://github.com/aicmode/date-calculator-tool',
+    group: 'Web Apps',
+  },
+  {
     title: 'NIGHT SHIFT CARE',
     subtitle: 'NURSE SHIFT WEB APP',
     category: 'Nurse Shift & Payroll Web App',
@@ -359,7 +376,7 @@ function ArrowIcon() {
 }
 
 function getProjectMeta(project: (typeof projects)[number], index: number) {
-  const isFeatured = index < 6 || ('featured' in project && project.featured)
+  const isFeatured = index < 7 || ('featured' in project && project.featured)
 
   if ('tags' in project) {
     return { tags: project.tags, isFeatured }
@@ -376,6 +393,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
   const isBlacklinePremium = 'isBlacklinePremium' in project && project.isBlacklinePremium
   const isVelvetPremium = 'isVelvetPremium' in project && project.isVelvetPremium
   const buttonLabel = 'buttonLabel' in project ? project.buttonLabel : 'Open Site'
+  const githubUrl = 'githubUrl' in project ? project.githubUrl : undefined
   const meta = getProjectMeta(project, index)
 
   return (
@@ -461,18 +479,61 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
             </p>
           </div>
 
-          <motion.span
-            className="editorial-work-button inline-flex h-11 shrink-0 items-center justify-center gap-2 border border-white/18 px-3 text-white/72"
-            variants={{
-              rest: { borderColor: 'rgba(255,255,255,0.18)' },
-              hover: { borderColor: project.accent, color: project.accent },
-            }}
-            transition={{ duration: 0.9, ease }}
-            aria-hidden="true"
-          >
-            <span className="text-[8px] font-semibold tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">{buttonLabel}</span>
-            <ArrowIcon />
-          </motion.span>
+          {githubUrl ? (
+            <div className="flex shrink-0 flex-col gap-2">
+              <motion.span
+                className="editorial-work-button inline-flex h-11 items-center justify-center gap-2 border border-white/18 px-3 text-white/72"
+                variants={{
+                  rest: { borderColor: 'rgba(255,255,255,0.18)' },
+                  hover: { borderColor: project.accent, color: project.accent },
+                }}
+                transition={{ duration: 0.9, ease }}
+                aria-hidden="true"
+              >
+                <span className="text-[8px] font-semibold tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">{buttonLabel}</span>
+                <ArrowIcon />
+              </motion.span>
+              <motion.span
+                role="link"
+                tabIndex={0}
+                aria-label={`Open ${project.title} GitHub repository`}
+                className="editorial-work-button inline-flex h-11 cursor-pointer items-center justify-center gap-2 border border-white/18 px-3 text-white/72"
+                variants={{
+                  rest: { borderColor: 'rgba(255,255,255,0.18)' },
+                  hover: { borderColor: project.accent, color: project.accent },
+                }}
+                transition={{ duration: 0.9, ease }}
+                onClick={(event) => {
+                  event.preventDefault()
+                  event.stopPropagation()
+                  window.open(githubUrl, '_blank', 'noopener,noreferrer')
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    window.open(githubUrl, '_blank', 'noopener,noreferrer')
+                  }
+                }}
+              >
+                <span className="text-[8px] font-semibold tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">GitHub</span>
+                <ArrowIcon />
+              </motion.span>
+            </div>
+          ) : (
+            <motion.span
+              className="editorial-work-button inline-flex h-11 shrink-0 items-center justify-center gap-2 border border-white/18 px-3 text-white/72"
+              variants={{
+                rest: { borderColor: 'rgba(255,255,255,0.18)' },
+                hover: { borderColor: project.accent, color: project.accent },
+              }}
+              transition={{ duration: 0.9, ease }}
+              aria-hidden="true"
+            >
+              <span className="text-[8px] font-semibold tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">{buttonLabel}</span>
+              <ArrowIcon />
+            </motion.span>
+          )}
         </div>
       </motion.a>
     </motion.article>
