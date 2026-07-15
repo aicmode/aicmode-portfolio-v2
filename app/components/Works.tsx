@@ -13,6 +13,7 @@ const CATEGORIES = ['All', 'LP Sites', 'Websites', 'EC Sites', 'Web Apps'] as co
 type Category = (typeof CATEGORIES)[number]
 
 const projects = [
+  // Date Calculator Tool production sync
   {
     title: 'Date Calculator Tool',
     subtitle: 'UTILITY WEB APP',
@@ -392,7 +393,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
   const isBlacklinePremium = 'isBlacklinePremium' in project && project.isBlacklinePremium
   const isVelvetPremium = 'isVelvetPremium' in project && project.isVelvetPremium
   const buttonLabel = 'buttonLabel' in project ? project.buttonLabel : 'Open Site'
-  const githubUrl = 'githubUrl' in project ? project.githubUrl : undefined
+  const githubUrl = 'githubUrl' in project && typeof project.githubUrl === 'string' ? project.githubUrl : undefined
   const meta = getProjectMeta(project, index)
 
   return (
