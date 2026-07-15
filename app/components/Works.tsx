@@ -16,7 +16,7 @@ const projects = [
   {
     title: 'Date Calculator Tool',
     subtitle: 'UTILITY WEB APP',
-    category: 'Date Calculator / Utility Web App',
+    category: 'Date Calculation Utility Web App',
     text: '基準日と任意の日数を入力するだけで、「○日後」「○日前」の日付を曜日付きで計算できるWebツールです。結果コピー、履歴保存、リセット機能にも対応し、日常業務で素早く日付を確認できます。',
     colorLabel: 'Web App / Utility Tool / Responsive',
     accent: '#8fb7e8',
@@ -27,7 +27,6 @@ const projects = [
     imagePosition: 'center 50%',
     url: 'https://aicmode.github.io/date-calculator-tool/',
     buttonLabel: 'Open Site',
-    githubUrl: 'https://github.com/aicmode/date-calculator-tool',
     group: 'Web Apps',
   },
   {
