@@ -427,7 +427,6 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
   const isBlacklinePremium = 'isBlacklinePremium' in project && project.isBlacklinePremium
   const isVelvetPremium = 'isVelvetPremium' in project && project.isVelvetPremium
   const buttonLabel = 'buttonLabel' in project ? project.buttonLabel : 'Open Site'
-  const githubUrl = 'githubUrl' in project && typeof project.githubUrl === 'string' ? project.githubUrl : undefined
   const meta = getProjectMeta(project, index)
 
   return (
@@ -513,61 +512,18 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
             </p>
           </div>
 
-          {githubUrl ? (
-            <div className="flex shrink-0 flex-col gap-2">
-              <motion.span
-                className="editorial-work-button inline-flex h-11 items-center justify-center gap-2 border border-white/18 px-3 text-white/72"
-                variants={{
-                  rest: { borderColor: 'rgba(255,255,255,0.18)' },
-                  hover: { borderColor: project.accent, color: project.accent },
-                }}
-                transition={{ duration: 0.9, ease }}
-                aria-hidden="true"
-              >
-                <span className="text-[8px] font-semibold tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">{buttonLabel}</span>
-                <ArrowIcon />
-              </motion.span>
-              <motion.span
-                role="link"
-                tabIndex={0}
-                aria-label={`Open ${project.title} GitHub repository`}
-                className="editorial-work-button inline-flex h-11 cursor-pointer items-center justify-center gap-2 border border-white/18 px-3 text-white/72"
-                variants={{
-                  rest: { borderColor: 'rgba(255,255,255,0.18)' },
-                  hover: { borderColor: project.accent, color: project.accent },
-                }}
-                transition={{ duration: 0.9, ease }}
-                onClick={(event) => {
-                  event.preventDefault()
-                  event.stopPropagation()
-                  window.open(githubUrl, '_blank', 'noopener,noreferrer')
-                }}
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter' || event.key === ' ') {
-                    event.preventDefault()
-                    event.stopPropagation()
-                    window.open(githubUrl, '_blank', 'noopener,noreferrer')
-                  }
-                }}
-              >
-                <span className="text-[8px] font-semibold tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">GitHub</span>
-                <ArrowIcon />
-              </motion.span>
-            </div>
-          ) : (
-            <motion.span
-              className="editorial-work-button inline-flex h-11 shrink-0 items-center justify-center gap-2 border border-white/18 px-3 text-white/72"
-              variants={{
-                rest: { borderColor: 'rgba(255,255,255,0.18)' },
-                hover: { borderColor: project.accent, color: project.accent },
-              }}
-              transition={{ duration: 0.9, ease }}
-              aria-hidden="true"
-            >
-              <span className="text-[8px] font-semibold tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">{buttonLabel}</span>
-              <ArrowIcon />
-            </motion.span>
-          )}
+          <motion.span
+            className="editorial-work-button inline-flex h-11 shrink-0 items-center justify-center gap-2 border border-white/18 px-3 text-white/72"
+            variants={{
+              rest: { borderColor: 'rgba(255,255,255,0.18)' },
+              hover: { borderColor: project.accent, color: project.accent },
+            }}
+            transition={{ duration: 0.9, ease }}
+            aria-hidden="true"
+          >
+            <span className="text-[8px] font-semibold tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">{buttonLabel}</span>
+            <ArrowIcon />
+          </motion.span>
         </div>
       </motion.a>
     </motion.article>
