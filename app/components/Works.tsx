@@ -64,6 +64,23 @@ const projects = [
     group: 'Web Apps',
   },
   {
+    title: 'AI Prompt Manager',
+    subtitle: 'AI PRODUCTIVITY WEB APP',
+    category: 'AI PROMPT MANAGEMENT WEB APP',
+    text: 'ChatGPT・Claude・Codex・Geminiなどで使用するプロンプトを一元管理し、検索・分類・お気に入り登録・コピー・再利用できるWebツールです。LocalStorage保存やJSONインポート・エクスポートにも対応しています。',
+    colorLabel: 'Web App / Responsive / AI Assisted',
+    accent: '#a78bfa',
+    tint: '#12101f',
+    image: '/works/images/ai-prompt-manager.png',
+    width: 1080,
+    height: 1527,
+    imagePosition: 'center top',
+    url: 'https://aicmode.github.io/ai-prompt-manager/',
+    buttonLabel: 'Open Site',
+    githubUrl: 'https://github.com/aicmode/ai-prompt-manager',
+    group: 'Web Apps',
+  },
+  {
     title: 'VELVET CREAM',
     subtitle: 'Luxury Ice Cream Brand Website',
     category: 'Luxury Ice Cream Brand Website',
@@ -393,7 +410,7 @@ function ArrowIcon() {
 }
 
 function getProjectMeta(project: (typeof projects)[number], index: number) {
-  const isFeatured = index < 7 || ('featured' in project && project.featured)
+  const isFeatured = index < 8 || ('featured' in project && project.featured)
 
   if ('tags' in project) {
     return { tags: project.tags, isFeatured }
