@@ -81,6 +81,25 @@ const projects = [
     group: 'Web Apps',
   },
   {
+    title: 'Dify AI Chat',
+    subtitle: 'AI CHATBOT WEB APP',
+    category: 'DIFY API CHATBOT WEB APPLICATION',
+    text: 'Dify APIとNode.js・Expressを連携し、ブラウザ上でAIと会話できるチャットボットWebアプリです。会話の継続、チャットのリセット、ローディング表示、エラー処理に対応し、APIキーは環境変数で安全に管理しています。',
+    colorLabel: 'Web App / Node.js / Express',
+    accent: '#5b8cff',
+    tint: '#0a1122',
+    image: '/works/images/dify-ai-chat-thumbnail.svg',
+    imageAlt: 'Dify APIと連携したAIチャットボットWebアプリの画面',
+    width: 1600,
+    height: 1000,
+    imagePosition: 'center',
+    url: 'https://github.com/aicmode/dify-ai-chatbot-web-app',
+    buttonLabel: 'Open Site',
+    githubUrl: 'https://github.com/aicmode/dify-ai-chatbot-web-app',
+    tags: ['Responsive', 'AI Powered'],
+    group: 'Web Apps',
+  },
+  {
     title: 'VELVET CREAM',
     subtitle: 'Luxury Ice Cream Brand Website',
     category: 'Luxury Ice Cream Brand Website',
@@ -410,7 +429,7 @@ function ArrowIcon() {
 }
 
 function getProjectMeta(project: (typeof projects)[number], index: number) {
-  const isFeatured = index < 8 || ('featured' in project && project.featured)
+  const isFeatured = index < 9 || ('featured' in project && project.featured)
 
   if ('tags' in project) {
     return { tags: project.tags, isFeatured }
@@ -472,7 +491,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
 
           <Image
             src={project.image}
-            alt={`${project.title} photo thumbnail`}
+            alt={'imageAlt' in project ? project.imageAlt : `${project.title} photo thumbnail`}
             fill
             sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 92vw"
             className={`editorial-poster-image${isSpecial ? ' bakery-poster-image' : ''}${
@@ -480,7 +499,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
             }`}
             style={{ objectPosition: 'imagePosition' in project ? project.imagePosition : 'center' }}
             priority={index < 2}
-            unoptimized={project.image.startsWith('https://')}
+            unoptimized={project.image.startsWith('https://') || project.image.endsWith('.svg')}
           />
         </motion.div>
 

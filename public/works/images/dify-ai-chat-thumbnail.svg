@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Dify APIと連携したAIチャットボットWebアプリの画面">
+  <defs>
+    <radialGradient id="difyBg" cx="34%" cy="26%" r="90%">
+      <stop offset="0%" stop-color="#0f1830"/>
+      <stop offset="46%" stop-color="#0a1122"/>
+      <stop offset="100%" stop-color="#04060d"/>
+    </radialGradient>
+    <linearGradient id="difyOrb" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7aa7ff"/>
+      <stop offset="55%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="difyOut" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f8dff"/>
+      <stop offset="100%" stop-color="#2f6ae0"/>
+    </linearGradient>
+    <linearGradient id="difyStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5b8cff"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <filter id="difyGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="26" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="difySoft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+
+  <!-- background -->
+  <rect width="1600" height="1000" fill="url(#difyBg)"/>
+
+  <!-- faint dot grid -->
+  <g fill="#5b8cff" opacity="0.06">
+    <g id="difyRow">
+      <circle cx="80" cy="80" r="2.4"/><circle cx="180" cy="80" r="2.4"/><circle cx="280" cy="80" r="2.4"/><circle cx="380" cy="80" r="2.4"/><circle cx="480" cy="80" r="2.4"/><circle cx="580" cy="80" r="2.4"/><circle cx="680" cy="80" r="2.4"/><circle cx="780" cy="80" r="2.4"/><circle cx="880" cy="80" r="2.4"/><circle cx="980" cy="80" r="2.4"/><circle cx="1080" cy="80" r="2.4"/><circle cx="1180" cy="80" r="2.4"/><circle cx="1280" cy="80" r="2.4"/><circle cx="1380" cy="80" r="2.4"/><circle cx="1480" cy="80" r="2.4"/>
+    </g>
+    <use href="#difyRow" y="120"/><use href="#difyRow" y="240"/><use href="#difyRow" y="360"/>
+    <use href="#difyRow" y="480"/><use href="#difyRow" y="600"/><use href="#difyRow" y="720"/><use href="#difyRow" y="840"/>
+  </g>
+
+  <!-- ambient glow blooms -->
+  <circle cx="360" cy="500" r="230" fill="#3b82f6" opacity="0.14" filter="url(#difySoft)"/>
+  <circle cx="1230" cy="360" r="180" fill="#8b5cf6" opacity="0.10" filter="url(#difySoft)"/>
+
+  <!-- AI orb with concentric rings -->
+  <g transform="translate(360,500)">
+    <circle r="205" fill="none" stroke="url(#difyStroke)" stroke-width="1.2" opacity="0.22"/>
+    <circle r="162" fill="none" stroke="#5b8cff" stroke-width="1.2" opacity="0.30" stroke-dasharray="6 12"/>
+    <circle r="120" fill="none" stroke="url(#difyStroke)" stroke-width="2" opacity="0.5"/>
+    <circle r="78" fill="url(#difyOrb)" filter="url(#difyGlow)"/>
+    <circle r="78" fill="none" stroke="#eaf1ff" stroke-width="1.4" opacity="0.35"/>
+    <!-- inner spark node -->
+    <path d="M0,-34 L9,-9 L34,0 L9,9 L0,34 L-9,9 L-34,0 L-9,-9 Z" fill="#f4f8ff" opacity="0.92"/>
+    <!-- orbiting nodes -->
+    <circle cx="162" cy="0" r="7" fill="#8b5cf6"/>
+    <circle cx="-141" cy="72" r="6" fill="#5b8cff"/>
+    <circle cx="72" cy="-150" r="5" fill="#7aa7ff"/>
+  </g>
+
+  <!-- chat conversation -->
+  <g>
+    <!-- incoming bubble 1 -->
+    <g>
+      <rect x="700" y="230" width="470" height="120" rx="26" fill="#111c33" stroke="#5b8cff" stroke-opacity="0.28" stroke-width="1.4"/>
+      <rect x="736" y="268" width="300" height="14" rx="7" fill="#93b4ff" opacity="0.55"/>
+      <rect x="736" y="300" width="210" height="14" rx="7" fill="#6f8fce" opacity="0.4"/>
+    </g>
+
+    <!-- outgoing bubble (user) -->
+    <g>
+      <rect x="900" y="400" width="440" height="120" rx="26" fill="url(#difyOut)"/>
+      <rect x="900" y="400" width="440" height="120" rx="26" fill="none" stroke="#a9c6ff" stroke-opacity="0.35" stroke-width="1.2"/>
+      <rect x="944" y="438" width="330" height="14" rx="7" fill="#eaf1ff" opacity="0.9"/>
+      <rect x="944" y="470" width="230" height="14" rx="7" fill="#dbe7ff" opacity="0.7"/>
+    </g>
+
+    <!-- incoming bubble with typing indicator -->
+    <g>
+      <rect x="700" y="570" width="250" height="110" rx="26" fill="#111c33" stroke="#8b5cf6" stroke-opacity="0.32" stroke-width="1.4"/>
+      <circle cx="770" cy="625" r="12" fill="#7aa7ff"/>
+      <circle cx="825" cy="625" r="12" fill="#5b8cff" opacity="0.8"/>
+      <circle cx="880" cy="625" r="12" fill="#8b5cf6" opacity="0.7"/>
+    </g>
+  </g>
+
+  <!-- connecting thread from orb to chat -->
+  <path d="M438,500 C560,500 590,300 700,300" fill="none" stroke="url(#difyStroke)" stroke-width="1.4" opacity="0.35" stroke-dasharray="4 10"/>
+
+  <!-- corner brackets for a futuristic frame -->
+  <g stroke="#5b8cff" stroke-width="2" fill="none" opacity="0.35">
+    <path d="M60,60 h60 M60,60 v60"/>
+    <path d="M1540,60 h-60 M1540,60 v60"/>
+    <path d="M60,940 h60 M60,940 v-60"/>
+    <path d="M1540,940 h-60 M1540,940 v-60"/>
+  </g>
+
+  <!-- subtle wordmark (minimal text) -->
+  <text x="1470" y="905" text-anchor="end" font-family="'Helvetica Neue',Arial,sans-serif" font-size="26" font-weight="700" letter-spacing="8" fill="#7aa7ff" opacity="0.5">DIFY AI</text>
+</svg>
