@@ -1,213 +1,43 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-labelledby="title desc">
-  <title id="title">Dify AI Chat</title>
-  <desc id="desc">左に発光するAIコア、中央に奥行きを持って浮かぶ半透明のチャットUI、右に浮遊するUIパネルを配した、静かで高級感のある近未来AIチャットインターフェース</desc>
-  <defs>
-    <!-- backdrop -->
-    <radialGradient id="bg" cx="34%" cy="46%" r="78%">
-      <stop offset="0" stop-color="#0b1330"/>
-      <stop offset="0.42" stop-color="#050a18"/>
-      <stop offset="1" stop-color="#02040b"/>
-    </radialGradient>
-    <radialGradient id="vignette" cx="50%" cy="48%" r="62%">
-      <stop offset="0.6" stop-color="#02040b" stop-opacity="0"/>
-      <stop offset="1" stop-color="#010206" stop-opacity=".85"/>
-    </radialGradient>
-    <radialGradient id="bloomBlue" cx="50%" cy="50%" r="50%">
-      <stop offset="0" stop-color="#4f8cff" stop-opacity=".58"/>
-      <stop offset="0.5" stop-color="#3f6ae0" stop-opacity=".16"/>
-      <stop offset="1" stop-color="#02040b" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="bloomViolet" cx="50%" cy="50%" r="50%">
-      <stop offset="0" stop-color="#7756ff" stop-opacity=".34"/>
-      <stop offset="1" stop-color="#02040b" stop-opacity="0"/>
-    </radialGradient>
-
-    <!-- AI core -->
-    <radialGradient id="coreHot" cx="40%" cy="34%" r="72%">
-      <stop offset="0" stop-color="#f4f8ff"/>
-      <stop offset="0.16" stop-color="#cfe0ff"/>
-      <stop offset="0.42" stop-color="#78a6ff"/>
-      <stop offset="0.72" stop-color="#4f8cff"/>
-      <stop offset="1" stop-color="#7756ff"/>
-    </radialGradient>
-    <radialGradient id="coreShell" cx="42%" cy="34%" r="70%">
-      <stop offset="0" stop-color="#dbe8ff" stop-opacity=".5"/>
-      <stop offset="0.55" stop-color="#3f62d7" stop-opacity=".12"/>
-      <stop offset="1" stop-color="#7756ff" stop-opacity=".28"/>
-    </radialGradient>
-    <radialGradient id="coreInner" cx="50%" cy="50%" r="50%">
-      <stop offset="0" stop-color="#4f8cff" stop-opacity=".9"/>
-      <stop offset="1" stop-color="#050b1c" stop-opacity=".95"/>
-    </radialGradient>
-
-    <!-- glass surfaces -->
-    <linearGradient id="glass" x1="0" y1="0" x2="0.65" y2="1">
-      <stop offset="0" stop-color="#1b2848" stop-opacity=".92"/>
-      <stop offset="0.5" stop-color="#0c1428" stop-opacity=".88"/>
-      <stop offset="1" stop-color="#070c18" stop-opacity=".97"/>
-    </linearGradient>
-    <linearGradient id="glassBack" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#18233f" stop-opacity=".5"/>
-      <stop offset="1" stop-color="#070c18" stop-opacity=".8"/>
-    </linearGradient>
-    <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#dbe8ff" stop-opacity=".22"/>
-      <stop offset="0.4" stop-color="#dbe8ff" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="bluePanel" x1="0" y1="0" x2="0.4" y2="1">
-      <stop offset="0" stop-color="#8ab0ff"/>
-      <stop offset="0.5" stop-color="#4f8cff"/>
-      <stop offset="1" stop-color="#3a5fd6"/>
-    </linearGradient>
-    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#dbe8ff" stop-opacity=".55"/>
-      <stop offset="0.45" stop-color="#5b8cff" stop-opacity=".26"/>
-      <stop offset="1" stop-color="#8a63ff" stop-opacity=".12"/>
-    </linearGradient>
-    <linearGradient id="thread" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#78a6ff" stop-opacity="0"/>
-      <stop offset="0.5" stop-color="#9dc0ff" stop-opacity=".7"/>
-      <stop offset="1" stop-color="#8a63ff" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#4f8cff" stop-opacity=".16"/>
-      <stop offset="1" stop-color="#4f8cff" stop-opacity="0"/>
-    </linearGradient>
-
-    <pattern id="grid" width="82" height="82" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
-      <path d="M82 0H0V82" fill="none" stroke="#78a6ff" stroke-opacity=".05"/>
-    </pattern>
-
-    <filter id="coreGlow" x="-120%" y="-120%" width="340%" height="340%">
-      <feGaussianBlur stdDeviation="34"/>
-    </filter>
-    <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%">
-      <feGaussianBlur stdDeviation="16"/>
-    </filter>
-    <filter id="bokeh" x="-100%" y="-100%" width="300%" height="300%">
-      <feGaussianBlur stdDeviation="9"/>
-    </filter>
-    <filter id="panelShadow" x="-40%" y="-40%" width="180%" height="200%">
-      <feDropShadow dx="0" dy="34" stdDeviation="34" flood-color="#00020a" flood-opacity=".75"/>
-      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#4f8cff" flood-opacity=".1"/>
-    </filter>
-    <filter id="chipShadow" x="-40%" y="-40%" width="180%" height="200%">
-      <feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#00020a" flood-opacity=".68"/>
-    </filter>
-    <filter id="grain">
-      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/>
-      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0"/>
-    </filter>
-  </defs>
-
-  <!-- backdrop -->
-  <rect width="1600" height="1000" fill="url(#bg)"/>
-  <rect x="70" y="60" width="1460" height="880" rx="48" fill="url(#grid)"/>
-  <ellipse cx="392" cy="470" rx="720" ry="560" fill="url(#bloomBlue)"/>
-  <ellipse cx="1230" cy="430" rx="440" ry="360" fill="url(#bloomViolet)"/>
-
-  <!-- floor grounding + reflected core light -->
-  <ellipse cx="470" cy="902" rx="560" ry="70" fill="url(#floor)"/>
-  <ellipse cx="900" cy="930" rx="820" ry="46" fill="#4f8cff" opacity=".05" filter="url(#softGlow)"/>
-
-  <!-- soft bokeh (out of focus) -->
-  <g filter="url(#bokeh)">
-    <circle cx="196" cy="742" r="16" fill="#5b8cff" opacity=".3"/>
-    <circle cx="1394" cy="248" r="20" fill="#7756ff" opacity=".26"/>
-    <circle cx="1468" cy="676" r="13" fill="#4f8cff" opacity=".24"/>
-    <circle cx="248" cy="238" r="11" fill="#78a6ff" opacity=".24"/>
-    <circle cx="642" cy="196" r="9" fill="#8a63ff" opacity=".22"/>
-  </g>
-
-  <!-- data thread: core to interface -->
-  <path d="M556 486C650 470 686 434 762 430" fill="none" stroke="url(#thread)" stroke-width="1.6" stroke-dasharray="2 11" stroke-linecap="round"/>
-  <circle cx="648" cy="459" r="3.4" fill="#bcd4ff" opacity=".8"/>
-
-  <!-- ===================== AI CORE (hero) ===================== -->
-  <g transform="translate(392 470) scale(1.12)">
-    <circle r="150" fill="#4f8cff" opacity=".26" filter="url(#coreGlow)"/>
-    <circle r="112" fill="#7ba2ff" opacity=".2" filter="url(#coreGlow)"/>
-    <!-- orbital rings -->
-    <ellipse rx="228" ry="86" transform="rotate(-19)" fill="none" stroke="#8fb2ff" stroke-width="1.1" stroke-opacity=".24"/>
-    <ellipse rx="188" ry="188" transform="rotate(24)" fill="none" stroke="url(#edge)" stroke-width="1.2" stroke-dasharray="3 13"/>
-    <ellipse rx="150" ry="56" transform="rotate(64)" fill="none" stroke="#8a63ff" stroke-width="1.1" stroke-opacity=".3"/>
-    <!-- glass shell -->
-    <circle r="98" fill="url(#coreShell)" stroke="url(#edge)" stroke-width="1.6"/>
-    <circle r="74" fill="url(#coreInner)" stroke="#78a6ff" stroke-opacity=".38" stroke-width="1"/>
-    <!-- hot core -->
-    <circle r="50" fill="url(#coreHot)"/>
-    <ellipse cx="-15" cy="-18" rx="21" ry="14" fill="#f6faff" opacity=".62"/>
-    <circle r="49" fill="none" stroke="#eaf2ff" stroke-opacity=".4"/>
-    <!-- orbital nodes -->
-    <circle cx="-214" cy="70" r="5" fill="#8fb2ff"/>
-    <circle cx="176" cy="-66" r="4.2" fill="#8a63ff"/>
-    <circle cx="88" cy="-172" r="3.4" fill="#dbe8ff" opacity=".85"/>
-    <circle cx="-150" cy="-118" r="2.6" fill="#dbe8ff" opacity=".6"/>
-  </g>
-
-  <!-- ===================== depth panel (behind) ===================== -->
-  <g transform="rotate(-5 1108 372)" filter="url(#chipShadow)" opacity=".62">
-    <rect x="1258" y="326" width="220" height="120" rx="24" fill="url(#glassBack)" stroke="#78a6ff" stroke-opacity=".22"/>
-    <circle cx="1298" cy="366" r="14" fill="#5b8cff" opacity=".42"/>
-    <rect x="1324" y="356" width="120" height="8" rx="4" fill="#dbe8ff" opacity=".3"/>
-    <rect x="1284" y="392" width="164" height="7" rx="3.5" fill="#78a6ff" opacity=".2"/>
-    <rect x="1284" y="414" width="120" height="7" rx="3.5" fill="#78a6ff" opacity=".13"/>
-  </g>
-
-  <!-- New Chat pill (floating right, deeper) -->
-  <g transform="rotate(6 1360 624)" filter="url(#chipShadow)" opacity=".72">
-    <rect x="1248" y="596" width="228" height="126" rx="26" fill="url(#glassBack)" stroke="#8a63ff" stroke-opacity=".24"/>
-    <rect x="1276" y="628" width="172" height="34" rx="17" fill="#4f8cff" opacity=".22" stroke="#78a6ff" stroke-opacity=".4"/>
-    <path d="M1298 645h20M1308 635v20" stroke="#dbe8ff" stroke-width="2.4" stroke-linecap="round" opacity=".7"/>
-    <rect x="1330" y="641" width="96" height="9" rx="4.5" fill="#dbe8ff" opacity=".5"/>
-    <rect x="1276" y="686" width="150" height="7" rx="3.5" fill="#78a6ff" opacity=".18"/>
-  </g>
-
-  <!-- ===================== primary chat interface ===================== -->
-  <g transform="rotate(-4 908 504)" filter="url(#panelShadow)">
-    <rect x="636" y="250" width="548" height="508" rx="34" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.6"/>
-    <path d="M636 284Q636 250 670 250H1150Q1184 250 1184 284V330Z" fill="url(#sheen)"/>
-    <!-- header -->
-    <circle cx="676" cy="298" r="6" fill="#8fb2ff" opacity=".9"/>
-    <circle cx="698" cy="298" r="6" fill="#5b8cff" opacity=".5"/>
-    <circle cx="720" cy="298" r="6" fill="#8a63ff" opacity=".45"/>
-    <rect x="758" y="292" width="150" height="10" rx="5" fill="#dbe8ff" opacity=".4"/>
-    <path d="M636 332H1184" stroke="#78a6ff" stroke-opacity=".16"/>
-
-    <!-- assistant bubble -->
-    <path d="M690 372H1024Q1046 372 1046 394V470Q1046 492 1024 492H726L698 512L706 492H690Q668 492 668 470V394Q668 372 690 372Z" fill="#111b30" stroke="#78a6ff" stroke-opacity=".24"/>
-    <circle cx="706" cy="416" r="16" fill="#4f8cff" opacity=".34"/>
-    <path d="M700 416l4 5 8-9" stroke="#dbe8ff" stroke-width="2" stroke-linecap="round" fill="none" opacity=".7"/>
-    <rect x="738" y="404" width="214" height="9" rx="4.5" fill="#dbe8ff" opacity=".5"/>
-    <rect x="738" y="430" width="286" height="8" rx="4" fill="#9db6e6" opacity=".26"/>
-    <rect x="738" y="454" width="230" height="8" rx="4" fill="#9db6e6" opacity=".18"/>
-
-    <!-- hero blue user bubble (glowing) -->
-    <rect x="732" y="512" width="404" height="126" rx="24" fill="#4f8cff" opacity=".2" filter="url(#softGlow)"/>
-    <path d="M760 520H1114Q1138 520 1138 544V612Q1138 636 1114 636H1096L1116 656L1078 636H760Q736 636 736 612V544Q736 520 760 520Z" fill="url(#bluePanel)" stroke="#dbe8ff" stroke-opacity=".42" stroke-width="1.2"/>
-    <path d="M762 522H1112Q1134 522 1135 543" fill="none" stroke="#f0f5ff" stroke-opacity=".45"/>
-    <rect x="782" y="556" width="252" height="9" rx="4.5" fill="#f6f9ff" opacity=".92"/>
-    <rect x="782" y="582" width="296" height="8" rx="4" fill="#e6eeff" opacity=".62"/>
-    <rect x="782" y="606" width="188" height="8" rx="4" fill="#e6eeff" opacity=".44"/>
-
-    <!-- typing indicator -->
-    <path d="M690 664H832Q850 664 850 682V712Q850 730 832 730H726L702 746L710 730H690Q672 730 672 712V682Q672 664 690 664Z" fill="#0d1626" stroke="#8a63ff" stroke-opacity=".26"/>
-    <circle cx="722" cy="697" r="7" fill="#8fb2ff" opacity=".8"/>
-    <circle cx="750" cy="697" r="7" fill="#5b8cff" opacity=".5"/>
-    <circle cx="778" cy="697" r="7" fill="#8a63ff" opacity=".42"/>
-  </g>
-
-  <!-- fine ambient lines -->
-  <path d="M120 812C440 664 742 792 1046 640C1250 538 1400 552 1500 590" fill="none" stroke="#78a6ff" stroke-opacity=".08" stroke-width="1.1"/>
-
-  <!-- vignette + grain -->
-  <rect width="1600" height="1000" fill="url(#vignette)"/>
-  <rect width="1600" height="1000" fill="#9db6e6" opacity=".05" filter="url(#grain)"/>
-
-  <!-- frame corners + label -->
-  <g fill="none" stroke="#78a6ff" stroke-width="1.2" opacity=".22">
-    <path d="M72 132V72H132M1468 72H1528V132M72 868V928H132M1468 928H1528V868"/>
-  </g>
-  <text x="1468" y="892" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="600" letter-spacing="7" fill="#dbe8ff" opacity=".5">DIFY AI</text>
-  <path d="M1322 907H1468" stroke="#5b8cff" stroke-opacity=".26"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="t d">
+<title id="t">Dify AI Chat — premium SaaS workspace</title><desc id="d">A dark navy desk with an aluminium laptop presenting an elegant glass chat interface.</desc>
+<defs>
+ <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#050a12"/><stop offset=".55" stop-color="#0b1625"/><stop offset="1" stop-color="#07101c"/></linearGradient>
+ <radialGradient id="light" cx="22%" cy="6%" r="82%"><stop stop-color="#375d86" stop-opacity=".3"/><stop offset=".55" stop-color="#132840" stop-opacity=".1"/><stop offset="1" stop-opacity="0"/></radialGradient>
+ <linearGradient id="metal" x2="0" y2="1"><stop stop-color="#cbd3dc"/><stop offset=".3" stop-color="#737f8e"/><stop offset=".55" stop-color="#303a47"/><stop offset="1" stop-color="#9aa5b2"/></linearGradient>
+ <linearGradient id="screen" x2="1" y2="1"><stop stop-color="#111d2c"/><stop offset="1" stop-color="#070d16"/></linearGradient>
+ <linearGradient id="glass" x2="1" y2="1"><stop stop-color="#23354a" stop-opacity=".82"/><stop offset="1" stop-color="#0d1725" stop-opacity=".74"/></linearGradient>
+ <linearGradient id="blue" x2="1"><stop stop-color="#75b9ff"/><stop offset="1" stop-color="#2778ff"/></linearGradient>
+ <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur stdDeviation="28"/></filter>
+ <filter id="soft"><feGaussianBlur stdDeviation="14"/></filter>
+</defs>
+<rect width="1600" height="1000" fill="url(#bg)"/><rect width="1600" height="1000" fill="url(#light)"/>
+<path d="M0 726L1600 555V1000H0Z" fill="#050a10" opacity=".48"/><path d="M0 748L1600 577" stroke="#7298bd" stroke-opacity=".08"/>
+<ellipse cx="760" cy="853" rx="570" ry="83" fill="#000" opacity=".72" filter="url(#shadow)"/><ellipse cx="760" cy="817" rx="430" ry="38" fill="#267dff" opacity=".1" filter="url(#soft)"/>
+<!-- shared aluminium laptop -->
+<g transform="translate(235 108)">
+ <rect x="0" y="0" width="1060" height="650" rx="38" fill="url(#metal)"/><rect x="13" y="13" width="1034" height="624" rx="28" fill="#05080d"/>
+ <rect x="31" y="31" width="998" height="588" rx="17" fill="url(#screen)"/><circle cx="530" cy="17" r="5" fill="#111923"/>
+ <!-- browser chrome -->
+ <path d="M31 48Q31 31 48 31H1012Q1029 31 1029 48V88H31Z" fill="#162335"/><circle cx="60" cy="59" r="6" fill="#647386"/><circle cx="82" cy="59" r="6" fill="#536174"/><circle cx="104" cy="59" r="6" fill="#445266"/>
+ <rect x="205" y="46" width="515" height="27" rx="13.5" fill="#0c1521"/><circle cx="226" cy="59.5" r="5" fill="#5a94d7"/><rect x="241" y="55" width="126" height="8" rx="4" fill="#8896a8" opacity=".6"/>
+ <!-- sidebar -->
+ <path d="M31 88H260V619H48Q31 619 31 602Z" fill="#0a121e"/><rect x="59" y="116" width="30" height="30" rx="9" fill="url(#blue)"/><path d="M68 131h12M74 125v12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+ <text x="103" y="138" fill="#e8f0fa" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="600">Dify Chat</text>
+ <rect x="55" y="177" width="181" height="42" rx="12" fill="#17283b"/><circle cx="76" cy="198" r="7" fill="#65aaff"/><rect x="91" y="192" width="83" height="7" rx="3.5" fill="#bdc9d8"/><rect x="91" y="205" width="50" height="5" rx="2.5" fill="#607086"/>
+ <g fill="#738398"><rect x="65" y="251" width="112" height="7" rx="3.5"/><rect x="65" y="287" width="139" height="7" rx="3.5"/><rect x="65" y="323" width="91" height="7" rx="3.5"/></g>
+ <rect x="55" y="548" width="181" height="42" rx="12" fill="#0f1b29" stroke="#26384c"/><circle cx="76" cy="569" r="9" fill="#244b73"/><rect x="94" y="564" width="72" height="7" rx="3.5" fill="#8b9aab"/>
+ <!-- chat area -->
+ <text x="304" y="133" fill="#edf4fc" font-family="Inter,Arial,sans-serif" font-size="24" font-weight="600">Project Assistant</text><circle cx="493" cy="126" r="5" fill="#55d6ab"/><text x="505" y="132" fill="#71849a" font-family="Inter,Arial,sans-serif" font-size="12">ONLINE</text>
+ <line x1="284" y1="158" x2="999" y2="158" stroke="#25364a"/>
+ <circle cx="326" cy="214" r="18" fill="#1e3c5d"/><path d="M318 214h16M326 206v16" stroke="#70b2ff" stroke-width="2"/>
+ <rect x="359" y="185" width="480" height="74" rx="18" fill="url(#glass)" stroke="#30465d"/><rect x="383" y="207" width="302" height="8" rx="4" fill="#bdc9d6"/><rect x="383" y="225" width="212" height="7" rx="3.5" fill="#6f8195"/>
+ <rect x="495" y="289" width="472" height="100" rx="18" fill="#176de0" opacity=".9"/><rect x="522" y="315" width="362" height="8" rx="4" fill="#e9f3ff"/><rect x="522" y="334" width="318" height="7" rx="3.5" fill="#bdd9fb"/><rect x="522" y="352" width="248" height="7" rx="3.5" fill="#bdd9fb"/>
+ <circle cx="326" cy="443" r="18" fill="#1e3c5d"/><path d="M318 443h16M326 435v16" stroke="#70b2ff" stroke-width="2"/>
+ <rect x="359" y="414" width="540" height="88" rx="18" fill="url(#glass)" stroke="#30465d"/><rect x="383" y="438" width="414" height="8" rx="4" fill="#b9c5d3"/><rect x="383" y="457" width="348" height="7" rx="3.5" fill="#6f8195"/><rect x="383" y="475" width="199" height="7" rx="3.5" fill="#6f8195"/>
+ <rect x="299" y="539" width="681" height="53" rx="17" fill="#0a121d" stroke="#2b4057"/><text x="324" y="571" fill="#65778c" font-family="Inter,Arial,sans-serif" font-size="15">Ask anything about your workspace…</text><circle cx="948" cy="565" r="16" fill="url(#blue)"/><path d="M941 565h13M950 558l7 7-7 7" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+ </g>
+ <path d="M145 758H1385L1513 869Q1525 883 1503 891H53Q31 883 46 868Z" fill="url(#metal)"/><path d="M145 758H1385L1405 776H126Z" fill="#b4bec9" opacity=".34"/><path d="M628 785H917L878 840H667Z" fill="#27313c" opacity=".5" stroke="#aab4c0" stroke-opacity=".45"/>
+ <!-- desk objects -->
+ <g transform="translate(1320 626) rotate(9)"><ellipse cx="73" cy="204" rx="90" ry="25" fill="#000" opacity=".35" filter="url(#soft)"/><rect width="146" height="230" rx="28" fill="url(#metal)"/><rect x="8" y="8" width="130" height="214" rx="22" fill="#07111e"/><rect x="25" y="44" width="96" height="11" rx="5.5" fill="#5da6ff"/><rect x="25" y="71" width="71" height="7" rx="3.5" fill="#354d68"/><rect x="25" y="89" width="88" height="7" rx="3.5" fill="#354d68"/><rect x="25" y="120" width="92" height="46" rx="12" fill="#15283d"/><rect x="39" y="137" width="58" height="6" rx="3" fill="#8294a8"/></g>
+<text x="82" y="92" fill="#6faeff" font-family="Inter,Arial,sans-serif" font-size="14" letter-spacing="4">CONVERSATIONAL WORKSPACE</text><text x="82" y="128" fill="#dbe8f6" font-family="Inter,Arial,sans-serif" font-size="28" font-weight="600">Dify AI Chat</text>
 </svg>
