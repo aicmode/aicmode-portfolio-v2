@@ -1,171 +1,213 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-labelledby="title desc">
   <title id="title">Dify AI Chat</title>
-  <desc id="desc">発光するAIコアと、奥行きを持って浮かぶ半透明のチャットパネルを描いた近未来的なAIチャットインターフェース</desc>
+  <desc id="desc">左に発光するAIコア、中央に奥行きを持って浮かぶ半透明のチャットUI、右に浮遊するUIパネルを配した、静かで高級感のある近未来AIチャットインターフェース</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#02050d"/>
-      <stop offset="0.52" stop-color="#050914"/>
-      <stop offset="1" stop-color="#091126"/>
-    </linearGradient>
-    <radialGradient id="focus" cx="50%" cy="50%" r="50%">
-      <stop stop-color="#4f8cff" stop-opacity=".18"/>
-      <stop offset=".55" stop-color="#4f8cff" stop-opacity=".05"/>
-      <stop offset="1" stop-color="#02050d" stop-opacity="0"/>
+    <!-- backdrop -->
+    <radialGradient id="bg" cx="34%" cy="46%" r="78%">
+      <stop offset="0" stop-color="#0b1330"/>
+      <stop offset="0.42" stop-color="#050a18"/>
+      <stop offset="1" stop-color="#02040b"/>
     </radialGradient>
-    <radialGradient id="core" cx="35%" cy="27%" r="75%">
-      <stop stop-color="#dbe8ff"/>
-      <stop offset=".18" stop-color="#78a6ff"/>
-      <stop offset=".58" stop-color="#4f8cff"/>
-      <stop offset="1" stop-color="#7756ff" stop-opacity=".38"/>
+    <radialGradient id="vignette" cx="50%" cy="48%" r="62%">
+      <stop offset="0.6" stop-color="#02040b" stop-opacity="0"/>
+      <stop offset="1" stop-color="#010206" stop-opacity=".85"/>
     </radialGradient>
-    <linearGradient id="coreShell" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#dbe8ff" stop-opacity=".32"/>
-      <stop offset=".34" stop-color="#5b8cff" stop-opacity=".08"/>
+    <radialGradient id="bloomBlue" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#4f8cff" stop-opacity=".58"/>
+      <stop offset="0.5" stop-color="#3f6ae0" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#02040b" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bloomViolet" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#7756ff" stop-opacity=".34"/>
+      <stop offset="1" stop-color="#02040b" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- AI core -->
+    <radialGradient id="coreHot" cx="40%" cy="34%" r="72%">
+      <stop offset="0" stop-color="#f4f8ff"/>
+      <stop offset="0.16" stop-color="#cfe0ff"/>
+      <stop offset="0.42" stop-color="#78a6ff"/>
+      <stop offset="0.72" stop-color="#4f8cff"/>
+      <stop offset="1" stop-color="#7756ff"/>
+    </radialGradient>
+    <radialGradient id="coreShell" cx="42%" cy="34%" r="70%">
+      <stop offset="0" stop-color="#dbe8ff" stop-opacity=".5"/>
+      <stop offset="0.55" stop-color="#3f62d7" stop-opacity=".12"/>
       <stop offset="1" stop-color="#7756ff" stop-opacity=".28"/>
-    </linearGradient>
-    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#17213a" stop-opacity=".9"/>
-      <stop offset=".55" stop-color="#0b1224" stop-opacity=".84"/>
-      <stop offset="1" stop-color="#070b16" stop-opacity=".96"/>
+    </radialGradient>
+    <radialGradient id="coreInner" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#4f8cff" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#050b1c" stop-opacity=".95"/>
+    </radialGradient>
+
+    <!-- glass surfaces -->
+    <linearGradient id="glass" x1="0" y1="0" x2="0.65" y2="1">
+      <stop offset="0" stop-color="#1b2848" stop-opacity=".92"/>
+      <stop offset="0.5" stop-color="#0c1428" stop-opacity=".88"/>
+      <stop offset="1" stop-color="#070c18" stop-opacity=".97"/>
     </linearGradient>
     <linearGradient id="glassBack" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#17203a" stop-opacity=".46"/>
-      <stop offset="1" stop-color="#080d1b" stop-opacity=".78"/>
+      <stop offset="0" stop-color="#18233f" stop-opacity=".5"/>
+      <stop offset="1" stop-color="#070c18" stop-opacity=".8"/>
     </linearGradient>
-    <linearGradient id="bluePanel" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#78a6ff"/>
-      <stop offset=".45" stop-color="#4f8cff"/>
-      <stop offset="1" stop-color="#3f62d7"/>
+    <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dbe8ff" stop-opacity=".22"/>
+      <stop offset="0.4" stop-color="#dbe8ff" stop-opacity="0"/>
     </linearGradient>
-    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="0">
-      <stop stop-color="#dbe8ff" stop-opacity=".42"/>
-      <stop offset=".38" stop-color="#5b8cff" stop-opacity=".26"/>
-      <stop offset="1" stop-color="#8a63ff" stop-opacity=".1"/>
+    <linearGradient id="bluePanel" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#8ab0ff"/>
+      <stop offset="0.5" stop-color="#4f8cff"/>
+      <stop offset="1" stop-color="#3a5fd6"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dbe8ff" stop-opacity=".55"/>
+      <stop offset="0.45" stop-color="#5b8cff" stop-opacity=".26"/>
+      <stop offset="1" stop-color="#8a63ff" stop-opacity=".12"/>
     </linearGradient>
     <linearGradient id="thread" x1="0" y1="0" x2="1" y2="0">
-      <stop stop-color="#78a6ff" stop-opacity=".08"/>
-      <stop offset=".5" stop-color="#78a6ff" stop-opacity=".55"/>
-      <stop offset="1" stop-color="#8a63ff" stop-opacity=".08"/>
+      <stop offset="0" stop-color="#78a6ff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#9dc0ff" stop-opacity=".7"/>
+      <stop offset="1" stop-color="#8a63ff" stop-opacity="0"/>
     </linearGradient>
-    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
-      <path d="M80 0H0V80" fill="none" stroke="#78a6ff" stroke-opacity=".045"/>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4f8cff" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#4f8cff" stop-opacity="0"/>
+    </linearGradient>
+
+    <pattern id="grid" width="82" height="82" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+      <path d="M82 0H0V82" fill="none" stroke="#78a6ff" stroke-opacity=".05"/>
     </pattern>
+
+    <filter id="coreGlow" x="-120%" y="-120%" width="340%" height="340%">
+      <feGaussianBlur stdDeviation="34"/>
+    </filter>
     <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%">
-      <feGaussianBlur stdDeviation="18"/>
+      <feGaussianBlur stdDeviation="16"/>
     </filter>
-    <filter id="panelShadow" x="-30%" y="-40%" width="170%" height="190%">
-      <feDropShadow dx="0" dy="30" stdDeviation="28" flood-color="#00030a" flood-opacity=".72"/>
-      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#4f8cff" flood-opacity=".08"/>
+    <filter id="bokeh" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="9"/>
     </filter>
-    <filter id="smallShadow" x="-30%" y="-50%" width="170%" height="220%">
-      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#00030a" flood-opacity=".7"/>
+    <filter id="panelShadow" x="-40%" y="-40%" width="180%" height="200%">
+      <feDropShadow dx="0" dy="34" stdDeviation="34" flood-color="#00020a" flood-opacity=".75"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#4f8cff" flood-opacity=".1"/>
     </filter>
-    <clipPath id="frontClip">
-      <path d="M732 252L1292 206Q1322 203 1327 232L1399 676Q1404 706 1373 712L812 784Q781 788 776 757L706 291Q701 258 732 252Z"/>
-    </clipPath>
+    <filter id="chipShadow" x="-40%" y="-40%" width="180%" height="200%">
+      <feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#00020a" flood-opacity=".68"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0"/>
+    </filter>
   </defs>
 
+  <!-- backdrop -->
   <rect width="1600" height="1000" fill="url(#bg)"/>
-  <rect x="64" y="54" width="1472" height="892" rx="52" fill="url(#grid)"/>
-  <ellipse cx="873" cy="500" rx="670" ry="440" fill="url(#focus)"/>
-  <path d="M100 808C440 636 744 794 1046 622C1248 507 1398 512 1510 538" fill="none" stroke="url(#thread)" stroke-width="1.2" opacity=".3"/>
-  <path d="M166 278C460 184 718 258 970 173C1175 105 1348 166 1460 228" fill="none" stroke="url(#thread)" stroke-width="1" opacity=".2"/>
+  <rect x="70" y="60" width="1460" height="880" rx="48" fill="url(#grid)"/>
+  <ellipse cx="392" cy="470" rx="720" ry="560" fill="url(#bloomBlue)"/>
+  <ellipse cx="1230" cy="430" rx="440" ry="360" fill="url(#bloomViolet)"/>
 
-  <!-- restrained ambient light -->
-  <ellipse cx="424" cy="508" rx="245" ry="245" fill="#4f8cff" opacity=".08" filter="url(#softGlow)"/>
-  <ellipse cx="1090" cy="536" rx="330" ry="235" fill="#7756ff" opacity=".045" filter="url(#softGlow)"/>
+  <!-- floor grounding + reflected core light -->
+  <ellipse cx="470" cy="902" rx="560" ry="70" fill="url(#floor)"/>
+  <ellipse cx="900" cy="930" rx="820" ry="46" fill="#4f8cff" opacity=".05" filter="url(#softGlow)"/>
 
-  <!-- AI core and orbital system -->
-  <g transform="translate(414 520)">
-    <ellipse rx="234" ry="89" transform="rotate(-18)" fill="none" stroke="#78a6ff" stroke-width="1.2" stroke-opacity=".28"/>
-    <ellipse rx="196" ry="196" transform="rotate(28)" fill="none" stroke="url(#edge)" stroke-width="1.2" stroke-dasharray="4 12"/>
-    <ellipse rx="146" ry="53" transform="rotate(67)" fill="none" stroke="#8a63ff" stroke-width="1.1" stroke-opacity=".28"/>
-    <circle r="112" fill="#4f8cff" opacity=".11" filter="url(#softGlow)"/>
-    <circle r="92" fill="url(#coreShell)" stroke="url(#edge)" stroke-width="1.5"/>
-    <circle r="69" fill="#071020" stroke="#78a6ff" stroke-opacity=".34"/>
-    <circle r="47" fill="url(#core)"/>
-    <ellipse cx="-14" cy="-17" rx="20" ry="13" fill="#eaf2ff" opacity=".58"/>
-    <circle r="46" fill="none" stroke="#dbe8ff" stroke-opacity=".36"/>
-    <circle cx="-218" cy="68" r="5" fill="#78a6ff"/>
-    <circle cx="183" cy="-64" r="4" fill="#8a63ff"/>
-    <circle cx="91" cy="-170" r="3.5" fill="#dbe8ff" opacity=".8"/>
+  <!-- soft bokeh (out of focus) -->
+  <g filter="url(#bokeh)">
+    <circle cx="196" cy="742" r="16" fill="#5b8cff" opacity=".3"/>
+    <circle cx="1394" cy="248" r="20" fill="#7756ff" opacity=".26"/>
+    <circle cx="1468" cy="676" r="13" fill="#4f8cff" opacity=".24"/>
+    <circle cx="248" cy="238" r="11" fill="#78a6ff" opacity=".24"/>
+    <circle cx="642" cy="196" r="9" fill="#8a63ff" opacity=".22"/>
   </g>
 
-  <!-- depth panels -->
-  <g transform="rotate(-8 1030 500)" filter="url(#smallShadow)" opacity=".48">
-    <rect x="845" y="183" width="430" height="154" rx="26" fill="url(#glassBack)" stroke="#78a6ff" stroke-opacity=".22"/>
-    <circle cx="891" cy="230" r="15" fill="#5b8cff" opacity=".38"/>
-    <rect x="923" y="218" width="178" height="8" rx="4" fill="#dbe8ff" opacity=".28"/>
-    <rect x="923" y="242" width="266" height="7" rx="3.5" fill="#78a6ff" opacity=".18"/>
-    <rect x="923" y="264" width="214" height="7" rx="3.5" fill="#78a6ff" opacity=".12"/>
-  </g>
-  <g transform="rotate(7 1170 710)" filter="url(#smallShadow)" opacity=".5">
-    <rect x="1015" y="658" width="395" height="135" rx="24" fill="url(#glassBack)" stroke="#8a63ff" stroke-opacity=".2"/>
-    <rect x="1052" y="699" width="252" height="8" rx="4" fill="#dbe8ff" opacity=".23"/>
-    <rect x="1052" y="725" width="196" height="7" rx="3.5" fill="#78a6ff" opacity=".15"/>
-    <circle cx="1359" cy="727" r="17" fill="#7756ff" opacity=".28"/>
-  </g>
+  <!-- data thread: core to interface -->
+  <path d="M556 486C650 470 686 434 762 430" fill="none" stroke="url(#thread)" stroke-width="1.6" stroke-dasharray="2 11" stroke-linecap="round"/>
+  <circle cx="648" cy="459" r="3.4" fill="#bcd4ff" opacity=".8"/>
 
-  <!-- primary floating glass interface -->
-  <g filter="url(#panelShadow)">
-    <path d="M732 252L1292 206Q1322 203 1327 232L1399 676Q1404 706 1373 712L812 784Q781 788 776 757L706 291Q701 258 732 252Z" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.5"/>
-    <g clip-path="url(#frontClip)">
-      <path d="M719 307L1343 255" stroke="#dbe8ff" stroke-opacity=".1"/>
-      <path d="M742 251L1298 205L1305 249L749 296Z" fill="#dbe8ff" opacity=".025"/>
-      <ellipse cx="1228" cy="232" rx="250" ry="80" fill="#4f8cff" opacity=".045" filter="url(#softGlow)"/>
-    </g>
-    <circle cx="751" cy="286" r="5" fill="#78a6ff" opacity=".8"/>
-    <circle cx="770" cy="284" r="5" fill="#5b8cff" opacity=".38"/>
-    <circle cx="789" cy="282" r="5" fill="#8a63ff" opacity=".32"/>
-    <path d="M1248 252l36-3" stroke="#dbe8ff" stroke-width="2" stroke-linecap="round" opacity=".2"/>
-
-    <!-- quiet assistant message -->
-    <g transform="rotate(-4.7 1010 393)">
-      <path d="M801 339H1167Q1187 339 1187 359V438Q1187 458 1167 458H850L818 476L824 458H801Q781 458 781 438V359Q781 339 801 339Z" fill="#111a2d" stroke="#78a6ff" stroke-opacity=".23"/>
-      <circle cx="823" cy="377" r="15" fill="#4f8cff" opacity=".32"/>
-      <rect x="850" y="366" width="204" height="8" rx="4" fill="#dbe8ff" opacity=".48"/>
-      <rect x="850" y="391" width="276" height="7" rx="3.5" fill="#94aeDE" opacity=".24"/>
-      <rect x="850" y="414" width="218" height="7" rx="3.5" fill="#94aeDE" opacity=".16"/>
-    </g>
-
-    <!-- hero blue message -->
-    <g transform="rotate(-4.7 1113 540)">
-      <path d="M941 482H1280Q1303 482 1303 505V591Q1303 614 1280 614H1263L1282 633L1244 614H941Q918 614 918 591V505Q918 482 941 482Z" fill="url(#bluePanel)" stroke="#dbe8ff" stroke-opacity=".38" stroke-width="1.2"/>
-      <path d="M944 484H1278Q1299 484 1300 504" fill="none" stroke="#eef4ff" stroke-opacity=".38"/>
-      <rect x="961" y="520" width="252" height="9" rx="4.5" fill="#f5f8ff" opacity=".88"/>
-      <rect x="961" y="548" width="292" height="8" rx="4" fill="#dbe8ff" opacity=".58"/>
-      <rect x="961" y="574" width="190" height="8" rx="4" fill="#dbe8ff" opacity=".42"/>
-    </g>
-
-    <!-- typing panel -->
-    <g transform="rotate(-4.7 931 667)">
-      <path d="M817 625H1053Q1071 625 1071 643V704Q1071 722 1053 722H847L821 738L829 722H817Q799 722 799 704V643Q799 625 817 625Z" fill="#0c1426" stroke="#8a63ff" stroke-opacity=".22"/>
-      <circle cx="855" cy="674" r="7" fill="#78a6ff" opacity=".7"/>
-      <circle cx="884" cy="674" r="7" fill="#5b8cff" opacity=".48"/>
-      <circle cx="913" cy="674" r="7" fill="#8a63ff" opacity=".42"/>
-    </g>
+  <!-- ===================== AI CORE (hero) ===================== -->
+  <g transform="translate(392 470) scale(1.12)">
+    <circle r="150" fill="#4f8cff" opacity=".26" filter="url(#coreGlow)"/>
+    <circle r="112" fill="#7ba2ff" opacity=".2" filter="url(#coreGlow)"/>
+    <!-- orbital rings -->
+    <ellipse rx="228" ry="86" transform="rotate(-19)" fill="none" stroke="#8fb2ff" stroke-width="1.1" stroke-opacity=".24"/>
+    <ellipse rx="188" ry="188" transform="rotate(24)" fill="none" stroke="url(#edge)" stroke-width="1.2" stroke-dasharray="3 13"/>
+    <ellipse rx="150" ry="56" transform="rotate(64)" fill="none" stroke="#8a63ff" stroke-width="1.1" stroke-opacity=".3"/>
+    <!-- glass shell -->
+    <circle r="98" fill="url(#coreShell)" stroke="url(#edge)" stroke-width="1.6"/>
+    <circle r="74" fill="url(#coreInner)" stroke="#78a6ff" stroke-opacity=".38" stroke-width="1"/>
+    <!-- hot core -->
+    <circle r="50" fill="url(#coreHot)"/>
+    <ellipse cx="-15" cy="-18" rx="21" ry="14" fill="#f6faff" opacity=".62"/>
+    <circle r="49" fill="none" stroke="#eaf2ff" stroke-opacity=".4"/>
+    <!-- orbital nodes -->
+    <circle cx="-214" cy="70" r="5" fill="#8fb2ff"/>
+    <circle cx="176" cy="-66" r="4.2" fill="#8a63ff"/>
+    <circle cx="88" cy="-172" r="3.4" fill="#dbe8ff" opacity=".85"/>
+    <circle cx="-150" cy="-118" r="2.6" fill="#dbe8ff" opacity=".6"/>
   </g>
 
-  <!-- core-to-interface data path -->
-  <path d="M565 512C638 500 659 448 730 428" fill="none" stroke="url(#thread)" stroke-width="1.4" stroke-dasharray="3 10"/>
-  <circle cx="636" cy="481" r="4" fill="#78a6ff" opacity=".72"/>
-  <circle cx="690" cy="448" r="2.8" fill="#dbe8ff" opacity=".68"/>
-
-  <!-- sparse particles -->
-  <g fill="#dbe8ff">
-    <circle cx="183" cy="215" r="2.4" opacity=".35"/><circle cx="278" cy="749" r="2.8" opacity=".42"/>
-    <circle cx="613" cy="197" r="2.2" opacity=".34"/><circle cx="687" cy="827" r="2.5" opacity=".3"/>
-    <circle cx="1432" cy="339" r="2.8" opacity=".38"/><circle cx="1453" cy="777" r="2.2" opacity=".28"/>
-  </g>
-  <g fill="#5b8cff">
-    <circle cx="225" cy="391" r="4" opacity=".28"/><circle cx="573" cy="738" r="3" opacity=".32"/>
-    <circle cx="1339" cy="149" r="3.5" opacity=".25"/><circle cx="1500" cy="568" r="3" opacity=".3"/>
+  <!-- ===================== depth panel (behind) ===================== -->
+  <g transform="rotate(-5 1108 372)" filter="url(#chipShadow)" opacity=".62">
+    <rect x="1258" y="326" width="220" height="120" rx="24" fill="url(#glassBack)" stroke="#78a6ff" stroke-opacity=".22"/>
+    <circle cx="1298" cy="366" r="14" fill="#5b8cff" opacity=".42"/>
+    <rect x="1324" y="356" width="120" height="8" rx="4" fill="#dbe8ff" opacity=".3"/>
+    <rect x="1284" y="392" width="164" height="7" rx="3.5" fill="#78a6ff" opacity=".2"/>
+    <rect x="1284" y="414" width="120" height="7" rx="3.5" fill="#78a6ff" opacity=".13"/>
   </g>
 
-  <!-- minimal frame and label -->
-  <g fill="none" stroke="#78a6ff" stroke-width="1.2" opacity=".2">
+  <!-- New Chat pill (floating right, deeper) -->
+  <g transform="rotate(6 1360 624)" filter="url(#chipShadow)" opacity=".72">
+    <rect x="1248" y="596" width="228" height="126" rx="26" fill="url(#glassBack)" stroke="#8a63ff" stroke-opacity=".24"/>
+    <rect x="1276" y="628" width="172" height="34" rx="17" fill="#4f8cff" opacity=".22" stroke="#78a6ff" stroke-opacity=".4"/>
+    <path d="M1298 645h20M1308 635v20" stroke="#dbe8ff" stroke-width="2.4" stroke-linecap="round" opacity=".7"/>
+    <rect x="1330" y="641" width="96" height="9" rx="4.5" fill="#dbe8ff" opacity=".5"/>
+    <rect x="1276" y="686" width="150" height="7" rx="3.5" fill="#78a6ff" opacity=".18"/>
+  </g>
+
+  <!-- ===================== primary chat interface ===================== -->
+  <g transform="rotate(-4 908 504)" filter="url(#panelShadow)">
+    <rect x="636" y="250" width="548" height="508" rx="34" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.6"/>
+    <path d="M636 284Q636 250 670 250H1150Q1184 250 1184 284V330Z" fill="url(#sheen)"/>
+    <!-- header -->
+    <circle cx="676" cy="298" r="6" fill="#8fb2ff" opacity=".9"/>
+    <circle cx="698" cy="298" r="6" fill="#5b8cff" opacity=".5"/>
+    <circle cx="720" cy="298" r="6" fill="#8a63ff" opacity=".45"/>
+    <rect x="758" y="292" width="150" height="10" rx="5" fill="#dbe8ff" opacity=".4"/>
+    <path d="M636 332H1184" stroke="#78a6ff" stroke-opacity=".16"/>
+
+    <!-- assistant bubble -->
+    <path d="M690 372H1024Q1046 372 1046 394V470Q1046 492 1024 492H726L698 512L706 492H690Q668 492 668 470V394Q668 372 690 372Z" fill="#111b30" stroke="#78a6ff" stroke-opacity=".24"/>
+    <circle cx="706" cy="416" r="16" fill="#4f8cff" opacity=".34"/>
+    <path d="M700 416l4 5 8-9" stroke="#dbe8ff" stroke-width="2" stroke-linecap="round" fill="none" opacity=".7"/>
+    <rect x="738" y="404" width="214" height="9" rx="4.5" fill="#dbe8ff" opacity=".5"/>
+    <rect x="738" y="430" width="286" height="8" rx="4" fill="#9db6e6" opacity=".26"/>
+    <rect x="738" y="454" width="230" height="8" rx="4" fill="#9db6e6" opacity=".18"/>
+
+    <!-- hero blue user bubble (glowing) -->
+    <rect x="732" y="512" width="404" height="126" rx="24" fill="#4f8cff" opacity=".2" filter="url(#softGlow)"/>
+    <path d="M760 520H1114Q1138 520 1138 544V612Q1138 636 1114 636H1096L1116 656L1078 636H760Q736 636 736 612V544Q736 520 760 520Z" fill="url(#bluePanel)" stroke="#dbe8ff" stroke-opacity=".42" stroke-width="1.2"/>
+    <path d="M762 522H1112Q1134 522 1135 543" fill="none" stroke="#f0f5ff" stroke-opacity=".45"/>
+    <rect x="782" y="556" width="252" height="9" rx="4.5" fill="#f6f9ff" opacity=".92"/>
+    <rect x="782" y="582" width="296" height="8" rx="4" fill="#e6eeff" opacity=".62"/>
+    <rect x="782" y="606" width="188" height="8" rx="4" fill="#e6eeff" opacity=".44"/>
+
+    <!-- typing indicator -->
+    <path d="M690 664H832Q850 664 850 682V712Q850 730 832 730H726L702 746L710 730H690Q672 730 672 712V682Q672 664 690 664Z" fill="#0d1626" stroke="#8a63ff" stroke-opacity=".26"/>
+    <circle cx="722" cy="697" r="7" fill="#8fb2ff" opacity=".8"/>
+    <circle cx="750" cy="697" r="7" fill="#5b8cff" opacity=".5"/>
+    <circle cx="778" cy="697" r="7" fill="#8a63ff" opacity=".42"/>
+  </g>
+
+  <!-- fine ambient lines -->
+  <path d="M120 812C440 664 742 792 1046 640C1250 538 1400 552 1500 590" fill="none" stroke="#78a6ff" stroke-opacity=".08" stroke-width="1.1"/>
+
+  <!-- vignette + grain -->
+  <rect width="1600" height="1000" fill="url(#vignette)"/>
+  <rect width="1600" height="1000" fill="#9db6e6" opacity=".05" filter="url(#grain)"/>
+
+  <!-- frame corners + label -->
+  <g fill="none" stroke="#78a6ff" stroke-width="1.2" opacity=".22">
     <path d="M72 132V72H132M1468 72H1528V132M72 868V928H132M1468 928H1528V868"/>
   </g>
-  <text x="1468" y="892" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="600" letter-spacing="7" fill="#dbe8ff" opacity=".46">DIFY AI</text>
-  <path d="M1322 907H1468" stroke="#5b8cff" stroke-opacity=".22"/>
+  <text x="1468" y="892" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="600" letter-spacing="7" fill="#dbe8ff" opacity=".5">DIFY AI</text>
+  <path d="M1322 907H1468" stroke="#5b8cff" stroke-opacity=".26"/>
 </svg>

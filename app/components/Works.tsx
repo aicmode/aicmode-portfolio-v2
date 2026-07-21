@@ -93,7 +93,7 @@ const projects = [
     width: 1600,
     height: 1000,
     imagePosition: 'center',
-    url: 'https://github.com/aicmode/dify-ai-chatbot-web-app',
+    url: 'https://dify-ai-chatbot-web-app.onrender.com',
     buttonLabel: 'Open Site',
     githubUrl: 'https://github.com/aicmode/dify-ai-chatbot-web-app',
     tags: ['Responsive', 'AI Powered'],
