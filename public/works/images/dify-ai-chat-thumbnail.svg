@@ -1,100 +1,171 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Dify APIと連携したAIチャットボットWebアプリの画面">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-labelledby="title desc">
+  <title id="title">Dify AI Chat</title>
+  <desc id="desc">発光するAIコアと、奥行きを持って浮かぶ半透明のチャットパネルを描いた近未来的なAIチャットインターフェース</desc>
   <defs>
-    <radialGradient id="difyBg" cx="34%" cy="26%" r="90%">
-      <stop offset="0%" stop-color="#0f1830"/>
-      <stop offset="46%" stop-color="#0a1122"/>
-      <stop offset="100%" stop-color="#04060d"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#02050d"/>
+      <stop offset="0.52" stop-color="#050914"/>
+      <stop offset="1" stop-color="#091126"/>
+    </linearGradient>
+    <radialGradient id="focus" cx="50%" cy="50%" r="50%">
+      <stop stop-color="#4f8cff" stop-opacity=".18"/>
+      <stop offset=".55" stop-color="#4f8cff" stop-opacity=".05"/>
+      <stop offset="1" stop-color="#02050d" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="difyOrb" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#7aa7ff"/>
-      <stop offset="55%" stop-color="#3b82f6"/>
-      <stop offset="100%" stop-color="#8b5cf6"/>
+    <radialGradient id="core" cx="35%" cy="27%" r="75%">
+      <stop stop-color="#dbe8ff"/>
+      <stop offset=".18" stop-color="#78a6ff"/>
+      <stop offset=".58" stop-color="#4f8cff"/>
+      <stop offset="1" stop-color="#7756ff" stop-opacity=".38"/>
+    </radialGradient>
+    <linearGradient id="coreShell" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#dbe8ff" stop-opacity=".32"/>
+      <stop offset=".34" stop-color="#5b8cff" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#7756ff" stop-opacity=".28"/>
     </linearGradient>
-    <linearGradient id="difyOut" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#4f8dff"/>
-      <stop offset="100%" stop-color="#2f6ae0"/>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#17213a" stop-opacity=".9"/>
+      <stop offset=".55" stop-color="#0b1224" stop-opacity=".84"/>
+      <stop offset="1" stop-color="#070b16" stop-opacity=".96"/>
     </linearGradient>
-    <linearGradient id="difyStroke" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#5b8cff"/>
-      <stop offset="100%" stop-color="#8b5cf6"/>
+    <linearGradient id="glassBack" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#17203a" stop-opacity=".46"/>
+      <stop offset="1" stop-color="#080d1b" stop-opacity=".78"/>
     </linearGradient>
-    <filter id="difyGlow" x="-60%" y="-60%" width="220%" height="220%">
-      <feGaussianBlur stdDeviation="26" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    <linearGradient id="bluePanel" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#78a6ff"/>
+      <stop offset=".45" stop-color="#4f8cff"/>
+      <stop offset="1" stop-color="#3f62d7"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#dbe8ff" stop-opacity=".42"/>
+      <stop offset=".38" stop-color="#5b8cff" stop-opacity=".26"/>
+      <stop offset="1" stop-color="#8a63ff" stop-opacity=".1"/>
+    </linearGradient>
+    <linearGradient id="thread" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#78a6ff" stop-opacity=".08"/>
+      <stop offset=".5" stop-color="#78a6ff" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#8a63ff" stop-opacity=".08"/>
+    </linearGradient>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M80 0H0V80" fill="none" stroke="#78a6ff" stroke-opacity=".045"/>
+    </pattern>
+    <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="18"/>
     </filter>
-    <filter id="difySoft" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="10"/>
+    <filter id="panelShadow" x="-30%" y="-40%" width="170%" height="190%">
+      <feDropShadow dx="0" dy="30" stdDeviation="28" flood-color="#00030a" flood-opacity=".72"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#4f8cff" flood-opacity=".08"/>
     </filter>
+    <filter id="smallShadow" x="-30%" y="-50%" width="170%" height="220%">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#00030a" flood-opacity=".7"/>
+    </filter>
+    <clipPath id="frontClip">
+      <path d="M732 252L1292 206Q1322 203 1327 232L1399 676Q1404 706 1373 712L812 784Q781 788 776 757L706 291Q701 258 732 252Z"/>
+    </clipPath>
   </defs>
 
-  <!-- background -->
-  <rect width="1600" height="1000" fill="url(#difyBg)"/>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <rect x="64" y="54" width="1472" height="892" rx="52" fill="url(#grid)"/>
+  <ellipse cx="873" cy="500" rx="670" ry="440" fill="url(#focus)"/>
+  <path d="M100 808C440 636 744 794 1046 622C1248 507 1398 512 1510 538" fill="none" stroke="url(#thread)" stroke-width="1.2" opacity=".3"/>
+  <path d="M166 278C460 184 718 258 970 173C1175 105 1348 166 1460 228" fill="none" stroke="url(#thread)" stroke-width="1" opacity=".2"/>
 
-  <!-- faint dot grid -->
-  <g fill="#5b8cff" opacity="0.06">
-    <g id="difyRow">
-      <circle cx="80" cy="80" r="2.4"/><circle cx="180" cy="80" r="2.4"/><circle cx="280" cy="80" r="2.4"/><circle cx="380" cy="80" r="2.4"/><circle cx="480" cy="80" r="2.4"/><circle cx="580" cy="80" r="2.4"/><circle cx="680" cy="80" r="2.4"/><circle cx="780" cy="80" r="2.4"/><circle cx="880" cy="80" r="2.4"/><circle cx="980" cy="80" r="2.4"/><circle cx="1080" cy="80" r="2.4"/><circle cx="1180" cy="80" r="2.4"/><circle cx="1280" cy="80" r="2.4"/><circle cx="1380" cy="80" r="2.4"/><circle cx="1480" cy="80" r="2.4"/>
-    </g>
-    <use href="#difyRow" y="120"/><use href="#difyRow" y="240"/><use href="#difyRow" y="360"/>
-    <use href="#difyRow" y="480"/><use href="#difyRow" y="600"/><use href="#difyRow" y="720"/><use href="#difyRow" y="840"/>
+  <!-- restrained ambient light -->
+  <ellipse cx="424" cy="508" rx="245" ry="245" fill="#4f8cff" opacity=".08" filter="url(#softGlow)"/>
+  <ellipse cx="1090" cy="536" rx="330" ry="235" fill="#7756ff" opacity=".045" filter="url(#softGlow)"/>
+
+  <!-- AI core and orbital system -->
+  <g transform="translate(414 520)">
+    <ellipse rx="234" ry="89" transform="rotate(-18)" fill="none" stroke="#78a6ff" stroke-width="1.2" stroke-opacity=".28"/>
+    <ellipse rx="196" ry="196" transform="rotate(28)" fill="none" stroke="url(#edge)" stroke-width="1.2" stroke-dasharray="4 12"/>
+    <ellipse rx="146" ry="53" transform="rotate(67)" fill="none" stroke="#8a63ff" stroke-width="1.1" stroke-opacity=".28"/>
+    <circle r="112" fill="#4f8cff" opacity=".11" filter="url(#softGlow)"/>
+    <circle r="92" fill="url(#coreShell)" stroke="url(#edge)" stroke-width="1.5"/>
+    <circle r="69" fill="#071020" stroke="#78a6ff" stroke-opacity=".34"/>
+    <circle r="47" fill="url(#core)"/>
+    <ellipse cx="-14" cy="-17" rx="20" ry="13" fill="#eaf2ff" opacity=".58"/>
+    <circle r="46" fill="none" stroke="#dbe8ff" stroke-opacity=".36"/>
+    <circle cx="-218" cy="68" r="5" fill="#78a6ff"/>
+    <circle cx="183" cy="-64" r="4" fill="#8a63ff"/>
+    <circle cx="91" cy="-170" r="3.5" fill="#dbe8ff" opacity=".8"/>
   </g>
 
-  <!-- ambient glow blooms -->
-  <circle cx="360" cy="500" r="230" fill="#3b82f6" opacity="0.14" filter="url(#difySoft)"/>
-  <circle cx="1230" cy="360" r="180" fill="#8b5cf6" opacity="0.10" filter="url(#difySoft)"/>
-
-  <!-- AI orb with concentric rings -->
-  <g transform="translate(360,500)">
-    <circle r="205" fill="none" stroke="url(#difyStroke)" stroke-width="1.2" opacity="0.22"/>
-    <circle r="162" fill="none" stroke="#5b8cff" stroke-width="1.2" opacity="0.30" stroke-dasharray="6 12"/>
-    <circle r="120" fill="none" stroke="url(#difyStroke)" stroke-width="2" opacity="0.5"/>
-    <circle r="78" fill="url(#difyOrb)" filter="url(#difyGlow)"/>
-    <circle r="78" fill="none" stroke="#eaf1ff" stroke-width="1.4" opacity="0.35"/>
-    <!-- inner spark node -->
-    <path d="M0,-34 L9,-9 L34,0 L9,9 L0,34 L-9,9 L-34,0 L-9,-9 Z" fill="#f4f8ff" opacity="0.92"/>
-    <!-- orbiting nodes -->
-    <circle cx="162" cy="0" r="7" fill="#8b5cf6"/>
-    <circle cx="-141" cy="72" r="6" fill="#5b8cff"/>
-    <circle cx="72" cy="-150" r="5" fill="#7aa7ff"/>
+  <!-- depth panels -->
+  <g transform="rotate(-8 1030 500)" filter="url(#smallShadow)" opacity=".48">
+    <rect x="845" y="183" width="430" height="154" rx="26" fill="url(#glassBack)" stroke="#78a6ff" stroke-opacity=".22"/>
+    <circle cx="891" cy="230" r="15" fill="#5b8cff" opacity=".38"/>
+    <rect x="923" y="218" width="178" height="8" rx="4" fill="#dbe8ff" opacity=".28"/>
+    <rect x="923" y="242" width="266" height="7" rx="3.5" fill="#78a6ff" opacity=".18"/>
+    <rect x="923" y="264" width="214" height="7" rx="3.5" fill="#78a6ff" opacity=".12"/>
+  </g>
+  <g transform="rotate(7 1170 710)" filter="url(#smallShadow)" opacity=".5">
+    <rect x="1015" y="658" width="395" height="135" rx="24" fill="url(#glassBack)" stroke="#8a63ff" stroke-opacity=".2"/>
+    <rect x="1052" y="699" width="252" height="8" rx="4" fill="#dbe8ff" opacity=".23"/>
+    <rect x="1052" y="725" width="196" height="7" rx="3.5" fill="#78a6ff" opacity=".15"/>
+    <circle cx="1359" cy="727" r="17" fill="#7756ff" opacity=".28"/>
   </g>
 
-  <!-- chat conversation -->
-  <g>
-    <!-- incoming bubble 1 -->
-    <g>
-      <rect x="700" y="230" width="470" height="120" rx="26" fill="#111c33" stroke="#5b8cff" stroke-opacity="0.28" stroke-width="1.4"/>
-      <rect x="736" y="268" width="300" height="14" rx="7" fill="#93b4ff" opacity="0.55"/>
-      <rect x="736" y="300" width="210" height="14" rx="7" fill="#6f8fce" opacity="0.4"/>
+  <!-- primary floating glass interface -->
+  <g filter="url(#panelShadow)">
+    <path d="M732 252L1292 206Q1322 203 1327 232L1399 676Q1404 706 1373 712L812 784Q781 788 776 757L706 291Q701 258 732 252Z" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.5"/>
+    <g clip-path="url(#frontClip)">
+      <path d="M719 307L1343 255" stroke="#dbe8ff" stroke-opacity=".1"/>
+      <path d="M742 251L1298 205L1305 249L749 296Z" fill="#dbe8ff" opacity=".025"/>
+      <ellipse cx="1228" cy="232" rx="250" ry="80" fill="#4f8cff" opacity=".045" filter="url(#softGlow)"/>
+    </g>
+    <circle cx="751" cy="286" r="5" fill="#78a6ff" opacity=".8"/>
+    <circle cx="770" cy="284" r="5" fill="#5b8cff" opacity=".38"/>
+    <circle cx="789" cy="282" r="5" fill="#8a63ff" opacity=".32"/>
+    <path d="M1248 252l36-3" stroke="#dbe8ff" stroke-width="2" stroke-linecap="round" opacity=".2"/>
+
+    <!-- quiet assistant message -->
+    <g transform="rotate(-4.7 1010 393)">
+      <path d="M801 339H1167Q1187 339 1187 359V438Q1187 458 1167 458H850L818 476L824 458H801Q781 458 781 438V359Q781 339 801 339Z" fill="#111a2d" stroke="#78a6ff" stroke-opacity=".23"/>
+      <circle cx="823" cy="377" r="15" fill="#4f8cff" opacity=".32"/>
+      <rect x="850" y="366" width="204" height="8" rx="4" fill="#dbe8ff" opacity=".48"/>
+      <rect x="850" y="391" width="276" height="7" rx="3.5" fill="#94aeDE" opacity=".24"/>
+      <rect x="850" y="414" width="218" height="7" rx="3.5" fill="#94aeDE" opacity=".16"/>
     </g>
 
-    <!-- outgoing bubble (user) -->
-    <g>
-      <rect x="900" y="400" width="440" height="120" rx="26" fill="url(#difyOut)"/>
-      <rect x="900" y="400" width="440" height="120" rx="26" fill="none" stroke="#a9c6ff" stroke-opacity="0.35" stroke-width="1.2"/>
-      <rect x="944" y="438" width="330" height="14" rx="7" fill="#eaf1ff" opacity="0.9"/>
-      <rect x="944" y="470" width="230" height="14" rx="7" fill="#dbe7ff" opacity="0.7"/>
+    <!-- hero blue message -->
+    <g transform="rotate(-4.7 1113 540)">
+      <path d="M941 482H1280Q1303 482 1303 505V591Q1303 614 1280 614H1263L1282 633L1244 614H941Q918 614 918 591V505Q918 482 941 482Z" fill="url(#bluePanel)" stroke="#dbe8ff" stroke-opacity=".38" stroke-width="1.2"/>
+      <path d="M944 484H1278Q1299 484 1300 504" fill="none" stroke="#eef4ff" stroke-opacity=".38"/>
+      <rect x="961" y="520" width="252" height="9" rx="4.5" fill="#f5f8ff" opacity=".88"/>
+      <rect x="961" y="548" width="292" height="8" rx="4" fill="#dbe8ff" opacity=".58"/>
+      <rect x="961" y="574" width="190" height="8" rx="4" fill="#dbe8ff" opacity=".42"/>
     </g>
 
-    <!-- incoming bubble with typing indicator -->
-    <g>
-      <rect x="700" y="570" width="250" height="110" rx="26" fill="#111c33" stroke="#8b5cf6" stroke-opacity="0.32" stroke-width="1.4"/>
-      <circle cx="770" cy="625" r="12" fill="#7aa7ff"/>
-      <circle cx="825" cy="625" r="12" fill="#5b8cff" opacity="0.8"/>
-      <circle cx="880" cy="625" r="12" fill="#8b5cf6" opacity="0.7"/>
+    <!-- typing panel -->
+    <g transform="rotate(-4.7 931 667)">
+      <path d="M817 625H1053Q1071 625 1071 643V704Q1071 722 1053 722H847L821 738L829 722H817Q799 722 799 704V643Q799 625 817 625Z" fill="#0c1426" stroke="#8a63ff" stroke-opacity=".22"/>
+      <circle cx="855" cy="674" r="7" fill="#78a6ff" opacity=".7"/>
+      <circle cx="884" cy="674" r="7" fill="#5b8cff" opacity=".48"/>
+      <circle cx="913" cy="674" r="7" fill="#8a63ff" opacity=".42"/>
     </g>
   </g>
 
-  <!-- connecting thread from orb to chat -->
-  <path d="M438,500 C560,500 590,300 700,300" fill="none" stroke="url(#difyStroke)" stroke-width="1.4" opacity="0.35" stroke-dasharray="4 10"/>
+  <!-- core-to-interface data path -->
+  <path d="M565 512C638 500 659 448 730 428" fill="none" stroke="url(#thread)" stroke-width="1.4" stroke-dasharray="3 10"/>
+  <circle cx="636" cy="481" r="4" fill="#78a6ff" opacity=".72"/>
+  <circle cx="690" cy="448" r="2.8" fill="#dbe8ff" opacity=".68"/>
 
-  <!-- corner brackets for a futuristic frame -->
-  <g stroke="#5b8cff" stroke-width="2" fill="none" opacity="0.35">
-    <path d="M60,60 h60 M60,60 v60"/>
-    <path d="M1540,60 h-60 M1540,60 v60"/>
-    <path d="M60,940 h60 M60,940 v-60"/>
-    <path d="M1540,940 h-60 M1540,940 v-60"/>
+  <!-- sparse particles -->
+  <g fill="#dbe8ff">
+    <circle cx="183" cy="215" r="2.4" opacity=".35"/><circle cx="278" cy="749" r="2.8" opacity=".42"/>
+    <circle cx="613" cy="197" r="2.2" opacity=".34"/><circle cx="687" cy="827" r="2.5" opacity=".3"/>
+    <circle cx="1432" cy="339" r="2.8" opacity=".38"/><circle cx="1453" cy="777" r="2.2" opacity=".28"/>
+  </g>
+  <g fill="#5b8cff">
+    <circle cx="225" cy="391" r="4" opacity=".28"/><circle cx="573" cy="738" r="3" opacity=".32"/>
+    <circle cx="1339" cy="149" r="3.5" opacity=".25"/><circle cx="1500" cy="568" r="3" opacity=".3"/>
   </g>
 
-  <!-- subtle wordmark (minimal text) -->
-  <text x="1470" y="905" text-anchor="end" font-family="'Helvetica Neue',Arial,sans-serif" font-size="26" font-weight="700" letter-spacing="8" fill="#7aa7ff" opacity="0.5">DIFY AI</text>
+  <!-- minimal frame and label -->
+  <g fill="none" stroke="#78a6ff" stroke-width="1.2" opacity=".2">
+    <path d="M72 132V72H132M1468 72H1528V132M72 868V928H132M1468 928H1528V868"/>
+  </g>
+  <text x="1468" y="892" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="600" letter-spacing="7" fill="#dbe8ff" opacity=".46">DIFY AI</text>
+  <path d="M1322 907H1468" stroke="#5b8cff" stroke-opacity=".22"/>
 </svg>
