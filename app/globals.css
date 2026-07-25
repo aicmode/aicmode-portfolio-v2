@@ -7,6 +7,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* Sentinel with no visual effect: BootRecovery reads this to tell whether
+     this stylesheet actually loaded, so it can pick the right fallback. */
+  --aic-css-loaded: 1;
 }
 
 /* Hide scrollbar for the Works category tab bar (keeps horizontal scroll on mobile) */

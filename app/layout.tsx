@@ -1,6 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import BootRecovery from "./components/BootRecovery";
+import ClientHealth from "./components/ClientHealth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +40,13 @@ export const metadata: Metadata = {
   },
 };
 
+// Matches the tag Next.js emits by default; pinned explicitly so the mobile
+// layout can never regress if that default changes.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -49,6 +58,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}
     >
       <body className="bg-[#080808] text-[#f0f0f0] antialiased min-h-screen">
+        {/* Inlined into the document, so it survives a failed asset chunk. */}
+        <BootRecovery />
+        <ClientHealth />
         {children}
       </body>
     </html>
