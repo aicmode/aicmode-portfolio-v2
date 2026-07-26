@@ -2,16 +2,6 @@
 import { motion } from 'framer-motion'
 import AnimateIn from './AnimateIn'
 
-function InstagramIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-5 h-5 flex-shrink-0">
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" strokeWidth="1.5" />
-      <circle cx="12" cy="12" r="4" strokeWidth="1.5" />
-      <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" strokeWidth="0" />
-    </svg>
-  )
-}
-
 function GitHubIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 flex-shrink-0">
@@ -20,43 +10,15 @@ function GitHubIcon() {
   )
 }
 
-function ThreadsIcon() {
-  return (
-    <svg viewBox="0 0 192 192" fill="currentColor" className="w-5 h-5 flex-shrink-0">
-      <path d="M141.537 88.988C140.71 88.592 139.87 88.21 139.019 87.845 137.537 60.538 122.616 44.905 97.562 44.745 97.448 44.744 97.336 44.744 97.222 44.744 82.236 44.744 69.773 51.141 62.102 62.781L75.881 72.233C81.612 63.538 90.605 61.685 97.229 61.685 97.305 61.685 97.382 61.685 97.458 61.686 105.707 61.738 111.932 64.137 115.961 68.814 118.893 72.219 120.854 76.925 121.825 82.864 114.511 81.621 106.601 81.239 98.145 81.723 74.325 83.095 59.011 96.988 60.04 116.292 60.562 126.084 65.44 134.508 73.775 140.011 80.822 144.663 89.899 146.938 99.332 146.423 111.79 145.74 121.563 140.987 128.381 132.296 133.559 125.696 136.834 117.143 138.28 106.366 144.217 109.949 148.617 114.664 151.047 120.332 155.179 129.967 155.42 145.8 142.501 158.708 131.182 170.016 117.576 174.908 97.014 175.059 74.204 174.89 56.954 167.575 45.738 153.317 35.236 139.966 29.808 120.682 29.605 96 29.808 71.318 35.236 52.034 45.738 38.683 56.954 24.425 74.204 17.11 97.013 16.94 119.988 17.111 137.539 24.461 149.184 38.788 154.894 45.814 159.199 54.649 162.037 64.95L178.184 60.642C174.744 47.962 169.331 37.036 161.965 27.974 147.036 9.607 125.202.195 97.07 0H96.957C68.882.194 47.292 9.642 32.788 28.079 19.882 44.486 13.224 67.316 13.001 95.933L13 96 13.001 96.068C13.224 124.684 19.882 147.514 32.788 163.921 47.292 182.358 68.882 191.806 96.957 192H97.07C122.03 191.827 139.624 185.292 154.118 170.811 173.081 151.866 172.51 128.119 166.26 113.541 161.776 103.087 153.227 94.596 141.537 88.988ZM98.44 129.507C88 130.095 77.154 125.409 76.62 115.372 76.223 107.93 81.916 99.626 99.081 98.637 101.047 98.523 102.976 98.468 104.871 98.468 111.106 98.468 116.939 99.074 122.242 100.233 120.264 124.935 108.662 128.946 98.44 129.507Z" />
-    </svg>
-  )
+const github = {
+  href: 'https://github.com/aicmode',
+  icon: <GitHubIcon />,
+  label: 'GitHub',
+  handle: 'aicmode',
+  desc: 'Open Source & Code',
+  glow: 'rgba(255,255,255,0.07)',
+  border: 'rgba(255,255,255,0.12)',
 }
-
-const socials = [
-  {
-    href: 'https://www.instagram.com/aicmode',
-    icon: <InstagramIcon />,
-    label: 'Instagram',
-    handle: '@aicmode',
-    desc: 'Visual Works & Process',
-    glow: 'rgba(131,58,180,0.18)',
-    border: 'rgba(131,58,180,0.2)',
-  },
-  {
-    href: 'https://github.com/aicmode',
-    icon: <GitHubIcon />,
-    label: 'GitHub',
-    handle: 'aicmode',
-    desc: 'Open Source & Code',
-    glow: 'rgba(255,255,255,0.07)',
-    border: 'rgba(255,255,255,0.12)',
-  },
-  {
-    href: 'https://www.threads.net/@aicmode',
-    icon: <ThreadsIcon />,
-    label: 'Threads',
-    handle: '@aicmode',
-    desc: 'Thoughts & Updates',
-    glow: 'rgba(255,255,255,0.07)',
-    border: 'rgba(255,255,255,0.12)',
-  },
-]
 
 const inquiries = [
   {
@@ -81,7 +43,7 @@ function SocialCard({
   desc,
   glow,
   border,
-}: (typeof socials)[number]) {
+}: typeof github) {
   return (
     <motion.a
       href={href}
@@ -279,14 +241,10 @@ export default function Contact() {
           </div>
         </AnimateIn>
 
-        {/* ── Social cards ── */}
+        {/* ── Social card ── */}
         <AnimateIn delay={420}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-            {socials.map((s, i) => (
-              <div key={s.label} className={i === 2 ? 'sm:col-span-2' : ''}>
-                <SocialCard {...s} />
-              </div>
-            ))}
+          <div className="mx-auto w-full max-w-lg">
+            <SocialCard {...github} />
           </div>
         </AnimateIn>
       </div>
