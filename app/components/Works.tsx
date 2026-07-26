@@ -211,6 +211,7 @@ const projects = [
     image: '/works/images/bagel.png',
     width: 2200,
     height: 1464,
+    // TODO: GitHub Pages deployment required.
     url: 'https://aicmode.github.io/SUNSET-BAGEL/',
     buttonLabel: 'Open Site',
     isSpecial: true,
@@ -428,6 +429,43 @@ const projects = [
   },
 ] as const
 
+/**
+ * Delivery facts shown on every card. Kept beside `projects` rather than inside
+ * it so the record's key type stays tied to the project titles — TypeScript
+ * fails the build if a project is ever added without its stack and status.
+ */
+const projectDelivery: Record<
+  (typeof projects)[number]['title'],
+  { stack: readonly string[]; status: 'Released' | 'Deployment Required' }
+> = {
+  'Date Calculator Tool': { stack: ['HTML', 'CSS', 'JavaScript'], status: 'Released' },
+  'NIGHT SHIFT CARE': { stack: ['HTML', 'CSS', 'JavaScript', 'LocalStorage'], status: 'Released' },
+  'Weather Calendar': { stack: ['Next.js', 'TypeScript', 'OpenWeather API', 'Vercel'], status: 'Released' },
+  'QR Code Bulk Generator': { stack: ['JavaScript', 'QRCode.js', 'JSZip'], status: 'Released' },
+  'AI Prompt Manager': { stack: ['TypeScript', 'JavaScript', 'LocalStorage'], status: 'Released' },
+  'Dify AI Chat': { stack: ['Node.js', 'Express', 'Dify API', 'Render'], status: 'Released' },
+  'VELVET CREAM': { stack: ['HTML', 'CSS', 'JavaScript', 'Multi Page'], status: 'Released' },
+  'BLACKLINE DETAILING': { stack: ['HTML', 'CSS', 'JavaScript'], status: 'Released' },
+  'CORE 45': { stack: ['HTML', 'CSS', 'JavaScript'], status: 'Released' },
+  'GREENROOT ENERGY': { stack: ['HTML', 'CSS', 'JavaScript', 'Multi Page'], status: 'Released' },
+  'NEW YORK PIZZA HOUSE': { stack: ['HTML', 'CSS', 'JavaScript', 'Cart UI'], status: 'Released' },
+  'SUNSET BAGEL': { stack: ['HTML', 'CSS', 'JavaScript'], status: 'Deployment Required' },
+  'BROOKLYN BREAD CO.': { stack: ['HTML', 'CSS', 'JavaScript', 'Multi Page'], status: 'Released' },
+  'LUNA Restaurant': { stack: ['HTML', 'CSS', 'JavaScript'], status: 'Released' },
+  'URBN Hair Studio': { stack: ['HTML', 'CSS', 'JavaScript'], status: 'Released' },
+  'Evergreen Medical Center': { stack: ['HTML', 'CSS', 'JavaScript', 'Medical UI'], status: 'Released' },
+  'SWEET MEMORIES': { stack: ['HTML', 'CSS', 'JavaScript'], status: 'Released' },
+  'KISSA MATCHA': { stack: ['HTML', 'CSS', 'JavaScript'], status: 'Released' },
+  DEERIFY: { stack: ['HTML', 'CSS', 'JavaScript'], status: 'Released' },
+  AURA: { stack: ['HTML', 'CSS', 'JavaScript'], status: 'Released' },
+  'LUMI Grooming': { stack: ['HTML', 'CSS', 'JavaScript'], status: 'Released' },
+  'LUXE MEMBERS': { stack: ['React', 'Vite', 'CSS', 'Vercel'], status: 'Released' },
+  'SAINT AVE': { stack: ['HTML', 'CSS', 'JavaScript', 'GSAP'], status: 'Released' },
+  'NOIR CAFÉ': { stack: ['HTML', 'CSS', 'JavaScript'], status: 'Released' },
+  'Tsuki Usagi Wagashi': { stack: ['HTML', 'CSS', 'JavaScript', 'Cart UI'], status: 'Released' },
+  PULSE: { stack: ['HTML', 'CSS', 'JavaScript'], status: 'Released' },
+}
+
 function ArrowIcon() {
   return (
     <motion.svg
@@ -457,7 +495,15 @@ function getProjectMeta(project: (typeof projects)[number], index: number) {
   return { tags: ['Responsive', 'AI Assisted'], isFeatured }
 }
 
-function WorkPoster({ project, index }: { project: (typeof projects)[number]; index: number }) {
+function WorkPoster({
+  project,
+  index,
+  displayIndex,
+}: {
+  project: (typeof projects)[number]
+  index: number
+  displayIndex: number
+}) {
   const isWideFeatured = 'featured' in project && project.featured
   const isSpecial = 'isSpecial' in project && project.isSpecial
   const isKissaPremium = 'isKissaPremium' in project && project.isKissaPremium
@@ -466,6 +512,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
   const isVelvetPremium = 'isVelvetPremium' in project && project.isVelvetPremium
   const buttonLabel = 'buttonLabel' in project ? project.buttonLabel : 'Open Site'
   const meta = getProjectMeta(project, index)
+  const delivery = projectDelivery[project.title]
 
   return (
     <motion.article
@@ -502,7 +549,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
           }}
           transition={{ duration: 1.15, ease }}
         >
-          {meta.isFeatured ? (
+          {meta.isFeatured && !isWideFeatured ? (
             <div className="pointer-events-none absolute left-4 top-4 z-10 border border-white/18 bg-black/70 px-3 py-2 text-[8px] font-bold uppercase leading-none tracking-[0.34em] text-white/58 backdrop-blur-md">
               FEATURED
             </div>
@@ -517,7 +564,7 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
               isKissaPremium ? ' kissa-poster-image' : ''
             }`}
             style={{ objectPosition: 'imagePosition' in project ? project.imagePosition : 'center' }}
-            priority={index < 2}
+            loading={displayIndex < 2 ? 'eager' : 'lazy'}
             unoptimized={project.image.startsWith('https://') || project.image.endsWith('.svg')}
           />
         </motion.div>
@@ -525,11 +572,11 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
         <div className="editorial-work-meta flex gap-5 px-1 pt-5 sm:pt-6">
           <div className="min-w-0">
             <div className="flex items-center gap-3">
-              <p className={`${isKissaPremium || isGreenrootPremium || isBlacklinePremium || isVelvetPremium ? '' : 'truncate uppercase '}text-[10px] font-semibold tracking-[0.34em] text-[color:var(--work-accent)]${isKissaPremium ? ' kissa-premium-subtitle' : ''}${isGreenrootPremium ? ' greenroot-premium-subtitle' : ''}${isBlacklinePremium ? ' blackline-premium-subtitle' : ''}${isVelvetPremium ? ' velvet-premium-subtitle' : ''}`}>
+              <p className={`${isKissaPremium || isGreenrootPremium || isBlacklinePremium || isVelvetPremium ? '' : 'uppercase '}text-[10px] font-semibold tracking-[0.34em] text-[color:var(--work-accent)]${isKissaPremium ? ' kissa-premium-subtitle' : ''}${isGreenrootPremium ? ' greenroot-premium-subtitle' : ''}${isBlacklinePremium ? ' blackline-premium-subtitle' : ''}${isVelvetPremium ? ' velvet-premium-subtitle' : ''}`}>
                 {project.subtitle}
               </p>
             </div>
-            <h3 className={`mt-2 font-semibold tracking-[-0.02em] text-white${isKissaPremium || isGreenrootPremium || isBlacklinePremium || isVelvetPremium ? '' : ' truncate'}${isSpecial ? ' bakery-card-title' : ' text-xl sm:text-2xl tracking-[-0.01em]'}${isKissaPremium ? ' kissa-premium-title' : ''}${isGreenrootPremium ? ' greenroot-premium-title' : ''}${isBlacklinePremium ? ' blackline-premium-title' : ''}${isVelvetPremium ? ' velvet-premium-title' : ''}`}>{project.title}</h3>
+            <h3 className={`mt-2 font-semibold tracking-[-0.02em] text-white${isSpecial ? ' bakery-card-title' : ' text-xl sm:text-2xl tracking-[-0.01em]'}${isKissaPremium ? ' kissa-premium-title' : ''}${isGreenrootPremium ? ' greenroot-premium-title' : ''}${isBlacklinePremium ? ' blackline-premium-title' : ''}${isVelvetPremium ? ' velvet-premium-title' : ''}`}>{project.title}</h3>
             <p className="mt-2 max-w-[30rem] text-sm leading-6 text-white/48">{project.text}</p>
             <div className="mt-4 flex flex-wrap gap-2">
               <span className="border border-[color:var(--work-accent)]/45 bg-[color:var(--work-accent)]/[0.08] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.28em] text-[color:var(--work-accent)]">
@@ -548,12 +595,23 @@ function WorkPoster({ project, index }: { project: (typeof projects)[number]; in
               <span className="block">{project.category}</span>
               <span className="block text-[color:var(--work-accent)] opacity-70">{project.colorLabel}</span>
             </p>
+            <div className="mt-3 space-y-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.26em]">
+              <p className="break-words text-white/38">
+                <span className="text-white/20">Stack</span> {delivery.stack.join(' · ')}
+              </p>
+              <p className="break-words text-white/38">
+                <span className="text-white/20">Status</span> {delivery.status}
+              </p>
+            </div>
           </div>
 
           <motion.span
             className="editorial-work-button inline-flex h-11 shrink-0 items-center justify-center gap-2 border border-white/18 px-3 text-white/72"
             variants={{
-              rest: { borderColor: 'rgba(255,255,255,0.18)' },
+              rest: {
+                borderColor: 'rgba(255,255,255,0.18)',
+                color: 'rgba(255,255,255,0.72)',
+              },
               hover: { borderColor: project.accent, color: project.accent },
             }}
             transition={{ duration: 0.9, ease }}
@@ -596,7 +654,7 @@ export default function Works() {
       <div className="relative mx-auto max-w-[1420px]">
         <div className="mb-12 flex flex-col gap-8 border-b border-white/[0.08] pb-8 md:mb-16 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="mb-5 text-[10px] uppercase tracking-[0.48em] text-white/38">Selected Web Design Works</p>
+            <p className="mb-5 text-[10px] uppercase tracking-[0.48em] text-white/38">Selected Web &amp; AI Development Works</p>
             <h2 className="text-[clamp(4.5rem,16vw,12rem)] font-black uppercase leading-[0.8] text-white">
               Works
             </h2>
@@ -608,8 +666,8 @@ export default function Works() {
             </p>
           </div>
           <p className="max-w-xl text-sm leading-8 text-white/46 lg:text-right">
-            飲食店、美容、医療、EC、ブランドサイトなど、実案件を想定して制作したWebデザイン作品です。
-            見た目の美しさだけでなく、第一印象・信頼感・導線・スマホ表示まで意識して構成しています。
+            飲食店、美容、医療、EC、ブランドサイトから、AI・API連携を含むWebアプリまで、実案件を想定して制作した作品です。
+            各カードには実際に使用した技術スタックと公開状況を記載しています。見た目だけでなく、設計・実装・運用まで通して形にできることを確認いただけます。
           </p>
         </div>
 
@@ -648,10 +706,10 @@ export default function Works() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease }}
-          className="editorial-poster-grid mx-auto grid grid-cols-1 items-stretch gap-x-8 gap-y-14 md:grid-cols-2 lg:gap-x-10 lg:gap-y-20 xl:grid-cols-3"
+          className="editorial-poster-grid mx-auto grid grid-cols-1 auto-rows-fr items-stretch gap-x-8 gap-y-14 md:grid-cols-2 lg:gap-x-10 lg:gap-y-20 xl:grid-cols-3"
         >
-          {visibleProjects.map(({ project, index }) => (
-            <WorkPoster key={project.title} project={project} index={index} />
+          {visibleProjects.map(({ project, index }, displayIndex) => (
+            <WorkPoster key={project.title} project={project} index={index} displayIndex={displayIndex} />
           ))}
         </motion.div>
 

@@ -964,7 +964,15 @@ a { -webkit-tap-highlight-color: transparent; }
 ───────────────────────────────────── */
 .editorial-work-card {
   display: flex;
-  height: 38rem;
+  /*
+   * A floor, not a fixed height. Every card in the grid is the same width, so
+   * every poster is the same height and the meta below it is height-clamped —
+   * the natural heights come out equal, and `align-items: stretch` on the grid
+   * evens out any remainder. A hard height instead silently clipped the bottom
+   * of the meta column at widths where the poster grows (the two-column band,
+   * and single-column above ~640px).
+   */
+  min-height: 41rem;
 }
 
 .editorial-work-card > a,
@@ -978,7 +986,6 @@ a { -webkit-tap-highlight-color: transparent; }
   flex-direction: column;
   min-height: 100%;
   padding: 10px;
-  overflow: hidden;
 }
 
 .featured-work-card > a {
@@ -1022,13 +1029,16 @@ a { -webkit-tap-highlight-color: transparent; }
   flex-direction: column;
   align-items: stretch;
   padding: 1.25rem 0.25rem 0.35rem;
-  overflow: hidden;
 }
 
 .editorial-work-meta > div {
-  flex: 1 1 0;
+  /*
+   * `auto` basis, not `0`: with a zero basis this column contributes nothing to
+   * the card's intrinsic height, so the card could never grow past its
+   * min-height and the bottom of the meta was cut off by `overflow: hidden`.
+   */
+  flex: 1 1 auto;
   min-width: 0;
-  overflow: hidden;
 }
 
 .editorial-work-meta h3,
@@ -1043,6 +1053,7 @@ a { -webkit-tap-highlight-color: transparent; }
   overflow: visible;
   font-size: 1.45rem;
   line-height: 1.08;
+  overflow-wrap: anywhere;
   white-space: normal;
 }
 
@@ -1051,37 +1062,23 @@ a { -webkit-tap-highlight-color: transparent; }
 .kissa-premium-subtitle,
 .greenroot-premium-subtitle,
 .velvet-premium-subtitle {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
   line-height: 1.45;
-  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
   white-space: normal;
 }
 
 .editorial-work-meta > div > p:first-of-type {
-  display: -webkit-box;
   min-height: 4.5rem;
-  overflow: hidden;
   overflow-wrap: anywhere;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  text-overflow: ellipsis;
 }
 
 .editorial-work-meta > div > div:nth-of-type(2) {
-  max-height: 3.9rem;
-  overflow: hidden;
+  overflow-wrap: anywhere;
 }
 
 .editorial-work-meta > div > p:nth-of-type(2) {
-  display: -webkit-box;
   min-height: 2rem;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
 }
 
 .editorial-work-button {
@@ -1092,7 +1089,8 @@ a { -webkit-tap-highlight-color: transparent; }
 
 @media (max-width: 767px) {
   .editorial-work-card {
-    height: 36rem;
+    /* Floor only — see the note on the desktop rule. */
+    min-height: 39rem;
   }
 
   .editorial-work-card > a,

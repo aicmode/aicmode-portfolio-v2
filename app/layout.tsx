@@ -14,25 +14,57 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const title = "AICMODE — AI Developer × Web Designer";
+const description =
+  "AIシステム開発、Webアプリ開発、AI自動化、業務効率化ツールを、要件整理から設計・実装・運用まで一貫して担当します。Next.js・React・TypeScript・Python・OpenAI APIを使い、店舗・病院・クリニック・中小企業・個人事業主・ブランドの課題を解決。Webサイト制作、LP制作、API連携まで対応するAI Developer / Web Designer です。";
+
 export const metadata: Metadata = {
-  title: "AICMODE — Web Design × AI",
-  description:
-    "AI × Overseas Culture inspired portfolio by AICMODE. Creative web design combining artificial intelligence with global creative culture.",
-  keywords: ["web design", "AI design", "portfolio", "AICMODE", "creative studio", "Next.js", "overseas culture"],
+  title,
+  description,
+  keywords: [
+    "AIシステム開発",
+    "Webアプリ開発",
+    "AI自動化",
+    "業務効率化",
+    "AI開発",
+    "AIエンジニア",
+    "業務改善システム",
+    "医療AI",
+    "SaaS開発",
+    "システム開発",
+    "API連携",
+    "Web制作",
+    "ホームページ制作",
+    "LP制作",
+    "AI Developer",
+    "AI Engineer",
+    "AI System Development",
+    "Web Developer",
+    "Creative Technologist",
+    "Business Automation",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Python",
+    "OpenAI API",
+    "Google APIs",
+    "Vercel",
+    "AICMODE",
+  ],
   authors: [{ name: "AICMODE" }],
   creator: "AICMODE",
   openGraph: {
-    title: "AICMODE — Web Design × AI",
-    description:
-      "AI × Overseas Culture inspired portfolio by AICMODE. Creative web design combining artificial intelligence with global culture.",
+    title,
+    description,
     siteName: "AICMODE",
     locale: "ja_JP",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AICMODE — Web Design × AI",
-    description: "AI × Overseas Culture inspired portfolio by AICMODE.",
+    title,
+    description:
+      "AIシステム開発・Webアプリ開発・AI自動化・業務効率化を、設計から実装・運用まで一貫対応。Next.js / React / Python / OpenAI API。",
   },
   robots: {
     index: true,

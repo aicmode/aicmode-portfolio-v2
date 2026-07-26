@@ -2,39 +2,7 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import AnimateIn from './AnimateIn'
-
-const faqs = [
-  {
-    no: '01',
-    question: '依頼するか決まっていなくても相談できますか？',
-    answer:
-      'まだ依頼するか決まっていない段階でも、目的やイメージの相談から可能です。まずは方向性の整理から、一緒に進められます。',
-  },
-  {
-    no: '02',
-    question: 'スマホ対応のサイトも作れますか？',
-    answer:
-      'スマホ表示を意識しながら、PC・スマホどちらでも見やすいWebサイトを制作します。第一印象と使いやすさの、両方を大切にします。',
-  },
-  {
-    no: '03',
-    question: '制作にAIを使用していますか？',
-    answer:
-      'AIを活用して構成・文章・ビジュアル案・デザイン制作を効率化しながら、最終的な見せ方は丁寧に調整します。',
-  },
-  {
-    no: '04',
-    question: '公開までサポートしてもらえますか？',
-    answer:
-      'GitHub Pages、Vercelなどを使った公開までの流れもサポートします。公開前の確認や、軽い微調整まで対応できます。',
-  },
-  {
-    no: '05',
-    question: 'どんなサイト制作が得意ですか？',
-    answer:
-      '飲食店、美容、医療、ブランドサイト、LP、ポートフォリオなど、世界観と第一印象が大切なWebサイトが得意です。',
-  },
-]
+import { faqs } from '../data/faqs'
 
 function FaqItem({
   no,
@@ -192,7 +160,7 @@ export default function FAQ() {
               Before You Ask
             </h2>
             <p className="mt-6 text-sm leading-7 text-white/45 md:text-[15px] md:leading-8">
-              制作前によくある不安や疑問を、簡単にまとめました。
+              Web制作・AI開発・業務効率化について、よくある不安や疑問をまとめました。
               <br className="hidden sm:block" />
               まずは相談だけでも大丈夫です。
             </p>
@@ -240,7 +208,7 @@ export default function FAQ() {
                 transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
               }}
             >
-              CONTACT / DM
+              CONTACT
             </motion.a>
           </div>
         </AnimateIn>

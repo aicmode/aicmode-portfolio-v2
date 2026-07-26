@@ -2,33 +2,70 @@
 import AnimateIn from './AnimateIn'
 
 const techStack = [
-  { label: 'HTML',       icon: '</>' },
-  { label: 'CSS',        icon: '{ }' },
-  { label: 'JavaScript', icon: 'JS'  },
-  { label: 'GitHub',     icon: '⊙'  },
-  { label: 'Vercel',     icon: '▲'  },
+  { label: 'HTML',        icon: '</>' },
+  { label: 'CSS',         icon: '{ }' },
+  { label: 'JavaScript',  icon: 'JS'  },
+  { label: 'TypeScript',  icon: 'TS'  },
+  { label: 'React',       icon: '◎'  },
+  { label: 'Next.js',     icon: 'N'   },
+  { label: 'Python',      icon: 'Py'  },
+  { label: 'Node.js',     icon: '⬡'  },
+  { label: 'Express',     icon: 'Ex'  },
+  { label: 'Tailwind CSS',icon: '≋'  },
+  { label: 'REST API',    icon: '⇄'  },
+  { label: 'OpenAI API',  icon: '✳'  },
+  { label: 'Google APIs', icon: 'G'   },
+  { label: 'LINE Messaging API', icon: 'L' },
+  { label: 'Discord API', icon: '◇'  },
+  { label: 'Slack API',   icon: '#'   },
+  { label: 'Git',         icon: '⑂'  },
+  { label: 'GitHub',      icon: '⊙'  },
+  { label: 'Vercel',      icon: '▲'  },
+  { label: 'Framer Motion', icon: '∿' },
+  { label: 'Responsive Design', icon: '▤' },
+  { label: 'AI Assisted Development', icon: '✧' },
 ]
 
 const creativeSkills = [
   {
-    title: 'AI Web Design',
-    description: 'AIを活用したWebサイトデザイン制作。\nブランドの世界観や雰囲気を設計し、魅力的なサイトを構築。',
-    icon: '✦',
+    title: 'AI System Design',
+    description: '業務のどこにAIを組み込めば効果が出るかを見極め、機能・データの流れ・API連携までを設計。',
+    icon: '⊟',
+  },
+  {
+    title: 'Automation Design',
+    description: '手作業・集計・通知・共有を洗い出し、自動化できる工程から仕組み化して人の時間を戻す。',
+    icon: '⟳',
   },
   {
     title: 'Prompt Engineering',
-    description: 'AIへ最適な指示を出し、高品質なデザイン・構成・コンテンツを生成。',
+    description: 'AIへの指示を設計し、出力の精度と再現性を安定させる。実務で使える品質まで詰める。',
     icon: '◈',
   },
   {
+    title: 'Workflow Optimization',
+    description: '現場の業務フローを整理し、重複や無駄な工程を削減。運用が続く形に組み直す。',
+    icon: '⟐',
+  },
+  {
     title: 'UI / UX Thinking',
-    description: 'ユーザー目線で使いやすさを考えた設計。\nスマホ対応や導線設計を重視。',
+    description: '使う人の目線で導線と操作性を設計。\nスマホ表示と、迷わせない構成を重視。',
     icon: '⊞',
   },
   {
     title: 'Creative Direction',
-    description: 'コンセプト設計からデザイン監修まで担当。\nブランドの魅力を最大限に引き出すクリエイティブ設計。',
+    description: 'コンセプト設計からデザイン監修まで担当。\nブランドの魅力を最大限に引き出す方向づけ。',
     icon: '⬒',
+  },
+  {
+    title: 'Business Thinking',
+    description: '集客・運用・コストまで踏まえ、事業として成立する形を提案。作って終わりにしない。',
+    icon: '◫',
+  },
+  {
+    title: 'Problem Solving',
+    description: '「何を作るか」の前に「何が課題か」を整理。必要な打ち手だけに絞って形にする。',
+    icon: '✦',
   },
 ]
 

@@ -11,6 +11,15 @@ const cityLights = [
   { top: '64%', right: '25%', width: 1, height: 20, opacity: 0.16, delay: 1.8 },
 ]
 
+const disciplines = [
+  'AI Systems',
+  'Web Applications',
+  'Business Automation',
+  'Creative Web Design',
+  'API Integration',
+  'Problem Solving',
+]
+
 const skylineDots = [
   { top: '28%', left: '66%', size: 2, opacity: 0.24, delay: 0.2 },
   { top: '34%', left: '72%', size: 3, opacity: 0.18, delay: 1.1 },
@@ -263,7 +272,7 @@ export default function Hero() {
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.72, ease: 'easeOut' }}
             >
-              Web Design × AI × Overseas Culture
+              AI Development × Web Design × Overseas Culture
             </motion.p>
 
             <motion.div
@@ -273,12 +282,28 @@ export default function Hero() {
               transition={{ duration: 1, delay: 0.82, ease: [0.22, 1, 0.36, 1] }}
             >
               <p className="text-[10px] md:text-[12px] font-semibold uppercase tracking-[0.28em] text-white/72">
-                Freelance Web Design for Brands, Shops, and Creators.
+                AI Systems &amp; Web Development for Brands, Shops, and Clinics.
               </p>
               <p className="mt-4 text-sm leading-7 text-white/46 md:text-[15px] md:leading-8">
-                海外カルチャーとAIを活かし、店舗・サービス・個人ブランドの世界観が伝わるWebサイトを制作します。
+                現場の課題を整理し、設計・実装・運用まで一貫して形にします。Webサイトから、AIシステム・業務効率化ツールの開発まで。
               </p>
             </motion.div>
+
+            <motion.ul
+              className="mx-auto mt-6 flex max-w-[34rem] flex-wrap items-center justify-center gap-x-6 gap-y-2.5 lg:mx-0 lg:justify-start"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.88, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {disciplines.map((discipline) => (
+                <li
+                  key={discipline}
+                  className="text-[9px] uppercase tracking-[0.3em] text-white/38 md:text-[10px]"
+                >
+                  {discipline}
+                </li>
+              ))}
+            </motion.ul>
 
             <motion.div
               className="mt-10 md:mt-14 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center lg:justify-start"
@@ -393,7 +418,7 @@ export default function Hero() {
                 className="text-[10px] tracking-[0.38em] uppercase text-center"
                 style={{ color: 'rgba(212,175,55,0.75)' }}
               >
-                Web Design Projects
+                Web &amp; AI Projects
               </p>
 
               {/* Footer */}

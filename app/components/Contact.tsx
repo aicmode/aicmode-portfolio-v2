@@ -15,23 +15,44 @@ const github = {
   icon: <GitHubIcon />,
   label: 'GitHub',
   handle: 'aicmode',
-  desc: 'Open Source & Code',
+  desc: 'Code · Web Apps · AI Systems',
   glow: 'rgba(255,255,255,0.07)',
   border: 'rgba(255,255,255,0.12)',
 }
 
+const disciplines = [
+  'AI Systems',
+  'Web Applications',
+  'Business Automation',
+  'Creative Web Design',
+  'API Integration',
+  'Problem Solving',
+]
+
 const inquiries = [
   {
-    title: 'Website Design',
-    text: '店舗・サービス・個人ブランド向けのWebサイト制作。',
+    title: 'Website / LP',
+    text: '問い合わせが増えない、信頼されない。その原因から整理して作り直します。',
   },
   {
-    title: 'Landing Page',
-    text: '商品・サービスの魅力を伝えるLP制作。',
+    title: 'AI Systems',
+    text: '対応や文章作成が追いつかない業務を、AIに任せられる形にします。',
+  },
+  {
+    title: 'Business Automation',
+    text: '毎日の手作業・集計・通知・共有を、自動で回る仕組みに変えます。',
+  },
+  {
+    title: 'Web Applications',
+    text: '既存ツールでは業務に合わない部分を、専用アプリで埋めます。',
+  },
+  {
+    title: 'API Integration',
+    text: 'ツール間の転記や二重入力をなくし、今の環境のままつなぎます。',
   },
   {
     title: 'Creative Direction',
-    text: '世界観、配色、構成、ビジュアルの方向性づくり。',
+    text: '何を、誰に、どう見せるか。伝わる方向性から一緒に決めます。',
   },
 ]
 
@@ -49,7 +70,7 @@ function SocialCard({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-center gap-5 px-6 py-5 w-full"
+      className="group flex w-full flex-col items-center gap-4 px-6 py-9 text-center"
       style={{
         border: `1px solid rgba(255,255,255,0.07)`,
         background: 'rgba(255,255,255,0.02)',
@@ -66,18 +87,18 @@ function SocialCard({
       initial={{ borderColor: 'rgba(255,255,255,0.07)', boxShadow: 'none', y: 0 }}
     >
       <div
-        className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full"
+        className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full"
         style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', color: '#686868', transition: 'color 0.3s ease, border-color 0.3s ease' }}
       >
         <span className="group-hover:text-white" style={{ color: 'inherit', transition: 'color 0.3s ease' }}>
           {icon}
         </span>
       </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-[9px] tracking-[0.4em] uppercase mb-0.5" style={{ color: '#363636' }}>
+      <div className="min-w-0">
+        <p className="mb-1.5 text-[9px] uppercase tracking-[0.4em]" style={{ color: '#363636' }}>
           {label}
         </p>
-        <p className="text-sm font-semibold tracking-wide text-white mb-0.5">
+        <p className="mb-1.5 text-sm font-semibold tracking-wide text-white">
           {handle}
         </p>
         <p className="text-[10px] tracking-wide" style={{ color: '#383838' }}>
@@ -85,8 +106,8 @@ function SocialCard({
         </p>
       </div>
       <svg
-        className="w-3.5 h-3.5 opacity-0 group-hover:opacity-60 flex-shrink-0 -translate-x-2 group-hover:translate-x-0"
-        style={{ color: '#888', transition: 'all 0.35s ease' }}
+        className="h-3.5 w-3.5 flex-shrink-0 opacity-20 transition-all duration-[350ms] group-hover:-translate-y-0.5 group-hover:opacity-60"
+        style={{ color: '#888' }}
         fill="none" stroke="currentColor" viewBox="0 0 24 24"
       >
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 7l-10 10M17 7H7m10 0v10" />
@@ -156,6 +177,17 @@ export default function Contact() {
                 cinematic.
               </span>
             </h2>
+
+            <ul className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2.5">
+              {disciplines.map((discipline) => (
+                <li
+                  key={discipline}
+                  className="text-[9px] uppercase tracking-[0.3em] text-white/38 md:text-[10px]"
+                >
+                  {discipline}
+                </li>
+              ))}
+            </ul>
           </div>
         </AnimateIn>
 
@@ -163,15 +195,15 @@ export default function Contact() {
         <AnimateIn delay={160}>
           <div className="mb-10 md:mb-16 max-w-3xl">
             <p className="mb-5 text-sm leading-7 text-white/46 md:text-base md:leading-8">
-              Webサイト制作、LP制作、ブランドサイト、ポートフォリオサイトなど、お気軽にご相談ください。
-              世界観のあるデザインと、AIを活用したスピード感のある制作で、ブランドの魅力が伝わるWebサイトを目指します。
+              まだ「何を作るか」が決まっていなくても大丈夫です。今どこで困っているかを教えていただければ、Webサイト・LPで解決するのか、AIシステムや業務効率化ツール、API連携で解決するのかを一緒に見極めます。
+              要件整理から設計・実装・運用まで一貫して担当するので、途中で話が途切れません。
             </p>
             <p className="text-sm md:text-base leading-relaxed mb-2" style={{ color: '#585858' }}>
               AI × Design × Overseas Culture — blending technology<br />
               with a global creative perspective.
             </p>
             <p className="text-[11px] tracking-[0.2em] uppercase" style={{ color: '#303030' }}>
-              Web Design · Branding · Creative Direction
+              AI Development · Web Design · Business Automation
             </p>
           </div>
         </AnimateIn>
@@ -208,7 +240,7 @@ export default function Contact() {
             </div>
             <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center">
               <motion.a
-                href="https://www.instagram.com/aicmode"
+                href={github.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center border px-7 py-4 text-[10px] font-semibold uppercase tracking-[0.34em] text-[#080808]"
@@ -223,10 +255,10 @@ export default function Contact() {
                   transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
                 }}
               >
-                CONTACT / DM
+                CONTACT VIA GITHUB
               </motion.a>
               <p className="text-[10px] uppercase tracking-[0.28em] text-white/26">
-                Instagram DM is open for project inquiries.
+                GitHub is open for project inquiries.
               </p>
             </div>
           </div>

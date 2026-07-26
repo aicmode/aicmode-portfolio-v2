@@ -9,30 +9,89 @@ const influences = [
 
 const stats = [
   { top: 'WEB', bottom: 'Design' },
-  { top: 'AI', bottom: 'Powered' },
+  { top: 'AI', bottom: 'Systems' },
   { top: '2026', bottom: 'Active' },
+]
+
+const services = [
+  {
+    title: 'Brand Website',
+    desc: '「良いのに伝わらない」を解決。第一印象と信頼感を整え、問い合わせにつなげます。',
+  },
+  {
+    title: 'Landing Page',
+    desc: '「見られても申し込まれない」を解決。訴求と導線を1ページに集約します。',
+  },
+  {
+    title: 'Portfolio Site',
+    desc: '「実績が正しく評価されない」を解決。作品と強みが伝わる見せ方に整理します。',
+  },
+  {
+    title: 'AI Systems',
+    desc: '「対応が追いつかない」を解決。問い合わせ対応・文章作成・要約・分類を任せられる形に。',
+  },
+  {
+    title: 'Business Automation',
+    desc: '「毎日同じ作業に時間が消える」を解決。集計・通知・共有が自動で回る状態にします。',
+  },
+  {
+    title: 'Web Applications',
+    desc: '「既存ツールが業務に合わない」を解決。必要な機能だけの専用アプリを用意します。',
+  },
+  {
+    title: 'Internal Tools',
+    desc: '「属人化して引き継げない」を解決。誰が使っても同じ結果になる社内ツールに整えます。',
+  },
+  {
+    title: 'Custom Dashboard',
+    desc: '「数字を探す時間が長い」を解決。判断に必要な指標を、一画面で把握できるように。',
+  },
+  {
+    title: 'API Integration',
+    desc: '「ツール間の転記が手作業」を解決。今の環境のまま、自動でつながる状態にします。',
+  },
 ]
 
 const offerings = [
   {
     id: '01',
     title: 'Brand Websites',
-    desc: '店舗・サービス・個人ブランド向けに、世界観と信頼感が伝わるWebサイトを制作します。',
+    desc: '良いサービスなのに伝わっていない状態を解消します。世界観と信頼感を整理し、指名で選ばれるサイトへ。',
   },
   {
     id: '02',
     title: 'Landing Pages',
-    desc: '商品やサービスの魅力が伝わる、見やすく印象に残るLPを制作します。',
+    desc: '見た人が迷わず動ける構成に整えます。訴求・根拠・導線を組み直し、申し込みまでの離脱を減らします。',
   },
   {
     id: '03',
-    title: 'Portfolio / Concept Sites',
-    desc: '作品やブランドイメージを美しく見せる、ポートフォリオ型・コンセプト型サイトを制作します。',
+    title: 'Portfolio Websites',
+    desc: '実績と強みが正しく評価される見せ方に整理し、次の依頼や採用につながる状態をつくります。',
   },
   {
     id: '04',
-    title: 'AI Assisted Design',
-    desc: 'AIを活用して、構成・デザイン・ビジュアル制作をスピーディーに進めます。',
+    title: 'AI Systems',
+    desc: '問い合わせ対応、文章作成、要約、分類など、時間ばかりかかる業務をAIに肩代わりさせます。',
+  },
+  {
+    id: '05',
+    title: 'Business Automation',
+    desc: '毎日の手作業・集計・通知・共有を自動化し、人が判断や接客に使う時間を取り戻します。',
+  },
+  {
+    id: '06',
+    title: 'Web Applications',
+    desc: '既存ツールに業務を合わせるのをやめ、現場の進め方に合わせた専用アプリで手戻りをなくします。',
+  },
+  {
+    id: '07',
+    title: 'Internal Dashboard',
+    desc: '数字を探す時間をなくします。売上・進捗・予約状況を一画面にまとめ、判断を早くします。',
+  },
+  {
+    id: '08',
+    title: 'API Integration',
+    desc: 'ツール間の転記や二重入力をなくします。すでに使っている環境のまま、自動でつながる形に。',
   },
 ]
 
@@ -40,22 +99,22 @@ const process = [
   {
     step: '01',
     title: 'Direction',
-    desc: '目的、雰囲気、必要なページ、見せたい印象を整理します。',
+    desc: '何が課題かを先に整理します。目的、優先順位、必要な機能をここで見極めます。',
   },
   {
     step: '02',
     title: 'Design',
-    desc: 'ブランドに合う配色、余白、レイアウト、ビジュアルの方向性を設計します。',
+    desc: '画面設計に加え、システム構成・データの流れ・API連携までを設計します。',
   },
   {
     step: '03',
     title: 'Build',
-    desc: 'スマホ表示も意識しながら、Webサイトとして丁寧に構築します。',
+    desc: 'スマホ表示まで含めて実装し、実際の運用を想定して動作を検証します。',
   },
   {
     step: '04',
-    title: 'Launch',
-    desc: '公開前の確認、微調整、公開までの流れをサポートします。',
+    title: 'Operate',
+    desc: '公開して終わりにせず、改善・追加・トラブル対応まで運用を継続してサポートします。',
   },
 ]
 
@@ -131,6 +190,49 @@ function OfferingCard({ id, title, desc }: { id: string; title: string; desc: st
       >
         {desc}
       </p>
+    </div>
+  )
+}
+
+function ServiceRow({ title, desc }: { title: string; desc: string }) {
+  return (
+    <div
+      className="flex h-full flex-col gap-2 py-5 pr-4 cursor-default"
+      style={{
+        borderTop: '1px solid rgba(255,255,255,0.07)',
+        transition: 'border-color 0.45s ease',
+      }}
+      onMouseEnter={(e) => {
+        const el = e.currentTarget as HTMLElement
+        el.style.borderTopColor = 'rgba(212,175,55,0.35)'
+        const titleEl = el.querySelector('[data-title]') as HTMLElement
+        const descEl = el.querySelector('[data-desc]') as HTMLElement
+        if (titleEl) titleEl.style.color = '#ffffff'
+        if (descEl) descEl.style.color = '#8a8a8a'
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget as HTMLElement
+        el.style.borderTopColor = 'rgba(255,255,255,0.07)'
+        const titleEl = el.querySelector('[data-title]') as HTMLElement
+        const descEl = el.querySelector('[data-desc]') as HTMLElement
+        if (titleEl) titleEl.style.color = '#c8c8c8'
+        if (descEl) descEl.style.color = '#5a5a5a'
+      }}
+    >
+      <span
+        data-title
+        className="text-[11px] font-semibold uppercase tracking-[0.28em]"
+        style={{ color: '#c8c8c8', transition: 'color 0.4s ease' }}
+      >
+        {title}
+      </span>
+      <span
+        data-desc
+        className="text-[13px] leading-relaxed"
+        style={{ color: '#5a5a5a', transition: 'color 0.4s ease' }}
+      >
+        {desc}
+      </span>
     </div>
   )
 }
@@ -279,6 +381,13 @@ export default function About() {
                   AIとWeb制作を組み合わせ、<br />
                   感覚的で世界観のあるサイトを制作。
                 </p>
+                <p className="text-sm md:text-base leading-relaxed" style={{ color: '#7a7a7a' }}>
+                  さらに、Next.js・React・PythonとOpenAI APIなどを活用して、AIシステム、Webアプリケーション、業務効率化ツールの開発まで対応します。
+                  AIを使うところで終わらせず、要件整理と<span style={{ color: '#a8a8a8' }}>設計</span>、コードを書く<span style={{ color: '#a8a8a8' }}>実装</span>、公開後の<span style={{ color: '#a8a8a8' }}>運用</span>・改善までを一人で通して担当できます。
+                </p>
+                <p className="text-sm md:text-base leading-relaxed" style={{ color: '#7a7a7a' }}>
+                  だから、外注先を分けずに相談できます。Webサイトを作る人ではなく、事業の課題そのものを整理し、解決する手段を選んで形にするクリエイティブテクノロジストとして関わります。
+                </p>
               </div>
 
               <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }} />
@@ -355,18 +464,27 @@ export default function About() {
                   className="text-base md:text-lg leading-relaxed"
                   style={{ color: '#c0c0c0' }}
                 >
-                  ただ綺麗なだけではなく、第一印象・信頼感・導線まで意識して、ブランドの魅力が伝わるWebサイトを制作します。
+                  作りたいものではなく、解決したいことから始めます。第一印象・信頼感・導線まで設計したWebサイトと、現場の手間そのものを減らすAIシステム。どちらも「その課題に効くか」で選びます。
                 </p>
                 <div style={{ width: '40px', height: '1px', background: 'linear-gradient(to right, rgba(124,58,237,0.6), rgba(37,99,235,0.3))' }} />
                 <p
                   className="text-sm md:text-base leading-relaxed"
                   style={{ color: '#7a7a7a' }}
                 >
-                  店舗、個人ブランド、サービス、ポートフォリオなど、それぞれの目的に合わせて、雰囲気・色・余白・言葉・見せ方を整理します。
-                  AIを活用しながら、スピード感とデザイン性の両方を大切にし、海外カルチャーを感じる洗練されたWeb表現を目指します。
+                  店舗、病院・クリニック、中小企業、個人事業主、ブランドなど、それぞれの目的に合わせて、雰囲気・色・余白・言葉・見せ方を整理します。
+                  同時に業務フローを見直し、AI・API連携・自動化までを設計・実装・運用まで通して担当。「問い合わせが増えない」「人手が足りない」「毎日同じ作業に追われる」といった課題に、成果で答えます。
                 </p>
               </div>
             </AnimateIn>
+          </div>
+
+          {/* Service menu */}
+          <div className="mt-16 md:mt-24 grid grid-cols-1 gap-x-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-12">
+            {services.map((service, i) => (
+              <AnimateIn key={service.title} delay={120 + i * 70}>
+                <ServiceRow {...service} />
+              </AnimateIn>
+            ))}
           </div>
         </div>
 
