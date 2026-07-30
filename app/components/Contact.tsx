@@ -22,18 +22,28 @@ const github = {
 
 const disciplines = [
   'AI Systems',
-  'Web Applications',
   'Business Automation',
-  'Creative Web Design',
+  'Web Applications',
   'API Integration',
-  'Problem Solving',
+  'Dashboard Development',
+  'Creative Web Design',
+]
+
+/**
+ * What to include in a first message. Removes the "I don't know what to write"
+ * barrier, which is the most common reason an enquiry never gets sent.
+ * Everything is optional on purpose — the note under the list says so.
+ */
+const inquiryChecklist = [
+  { label: '現在困っていること', hint: '手作業になっている業務、対応が追いつかない場面など' },
+  { label: '利用する人', hint: '社内スタッフ / 顧客 / 自分だけ、想定人数' },
+  { label: '希望する機能', hint: '決まっていなければ「やりたいこと」だけでも構いません' },
+  { label: '希望時期', hint: '公開したい時期、動かしたいタイミング' },
+  { label: '予算の目安', hint: '範囲でも構いません。範囲に合わせて構成を調整します' },
+  { label: '参考サービス', hint: '似ていると感じたサイト・ツールのURL' },
 ]
 
 const inquiries = [
-  {
-    title: 'Website / LP',
-    text: '問い合わせが増えない、信頼されない。その原因から整理して作り直します。',
-  },
   {
     title: 'AI Systems',
     text: '対応や文章作成が追いつかない業務を、AIに任せられる形にします。',
@@ -43,12 +53,16 @@ const inquiries = [
     text: '毎日の手作業・集計・通知・共有を、自動で回る仕組みに変えます。',
   },
   {
+    title: 'API Integration',
+    text: 'ツール間の転記や二重入力をなくし、今の環境のままつなぎます。',
+  },
+  {
     title: 'Web Applications',
     text: '既存ツールでは業務に合わない部分を、専用アプリで埋めます。',
   },
   {
-    title: 'API Integration',
-    text: 'ツール間の転記や二重入力をなくし、今の環境のままつなぎます。',
+    title: 'Website / LP',
+    text: '問い合わせが増えない、信頼されない。その原因から整理して作り直します。',
   },
   {
     title: 'Creative Direction',
@@ -88,20 +102,20 @@ function SocialCard({
     >
       <div
         className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full"
-        style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', color: '#686868', transition: 'color 0.3s ease, border-color 0.3s ease' }}
+        style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', color: '#8a8a8a', transition: 'color 0.3s ease, border-color 0.3s ease' }}
       >
         <span className="group-hover:text-white" style={{ color: 'inherit', transition: 'color 0.3s ease' }}>
           {icon}
         </span>
       </div>
       <div className="min-w-0">
-        <p className="mb-1.5 text-[9px] uppercase tracking-[0.4em]" style={{ color: '#363636' }}>
+        <p className="mb-1.5 text-[9px] uppercase tracking-[0.4em]" style={{ color: '#7a7a7a' }}>
           {label}
         </p>
         <p className="mb-1.5 text-sm font-semibold tracking-wide text-white">
           {handle}
         </p>
-        <p className="text-[10px] tracking-wide" style={{ color: '#383838' }}>
+        <p className="text-[10px] tracking-wide" style={{ color: '#7a7a7a' }}>
           {desc}
         </p>
       </div>
@@ -160,7 +174,7 @@ export default function Contact() {
         {/* ── Headline ── */}
         <AnimateIn delay={80}>
           <div className="mb-6 md:mb-8">
-            <p className="text-[10px] tracking-[0.55em] text-zinc-600 mb-5 uppercase">
+            <p className="text-[10px] tracking-[0.55em] text-zinc-400 mb-5 uppercase">
               Contact
             </p>
             <h2
@@ -182,7 +196,7 @@ export default function Contact() {
               {disciplines.map((discipline) => (
                 <li
                   key={discipline}
-                  className="text-[9px] uppercase tracking-[0.3em] text-white/38 md:text-[10px]"
+                  className="text-[9px] uppercase tracking-[0.3em] text-white/56 md:text-[10px]"
                 >
                   {discipline}
                 </li>
@@ -193,16 +207,16 @@ export default function Contact() {
 
         {/* ── Copy ── */}
         <AnimateIn delay={160}>
-          <div className="mb-10 md:mb-16 max-w-3xl">
-            <p className="mb-5 text-sm leading-7 text-white/46 md:text-base md:leading-8">
-              まだ「何を作るか」が決まっていなくても大丈夫です。今どこで困っているかを教えていただければ、Webサイト・LPで解決するのか、AIシステムや業務効率化ツール、API連携で解決するのかを一緒に見極めます。
-              要件整理から設計・実装・運用まで一貫して担当するので、途中で話が途切れません。
+          <div className="mb-10 max-w-3xl md:mb-16">
+            <p className="mb-5 text-sm leading-7 text-white/58 md:text-base md:leading-8">
+              まだ仕様が決まっていなくても問題ありません。現在の課題、手作業になっている業務、作りたいサービスのイメージをお聞かせください。
+              内容を整理し、Webサイト・AIシステム・業務自動化・API連携のどれが適しているかをご提案します。
             </p>
-            <p className="text-sm md:text-base leading-relaxed mb-2" style={{ color: '#585858' }}>
+            <p className="text-sm md:text-base leading-relaxed mb-2" style={{ color: '#8a8a8a' }}>
               AI × Design × Overseas Culture — blending technology<br />
               with a global creative perspective.
             </p>
-            <p className="text-[11px] tracking-[0.2em] uppercase" style={{ color: '#303030' }}>
+            <p className="text-[11px] tracking-[0.2em] uppercase" style={{ color: '#7a7a7a' }}>
               AI Development · Web Design · Business Automation
             </p>
           </div>
@@ -212,7 +226,7 @@ export default function Contact() {
         <AnimateIn delay={240}>
           <div className="mb-12 md:mb-16">
             <div className="mb-6 flex items-center justify-between gap-6">
-              <p className="text-[10px] uppercase tracking-[0.5em] text-white/42">
+              <p className="text-[10px] uppercase tracking-[0.5em] text-white/58">
                 Project Inquiry
               </p>
               <div className="h-px flex-1 bg-gradient-to-l from-white/[0.07] to-transparent" />
@@ -232,18 +246,55 @@ export default function Contact() {
                   <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.34em] text-white/76">
                     {item.title}
                   </p>
-                  <p className="text-sm leading-7 text-white/42">
+                  <p className="text-sm leading-7 text-white/58">
                     {item.text}
                   </p>
                 </motion.div>
               ))}
             </div>
-            <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center">
+          </div>
+        </AnimateIn>
+
+        {/* ── What to send ── */}
+        <AnimateIn delay={280}>
+          <div className="mb-12 md:mb-16">
+            <div className="mb-6 flex items-center justify-between gap-6">
+              <p className="text-[10px] uppercase tracking-[0.5em] text-white/58">What To Include</p>
+              <div className="h-px flex-1 bg-gradient-to-l from-white/[0.07] to-transparent" />
+            </div>
+            <p className="mb-7 max-w-3xl text-sm leading-7 text-white/58">
+              初回のご連絡では、以下のうち分かる範囲だけで構いません。すべて埋まっていなくても、こちらから必要な点を伺いながら整理します。
+            </p>
+            <ul className="grid grid-cols-1 gap-x-8 gap-y-0 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-12">
+              {inquiryChecklist.map((item, index) => (
+                <li
+                  key={item.label}
+                  className="flex flex-col gap-1.5 py-4"
+                  style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
+                >
+                  <span className="flex items-baseline gap-3">
+                    <span
+                      className="font-mono text-[9px] tracking-[0.2em]"
+                      style={{ color: 'rgba(212,175,55,0.8)' }}
+                      aria-hidden="true"
+                    >
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span className="text-[12px] font-semibold uppercase tracking-[0.16em] text-white/78">
+                      {item.label}
+                    </span>
+                  </span>
+                  <span className="pl-[1.7rem] text-[12px] leading-6 text-white/56">{item.hint}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
               <motion.a
-                href={github.href}
+                href={`${github.href}?tab=repositories`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center border px-7 py-4 text-[10px] font-semibold uppercase tracking-[0.34em] text-[#080808]"
+                className="inline-flex items-center justify-center border px-7 py-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#080808]"
                 style={{
                   borderColor: 'rgba(212,175,55,0.5)',
                   background: 'linear-gradient(135deg, rgba(255,255,255,0.96), rgba(212,175,55,0.82))',
@@ -255,12 +306,31 @@ export default function Contact() {
                   transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
                 }}
               >
-                CONTACT VIA GITHUB
+                PROJECT INQUIRY VIA GITHUB
+                <span className="sr-only">（GitHubを新しいタブで開きます）</span>
               </motion.a>
-              <p className="text-[10px] uppercase tracking-[0.28em] text-white/26">
-                GitHub is open for project inquiries.
-              </p>
+              <a
+                href={github.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center border border-white/14 px-7 py-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-white/70 transition duration-500 hover:border-white/32 hover:text-white"
+              >
+                VIEW GITHUB PROFILE
+                <span className="sr-only">（GitHubを新しいタブで開きます）</span>
+              </a>
             </div>
+
+            {/*
+              GitHub is currently the only contact route that exists. No email
+              address or social handle is invented here — and because a GitHub
+              Issue is public, that has to be said out loud before someone pastes
+              business details into one.
+            */}
+            <p className="mt-6 max-w-3xl border-l border-white/12 pl-4 text-[12.5px] leading-6 text-white/52">
+              現在の問い合わせ窓口はGitHubのみです。GitHubのIssueは<strong className="font-semibold text-white/60">誰でも閲覧できる公開の場</strong>のため、
+              社名・個人情報・社内の非公開情報・認証情報は書き込まないでください。
+              まずは「何に困っているか」だけをご記入いただければ、非公開でやり取りできる方法をこちらからご案内します。
+            </p>
           </div>
         </AnimateIn>
 
@@ -268,7 +338,7 @@ export default function Contact() {
         <AnimateIn delay={360}>
           <div className="mb-8 md:mb-10 flex items-center gap-6">
             <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to right, rgba(255,255,255,0.06), transparent)' }} />
-            <span className="text-[9px] tracking-[0.45em] text-zinc-700 uppercase whitespace-nowrap">Connect</span>
+            <span className="text-[9px] tracking-[0.45em] text-zinc-400 uppercase whitespace-nowrap">Connect</span>
             <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to left, rgba(255,255,255,0.06), transparent)' }} />
           </div>
         </AnimateIn>

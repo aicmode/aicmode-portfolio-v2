@@ -22,6 +22,14 @@
  *   2. If assets are still unavailable, degrade gracefully rather than showing
  *      a blank screen: reveal the real content when the stylesheet survived,
  *      otherwise show a readable notice with a retry link.
+ *
+ * The failure notice is BUILT BY THE SCRIPT, not rendered into the document.
+ * It used to ship as a `display:none` div, which meant the words
+ * "読み込みに失敗しました" were in the served HTML of a perfectly healthy page —
+ * visible to crawlers, to text extraction, and to any assistive tech that
+ * ignores the CSS. Constructing it at failure time keeps the healthy document
+ * free of error copy while losing nothing: the builder is inline, so it is
+ * available in exactly the situation it exists for.
  */
 
 const NOTICE_ID = 'aic-boot-notice'
@@ -30,7 +38,6 @@ const NOTICE_ID = 'aic-boot-notice'
 const CRITICAL_CSS = `
 html{background-color:#080808}
 body{margin:0;background-color:#080808;color:#f0f0f0}
-#${NOTICE_ID}{display:none}
 /*
  * Stylesheet survived but the bundle did not: reveal the content, which keeps
  * the real design and simply loses the animations. Scoped to true zeros:
@@ -43,17 +50,16 @@ html.aic-boot-failed [style$="opacity:0"]{
 opacity:1!important;transform:none!important;filter:none!important
 }
 /*
- * The stylesheet is gone too, so the design cannot be rendered at all. Show a
- * self-contained notice instead of an unreadable dark-on-dark page.
+ * The stylesheet is gone too, so the design cannot be rendered at all. The
+ * notice is injected by the script in that case; hide everything else.
  */
-html.aic-boot-degraded #${NOTICE_ID}{display:flex}
 html.aic-boot-degraded body>*:not(#${NOTICE_ID}){display:none}
 `.trim()
 
 /** Detects "the bundle never ran" and recovers from it. */
 const BOOT_SCRIPT = `
 (function(){
-  var KEY='aic:boot-recovery',handled=false;
+  var KEY='aic:boot-recovery',NOTICE=${JSON.stringify(NOTICE_ID)},handled=false;
 
   function styleSheetLoaded(){
     try{
@@ -62,12 +68,50 @@ const BOOT_SCRIPT = `
     }catch(e){return false}
   }
 
+  /* Built here rather than server-rendered, so a healthy page never carries
+     error copy in its DOM. Styles are inline because this path is reached
+     precisely when the stylesheet is missing. */
+  function showNotice(){
+    if(document.getElementById(NOTICE))return;
+    var box=document.createElement('div');
+    box.id=NOTICE;
+    box.setAttribute('role','alert');
+    box.style.cssText='min-height:100vh;display:flex;flex-direction:column;'+
+      'align-items:center;justify-content:center;gap:1.5rem;padding:2rem;'+
+      'text-align:center;background-color:#080808;color:#f0f0f0;'+
+      'font-family:system-ui,-apple-system,sans-serif';
+    var brand=document.createElement('p');
+    brand.style.cssText='margin:0;font-size:10px;letter-spacing:0.4em;color:rgba(212,175,55,0.75)';
+    brand.textContent='AICMODE';
+    var title=document.createElement('h2');
+    title.style.cssText='margin:0;font-size:1.125rem;font-weight:700';
+    title.textContent='読み込みに失敗しました';
+    var body=document.createElement('p');
+    body.style.cssText='margin:0;font-size:0.875rem;line-height:1.8;color:rgba(255,255,255,0.55)';
+    body.textContent='通信環境をご確認のうえ、再読み込みをお試しください。';
+    /* A plain link, not a client-side navigation: this path only runs when the
+       JS bundle failed, so a real document request is what is needed. */
+    var retry=document.createElement('a');
+    retry.href='/';
+    retry.style.cssText='padding:0.875rem 2.5rem;font-size:10px;letter-spacing:0.3em;'+
+      'text-decoration:none;color:#080808;border:1px solid rgba(212,175,55,0.48);'+
+      'background:linear-gradient(135deg, rgba(255,255,255,0.96), rgba(212,175,55,0.82))';
+    retry.textContent='RELOAD';
+    box.appendChild(brand);box.appendChild(title);box.appendChild(body);box.appendChild(retry);
+    document.body.appendChild(box);
+  }
+
   function degrade(){
     var el=document.documentElement;
     if(!el||!el.classList)return;
-    /* Reveal the real design if we still have styles; otherwise show the
+    /* Reveal the real design if we still have styles; otherwise inject the
        notice, which carries its own inline styling. */
-    el.classList.add(styleSheetLoaded()?'aic-boot-failed':'aic-boot-degraded');
+    if(styleSheetLoaded()){
+      el.classList.add('aic-boot-failed');
+    }else{
+      el.classList.add('aic-boot-degraded');
+      showNotice();
+    }
   }
 
   function onBootFailure(){
@@ -104,56 +148,6 @@ export default function BootRecovery() {
     <>
       <style dangerouslySetInnerHTML={{ __html: CRITICAL_CSS }} />
       <script dangerouslySetInnerHTML={{ __html: BOOT_SCRIPT }} />
-
-      {/*
-        Hidden unless the stylesheet itself failed to load, so every style here
-        is inline and the retry is a plain link that needs no JavaScript.
-      */}
-      <div
-        id={NOTICE_ID}
-        style={{
-          minHeight: '100vh',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '1.5rem',
-          padding: '2rem',
-          textAlign: 'center',
-          backgroundColor: '#080808',
-          color: '#f0f0f0',
-          fontFamily: 'system-ui, -apple-system, sans-serif',
-        }}
-      >
-        <p style={{ margin: 0, fontSize: '10px', letterSpacing: '0.4em', color: 'rgba(212,175,55,0.75)' }}>
-          AICMODE
-        </p>
-        <h2 style={{ margin: 0, fontSize: '1.125rem', fontWeight: 700 }}>
-          読み込みに失敗しました
-        </h2>
-        <p style={{ margin: 0, fontSize: '0.875rem', lineHeight: 1.8, color: 'rgba(255,255,255,0.55)' }}>
-          通信環境をご確認のうえ、再読み込みをお試しください。
-        </p>
-        {/*
-          Intentionally a plain <a>, not next/link: this path only runs when the
-          JS bundle failed, so a client-side navigation could not work. A real
-          document request is exactly what is needed to re-fetch the page.
-        */}
-        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-        <a
-          href="/"
-          style={{
-            padding: '0.875rem 2.5rem',
-            fontSize: '10px',
-            letterSpacing: '0.3em',
-            textDecoration: 'none',
-            color: '#080808',
-            border: '1px solid rgba(212,175,55,0.48)',
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.96), rgba(212,175,55,0.82))',
-          }}
-        >
-          RELOAD
-        </a>
-      </div>
     </>
   )
 }

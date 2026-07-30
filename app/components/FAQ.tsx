@@ -17,6 +17,11 @@ function FaqItem({
   isOpen: boolean
   onToggle: () => void
 }) {
+  // Stable ids derived from the question number, so aria-controls / labelledby
+  // point at real elements on both the server and the client render.
+  const buttonId = `faq-trigger-${no}`
+  const panelId = `faq-panel-${no}`
+
   return (
     <motion.div
       className="w-full overflow-hidden"
@@ -37,15 +42,21 @@ function FaqItem({
       }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
     >
-      <button
-        type="button"
-        onClick={onToggle}
-        aria-expanded={isOpen}
-        className="group flex w-full items-center gap-4 px-5 py-5 text-left sm:gap-5 sm:px-7 sm:py-6"
-        style={{ background: 'transparent', cursor: 'pointer' }}
-      >
+      {/* The trigger sits inside a heading so the accordion shows up in a screen
+          reader's heading list, per the ARIA accordion pattern. */}
+      <h3 className="m-0">
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={isOpen}
+          aria-controls={panelId}
+          id={buttonId}
+          className="group flex w-full items-center gap-4 px-5 py-5 text-left sm:gap-5 sm:px-7 sm:py-6"
+          style={{ background: 'transparent', cursor: 'pointer' }}
+        >
         <span
           className="font-mono text-[11px] tracking-[0.1em] flex-shrink-0 w-7"
+          aria-hidden="true"
           style={{
             color: isOpen ? 'rgba(212,175,55,0.85)' : '#3a3a3a',
             transition: 'color 0.35s ease',
@@ -66,6 +77,7 @@ function FaqItem({
           className="flex-shrink-0"
           animate={{ rotate: isOpen ? 45 : 0 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          aria-hidden="true"
         >
           <svg
             viewBox="0 0 24 24"
@@ -85,12 +97,16 @@ function FaqItem({
             />
           </svg>
         </motion.span>
-      </button>
+        </button>
+      </h3>
 
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
             key="content"
+            id={panelId}
+            role="region"
+            aria-labelledby={buttonId}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -147,7 +163,7 @@ export default function FAQ() {
         {/* Heading */}
         <AnimateIn>
           <div className="mb-12 md:mb-16">
-            <p className="mb-4 text-[10px] uppercase tracking-[0.55em] text-zinc-600">
+            <p className="mb-4 text-[10px] uppercase tracking-[0.55em] text-zinc-400">
               FAQ
             </p>
             <h2
@@ -159,10 +175,10 @@ export default function FAQ() {
             >
               Before You Ask
             </h2>
-            <p className="mt-6 text-sm leading-7 text-white/45 md:text-[15px] md:leading-8">
-              Web制作・AI開発・業務効率化について、よくある不安や疑問をまとめました。
+            <p className="mt-6 text-sm leading-7 text-white/58 md:text-[15px] md:leading-8">
+              AIシステム開発・業務自動化・API連携・Web制作について、依頼前によくいただく質問をまとめました。
               <br className="hidden sm:block" />
-              まずは相談だけでも大丈夫です。
+              回答は一般的な進め方です。実際の対応内容は案件ごとに要件を確認したうえで決めます。
             </p>
           </div>
         </AnimateIn>
@@ -187,7 +203,7 @@ export default function FAQ() {
           <div className="mt-12 flex flex-col items-center gap-5 text-center md:mt-16">
             <p
               className="text-[11px] uppercase tracking-[0.4em]"
-              style={{ color: '#585858' }}
+              style={{ color: '#8a8a8a' }}
             >
               Still have a question?
             </p>

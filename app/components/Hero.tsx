@@ -11,13 +11,21 @@ const cityLights = [
   { top: '64%', right: '25%', width: 1, height: 20, opacity: 0.16, delay: 1.8 },
 ]
 
+/**
+ * Ordered so an AI / automation client sees themselves in the first three
+ * words. "Creative Web Design" stays — it is a real differentiator — but sits
+ * after the AI capabilities rather than competing with them.
+ *
+ * RAG / vector search is deliberately not listed: there is no implementation to
+ * point at yet, and a tag here reads as a claim.
+ */
 const disciplines = [
   'AI Systems',
-  'Web Applications',
   'Business Automation',
-  'Creative Web Design',
+  'Web Applications',
   'API Integration',
-  'Problem Solving',
+  'Dashboard Development',
+  'Creative Web Design',
 ]
 
 const skylineDots = [
@@ -242,7 +250,7 @@ export default function Hero() {
           {/* Left: branding — subtle parallax + fade out on scroll */}
           <motion.div className="text-center lg:text-left" style={{ opacity: contentOpacity, y: contentY }}>
             <motion.p
-              className="text-[9px] md:text-[10px] tracking-[0.85em] text-zinc-600 mb-6 md:mb-8 uppercase"
+              className="text-[9px] md:text-[10px] tracking-[0.85em] text-zinc-400 mb-6 md:mb-8 uppercase"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
@@ -266,13 +274,28 @@ export default function Hero() {
               AIC
             </motion.h1>
 
+            {/* The AIC wordmark stays the brand; this line is what tells a
+                visitor within one second that the discipline is AI systems. */}
             <motion.p
-              className="mt-5 md:mt-7 text-[9px] md:text-[11px] tracking-[0.42em] text-zinc-500 uppercase"
+              className="mt-4 text-[13px] font-black uppercase leading-[1.15] tracking-[0.06em] text-white/88 sm:text-[17px] md:mt-6 md:text-[20px]"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.62, ease: [0.22, 1, 0.36, 1] }}
+            >
+              AI Systems
+              <span className="mx-2 text-[rgba(212,175,55,0.75)]" aria-hidden="true">
+                ×
+              </span>
+              Web Development
+            </motion.p>
+
+            <motion.p
+              className="mt-4 text-[9px] uppercase tracking-[0.42em] text-zinc-400 md:mt-5 md:text-[11px]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.72, ease: 'easeOut' }}
             >
-              AI Development × Web Design × Overseas Culture
+              Business Automation · API Integration · Overseas Culture
             </motion.p>
 
             <motion.div
@@ -281,11 +304,13 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.82, ease: [0.22, 1, 0.36, 1] }}
             >
-              <p className="text-[10px] md:text-[12px] font-semibold uppercase tracking-[0.28em] text-white/72">
-                AI Systems &amp; Web Development for Brands, Shops, and Clinics.
+              <p className="text-[10px] font-semibold uppercase leading-5 tracking-[0.24em] text-white/72 md:text-[12px] md:leading-6">
+                AI Systems, Business Automation, and Web Applications
+                <br className="hidden sm:block" /> built from business problems — not just feature requests.
               </p>
-              <p className="mt-4 text-sm leading-7 text-white/46 md:text-[15px] md:leading-8">
-                現場の課題を整理し、設計・実装・運用まで一貫して形にします。Webサイトから、AIシステム・業務効率化ツールの開発まで。
+              <p className="mt-4 text-sm leading-7 text-white/58 md:text-[15px] md:leading-8">
+                業務課題の整理から、要件定義・設計・実装・テスト・公開・運用まで。
+                AIシステム、業務自動化、API連携、Webアプリケーションを一貫して形にします。
               </p>
             </motion.div>
 
@@ -298,7 +323,7 @@ export default function Hero() {
               {disciplines.map((discipline) => (
                 <li
                   key={discipline}
-                  className="text-[9px] uppercase tracking-[0.3em] text-white/38 md:text-[10px]"
+                  className="text-[9px] uppercase tracking-[0.3em] text-white/56 md:text-[10px]"
                 >
                   {discipline}
                 </li>
@@ -311,9 +336,34 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
             >
+              {/* Primary: straight into the AI work, which is what an AI brief
+                  needs to see. Secondary keeps the enquiry route one tap away. */}
               <motion.a
-                href="#works"
-                className="group inline-flex items-center justify-center gap-3 px-8 py-3.5 text-[10px] uppercase tracking-[0.32em] text-white md:px-10 md:py-4 md:text-[11px]"
+                href="#case-studies"
+                className="group inline-flex items-center justify-center gap-3 whitespace-nowrap px-6 py-3.5 text-[10px] uppercase tracking-[0.22em] text-[#080808] sm:px-8 md:px-9 md:py-4 md:text-[11px] md:tracking-[0.26em]"
+                style={{
+                  border: '1px solid rgba(212,175,55,0.48)',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.96), rgba(212,175,55,0.82))',
+                  boxShadow: '0 0 36px rgba(212,175,55,0.12), inset 0 1px 0 rgba(255,255,255,0.55)',
+                }}
+                whileHover={{
+                  y: -2,
+                  boxShadow: '0 0 60px rgba(212,175,55,0.24), 0 0 110px rgba(109,40,217,0.12)',
+                  transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+                }}
+              >
+                VIEW AI CASE STUDIES
+                <svg
+                  className="h-3 w-3 transition-transform duration-300 group-hover:translate-y-0.5 md:h-3.5 md:w-3.5"
+                  fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+                </svg>
+              </motion.a>
+              <motion.a
+                href="#contact"
+                className="group inline-flex items-center justify-center gap-3 whitespace-nowrap px-6 py-3.5 text-[10px] uppercase tracking-[0.24em] text-white sm:px-8 md:px-9 md:py-4 md:text-[11px] md:tracking-[0.28em]"
                 style={{
                   border: '1px solid rgba(255,255,255,0.18)',
                   background: 'transparent',
@@ -326,32 +376,11 @@ export default function Hero() {
                   transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
                 }}
               >
-                VIEW WORKS
-                <svg
-                  className="w-3 h-3 md:w-3.5 md:h-3.5 group-hover:translate-y-0.5 transition-transform duration-300"
-                  fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
-                </svg>
-              </motion.a>
-              <motion.a
-                href="#contact"
-                className="group inline-flex items-center justify-center gap-3 px-8 py-3.5 text-[10px] uppercase tracking-[0.3em] text-[#080808] md:px-10 md:py-4 md:text-[11px]"
-                style={{
-                  border: '1px solid rgba(212,175,55,0.48)',
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.96), rgba(212,175,55,0.82))',
-                  boxShadow: '0 0 36px rgba(212,175,55,0.12), inset 0 1px 0 rgba(255,255,255,0.55)',
-                }}
-                whileHover={{
-                  y: -2,
-                  boxShadow: '0 0 60px rgba(212,175,55,0.24), 0 0 110px rgba(109,40,217,0.12)',
-                  transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
-                }}
-              >
                 START A PROJECT
                 <svg
                   className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 md:h-3.5 md:w-3.5"
                   fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 7l-10 10M17 7H7m10 0v10" />
                 </svg>
@@ -366,8 +395,14 @@ export default function Hero() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.5, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
+            {/*
+              Two real counts instead of one rounded "20+". "Projects Completed"
+              is gone on purpose: it reads as delivered client work, and none of
+              this portfolio was commissioned. The footer line says what these
+              actually are.
+            */}
             <div
-              className="relative flex flex-col items-center justify-center py-12 sm:py-16 px-14 sm:px-20 rounded-2xl"
+              className="relative flex w-full max-w-[26rem] flex-col items-center justify-center rounded-2xl px-8 py-10 sm:px-14 sm:py-14"
               style={{
                 border: '1px solid rgba(212,175,55,0.18)',
                 background:
@@ -378,60 +413,69 @@ export default function Hero() {
                 minWidth: '240px',
               }}
             >
-              {/* Number */}
-              <div
-                className="font-black leading-none text-white"
-                style={{
-                  fontSize: 'clamp(5.5rem, 13vw, 10rem)',
-                  letterSpacing: '-0.045em',
-                  textShadow:
-                    '0 0 50px rgba(212,175,55,0.22), 0 0 100px rgba(212,175,55,0.10)',
-                }}
-              >
-                20+
-              </div>
+              <dl className="w-full">
+                <div className="flex items-baseline justify-center gap-4 sm:gap-5">
+                  <dd
+                    className="font-black leading-none text-white"
+                    style={{
+                      fontSize: 'clamp(3.4rem, 8vw, 5.6rem)',
+                      letterSpacing: '-0.045em',
+                      textShadow: '0 0 50px rgba(212,175,55,0.22), 0 0 100px rgba(212,175,55,0.10)',
+                    }}
+                  >
+                    06
+                  </dd>
+                  <dt className="text-left">
+                    <span
+                      className="block text-[10px] uppercase tracking-[0.32em]"
+                      style={{ color: 'rgba(212,175,55,0.78)' }}
+                    >
+                      AI &amp; Automation
+                    </span>
+                    <span className="mt-1 block text-[13px] font-bold tracking-[-0.01em] text-white sm:text-[15px]">
+                      Case Studies
+                    </span>
+                  </dt>
+                </div>
 
-              {/* Label */}
-              <div
-                className="font-bold text-white text-center"
-                style={{
-                  fontSize: 'clamp(1.6rem, 4vw, 2.8rem)',
-                  letterSpacing: '-0.02em',
-                  marginTop: '-0.05em',
-                }}
-              >
-                Works
-              </div>
-
-              {/* Divider */}
-              <div
-                className="my-4 sm:my-5"
-                style={{
-                  width: '40px',
-                  height: '1px',
-                  background: 'rgba(212,175,55,0.35)',
-                }}
-              />
-
-              {/* Subtitle */}
-              <p
-                className="text-[10px] tracking-[0.38em] uppercase text-center"
-                style={{ color: 'rgba(212,175,55,0.75)' }}
-              >
-                Web &amp; AI Projects
-              </p>
-
-              {/* Footer */}
-              <div className="mt-5 flex items-center gap-2">
                 <div
-                  className="w-1.5 h-1.5 rounded-full animate-pulse-glow"
-                  style={{ background: 'rgba(212,175,55,0.55)' }}
+                  className="mx-auto my-5 sm:my-6"
+                  style={{ width: '40px', height: '1px', background: 'rgba(212,175,55,0.35)' }}
                 />
-                <p
-                  className="text-[9px] tracking-[0.3em] uppercase"
-                  style={{ color: 'rgba(255,255,255,0.25)' }}
-                >
-                  Projects Completed
+
+                <div className="flex items-baseline justify-center gap-4 sm:gap-5">
+                  <dd
+                    className="font-black leading-none text-white"
+                    style={{
+                      fontSize: 'clamp(3.4rem, 8vw, 5.6rem)',
+                      letterSpacing: '-0.045em',
+                      textShadow: '0 0 50px rgba(212,175,55,0.16)',
+                    }}
+                  >
+                    26
+                  </dd>
+                  <dt className="text-left">
+                    <span
+                      className="block text-[10px] uppercase tracking-[0.32em]"
+                      style={{ color: 'rgba(212,175,55,0.78)' }}
+                    >
+                      Web &amp; App
+                    </span>
+                    <span className="mt-1 block text-[13px] font-bold tracking-[-0.01em] text-white sm:text-[15px]">
+                      Portfolio Projects
+                    </span>
+                  </dt>
+                </div>
+              </dl>
+
+              <div className="mt-7 flex items-center gap-2">
+                <div
+                  className="h-1.5 w-1.5 rounded-full animate-pulse-glow"
+                  style={{ background: 'rgba(212,175,55,0.55)' }}
+                  aria-hidden="true"
+                />
+                <p className="text-[9px] uppercase tracking-[0.26em]" style={{ color: 'rgba(255,255,255,0.56)' }}>
+                  Self-directed &amp; Training Builds
                 </p>
               </div>
             </div>
@@ -447,7 +491,7 @@ export default function Hero() {
         animate={{ opacity: 0.45 }}
         transition={{ delay: 1.5, duration: 1.2 }}
       >
-        <span className="text-[9px] tracking-[0.65em] text-zinc-600 uppercase">Scroll</span>
+        <span className="text-[9px] tracking-[0.65em] text-zinc-400 uppercase">Scroll</span>
         <div className="w-[1px] h-10 md:h-12 overflow-hidden">
           <div className="w-full h-full bg-gradient-to-b from-zinc-500 to-transparent animate-scroll-line" />
         </div>

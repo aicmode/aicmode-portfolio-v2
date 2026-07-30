@@ -1,115 +1,65 @@
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
-import Works from "./components/Works";
+import CaseStudies from "./components/CaseStudies";
+import SelectedWorks from "./components/SelectedWorks";
+import Services from "./components/Services";
 import About from "./components/About";
+import Process from "./components/Process";
 import Skills from "./components/Skills";
 import FAQ from "./components/FAQ";
 import Contact from "./components/Contact";
+import WorksArchive from "./components/WorksArchive";
 import Footer from "./components/Footer";
 import { faqs } from "./data/faqs";
+import { services } from "./data/services";
+import { caseStudies } from "./data/caseStudies";
+import { projects } from "./data/projects";
 
+const SITE_URL = "https://aicmode-portfolio.vercel.app";
 const GITHUB_URL = "https://github.com/aicmode";
 
-// Each entry becomes both a standalone Service node and an Offer in the
-// ProfessionalService's catalog, so the two can never describe different menus.
-const services = [
-  {
-    id: "ai-system-development",
-    name: "AIシステム開発",
-    type: "AI System Development",
-    description:
-      "OpenAI APIなどを活用し、問い合わせ対応・文章生成・要約・分類といった時間のかかる業務をAIに任せられる仕組みを、設計から実装・運用まで構築します。",
-  },
-  {
-    id: "business-automation",
-    name: "業務効率化・AI自動化",
-    type: "Business Automation",
-    description:
-      "毎日の手作業・集計・通知・共有を自動化し、人が判断や接客に使う時間を取り戻す仕組みを設計します。",
-  },
-  {
-    id: "web-application-development",
-    name: "Webアプリ開発",
-    type: "Web Application Development",
-    description:
-      "Next.js・React・TypeScript・Pythonで、予約・管理・計算など業務に合わせた目的特化型のWebアプリケーションを開発します。",
-  },
-  {
-    id: "business-improvement-system",
-    name: "業務改善システム開発",
-    type: "Business Improvement System",
-    description:
-      "現場の業務フローを整理し、属人化や二重入力をなくす社内システム・内部ツールを構築します。",
-  },
-  {
-    id: "saas-development",
-    name: "SaaS開発",
-    type: "SaaS Development",
-    description:
-      "継続利用を前提としたWebサービスを、認証・データ設計・ダッシュボードまで含めて開発します。",
-  },
-  {
-    id: "api-integration",
-    name: "API連携",
-    type: "API Integration",
-    description:
-      "Google APIs、LINE Messaging API、Slack API、Discord API、REST APIなど、すでに使っているツールと自動でつながる状態にします。",
-  },
-  {
-    id: "custom-dashboard",
-    name: "ダッシュボード構築",
-    type: "Custom Dashboard",
-    description:
-      "売上・進捗・予約状況など、判断に必要な数値を一画面で把握できるダッシュボードを構築します。",
-  },
-  {
-    id: "brand-website",
-    name: "Webサイト制作",
-    type: "Web Design",
-    description:
-      "店舗・病院・クリニック・中小企業・個人事業主・ブランド向けに、第一印象と信頼感が伝わり、問い合わせにつながるWebサイトを制作します。",
-  },
-  {
-    id: "landing-page",
-    name: "LP制作",
-    type: "Landing Page",
-    description:
-      "訴求・根拠・導線を1ページに整理し、申し込みまでの離脱を減らすランディングページを制作します。",
-  },
-];
-
+/**
+ * Structured data, built from the same arrays the page renders, so the two can
+ * never describe different things.
+ *
+ * Person + ProfessionalService, not Organization: this is one freelance
+ * developer, and there is no registered company, address, phone number or
+ * review to describe. Nothing about pricing, ratings, aggregate reviews or
+ * client counts appears here — inventing any of that is exactly the kind of
+ * structured-data claim search engines penalise, and it would be untrue.
+ */
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebSite",
-      "@id": "#aicmode-website",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
       name: "AICMODE",
-      alternateName: "AICMODE — AI Developer × Web Designer",
+      alternateName: "AICMODE — AI Systems, Automation & Web Development",
       description:
-        "AIシステム開発、Webアプリ開発、AI自動化、業務効率化を、設計・実装・運用まで一貫して担当するAI Developer / Web Designer のポートフォリオ。",
+        "AIシステム、業務自動化、API連携、Webアプリケーション、ブランドサイトの設計・開発。課題整理から実装・公開・運用まで一貫して対応するフリーランス開発者のポートフォリオ。",
       inLanguage: "ja-JP",
-      publisher: { "@id": "#aicmode" },
-      about: { "@id": "#aicmode-service" },
+      publisher: { "@id": `${SITE_URL}/#aicmode` },
+      about: { "@id": `${SITE_URL}/#service` },
     },
     {
       "@type": "Person",
-      "@id": "#aicmode",
+      "@id": `${SITE_URL}/#aicmode`,
       name: "AICMODE",
       alternateName: "AIC",
-      url: GITHUB_URL,
-      jobTitle: "AI Developer / Web Designer",
+      url: SITE_URL,
+      jobTitle: "AI Developer / Web Developer",
       description:
-        "AIシステム開発、Webアプリ開発、業務効率化、API連携を、要件整理から設計・実装・運用まで一貫して担当するAI Developer / Web Designer。",
+        "AIシステム開発、業務自動化、API連携、Webアプリケーション開発を、要件整理から設計・実装・テスト・公開・運用まで一貫して担当するフリーランス開発者。",
       knowsAbout: [
         "AI System Development",
-        "AI Automation",
         "Business Automation",
-        "Business Improvement System",
+        "Workflow Automation",
         "Web Application Development",
-        "SaaS Development",
         "API Integration",
         "Prompt Engineering",
+        "Dashboard Development",
         "Web Design",
         "Responsive Design",
         "HTML",
@@ -118,14 +68,21 @@ const jsonLd = {
         "TypeScript",
         "React",
         "Next.js",
+        "Tailwind CSS",
         "Python",
+        "Flask",
         "Node.js",
+        "Express",
         "REST API",
         "OpenAI API",
+        "Whisper API",
+        "Dify API",
         "Google APIs",
+        "Google Apps Script",
         "LINE Messaging API",
-        "Discord API",
         "Slack API",
+        "Discord API",
+        "Webhook",
         "Git",
         "GitHub",
         "Vercel",
@@ -135,35 +92,75 @@ const jsonLd = {
     },
     {
       "@type": "ProfessionalService",
-      "@id": "#aicmode-service",
+      "@id": `${SITE_URL}/#service`,
       name: "AICMODE",
       description:
-        "店舗・病院・クリニック・中小企業・個人事業主・ブランド向けに、AIシステム開発、Webアプリ開発、AI自動化、業務効率化、API連携、Web制作を提供します。",
-      url: GITHUB_URL,
+        "AIシステム開発、業務自動化、API連携、ダッシュボード構築、Webアプリ開発、Webサイト・LP制作を提供します。",
+      url: SITE_URL,
       areaServed: "JP",
       availableLanguage: ["ja", "en"],
-      provider: { "@id": "#aicmode" },
+      provider: { "@id": `${SITE_URL}/#aicmode` },
       hasOfferCatalog: {
         "@type": "OfferCatalog",
-        name: "AI Development & Web Design Services",
+        name: "AI Development, Automation & Web Services",
         itemListElement: services.map((service) => ({
           "@type": "Offer",
-          itemOffered: { "@id": `#service-${service.id}` },
+          itemOffered: { "@id": `${SITE_URL}/#service-${service.id}` },
         })),
       },
     },
     ...services.map((service) => ({
       "@type": "Service",
-      "@id": `#service-${service.id}`,
+      "@id": `${SITE_URL}/#service-${service.id}`,
       name: service.name,
       serviceType: service.type,
       description: service.description,
       areaServed: "JP",
-      provider: { "@id": "#aicmode" },
+      provider: { "@id": `${SITE_URL}/#aicmode` },
     })),
+    // Portfolio pieces are CreativeWork, and `creator` is the only relationship
+    // asserted — never a client, sponsor or customer, because there is none.
+    {
+      "@type": "ItemList",
+      "@id": `${SITE_URL}/#case-studies`,
+      name: "AI & Automation Case Studies",
+      numberOfItems: caseStudies.length,
+      itemListElement: caseStudies.map((study, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "CreativeWork",
+          name: study.title,
+          description: study.solution,
+          creator: { "@id": `${SITE_URL}/#aicmode` },
+          keywords: study.stack.join(", "),
+          ...(study.liveUrl ? { url: study.liveUrl } : {}),
+          ...(study.githubUrl ? { codeRepository: study.githubUrl } : {}),
+        },
+      })),
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${SITE_URL}/#works`,
+      name: "Portfolio Projects",
+      numberOfItems: projects.length,
+      itemListElement: projects.map((project, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "CreativeWork",
+          name: project.title,
+          description: project.summary,
+          creator: { "@id": `${SITE_URL}/#aicmode` },
+          keywords: project.stack.join(", "),
+          ...(project.liveUrl ? { url: project.liveUrl } : {}),
+          ...(project.githubUrl ? { codeRepository: project.githubUrl } : {}),
+        },
+      })),
+    },
     {
       "@type": "FAQPage",
-      "@id": "#aicmode-faq",
+      "@id": `${SITE_URL}/#faq`,
       mainEntity: faqs.map((faq) => ({
         "@type": "Question",
         name: faq.question,
@@ -183,13 +180,22 @@ export default function Home() {
         }}
       />
       <Nav />
-      <main>
+      {/*
+        Order is deliberate for an AI / automation brief: the case studies come
+        before the web work, and the full 26-piece archive sits after Contact so
+        it can't bury the sales-critical sections.
+      */}
+      <main id="main">
         <Hero />
-        <Works />
+        <CaseStudies />
+        <SelectedWorks />
+        <Services />
         <About />
+        <Process />
         <Skills />
         <FAQ />
         <Contact />
+        <WorksArchive />
       </main>
       <Footer />
     </>

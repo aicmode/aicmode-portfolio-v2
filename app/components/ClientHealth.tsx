@@ -73,8 +73,10 @@ export default function ClientHealth() {
     safeRemove('sessionStorage', RECOVERY_KEY)
 
     // If a fallback fired before the bundle finished loading, undo it so the
-    // real animations take over.
+    // real animations take over — including removing the injected notice, which
+    // BootRecovery appends to <body> rather than rendering into the document.
     document.documentElement.classList.remove('aic-boot-failed', 'aic-boot-degraded')
+    document.getElementById('aic-boot-notice')?.remove()
 
     if (safeGet('localStorage', CLEANUP_KEY)) return
 

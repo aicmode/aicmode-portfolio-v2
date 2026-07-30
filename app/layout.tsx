@@ -3,68 +3,79 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import BootRecovery from "./components/BootRecovery";
 import ClientHealth from "./components/ClientHealth";
+import MotionPreferences from "./components/MotionPreferences";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  // Text stays readable while the webfont loads rather than flashing invisible.
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const title = "AICMODE — AI Developer × Web Designer";
+const SITE_URL = "https://aicmode-portfolio.vercel.app";
+
+const title = "AICMODE — AI Systems, Automation & Web Development";
 const description =
-  "AIシステム開発、Webアプリ開発、AI自動化、業務効率化ツールを、要件整理から設計・実装・運用まで一貫して担当します。Next.js・React・TypeScript・Python・OpenAI APIを使い、店舗・病院・クリニック・中小企業・個人事業主・ブランドの課題を解決。Webサイト制作、LP制作、API連携まで対応するAI Developer / Web Designer です。";
+  "AIシステム、業務自動化、API連携、Webアプリケーション、ブランドサイトの設計・開発。課題整理から実装・公開・運用まで一貫して対応します。";
 
 export const metadata: Metadata = {
+  // Required for relative OG / canonical URLs to resolve to absolute ones.
+  metadataBase: new URL(SITE_URL),
   title,
   description,
+  applicationName: "AICMODE",
   keywords: [
     "AIシステム開発",
-    "Webアプリ開発",
+    "業務自動化",
     "AI自動化",
     "業務効率化",
-    "AI開発",
-    "AIエンジニア",
-    "業務改善システム",
-    "医療AI",
-    "SaaS開発",
-    "システム開発",
     "API連携",
+    "Webアプリ開発",
+    "ダッシュボード開発",
+    "AI開発",
+    "フリーランス エンジニア",
     "Web制作",
     "ホームページ制作",
     "LP制作",
     "AI Developer",
-    "AI Engineer",
-    "AI System Development",
-    "Web Developer",
-    "Creative Technologist",
     "Business Automation",
+    "Workflow Automation",
     "Next.js",
     "React",
     "TypeScript",
     "Python",
     "OpenAI API",
+    "Dify API",
+    "LINE Messaging API",
+    "Slack API",
     "Google APIs",
     "Vercel",
     "AICMODE",
   ],
-  authors: [{ name: "AICMODE" }],
+  authors: [{ name: "AICMODE", url: SITE_URL }],
   creator: "AICMODE",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title,
-    description,
+    type: "website",
+    url: SITE_URL,
     siteName: "AICMODE",
     locale: "ja_JP",
-    type: "website",
+    title,
+    description,
   },
   twitter: {
     card: "summary_large_image",
     title,
     description:
-      "AIシステム開発・Webアプリ開発・AI自動化・業務効率化を、設計から実装・運用まで一貫対応。Next.js / React / Python / OpenAI API。",
+      "AIシステム開発・業務自動化・API連携・Webアプリ開発を、設計から実装・公開・運用まで一貫対応。Next.js / TypeScript / Python / OpenAI API。",
   },
   robots: {
     index: true,
@@ -77,6 +88,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: "#080808",
 };
 
 export default function RootLayout({
@@ -93,7 +105,11 @@ export default function RootLayout({
         {/* Inlined into the document, so it survives a failed asset chunk. */}
         <BootRecovery />
         <ClientHealth />
-        {children}
+        {/* First tab stop: lets a keyboard user jump the fixed nav. */}
+        <a href="#main" className="skip-link">
+          本文へスキップ
+        </a>
+        <MotionPreferences>{children}</MotionPreferences>
       </body>
     </html>
   );

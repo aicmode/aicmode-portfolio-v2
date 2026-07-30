@@ -1,14 +1,27 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 const links = [
-  { label: 'WORKS',   href: '#works' },
-  { label: 'ABOUT',   href: '#about' },
+  { label: 'AI CASE STUDIES', href: '#case-studies' },
+  { label: 'WORKS', href: '#works' },
+  { label: 'SERVICES', href: '#services' },
+  { label: 'ABOUT', href: '#about' },
+  { label: 'FAQ', href: '#faq' },
   { label: 'CONTACT', href: '#contact' },
 ]
 
+const PANEL_ID = 'mobile-nav-panel'
+
+/** Panel collapse duration, in seconds and ms, from one place. */
+const PANEL_DURATION_S = 0.32
+const PANEL_DURATION_MS = PANEL_DURATION_S * 1000
+
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+  const scrollTimerRef = useRef<number | undefined>(undefined)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -16,8 +29,51 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  /**
+   * Drive the jump ourselves rather than leaving it to fragment navigation.
+   *
+   * Tapping a link in the panel used to update the URL hash and not move the
+   * page at all: the panel's collapse animation runs at the same moment, and a
+   * smooth scroll that is already in flight gets cancelled by it. So the hash is
+   * pushed immediately (the URL stays shareable) and the scroll is started once
+   * the panel has finished collapsing.
+   *
+   * `scrollIntoView` with no `behavior` defers to the CSS `scroll-behavior`,
+   * which is how the reduced-motion override stays in effect, and it honours
+   * `scroll-margin-top` so the heading clears the fixed nav.
+   */
+  const onNavigate = useCallback((event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    const target = document.querySelector(href)
+    setMenuOpen(false)
+    if (!target) return
+    event.preventDefault()
+    history.pushState(null, '', href)
+    window.clearTimeout(scrollTimerRef.current)
+    scrollTimerRef.current = window.setTimeout(() => {
+      target.scrollIntoView({ block: 'start' })
+    }, PANEL_DURATION_MS + 60)
+  }, [])
+
+  // Don't let a queued scroll fire after this component is gone.
+  useEffect(() => () => window.clearTimeout(scrollTimerRef.current), [])
+
+  // Escape closes the panel wherever focus is, and focus goes back to the
+  // toggle so a keyboard user is not stranded at the top of the document.
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false)
+        toggleRef.current?.focus()
+      }
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [menuOpen])
+
   return (
     <nav
+      aria-label="サイト内ナビゲーション"
       style={{
         position: 'fixed',
         top: 0,
@@ -25,32 +81,89 @@ export default function Nav() {
         right: 0,
         zIndex: 10000,
         transition: 'background 0.5s ease, backdrop-filter 0.5s ease, border-color 0.5s ease',
-        background: scrolled ? 'rgba(8, 8, 8, 0.92)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(24px)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(24px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.05)' : '1px solid transparent',
+        background: scrolled || menuOpen ? 'rgba(8, 8, 8, 0.94)' : 'transparent',
+        backdropFilter: scrolled || menuOpen ? 'blur(24px)' : 'none',
+        WebkitBackdropFilter: scrolled || menuOpen ? 'blur(24px)' : 'none',
+        borderBottom: scrolled || menuOpen ? '1px solid rgba(255,255,255,0.05)' : '1px solid transparent',
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-5 flex items-center justify-between">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-12">
         <a
           href="#top"
-          className="font-bold tracking-[0.3em] text-white text-sm hover:opacity-70 transition-opacity duration-300"
+          className="text-sm font-bold tracking-[0.3em] text-white transition-opacity duration-300 hover:opacity-70"
         >
           AICMODE
         </a>
 
-        <div className="hidden md:flex items-center gap-10">
+        <div className="hidden items-center gap-8 lg:flex">
           {links.map(({ label, href }) => (
             <a
               key={label}
               href={href}
-              className="text-[11px] tracking-[0.25em] text-zinc-500 hover:text-white transition-colors duration-300 uppercase"
+              className="text-[10px] uppercase tracking-[0.22em] text-zinc-400 transition-colors duration-300 hover:text-white"
             >
               {label}
             </a>
           ))}
         </div>
+
+        {/* Below lg the links were previously hidden with no alternative, so the
+            new sections were unreachable on a phone without manual scrolling. */}
+        <button
+          ref={toggleRef}
+          type="button"
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-expanded={menuOpen}
+          aria-controls={PANEL_ID}
+          className="inline-flex h-10 w-10 items-center justify-center border border-white/12 text-white/70 transition-colors duration-300 hover:border-white/30 hover:text-white lg:hidden"
+        >
+          <span className="sr-only">{menuOpen ? 'メニューを閉じる' : 'メニューを開く'}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-4 w-4" aria-hidden="true">
+            {menuOpen ? (
+              <path strokeLinecap="round" strokeWidth={1.5} d="M6 6l12 12M18 6L6 18" />
+            ) : (
+              <path strokeLinecap="round" strokeWidth={1.5} d="M4 7h16M4 12h16M4 17h16" />
+            )}
+          </svg>
+        </button>
       </div>
+
+      <AnimatePresence initial={false}>
+        {menuOpen ? (
+          <motion.div
+            id={PANEL_ID}
+            key="panel"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: PANEL_DURATION_S, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden border-t border-white/[0.06] lg:hidden"
+          >
+            <ul className="px-6 pb-5 pt-2">
+              {links.map(({ label, href }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    onClick={(event) => onNavigate(event, href)}
+                    className="block border-b border-white/[0.05] py-3.5 text-[11px] uppercase tracking-[0.26em] text-zinc-400 transition-colors duration-300 hover:text-white"
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <a
+                  href="#archive"
+                  onClick={(event) => onNavigate(event, '#archive')}
+                  className="block py-3.5 text-[11px] uppercase tracking-[0.26em] text-zinc-400 transition-colors duration-300 hover:text-white"
+                >
+                  WORKS ARCHIVE
+                </a>
+              </li>
+            </ul>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </nav>
   )
 }

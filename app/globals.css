@@ -245,7 +245,7 @@ a { -webkit-tap-highlight-color: transparent; }
   backdrop-filter: blur(10px);
 }
 
-.featured-work-card > a {
+.featured-work-card > .work-card-body {
   display: grid;
   gap: 0;
 }
@@ -384,7 +384,7 @@ a { -webkit-tap-highlight-color: transparent; }
     0 18px 52px rgba(148, 163, 184, 0.08);
 }
 
-.blackline-premium-card > a {
+.blackline-premium-card > .work-card-body {
   padding: 10px;
 }
 
@@ -444,7 +444,7 @@ a { -webkit-tap-highlight-color: transparent; }
 }
 
 .blackline-premium-tags span:first-child {
-  color: rgba(255, 255, 255, 0.34);
+  color: rgba(255, 255, 255, 0.56);
 }
 
 .blackline-premium-tags span:last-child {
@@ -472,7 +472,7 @@ a { -webkit-tap-highlight-color: transparent; }
     0 18px 44px rgba(67, 94, 45, 0.12);
 }
 
-.kissa-premium-card > a {
+.kissa-premium-card > .work-card-body {
   padding: 12px;
 }
 
@@ -543,7 +543,7 @@ a { -webkit-tap-highlight-color: transparent; }
 }
 
 .kissa-premium-tags span:first-child {
-  color: rgba(255, 255, 255, 0.34);
+  color: rgba(255, 255, 255, 0.56);
 }
 
 .kissa-premium-tags span:last-child {
@@ -569,7 +569,7 @@ a { -webkit-tap-highlight-color: transparent; }
     0 18px 54px rgba(7, 80, 48, 0.16);
 }
 
-.greenroot-premium-card > a {
+.greenroot-premium-card > .work-card-body {
   padding: 12px;
 }
 
@@ -620,7 +620,7 @@ a { -webkit-tap-highlight-color: transparent; }
 }
 
 .greenroot-premium-tags span:first-child {
-  color: rgba(255, 255, 255, 0.38);
+  color: rgba(255, 255, 255, 0.56);
 }
 
 .greenroot-premium-tags span:last-child {
@@ -648,7 +648,7 @@ a { -webkit-tap-highlight-color: transparent; }
     0 18px 54px rgba(216, 189, 124, 0.1);
 }
 
-.velvet-premium-card > a {
+.velvet-premium-card > .work-card-body {
   padding: 12px;
 }
 
@@ -706,7 +706,7 @@ a { -webkit-tap-highlight-color: transparent; }
 }
 
 .velvet-premium-tags span:first-child {
-  color: rgba(255, 255, 255, 0.36);
+  color: rgba(255, 255, 255, 0.56);
 }
 
 .velvet-premium-tags span:last-child {
@@ -737,7 +737,7 @@ a { -webkit-tap-highlight-color: transparent; }
     border-radius: 18px;
   }
 
-  .kissa-premium-card > a {
+  .kissa-premium-card > .work-card-body {
     padding: 10px;
   }
 
@@ -760,7 +760,7 @@ a { -webkit-tap-highlight-color: transparent; }
     letter-spacing: 0.1em;
   }
 
-  .greenroot-premium-card > a {
+  .greenroot-premium-card > .work-card-body {
     padding: 10px;
   }
 
@@ -777,7 +777,7 @@ a { -webkit-tap-highlight-color: transparent; }
     letter-spacing: 0.12em;
   }
 
-  .blackline-premium-card > a {
+  .blackline-premium-card > .work-card-body {
     padding: 9px;
   }
 
@@ -928,7 +928,7 @@ a { -webkit-tap-highlight-color: transparent; }
 }
 
 @media (min-width: 1024px) {
-  .featured-work-card > a {
+  .featured-work-card > .work-card-body {
     grid-template-columns: minmax(0, 1.08fr) minmax(20rem, 0.92fr);
     align-items: stretch;
   }
@@ -975,12 +975,12 @@ a { -webkit-tap-highlight-color: transparent; }
   min-height: 41rem;
 }
 
-.editorial-work-card > a,
-.featured-work-card > a,
-.blackline-premium-card > a,
-.kissa-premium-card > a,
-.greenroot-premium-card > a,
-.velvet-premium-card > a {
+.editorial-work-card > .work-card-body,
+.featured-work-card > .work-card-body,
+.blackline-premium-card > .work-card-body,
+.kissa-premium-card > .work-card-body,
+.greenroot-premium-card > .work-card-body,
+.velvet-premium-card > .work-card-body {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -988,7 +988,7 @@ a { -webkit-tap-highlight-color: transparent; }
   padding: 10px;
 }
 
-.featured-work-card > a {
+.featured-work-card > .work-card-body {
   grid-template-columns: none;
 }
 
@@ -1081,10 +1081,24 @@ a { -webkit-tap-highlight-color: transparent; }
   overflow-wrap: anywhere;
 }
 
-.editorial-work-button {
-  align-self: flex-start;
+.editorial-poster-link {
+  display: block;
+  flex: 0 0 auto;
+}
+
+/*
+ * The action row sits outside the poster link so the "Details" control can be a
+ * real <button> — a button nested inside an <a> is invalid and unusable by
+ * keyboard. `margin-top: auto` inside the flex column keeps every card's
+ * buttons on the same baseline regardless of copy length.
+ */
+.work-card-actions {
   flex-shrink: 0;
   margin-top: auto;
+}
+
+.editorial-work-button {
+  flex-shrink: 0;
 }
 
 @media (max-width: 767px) {
@@ -1093,12 +1107,12 @@ a { -webkit-tap-highlight-color: transparent; }
     min-height: 39rem;
   }
 
-  .editorial-work-card > a,
-  .featured-work-card > a,
-  .blackline-premium-card > a,
-  .kissa-premium-card > a,
-  .greenroot-premium-card > a,
-  .velvet-premium-card > a {
+  .editorial-work-card > .work-card-body,
+  .featured-work-card > .work-card-body,
+  .blackline-premium-card > .work-card-body,
+  .kissa-premium-card > .work-card-body,
+  .greenroot-premium-card > .work-card-body,
+  .velvet-premium-card > .work-card-body {
     padding: 9px;
   }
 
@@ -1110,4 +1124,290 @@ a { -webkit-tap-highlight-color: transparent; }
   .velvet-premium-card .editorial-poster-shell {
     aspect-ratio: 16 / 10.5;
   }
+}
+
+/* ─────────────────────────────────────
+   Accessibility: skip link
+───────────────────────────────────── */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 10002;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  background: #0a0a0a;
+  color: #f0f0f0;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  text-decoration: none;
+  /* Off-screen rather than display:none, so it is still reachable by Tab. */
+  transform: translateY(-160%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* ─────────────────────────────────────
+   Accessibility: focus visibility
+
+   A single restrained ring, so keyboard position is always obvious without the
+   heavy default outline breaking the dark editorial look. `:focus-visible`
+   only — a mouse click never paints a ring.
+───────────────────────────────────── */
+:focus-visible {
+  outline: 1px solid rgba(212, 175, 55, 0.85);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+.editorial-poster-link:focus-visible,
+.work-card-actions a:focus-visible,
+.work-card-actions button:focus-visible,
+.case-card a:focus-visible,
+.case-card button:focus-visible {
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────
+   AI & Automation case studies
+───────────────────────────────────── */
+.case-studies-section {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.035), transparent 36%),
+    #050506;
+  isolation: isolate;
+  max-width: 100vw;
+}
+
+.case-card {
+  border-radius: 6px;
+  background:
+    radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--case-accent) 12%, transparent), transparent 34%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.028) 0%, rgba(255, 255, 255, 0.008) 46%, rgba(0, 0, 0, 0) 100%),
+    #08080a;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07),
+    0 26px 84px rgba(0, 0, 0, 0.5);
+  transition:
+    box-shadow 900ms cubic-bezier(0.13, 0.86, 0.18, 1),
+    transform 900ms cubic-bezier(0.13, 0.86, 0.18, 1);
+}
+
+.case-card:hover {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 40px 130px rgba(0, 0, 0, 0.68);
+  transform: translateY(-4px);
+}
+
+/* Accent hairline along the top edge, brightening on hover. */
+.case-card-rule {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--case-accent) 0%,
+    color-mix(in srgb, var(--case-accent) 30%, transparent) 42%,
+    transparent 100%
+  );
+  opacity: 0.5;
+  transition: opacity 900ms cubic-bezier(0.13, 0.86, 0.18, 1);
+}
+
+.case-card:hover .case-card-rule {
+  opacity: 0.95;
+}
+
+/* ─────────────────────────────────────
+   Detail dialog
+───────────────────────────────────── */
+.detail-modal-panel {
+  border-radius: 6px;
+  /* Scrolls inside itself so a long case study never scrolls the page behind. */
+  max-height: calc(100vh - 5rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+@media (max-width: 640px) {
+  .detail-modal-panel {
+    max-height: calc(100vh - 3rem);
+  }
+}
+
+/* ─────────────────────────────────────
+   Reduced motion
+
+   Pairs with MotionPreferences (framer-motion's own opt-out): this half covers
+   the CSS keyframes and long transitions. Ambient decoration is parked at a
+   resting frame rather than removed, so nothing disappears.
+───────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    animation: none;
+  }
+
+  .animate-orb-1,
+  .animate-orb-2,
+  .animate-orb-3,
+  .animate-scroll-line,
+  .animate-pulse-glow,
+  .animate-available,
+  .animate-shimmer,
+  .animate-glow-border,
+  .animate-neon-border,
+  .animate-shadow-pulse,
+  .scan-line {
+    animation: none !important;
+  }
+
+  .editorial-work-card,
+  .editorial-poster-shell,
+  .editorial-poster-shell::after,
+  .editorial-poster-image,
+  .editorial-work-button::before,
+  .case-card,
+  .case-card-rule {
+    transition-duration: 0.01ms !important;
+  }
+
+  .editorial-work-card:hover,
+  .case-card:hover {
+    transform: none;
+  }
+}
+
+/* ─────────────────────────────────────
+   Services / Capabilities / Process cards
+
+   These used to swap colours through inline onMouseEnter handlers that walked
+   the DOM. Same visual result in CSS — and it now works for keyboard focus and
+   costs no re-render.
+───────────────────────────────────── */
+.capability-card {
+  transition:
+    border-color 0.45s ease,
+    background 0.45s ease,
+    box-shadow 0.45s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.capability-card:hover,
+.capability-card:focus-within {
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 0 28px rgba(109, 40, 217, 0.12), 0 0 56px rgba(37, 99, 235, 0.06);
+  transform: translateY(-4px);
+}
+
+.capability-card h4,
+.capability-card p,
+.capability-card span {
+  transition: color 0.4s ease;
+}
+
+.capability-card:hover h4 {
+  color: #ffffff;
+}
+
+.capability-card:hover p {
+  color: #9a9a9a;
+}
+
+.process-card {
+  transition:
+    border-color 0.45s ease,
+    background 0.45s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.process-card:hover {
+  border-top-color: rgba(124, 58, 237, 0.5) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0)) !important;
+  transform: translateY(-4px);
+}
+
+.process-card h3,
+.process-card p {
+  transition: color 0.4s ease;
+}
+
+.process-card:hover h3 {
+  color: #ffffff;
+}
+
+.process-card:hover p {
+  color: #9a9a9a;
+}
+
+.skill-card,
+.creative-skill-card {
+  transition:
+    border-color 0.35s ease,
+    background 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.skill-card:hover,
+.creative-skill-card:hover {
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 0 24px rgba(109, 40, 217, 0.12), 0 0 48px rgba(37, 99, 235, 0.06);
+  transform: translateY(-2px);
+}
+
+.skill-card span,
+.creative-skill-card span {
+  transition: color 0.3s ease;
+}
+
+.skill-card:hover span {
+  color: #f0f0f0;
+}
+
+.creative-skill-card:hover [data-icon],
+.creative-skill-card:hover [data-title] {
+  color: #f0f0f0;
+}
+
+.creative-skill-card:hover [data-desc] {
+  color: #a0a0a0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .capability-card:hover,
+  .process-card:hover,
+  .skill-card:hover,
+  .creative-skill-card:hover {
+    transform: none;
+  }
+}
+
+/* ─────────────────────────────────────
+   Anchor landing offset
+
+   The nav is fixed, so a raw #hash jump parks the target's heading underneath
+   it. Applied to the sections the nav and CTAs actually target.
+───────────────────────────────────── */
+#case-studies,
+#works,
+#services,
+#about,
+#process,
+#skills,
+#faq,
+#contact,
+#archive {
+  scroll-margin-top: 76px;
 }

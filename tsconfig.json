@@ -30,5 +30,15 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    // File-sync duplicates ("routes.d 2.ts" and friends) appear inside
+    // .next/types on this machine and make `tsc --noEmit` fail with duplicate
+    // identifiers even when the source is clean. No real source file is ever
+    // named like this, so excluding the pattern is safe.
+    "**/* 2.ts",
+    "**/* 2.tsx",
+    "**/* 2.d.ts",
+    "**/*.d 2.ts"
+  ]
 }
