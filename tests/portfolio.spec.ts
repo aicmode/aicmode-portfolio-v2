@@ -126,3 +126,92 @@ for (const viewport of viewports) {
     expect(errorResponses).toEqual([])
   })
 }
+
+/**
+ * Counting cards in the DOM is not enough: the archive regressed once with all
+ * 26 articles mounted but left at `opacity: 0` by a scroll-triggered reveal,
+ * which reads to a visitor as an empty archive. These assertions are about what
+ * is actually on screen, without scrolling first.
+ */
+const EXPECTED_CATEGORY_COUNTS = [
+  ['AI Systems', 1],
+  ['Web Applications', 5],
+  ['Websites', 4],
+  ['Landing Pages', 11],
+  ['EC', 5],
+] as const
+
+const ARCHIVE_TOTAL = 26
+
+for (const viewport of [
+  { width: 390, height: 844 },
+  { width: 1440, height: 900 },
+] as const) {
+  test(`archive cards are rendered visible, not just mounted, at ${viewport.width}px`, async ({ page }) => {
+    test.setTimeout(120_000)
+
+    const consoleErrors: string[] = []
+    page.on('console', (message) => {
+      if (message.type() === 'error') consoleErrors.push(message.text())
+    })
+    page.on('pageerror', (error) => consoleErrors.push(`pageerror: ${error.message}`))
+
+    await page.setViewportSize(viewport)
+    await page.goto('http://localhost:3000/', { waitUntil: 'networkidle' })
+
+    const archive = page.locator('#archive')
+    const cards = archive.locator('article')
+
+    /** Cards that a visitor can actually see: laid out and fully faded in. */
+    const shownCards = () =>
+      cards.evaluateAll(
+        (elements) =>
+          elements.filter((element) => {
+            const style = getComputedStyle(element)
+            const box = element.getBoundingClientRect()
+            return (
+              Number(style.opacity) > 0.9 &&
+              style.visibility !== 'hidden' &&
+              box.width > 0 &&
+              box.height > 0
+            )
+          }).length,
+      )
+
+    const expandButton = page.getByRole('button', { name: 'VIEW ALL 26 WORKS' })
+    const showLessButton = page.getByRole('button', { name: 'SHOW LESS' }).first()
+    const tab = (name: string) =>
+      archive.locator('.works-tabs button', { hasText: new RegExp(`^${name}`) }).first()
+
+    await expect(expandButton).toHaveAttribute('aria-expanded', 'false')
+    await expect(cards).toHaveCount(0)
+
+    await archive.scrollIntoViewIfNeeded()
+    await expandButton.click()
+    await expect(showLessButton).toHaveAttribute('aria-expanded', 'true')
+    await expect(cards).toHaveCount(ARCHIVE_TOTAL)
+    await expect.poll(shownCards).toBe(ARCHIVE_TOTAL)
+
+    for (const [category, expected] of EXPECTED_CATEGORY_COUNTS) {
+      await tab(category).click()
+      await expect(cards).toHaveCount(expected)
+      await expect.poll(shownCards).toBe(expected)
+      await expect(showLessButton).toHaveAttribute('aria-expanded', 'true')
+    }
+
+    // Returning to All from a category must restore all 26, still on screen.
+    await tab('All').click()
+    await expect(cards).toHaveCount(ARCHIVE_TOTAL)
+    await expect.poll(shownCards).toBe(ARCHIVE_TOTAL)
+
+    await showLessButton.click()
+    await expect(cards).toHaveCount(0)
+    await expect(expandButton).toHaveAttribute('aria-expanded', 'false')
+
+    await expandButton.click()
+    await expect(cards).toHaveCount(ARCHIVE_TOTAL)
+    await expect.poll(shownCards).toBe(ARCHIVE_TOTAL)
+
+    expect(consoleErrors).toEqual([])
+  })
+}

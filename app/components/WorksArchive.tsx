@@ -6,10 +6,10 @@ import AnimateIn from './AnimateIn'
 import DetailModal from './DetailModal'
 import WorkPoster, { WorkDetail } from './WorkPoster'
 import { archiveCategories, archiveProjects, projectCountByCategory, projects } from '../data/projects'
-import type { Category } from '../types/project'
+import { ALL_FILTER } from '../types/project'
+import type { Filter } from '../types/project'
 
 const ease = [0.13, 0.86, 0.18, 1] as const
-type Filter = 'All' | Category
 const ARCHIVE_PROJECTS_ID = 'works-archive-projects'
 
 /**
@@ -18,7 +18,7 @@ const ARCHIVE_PROJECTS_ID = 'works-archive-projects'
  * is removed from the portfolio.
  */
 export default function WorksArchive() {
-  const [activeCategory, setActiveCategory] = useState<Filter>('All')
+  const [activeCategory, setActiveCategory] = useState<Filter>(ALL_FILTER)
   const [isExpanded, setIsExpanded] = useState(false)
   const [openId, setOpenId] = useState<string | null>(null)
   const archiveHeadingRef = useRef<HTMLDivElement>(null)
@@ -26,25 +26,29 @@ export default function WorksArchive() {
   const prefersReducedMotion = useReducedMotion()
   const openProject = projects.find((project) => project.id === openId) ?? null
 
-  const filters = useMemo<readonly Filter[]>(() => ['All', ...archiveCategories], [])
+  const filters = useMemo<readonly Filter[]>(() => [ALL_FILTER, ...archiveCategories], [])
 
   const counts = useMemo<Record<Filter, number>>(
-    () => ({ All: archiveProjects.length, ...projectCountByCategory }) as Record<Filter, number>,
+    () => ({ [ALL_FILTER]: archiveProjects.length, ...projectCountByCategory }),
     [],
   )
 
-  const visibleProjects = useMemo(
+  /** What the active tab selects, independent of whether the archive is open. */
+  const filteredProjects = useMemo(
     () =>
-      archiveProjects.filter(
-        (project) => activeCategory === 'All' || project.group === activeCategory,
-      ),
+      activeCategory === ALL_FILTER
+        ? archiveProjects
+        : archiveProjects.filter((project) => project.group === activeCategory),
     [activeCategory],
   )
 
+  /** What is actually rendered: nothing at all while the archive is collapsed. */
+  const displayedProjects = isExpanded ? filteredProjects : []
+
   const toggleLabel = isExpanded
     ? 'SHOW LESS'
-    : activeCategory === 'All'
-      ? `VIEW ALL ${counts.All} WORKS`
+    : activeCategory === ALL_FILTER
+      ? `VIEW ALL ${counts[ALL_FILTER]} WORKS`
       : `VIEW ${counts[activeCategory]} ${activeCategory} WORKS`
 
   function handleCategoryChange(category: Filter) {
@@ -159,12 +163,13 @@ export default function WorksArchive() {
                 transition={{ duration: prefersReducedMotion ? 0 : 0.5, ease }}
                 className="editorial-poster-grid mx-auto mt-12 grid auto-rows-fr grid-cols-1 items-stretch gap-x-8 gap-y-12 md:mt-14 md:grid-cols-2 lg:gap-x-10 lg:gap-y-16 xl:grid-cols-3"
               >
-                {visibleProjects.map((project, index) => (
+                {displayedProjects.map((project, index) => (
                   <WorkPoster
                     key={project.id}
                     project={project}
                     index={index}
                     showFeaturedBadge={project.featured}
+                    revealOnMount
                     onOpenDetail={() => setOpenId(project.id)}
                   />
                 ))}

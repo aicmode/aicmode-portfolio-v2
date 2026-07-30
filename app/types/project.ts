@@ -45,6 +45,17 @@ export type Category =
   | 'Landing Pages'
   | 'EC'
 
+/**
+ * The archive's "show everything" tab. It is deliberately not a `Category`
+ * member — no project carries it — so it lives here as one constant that both
+ * the tab list and the filter compare against, and can never drift into a
+ * string that matches nothing.
+ */
+export const ALL_FILTER = 'All'
+
+/** A tab in the Works Archive: every category, plus "All". */
+export type Filter = typeof ALL_FILTER | Category
+
 export const STATUS_LABEL: Record<ProjectStatus, string> = {
   released: 'Released',
   'case-study': 'Case Study',

@@ -90,11 +90,29 @@ function ProjectImage({
   )
 }
 
+/**
+ * Scroll reveal is the right default for a grid that is on the page from the
+ * start, but wrong for one the user just asked to see: content mounted below
+ * the fold would stay at `opacity: 0` until it is scrolled to, and a filter
+ * change that remounts the grid would blank out cards that were already read.
+ * `revealOnMount` swaps the viewport trigger for a plain mount animation.
+ *
+ * The reveal has to travel through the `rest` variant rather than an `animate`
+ * object, because `animate="rest"` is also what propagates the rest/hover
+ * labels down to the arrow and image children.
+ */
+const MOUNT_REVEAL_VARIANTS = {
+  hidden: { opacity: 0, y: 18 },
+  rest: { opacity: 1, y: 0 },
+  hover: { opacity: 1, y: 0 },
+} as const
+
 export default function WorkPoster({
   project,
   index,
   priority = false,
   showFeaturedBadge = false,
+  revealOnMount = false,
   onOpenDetail,
 }: {
   project: Project
@@ -103,6 +121,8 @@ export default function WorkPoster({
   /** Eager-load the first cards so the grid has no blank posters on entry. */
   priority?: boolean
   showFeaturedBadge?: boolean
+  /** Animate in as soon as the card mounts instead of waiting for a scroll. */
+  revealOnMount?: boolean
   onOpenDetail: () => void
 }) {
   const variant = project.variant
@@ -110,6 +130,13 @@ export default function WorkPoster({
   const primaryUrl = hasLiveDemo(project.status) ? project.liveUrl : project.githubUrl
   const primaryLabel = STATUS_CTA[project.status]
   const tags = project.tags ?? []
+  const revealProps = revealOnMount
+    ? { variants: MOUNT_REVEAL_VARIANTS, initial: 'hidden' }
+    : {
+        initial: { opacity: 0, y: 18 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, amount: 0.16 },
+      }
 
   return (
     <motion.article
@@ -121,9 +148,7 @@ export default function WorkPoster({
         .filter(Boolean)
         .join(' ')}
       style={{ '--work-accent': project.accent, '--work-tint': project.tint } as CSSProperties}
-      initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.16 }}
+      {...revealProps}
       transition={{ duration: 1.05, delay: Math.min(index, 6) * 0.07, ease }}
       whileHover="hover"
       animate="rest"
