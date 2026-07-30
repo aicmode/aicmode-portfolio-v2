@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useState } from 'react'
 import type { CSSProperties } from 'react'
 import { STATUS_CTA, STATUS_LABEL, hasLiveDemo } from '../types/project'
 import type { Project } from '../types/project'
@@ -36,6 +37,56 @@ function ArrowIcon() {
     >
       <path d="M7 17L17 7M17 7H8M17 7V16" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" />
     </motion.svg>
+  )
+}
+
+function ProjectImage({
+  project,
+  className,
+  sizes,
+  preload = false,
+}: {
+  project: Project
+  className: string
+  sizes: string
+  preload?: boolean
+}) {
+  const [hasFailed, setHasFailed] = useState(false)
+  const imageAlt = project.imageAlt ?? `${project.title} のサムネイル画像`
+
+  return (
+    <>
+      <Image
+        key={project.image}
+        src={project.image}
+        alt={hasFailed ? '' : imageAlt}
+        fill
+        sizes={sizes}
+        className={`${className}${hasFailed ? ' opacity-0' : ''}`}
+        style={{ objectPosition: project.imagePosition ?? 'center' }}
+        preload={preload}
+        loading={preload ? undefined : 'lazy'}
+        unoptimized={project.image.startsWith('https://')}
+        onError={() => setHasFailed(true)}
+        aria-hidden={hasFailed || undefined}
+      />
+      {hasFailed ? (
+        <div
+          role="img"
+          aria-label={imageAlt}
+          className="absolute inset-0 z-[4] flex items-center justify-center bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.045),transparent_68%),#050505] px-6 text-center"
+        >
+          <div>
+            <span className="block text-[8px] font-semibold uppercase tracking-[0.34em] text-white/38">
+              Preview unavailable
+            </span>
+            <span className="mt-3 block text-[10px] font-semibold uppercase tracking-[0.2em] text-white/56">
+              {project.title}
+            </span>
+          </div>
+        </div>
+      ) : null}
+    </>
   )
 }
 
@@ -93,10 +144,8 @@ export default function WorkPoster({
               </div>
             ) : null}
 
-            <Image
-              src={project.image}
-              alt={project.imageAlt ?? `${project.title} のサムネイル画像`}
-              fill
+            <ProjectImage
+              project={project}
               sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 92vw"
               className={[
                 'editorial-poster-image',
@@ -105,10 +154,7 @@ export default function WorkPoster({
               ]
                 .filter(Boolean)
                 .join(' ')}
-              style={{ objectPosition: project.imagePosition ?? 'center' }}
-              priority={priority}
-              loading={priority ? undefined : 'lazy'}
-              unoptimized={project.image.startsWith('https://')}
+              preload={priority}
             />
           </div>
           <span className="sr-only">{project.title} を新しいタブで開く</span>
@@ -247,14 +293,10 @@ export function WorkDetail({ project }: { project: Project }) {
       </div>
 
       <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-white/[0.07] bg-[#050505]">
-        <Image
-          src={project.image}
-          alt={project.imageAlt ?? `${project.title} のサムネイル画像`}
-          fill
+        <ProjectImage
+          project={project}
           sizes="(min-width: 768px) 640px, 92vw"
           className="object-cover"
-          style={{ objectPosition: project.imagePosition ?? 'center' }}
-          unoptimized={project.image.startsWith('https://')}
         />
       </div>
 
