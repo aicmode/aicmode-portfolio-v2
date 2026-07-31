@@ -13,6 +13,44 @@
  * absent: there is no implementation to point at yet.
  */
 
+/** Three plain-language entry points shown before the detailed service list. */
+export const serviceEntrances = [
+  {
+    no: '01',
+    title: 'AI & Automation',
+    audience: '問い合わせ対応や定型作業に時間を取られ、改善の入口が分からない方へ。',
+    items: [
+      '問い合わせの要約・分類',
+      '定型文章の生成',
+      'Slack、LINE、Google Workspaceなどの連携',
+      '集計、通知、保存の自動化',
+    ],
+  },
+  {
+    no: '02',
+    title: 'Business Web Applications',
+    audience: '既存ツールが業務に合わず、転記や集計を手作業で補っている方へ。',
+    items: [
+      '業務用入力フォーム',
+      '管理画面',
+      'ダッシュボード',
+      '検索、絞り込み、CSV出力',
+      '専用の小規模Webアプリ',
+    ],
+  },
+  {
+    no: '03',
+    title: 'Healthcare Digital Support',
+    audience: '医療・介護現場の流れを理解したうえで、無理のないデジタル化を進めたい方へ。',
+    items: [
+      '医療・介護現場の業務整理',
+      '記録や情報共有の補助',
+      '医療向けWebアプリの企画・試作',
+      '医療サイト、採用サイト、案内ページ',
+    ],
+  },
+] as const
+
 /** Problem-first. Each `id`/`type` also feeds the Service JSON-LD nodes. */
 export const services = [
   {

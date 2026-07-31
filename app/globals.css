@@ -1401,10 +1401,12 @@ a { -webkit-tap-highlight-color: transparent; }
    it. Applied to the sections the nav and CTAs actually target.
 ───────────────────────────────────── */
 #case-studies,
+#healthcare,
 #works,
 #services,
 #about,
 #process,
+#trust,
 #skills,
 #faq,
 #contact,

@@ -103,7 +103,7 @@ export const creativeSkills = [
     icon: '✦',
   },
   {
-    title: 'AI System Design',
+    title: 'AI Systems Design',
     description: '業務のどこにAIを組み込めば効果が出るかを見極め、機能・データの流れ・API連携までを設計。',
     icon: '⊟',
   },

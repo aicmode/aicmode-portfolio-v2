@@ -23,7 +23,7 @@ const strengths = [
     desc: '作りたい機能ではなく、解くべき課題から始めます。目的・利用者・優先順位を先に確定させます。',
   },
   {
-    title: 'AI System Design',
+    title: 'AI Systems Design',
     desc: '業務のどこにAIが効くかを見極め、機能・データの流れ・API連携・限界の扱いまで設計します。',
   },
   {
@@ -134,21 +134,16 @@ export default function About() {
             <div className="space-y-8 md:space-y-10">
               <div className="space-y-4">
                 <p className="text-base leading-relaxed md:text-lg" style={{ color: '#c0c0c0' }}>
-                  業務の流れと課題を整理し、必要な機能をMVPとして定義。
-                </p>
-                <p className="text-base leading-relaxed md:text-lg" style={{ color: '#c0c0c0' }}>
-                  AIシステム、Webアプリ、業務自動化、API連携を、
-                  <br />
-                  設計から実装・テスト・公開・運用まで一貫して担当します。
+                  業務の流れと課題を整理し、AIシステム、Webアプリ、業務自動化、API連携を、
+                  設計から実装・テスト・公開まで一貫して形にします。
                 </p>
                 <p className="text-sm leading-relaxed md:text-base" style={{ color: '#7a7a7a' }}>
-                  単にAIツールを使うだけではなく、目的・利用者・運用方法・セキュリティ・コストまで整理したうえで、現場で使い続けられる形を目指します。
-                  <span style={{ color: '#a8a8a8' }}>設計</span>・<span style={{ color: '#a8a8a8' }}>実装</span>・
-                  <span style={{ color: '#a8a8a8' }}>運用</span>を一人で通せるため、外注先を分ける必要がありません。
+                  看護師として約9年間の現場経験があり、医療・介護分野では専門用語だけでなく、
+                  実際の運用や利用者の負担まで考えた要件整理ができます。
                 </p>
                 <p className="text-sm leading-relaxed md:text-base" style={{ color: '#7a7a7a' }}>
-                  医療・介護分野の業務理解を活かした要件整理も強みとしており、Healthcare × AI / Web Applications の領域では、現場の運用に合うかどうかを前提に設計します。
-                  加えて、海外カルチャー・音楽・映画から影響を受けたクリエイティブ表現も担当できるため、機能性と世界観の両方を必要とするプロジェクトにも対応します。
+                  海外の音楽、映画、ストリートカルチャーから影響を受けたクリエイティブ表現も強みです。
+                  機能性だけでなく、ブランドの世界観まで必要な案件にも対応します。
                 </p>
               </div>
 

@@ -87,6 +87,8 @@ function CaseStudyCard({ study, onOpen }: { study: CaseStudy; onOpen: () => void
         </ul>
 
         <div className="mt-auto space-y-1.5 border-t border-white/[0.06] pt-4">
+          <MetaLine label="Role" value={study.role.join(' / ')} />
+          <MetaLine label="Project Type" value={study.projectType} />
           <MetaLine label="Stack" value={study.stack.join(' · ')} />
           <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.24em]">
             <span className="text-white/50">Status</span>
@@ -229,6 +231,11 @@ function CaseStudyDetail({ study }: { study: CaseStudy }) {
       ) : null}
 
       <div className="space-y-5 p-6 sm:p-9">
+        <section className="grid gap-4 border-b border-white/[0.06] pb-5 sm:grid-cols-3">
+          <MetaLine label="Role" value={study.role.join(' / ')} />
+          <MetaLine label="Project Type" value={study.projectType} />
+          <MetaLine label="Status" value={STATUS_LABEL[study.status]} />
+        </section>
         <DetailSection no="01" title="Problem" text={study.problem} accent={study.accent} />
         <DetailSection no="02" title="Goal" text={study.detail.goal} accent={study.accent} />
         <DetailSection no="03" title="Proposed Solution" items={study.detail.proposedSolution} accent={study.accent} />

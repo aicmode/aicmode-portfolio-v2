@@ -1,6 +1,8 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
+import { caseStudies } from '../data/caseStudies'
+import { projects } from '../data/projects'
 
 const cityLights = [
   { top: '24%', right: '14%', width: 2, height: 26, opacity: 0.28, delay: 0 },
@@ -286,7 +288,7 @@ export default function Hero() {
               <span className="mx-2 text-[rgba(212,175,55,0.75)]" aria-hidden="true">
                 ×
               </span>
-              Web Development
+              Business Automation
             </motion.p>
 
             <motion.p
@@ -295,7 +297,7 @@ export default function Hero() {
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.72, ease: 'easeOut' }}
             >
-              Business Automation · API Integration · Overseas Culture
+              Web Applications · API Integration · Healthcare
             </motion.p>
 
             <motion.div
@@ -304,13 +306,16 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.82, ease: [0.22, 1, 0.36, 1] }}
             >
-              <p className="text-[10px] font-semibold uppercase leading-5 tracking-[0.24em] text-white/72 md:text-[12px] md:leading-6">
-                AI Systems, Business Automation, and Web Applications
-                <br className="hidden sm:block" /> built from business problems — not just feature requests.
+              <p className="text-lg font-semibold leading-8 tracking-[-0.01em] text-white/88 md:text-[1.35rem] md:leading-9">
+                業務の課題を整理し、
+                <br />
+                AI・自動化・Webアプリで
+                <br />
+                現場で使える仕組みに変えます。
               </p>
               <p className="mt-4 text-sm leading-7 text-white/58 md:text-[15px] md:leading-8">
-                業務課題の整理から、要件定義・設計・実装・テスト・公開・運用まで。
-                AIシステム、業務自動化、API連携、Webアプリケーションを一貫して形にします。
+                医療現場で培った業務理解と、AI・API連携・Web開発の技術を生かし、
+                ヒアリング、要件定義、MVP設計、実装、テスト、公開まで一貫して対応します。
               </p>
             </motion.div>
 
@@ -336,10 +341,9 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
             >
-              {/* Primary: straight into the AI work, which is what an AI brief
-                  needs to see. Secondary keeps the enquiry route one tap away. */}
+              {/* Primary answers what can be discussed; secondary proves it. */}
               <motion.a
-                href="#case-studies"
+                href="#services"
                 className="group inline-flex items-center justify-center gap-3 whitespace-nowrap px-6 py-3.5 text-[10px] uppercase tracking-[0.22em] text-[#080808] sm:px-8 md:px-9 md:py-4 md:text-[11px] md:tracking-[0.26em]"
                 style={{
                   border: '1px solid rgba(212,175,55,0.48)',
@@ -352,7 +356,7 @@ export default function Hero() {
                   transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
                 }}
               >
-                VIEW AI CASE STUDIES
+                相談できることを見る
                 <svg
                   className="h-3 w-3 transition-transform duration-300 group-hover:translate-y-0.5 md:h-3.5 md:w-3.5"
                   fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -362,7 +366,7 @@ export default function Hero() {
                 </svg>
               </motion.a>
               <motion.a
-                href="#contact"
+                href="#works"
                 className="group inline-flex items-center justify-center gap-3 whitespace-nowrap px-6 py-3.5 text-[10px] uppercase tracking-[0.24em] text-white sm:px-8 md:px-9 md:py-4 md:text-[11px] md:tracking-[0.28em]"
                 style={{
                   border: '1px solid rgba(255,255,255,0.18)',
@@ -376,7 +380,7 @@ export default function Hero() {
                   transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
                 }}
               >
-                START A PROJECT
+                制作事例を見る
                 <svg
                   className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 md:h-3.5 md:w-3.5"
                   fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -423,7 +427,7 @@ export default function Hero() {
                       textShadow: '0 0 50px rgba(212,175,55,0.22), 0 0 100px rgba(212,175,55,0.10)',
                     }}
                   >
-                    06
+                    {String(caseStudies.length).padStart(2, '0')}
                   </dd>
                   <dt className="text-left">
                     <span
@@ -452,7 +456,7 @@ export default function Hero() {
                       textShadow: '0 0 50px rgba(212,175,55,0.16)',
                     }}
                   >
-                    26
+                    {String(projects.length).padStart(2, '0')}
                   </dd>
                   <dt className="text-left">
                     <span

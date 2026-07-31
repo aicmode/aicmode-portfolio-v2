@@ -1,6 +1,6 @@
 'use client'
 import AnimateIn from './AnimateIn'
-import { capabilities, services } from '../data/services'
+import { capabilities, serviceEntrances, services } from '../data/services'
 
 /**
  * Two lists, two jobs.
@@ -84,6 +84,37 @@ function CapabilityCard({ id, title, desc }: { id: string; title: string; desc: 
   )
 }
 
+function ServiceEntrance({
+  no,
+  title,
+  audience,
+  items,
+}: (typeof serviceEntrances)[number]) {
+  return (
+    <article className="flex h-full flex-col border border-white/[0.08] bg-white/[0.018] p-6 md:p-7">
+      <p className="font-mono text-[10px] tracking-[0.3em] text-[rgba(212,175,55,0.78)]">{no}</p>
+      <h3 className="mt-4 text-lg font-semibold tracking-[-0.01em] text-white md:text-xl">{title}</h3>
+      <p className="mt-4 text-[13px] leading-7 text-white/58">
+        <span className="mb-1 block text-[9px] font-semibold uppercase tracking-[0.28em] text-white/50">
+          こういう悩みの方へ
+        </span>
+        {audience}
+      </p>
+      <ul className="mt-5 space-y-2 border-t border-white/[0.07] pt-5">
+        {items.map((item) => (
+          <li key={item} className="flex gap-3 text-[13px] leading-6 text-white/58">
+            <span
+              aria-hidden="true"
+              className="mt-[9px] h-[3px] w-[3px] flex-shrink-0 bg-[rgba(212,175,55,0.72)]"
+            />
+            {item}
+          </li>
+        ))}
+      </ul>
+    </article>
+  )
+}
+
 export default function Services() {
   return (
     <section id="services" className="px-5 py-20 md:px-12 md:py-40" style={{ background: '#0a0a0a' }}>
@@ -129,6 +160,23 @@ export default function Services() {
             </p>
           </AnimateIn>
         </div>
+
+        <div className="mt-12 grid grid-cols-1 gap-3 md:mt-16 md:grid-cols-3 md:gap-4">
+          {serviceEntrances.map((item, i) => (
+            <AnimateIn key={item.no} delay={120 + i * 90}>
+              <ServiceEntrance {...item} />
+            </AnimateIn>
+          ))}
+        </div>
+
+        <AnimateIn delay={180}>
+          <div className="mt-20 border-t border-white/[0.08] pt-10 md:mt-28 md:pt-14">
+            <p className="text-[10px] uppercase tracking-[0.5em] text-zinc-400">Detailed Services</p>
+            <h3 className="mt-4 text-2xl font-black tracking-[-0.02em] text-white md:text-4xl">
+              課題から探す
+            </h3>
+          </div>
+        </AnimateIn>
 
         <div className="mt-6 grid grid-cols-1 gap-x-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-12">
           {services.map((service, i) => (

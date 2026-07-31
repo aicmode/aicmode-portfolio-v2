@@ -5,6 +5,7 @@ import AnimateIn from './AnimateIn'
 import DetailModal from './DetailModal'
 import WorkPoster, { WorkDetail } from './WorkPoster'
 import { projects, selectedProjects } from '../data/projects'
+import { caseStudies } from '../data/caseStudies'
 
 /**
  * The curated first read: eight pieces, ordered so an AI / web-app client sees
@@ -34,7 +35,7 @@ export default function SelectedWorks() {
                 className="mt-4 text-[10px] uppercase tracking-[0.44em] md:text-[11px]"
                 style={{ color: 'rgba(212,175,55,0.82)' }}
               >
-                26 Portfolio Projects · 6 AI Case Studies
+                {projects.length} Portfolio Projects · {caseStudies.length} AI Case Studies
               </p>
             </div>
             <p className="max-w-xl text-sm leading-8 text-white/58 lg:text-right">
@@ -66,7 +67,7 @@ export default function SelectedWorks() {
                 href="#archive"
                 className="inline-flex w-full items-center justify-center border border-white/14 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.34em] text-white/70 transition duration-500 hover:border-white/32 hover:text-white sm:w-auto"
               >
-                View All 26 Works
+                View All {projects.length} Works
               </a>
               <a
                 href="#contact"

@@ -20,9 +20,9 @@ const geistMono = Geist_Mono({
 
 const SITE_URL = "https://aicmode-portfolio.vercel.app";
 
-const title = "AICMODE — AI Systems, Automation & Web Development";
+const title = "AICMODE | AI Systems, Business Automation & Web Applications";
 const description =
-  "AIシステム、業務自動化、API連携、Webアプリケーション、ブランドサイトの設計・開発。課題整理から実装・公開・運用まで一貫して対応します。";
+  "鹿児島を拠点に、AIシステム、業務自動化、API連携、Webアプリを設計・開発。医療現場の業務理解を生かし、要件整理からMVP、テスト、公開まで一貫して対応します。";
 
 export const metadata: Metadata = {
   // Required for relative OG / canonical URLs to resolve to absolute ones.
@@ -74,8 +74,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title,
-    description:
-      "AIシステム開発・業務自動化・API連携・Webアプリ開発を、設計から実装・公開・運用まで一貫対応。Next.js / TypeScript / Python / OpenAI API。",
+    description,
   },
   robots: {
     index: true,

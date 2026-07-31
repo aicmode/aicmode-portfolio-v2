@@ -8,7 +8,7 @@ import { ImageResponse } from 'next/og'
  * with `next/og` has no Japanese glyphs, and loading one would blow the 500KB
  * bundle limit for no real gain on a share card.
  */
-export const alt = 'AICMODE — AI Systems, Automation & Web Development'
+export const alt = 'AICMODE — AI Systems, Business Automation & Web Applications'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -40,7 +40,7 @@ export default function Image() {
           <div
             style={{
               marginTop: 44,
-              fontSize: 86,
+              fontSize: 70,
               fontWeight: 700,
               lineHeight: 1.02,
               letterSpacing: -3,
@@ -50,8 +50,8 @@ export default function Image() {
             }}
           >
             <span>AI Systems</span>
-            <span style={{ color: 'rgba(255,255,255,0.42)' }}>&amp; Automation</span>
-            <span>× Web Development</span>
+            <span style={{ color: 'rgba(255,255,255,0.42)' }}>&amp; Business Automation</span>
+            <span>× Web Applications</span>
           </div>
         </div>
 
@@ -76,7 +76,7 @@ export default function Image() {
               textTransform: 'uppercase',
             }}
           >
-            AI Systems · Business Automation · API Integration · Web Apps
+            AI Systems · Business Automation · API Integration · Web Applications
           </div>
         </div>
       </div>

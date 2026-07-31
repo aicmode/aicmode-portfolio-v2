@@ -31,7 +31,7 @@ export type ProjectStatus =
  * that member would invite mislabelling.
  */
 export type ProjectType =
-  | 'Released Demo'
+  | 'Self-directed Project'
   | 'Personal Project'
   | 'Training Project'
   | 'Concept Project'
@@ -130,6 +130,8 @@ export type CaseStudy = {
   subtitle: string
   group: Category
   projectType: ProjectType
+  /** Work personally completed for this project; kept factual per repository documentation. */
+  role: readonly string[]
   status: ProjectStatus
   /** Shown under the status when the deployment has a caveat worth stating. */
   statusNote?: string

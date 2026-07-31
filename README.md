@@ -1,6 +1,6 @@
 # AICMODE Portfolio
 
-AIシステム開発・業務自動化・API連携・Webアプリ開発を中心に扱う、フリーランス開発者のポートフォリオサイトです。
+鹿児島を拠点に、AIシステム開発・業務自動化・API連携・Webアプリ開発を中心に扱う、フリーランス開発者の営業型ポートフォリオサイトです。
 
 黒を基調としたダークエディトリアルデザインで、AI・自動化のケーススタディ6件と、Webアプリ・Webサイト・LP・ECサイトの制作物26件を掲載しています。
 
@@ -32,6 +32,9 @@ Status の定義は [`app/types/project.ts`](app/types/project.ts) で一元管�
 ## 主な特徴
 
 - **AI Systems & Automation Case Studies** — 課題・目的・MVP範囲・Phase 2・アーキテクチャ・セキュリティ制約までをモーダルで表示
+- **Healthcare × AI** — 看護師として約9年間の現場経験に基づく、医療・介護分野での要件整理と安全設計の方針
+- **Three Service Entrances** — AI・自動化、業務Webアプリ、医療デジタル支援の3分類から相談内容を選べる構成
+- **How I Work** — MVP、制約共有、公開前テスト、セキュリティ確認の方針
 - **Selected Works** — 営業上重要な8件を初期表示
 - **Works Archive** — 全26件をカテゴリー別に絞り込み表示
 - **Project Detail Modal** — フォーカストラップ、Escapeで閉じる、閉じたあとのフォーカス復帰に対応
@@ -76,7 +79,7 @@ npm run build       # 本番ビルド
 ビルドの成功だけでは確認完了としていません。合わせて次を確認します。
 
 - トップページの初期表示（エラーUIが出ないこと）
-- Hero の CTA が AI Case Studies へ遷移すること
+- Hero の CTA が Services / Selected Works へ遷移すること
 - Works Archive のカテゴリー絞り込み
 - Case Study / Work の詳細モーダルの開閉（Escape・フォーカス復帰）
 - FAQ アコーディオンの開閉
@@ -93,6 +96,7 @@ app/
 │   ├── Nav.tsx                # 固定ナビ + モバイルメニュー
 │   ├── Hero.tsx               # ファーストビュー
 │   ├── CaseStudies.tsx        # AI & Automation ケーススタディ
+│   ├── HealthcareAI.tsx       # 医療現場経験と安全設計の方針
 │   ├── SelectedWorks.tsx      # 厳選8件
 │   ├── WorksArchive.tsx       # 全26件 + カテゴリー絞り込み
 │   ├── WorkPoster.tsx         # 作品カード + 詳細モーダルの中身
@@ -100,6 +104,7 @@ app/
 │   ├── Services.tsx           # 課題起点のServices + 成果物起点のCapabilities
 │   ├── About.tsx              # プロフィール + 6つの強み
 │   ├── Process.tsx            # 制作フロー（01–05）
+│   ├── Trust.tsx              # How I Work / 依頼前の安心材料
 │   ├── Skills.tsx             # カテゴリ別スキル
 │   ├── FAQ.tsx                # アコーディオン
 │   ├── Contact.tsx            # 問い合わせ導線

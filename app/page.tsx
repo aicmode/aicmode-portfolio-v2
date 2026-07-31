@@ -1,10 +1,12 @@
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import CaseStudies from "./components/CaseStudies";
+import HealthcareAI from "./components/HealthcareAI";
 import SelectedWorks from "./components/SelectedWorks";
 import Services from "./components/Services";
 import About from "./components/About";
 import Process from "./components/Process";
+import Trust from "./components/Trust";
 import Skills from "./components/Skills";
 import FAQ from "./components/FAQ";
 import Contact from "./components/Contact";
@@ -36,9 +38,9 @@ const jsonLd = {
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
       name: "AICMODE",
-      alternateName: "AICMODE — AI Systems, Automation & Web Development",
+      alternateName: "AICMODE | AI Systems, Business Automation & Web Applications",
       description:
-        "AIシステム、業務自動化、API連携、Webアプリケーション、ブランドサイトの設計・開発。課題整理から実装・公開・運用まで一貫して対応するフリーランス開発者のポートフォリオ。",
+        "鹿児島を拠点に、AIシステム、業務自動化、API連携、Webアプリを設計・開発。医療現場の業務理解を生かし、要件整理からMVP、テスト、公開まで一貫して対応するポートフォリオ。",
       inLanguage: "ja-JP",
       publisher: { "@id": `${SITE_URL}/#aicmode` },
       about: { "@id": `${SITE_URL}/#service` },
@@ -51,9 +53,9 @@ const jsonLd = {
       url: SITE_URL,
       jobTitle: "AI Developer / Web Developer",
       description:
-        "AIシステム開発、業務自動化、API連携、Webアプリケーション開発を、要件整理から設計・実装・テスト・公開・運用まで一貫して担当するフリーランス開発者。",
+        "医療現場で約9年間培った業務理解を生かし、AIシステム開発、業務自動化、API連携、Webアプリ開発を要件整理から公開まで一貫して担当するフリーランス開発者。",
       knowsAbout: [
-        "AI System Development",
+        "AI Systems Development",
         "Business Automation",
         "Workflow Automation",
         "Web Application Development",
@@ -95,7 +97,7 @@ const jsonLd = {
       "@id": `${SITE_URL}/#service`,
       name: "AICMODE",
       description:
-        "AIシステム開発、業務自動化、API連携、ダッシュボード構築、Webアプリ開発、Webサイト・LP制作を提供します。",
+        "AIシステム開発、業務自動化、API連携、ダッシュボード構築、Webアプリ開発、医療・介護分野の業務整理、Webサイト・LP制作を提供します。",
       url: SITE_URL,
       areaServed: "JP",
       availableLanguage: ["ja", "en"],
@@ -188,10 +190,12 @@ export default function Home() {
       <main id="main">
         <Hero />
         <CaseStudies />
+        <HealthcareAI />
         <SelectedWorks />
         <Services />
         <About />
         <Process />
+        <Trust />
         <Skills />
         <FAQ />
         <Contact />

@@ -4,7 +4,7 @@ import AnimateIn from './AnimateIn'
 
 function GitHubIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 flex-shrink-0">
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 flex-shrink-0" aria-hidden="true">
       <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
     </svg>
   )
@@ -15,7 +15,7 @@ const github = {
   icon: <GitHubIcon />,
   label: 'GitHub',
   handle: 'aicmode',
-  desc: 'Code · Web Apps · AI Systems',
+  desc: 'Code · Web Applications · AI Systems',
   glow: 'rgba(255,255,255,0.07)',
   border: 'rgba(255,255,255,0.12)',
 }
@@ -28,6 +28,9 @@ const disciplines = [
   'Dashboard Development',
   'Creative Web Design',
 ]
+
+const GITHUB_ISSUE_URL =
+  'https://github.com/aicmode/portfolio/issues/new?title=%E3%80%90%E3%81%94%E7%9B%B8%E8%AB%87%E3%80%91'
 
 /**
  * What to include in a first message. Removes the "I don't know what to write"
@@ -84,6 +87,7 @@ function SocialCard({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label={`${label}プロフィールを新しいタブで開く`}
       className="group flex w-full flex-col items-center gap-4 px-6 py-9 text-center"
       style={{
         border: `1px solid rgba(255,255,255,0.07)`,
@@ -181,14 +185,14 @@ export default function Contact() {
               className="font-black text-white leading-tight"
               style={{ fontSize: 'clamp(2.4rem, 6.5vw, 5.5rem)', letterSpacing: '-0.025em' }}
             >
-              Let&apos;s build something<br />
+              相談から、使える<br />
               <span style={{
                 background: 'linear-gradient(120deg, #ffffff 0%, rgba(200,180,255,0.85) 60%, rgba(100,160,255,0.7) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
               }}>
-                cinematic.
+                仕組みへ。
               </span>
             </h2>
 
@@ -213,8 +217,7 @@ export default function Contact() {
               内容を整理し、Webサイト・AIシステム・業務自動化・API連携のどれが適しているかをご提案します。
             </p>
             <p className="text-sm md:text-base leading-relaxed mb-2" style={{ color: '#8a8a8a' }}>
-              AI × Design × Overseas Culture — blending technology<br />
-              with a global creative perspective.
+              Business First × Technology × Creative Direction
             </p>
             <p className="text-[11px] tracking-[0.2em] uppercase" style={{ color: '#7a7a7a' }}>
               AI Development · Web Design · Business Automation
@@ -291,7 +294,7 @@ export default function Contact() {
 
             <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
               <motion.a
-                href={`${github.href}?tab=repositories`}
+                href={GITHUB_ISSUE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center border px-7 py-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#080808]"
@@ -306,7 +309,7 @@ export default function Contact() {
                   transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
                 }}
               >
-                PROJECT INQUIRY VIA GITHUB
+                GitHubで相談内容を送る
                 <span className="sr-only">（GitHubを新しいタブで開きます）</span>
               </motion.a>
               <a
@@ -315,7 +318,7 @@ export default function Contact() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center border border-white/14 px-7 py-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-white/70 transition duration-500 hover:border-white/32 hover:text-white"
               >
-                VIEW GITHUB PROFILE
+                GitHubプロフィールを見る
                 <span className="sr-only">（GitHubを新しいタブで開きます）</span>
               </a>
             </div>
@@ -326,11 +329,16 @@ export default function Contact() {
               Issue is public, that has to be said out loud before someone pastes
               business details into one.
             */}
-            <p className="mt-6 max-w-3xl border-l border-white/12 pl-4 text-[12.5px] leading-6 text-white/52">
-              現在の問い合わせ窓口はGitHubのみです。GitHubのIssueは<strong className="font-semibold text-white/60">誰でも閲覧できる公開の場</strong>のため、
-              社名・個人情報・社内の非公開情報・認証情報は書き込まないでください。
-              まずは「何に困っているか」だけをご記入いただければ、非公開でやり取りできる方法をこちらからご案内します。
-            </p>
+            <div className="mt-6 max-w-3xl border-l border-[rgba(212,175,55,0.32)] pl-4 text-[12.5px] leading-6 text-white/58">
+              <p className="font-semibold text-white/76">GitHubをお持ちでない方へ</p>
+              <p className="mt-2">
+                現在、正式な問い合わせフォームを準備中です。商工会議所などで直接ご案内した方には、
+                個別に非公開の連絡方法をお伝えします。
+              </p>
+              <p className="mt-2">
+                GitHub Issueは公開されるため、社名、患者情報、個人情報、APIキー、社内資料などは記載しないでください。
+              </p>
+            </div>
           </div>
         </AnimateIn>
 

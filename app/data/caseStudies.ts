@@ -20,7 +20,8 @@ export const caseStudies: readonly CaseStudy[] = [
     title: 'MediBrief',
     subtitle: 'AI SYSTEM / HEALTHCARE',
     group: 'AI Systems',
-    projectType: 'Released Demo',
+    projectType: 'Self-directed Project',
+    role: ['Planning', 'Requirements', 'Design', 'Development', 'Testing'],
     status: 'released',
     problem:
       '診察時間は短く、患者は緊張して伝えたいことを忘れるため、医師が判断に必要な情報が揃わない。',
@@ -90,6 +91,7 @@ export const caseStudies: readonly CaseStudy[] = [
     subtitle: 'AUTOMATION / MULTI-CHANNEL',
     group: 'Automation',
     projectType: 'Training Project',
+    role: ['Development', 'Testing', 'Documentation'],
     status: 'source-only',
     statusNote: 'Slack / OpenAI / LINE の各APIキーを設定して実行する構成のため、公開デモは用意していません。',
     problem:
@@ -156,7 +158,8 @@ export const caseStudies: readonly CaseStudy[] = [
     title: 'Dify AI Chat',
     subtitle: 'AI SYSTEM / CHAT INTERFACE',
     group: 'AI Systems',
-    projectType: 'Released Demo',
+    projectType: 'Training Project',
+    role: ['Requirements', 'Design', 'Development', 'Testing'],
     status: 'released',
     statusNote:
       '無料プランのホスティングを使用しているため、アクセスがない時間帯は初回表示に起動待ちが発生する場合があります。',
@@ -227,7 +230,8 @@ export const caseStudies: readonly CaseStudy[] = [
     title: 'Smart Expense Tracker',
     subtitle: 'DASHBOARD / DATA VISUALIZATION',
     group: 'Web Applications',
-    projectType: 'Released Demo',
+    projectType: 'Self-directed Project',
+    role: ['Planning', 'Design', 'Development', 'Testing'],
     status: 'released',
     problem:
       '支出の記録と分析が別々のツールに分かれているため、合計や偏りを知るのに毎回集計し直すことになる。',
@@ -241,7 +245,7 @@ export const caseStudies: readonly CaseStudy[] = [
       'UTF-8 BOM付きCSVエクスポート',
       'データがない場合の専用Empty State',
     ],
-    stack: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS 4', 'Recharts', 'LocalStorage'],
+    stack: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS v4', 'Recharts', 'LocalStorage'],
     accent: '#a78bfa',
     detail: {
       goal:
@@ -298,6 +302,7 @@ export const caseStudies: readonly CaseStudy[] = [
     subtitle: 'AUTOMATION / SPEECH TO DOCUMENT',
     group: 'Automation',
     projectType: 'Training Project',
+    role: ['Development', 'Testing', 'Documentation'],
     status: 'source-only',
     statusNote:
       'OpenAIとGoogleの認証情報を設定してローカル実行する構成のため、公開デモは用意していません。',
@@ -365,6 +370,7 @@ export const caseStudies: readonly CaseStudy[] = [
     subtitle: 'ARCHITECTURE STUDY / LINE BOT',
     group: 'AI Systems',
     projectType: 'Architecture Study',
+    role: ['Planning', 'Requirements', 'Architecture'],
     status: 'case-study',
     statusNote: '設計完了・実装準備中の案件です。設計書のみ公開しており、稼働中のBotはありません。',
     problem:
