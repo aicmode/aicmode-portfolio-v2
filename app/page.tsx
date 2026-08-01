@@ -184,7 +184,7 @@ export default function Home() {
       <Nav />
       {/*
         Order is deliberate for an AI / automation brief: the case studies come
-        before the web work, and the full 26-piece archive sits after Contact so
+        before the web work, and the full 27-piece archive sits after Contact so
         it can't bury the sales-critical sections.
       */}
       <main id="main">

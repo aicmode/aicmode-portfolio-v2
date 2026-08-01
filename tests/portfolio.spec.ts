@@ -28,8 +28,12 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
   )
   await expect(page.locator('h1')).toHaveCount(1)
   await expect(page.locator('#top')).toContainText('業務の課題を整理し、')
+  await expect(page.locator('#top dl dd')).toHaveText(['06', '27'])
   await expect(page.locator('#case-studies article')).toHaveCount(6)
+  await expect(page.locator('#case-studies')).not.toContainText('MediChart Lite')
   await expect(page.locator('#healthcare')).toContainText('看護師として約9年間')
+  await expect(page.locator('#works')).toContainText('27 Portfolio Projects · 6 AI Case Studies')
+  await expect(page.locator('#works article')).toHaveCount(8)
 
   const servicesCta = page.getByRole('link', { name: '相談できることを見る' })
   const worksCta = page.getByRole('link', { name: '制作事例を見る' })
@@ -56,6 +60,45 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
   await expect(workDialog).toBeVisible()
   await page.keyboard.press('Escape')
   await expect(workDialog).toBeHidden()
+
+  const medichartCard = page.locator('#works article', {
+    has: page.getByRole('heading', { name: 'MediChart Lite', exact: true }),
+  })
+  await expect(medichartCard).toHaveCount(1)
+  await expect(medichartCard).toContainText('HEALTHCARE WEB APPLICATION')
+  const medichartImage = medichartCard.locator('img')
+  await expect(medichartImage).toHaveAttribute('src', /medichart-lite\.webp/)
+  await expect.poll(() => medichartImage.evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
+  await expect(medichartCard.getByRole('link', { name: /Live Demo/ })).toHaveAttribute(
+    'href',
+    'https://medichart-lite.vercel.app',
+  )
+  await expect(medichartCard.getByRole('link', { name: /GitHub/ })).toHaveAttribute(
+    'href',
+    'https://github.com/aicmode/medichart-lite',
+  )
+  await medichartCard.getByRole('button', { name: /Details/ }).click()
+  const medichartDialog = page.getByRole('dialog', { name: 'MediChart Lite' })
+  await expect(medichartDialog).toContainText('Safety')
+  await expect(medichartDialog).toContainText('実在患者情報は扱わず')
+  await expect(medichartDialog).toContainText('Frontend Development')
+  await expect(medichartDialog.getByRole('link', { name: /Open Site/ })).toHaveAttribute(
+    'href',
+    'https://medichart-lite.vercel.app',
+  )
+  await expect(medichartDialog.getByRole('link', { name: /View Source on GitHub/ })).toHaveAttribute(
+    'href',
+    'https://github.com/aicmode/medichart-lite',
+  )
+  await page.keyboard.press('Escape')
+  await expect(medichartDialog).toBeHidden()
+
+  const archive = page.locator('#archive')
+  await archive.locator('.works-tabs button', { hasText: /^Web Applications/ }).click()
+  await expect(archive.locator('article')).toHaveCount(6)
+  await expect(
+    archive.locator('article', { has: page.getByRole('heading', { name: 'MediChart Lite', exact: true }) }),
+  ).toHaveCount(1)
 
   const faqTrigger = page.locator('#faq h3 button').nth(1)
   await expect(faqTrigger).toHaveAttribute('aria-expanded', 'false')
@@ -121,7 +164,7 @@ for (const viewport of viewports) {
 
     const archive = page.locator('#archive')
     const archiveCards = archive.locator('article')
-    const expandButton = page.getByRole('button', { name: 'VIEW ALL 26 WORKS' })
+    const expandButton = page.getByRole('button', { name: 'VIEW ALL 27 WORKS' })
 
     await expect(expandButton).toHaveAttribute('aria-expanded', 'false')
     await expect(expandButton).toHaveAttribute('aria-controls', 'works-archive-projects')
@@ -135,7 +178,7 @@ for (const viewport of viewports) {
 
     await expandButton.click()
     await expect(page.getByRole('button', { name: 'SHOW LESS' }).first()).toHaveAttribute('aria-expanded', 'true')
-    await expect(archiveCards).toHaveCount(26)
+    await expect(archiveCards).toHaveCount(27)
 
     const expandedHeight = await page.evaluate(() => document.documentElement.scrollHeight)
     expect(expandedHeight).toBeGreaterThan(initialHeight)
@@ -194,7 +237,7 @@ for (const viewport of viewports) {
     }
 
     await categoryButtons.first().click()
-    await expect(archiveCards).toHaveCount(26)
+    await expect(archiveCards).toHaveCount(27)
 
     const pageWidth = await page.evaluate(() => ({
       scrollWidth: document.documentElement.scrollWidth,
@@ -209,7 +252,7 @@ for (const viewport of viewports) {
 
     await page.reload({ waitUntil: 'networkidle' })
     await expect(page.locator('#archive article')).toHaveCount(0)
-    await expect(page.getByRole('button', { name: 'VIEW ALL 26 WORKS' })).toHaveAttribute('aria-expanded', 'false')
+    await expect(page.getByRole('button', { name: 'VIEW ALL 27 WORKS' })).toHaveAttribute('aria-expanded', 'false')
 
     expect(consoleErrors).toEqual([])
     expect(failedRequests).toEqual([])
@@ -219,19 +262,19 @@ for (const viewport of viewports) {
 
 /**
  * Counting cards in the DOM is not enough: the archive regressed once with all
- * 26 articles mounted but left at `opacity: 0` by a scroll-triggered reveal,
+ * 27 articles mounted but left at `opacity: 0` by a scroll-triggered reveal,
  * which reads to a visitor as an empty archive. These assertions are about what
  * is actually on screen, without scrolling first.
  */
 const EXPECTED_CATEGORY_COUNTS = [
   ['AI Systems', 1],
-  ['Web Applications', 5],
+  ['Web Applications', 6],
   ['Websites', 4],
   ['Landing Pages', 11],
   ['EC', 5],
 ] as const
 
-const ARCHIVE_TOTAL = 26
+const ARCHIVE_TOTAL = 27
 
 for (const viewport of [
   { width: 390, height: 844 },
@@ -268,7 +311,7 @@ for (const viewport of [
           }).length,
       )
 
-    const expandButton = page.getByRole('button', { name: 'VIEW ALL 26 WORKS' })
+    const expandButton = page.getByRole('button', { name: 'VIEW ALL 27 WORKS' })
     const showLessButton = page.getByRole('button', { name: 'SHOW LESS' }).first()
     const tab = (name: string) =>
       archive.locator('.works-tabs button', { hasText: new RegExp(`^${name}`) }).first()
@@ -289,7 +332,7 @@ for (const viewport of [
       await expect(showLessButton).toHaveAttribute('aria-expanded', 'true')
     }
 
-    // Returning to All from a category must restore all 26, still on screen.
+    // Returning to All from a category must restore all 27, still on screen.
     await tab('All').click()
     await expect(cards).toHaveCount(ARCHIVE_TOTAL)
     await expect.poll(shownCards).toBe(ARCHIVE_TOTAL)

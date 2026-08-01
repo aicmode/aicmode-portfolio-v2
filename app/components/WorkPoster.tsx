@@ -128,7 +128,7 @@ export default function WorkPoster({
   const variant = project.variant
   const typePrefix = variant ? VARIANT_TYPE_CLASS[variant] : undefined
   const primaryUrl = hasLiveDemo(project.status) ? project.liveUrl : project.githubUrl
-  const primaryLabel = STATUS_CTA[project.status]
+  const primaryLabel = project.ctaLabel ?? STATUS_CTA[project.status]
   const tags = project.tags ?? []
   const revealProps = revealOnMount
     ? { variants: MOUNT_REVEAL_VARIANTS, initial: 'hidden' }
@@ -272,6 +272,18 @@ export default function WorkPoster({
             <ArrowIcon />
           </motion.a>
 
+          {project.showGithubOnCard && project.githubUrl ? (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-11 items-center justify-center border border-white/10 px-4 text-[8px] font-semibold uppercase tracking-[0.18em] text-white/58 transition-colors duration-500 hover:border-white/28 hover:text-white/85 sm:text-[9px] sm:tracking-[0.22em]"
+            >
+              GitHub
+              <span className="sr-only">（{project.title} のソースを新しいタブで開きます）</span>
+            </a>
+          ) : null}
+
           <button
             type="button"
             onClick={onOpenDetail}
@@ -345,6 +357,20 @@ export function WorkDetail({ project }: { project: Project }) {
             ))}
           </ul>
         </section>
+        {project.safety ? (
+          <section className="border-t border-white/[0.06] pt-5">
+            <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Safety</h4>
+            <p className="mt-3 text-[13px] leading-7 text-white/52">{project.safety}</p>
+          </section>
+        ) : null}
+        {project.role ? (
+          <section className="border-t border-white/[0.06] pt-5">
+            <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Role</h4>
+            <p className="mt-3 text-[12px] font-semibold uppercase leading-6 tracking-[0.2em] text-white/58">
+              {project.role.join(' / ')}
+            </p>
+          </section>
+        ) : null}
         <section className="border-t border-white/[0.06] pt-5">
           <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Tech Stack</h4>
           <p className="mt-3 text-[12px] font-semibold uppercase leading-6 tracking-[0.2em] text-white/58">

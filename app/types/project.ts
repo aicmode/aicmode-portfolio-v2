@@ -99,6 +99,10 @@ export type Project = {
   /** One sentence: what was built in response. */
   solution: string
   features: readonly string[]
+  /** Optional safety boundary for demos in regulated or sensitive domains. */
+  safety?: string
+  /** Work personally completed for this project. */
+  role?: readonly string[]
   group: Category
   projectType: ProjectType
   status: ProjectStatus
@@ -113,6 +117,10 @@ export type Project = {
   imagePosition?: string
   liveUrl?: string
   githubUrl?: string
+  /** Optional primary-card CTA copy when the default status label is too generic. */
+  ctaLabel?: string
+  /** Show a source link beside the primary CTA on the work card. */
+  showGithubOnCard?: boolean
   /** Lower numbers appear first; also drives Selected Works. */
   order: number
   featured?: boolean

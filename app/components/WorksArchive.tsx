@@ -13,7 +13,7 @@ const ease = [0.13, 0.86, 0.18, 1] as const
 const ARCHIVE_PROJECTS_ID = 'works-archive-projects'
 
 /**
- * The complete set of 26 works with the category filter preserved. Lives below
+ * The complete set of 27 works with the category filter preserved. Lives below
  * the curated sections so the sales-critical work is not buried, while nothing
  * is removed from the portfolio.
  */
