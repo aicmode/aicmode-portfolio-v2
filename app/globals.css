@@ -342,6 +342,51 @@ a { -webkit-tap-highlight-color: transparent; }
   transform: scale(1.018);
 }
 
+/* MediChart Lite only: restrained clinical navy and blue treatment. */
+.medichart-work-card {
+  background:
+    radial-gradient(circle at 16% 0%, rgba(67, 166, 255, 0.14), transparent 34%),
+    linear-gradient(150deg, rgba(6, 24, 42, 0.98), rgba(2, 8, 15, 0.99) 62%);
+  box-shadow:
+    inset 0 0 0 1px rgba(67, 166, 255, 0.14),
+    0 28px 90px rgba(0, 0, 0, 0.54);
+}
+
+.medichart-work-card .editorial-poster-shell {
+  border-color: rgba(85, 177, 255, 0.25);
+  box-shadow:
+    inset 0 0 0 1px rgba(115, 193, 255, 0.05),
+    0 18px 60px rgba(12, 111, 196, 0.14),
+    0 0 34px rgba(67, 166, 255, 0.09);
+}
+
+.medichart-work-card:hover {
+  box-shadow:
+    inset 0 0 0 1px rgba(91, 181, 255, 0.34),
+    0 42px 140px rgba(0, 0, 0, 0.7),
+    0 0 46px rgba(37, 137, 224, 0.1);
+}
+
+.medichart-work-card:hover .editorial-poster-shell {
+  border-color: rgba(108, 193, 255, 0.42);
+  box-shadow:
+    inset 0 0 0 1px rgba(125, 199, 255, 0.09),
+    0 32px 90px rgba(11, 103, 181, 0.2),
+    0 0 42px rgba(67, 166, 255, 0.13);
+}
+
+.medichart-work-card:hover .editorial-poster-image {
+  filter: saturate(1.08) contrast(1.07) brightness(1.04);
+  transform: scale(1.03);
+}
+
+.medichart-updated-badge {
+  border: 1px solid rgba(86, 181, 255, 0.42);
+  background: rgba(4, 22, 38, 0.78);
+  color: rgba(142, 211, 255, 0.92);
+  box-shadow: 0 0 20px rgba(67, 166, 255, 0.1);
+}
+
 .editorial-work-button {
   position: relative;
   overflow: hidden;
@@ -1123,6 +1168,38 @@ a { -webkit-tap-highlight-color: transparent; }
   .greenroot-premium-card .editorial-poster-shell,
   .velvet-premium-card .editorial-poster-shell {
     aspect-ratio: 16 / 10.5;
+  }
+}
+
+/*
+ * MediChart Lite carries the densest meta in the set, and because the grid is
+ * `auto-rows-fr` whatever this one card needs is handed to every other card in
+ * the section. Two guards keep it inside the shared rhythm; neither changes any
+ * other card, and neither pins a height, so nothing can be clipped.
+ */
+.medichart-work-card .editorial-work-meta > div > p:nth-of-type(2) {
+  /* Summary stays within the three lines the other cards already occupy. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/*
+ * This is the only card with a GitHub control, so it is the only one with three
+ * buttons in the action row — and at the narrow end of the two-column band they
+ * overrun the row by ~4px and wrap to a second line, making the card (and so
+ * every card) 54px taller. Its own gutters absorb that; the shared button style
+ * is untouched.
+ */
+@media (min-width: 768px) and (max-width: 800px) {
+  .medichart-work-card .work-card-actions {
+    gap: 0.5rem;
+  }
+
+  .medichart-work-card .work-card-actions > a,
+  .medichart-work-card .work-card-actions > button {
+    padding-inline: 0.8125rem;
   }
 }
 

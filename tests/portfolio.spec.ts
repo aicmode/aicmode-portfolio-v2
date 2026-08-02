@@ -66,13 +66,22 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
   })
   await expect(medichartCard).toHaveCount(1)
   await expect(medichartCard).toContainText('HEALTHCARE WEB APPLICATION')
+  await expect(medichartCard).toContainText(/Clinical Record Management Demo/i)
+  await expect(medichartCard).toContainText(/Recharts/i)
+  await expect(medichartCard).toContainText(/Dark Mode/i)
+  await expect(medichartCard).toContainText('UPDATED')
   const medichartImage = medichartCard.locator('img')
-  await expect(medichartImage).toHaveAttribute('src', /medichart-lite\.webp/)
+  await expect(medichartImage).toHaveAttribute('src', /medichart-lite-clinical-dashboard\.jpg/)
+  await expect(medichartImage).not.toHaveAttribute('src', /medichart-lite\.webp/)
   await expect.poll(() => medichartImage.evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
-  await expect(medichartCard.getByRole('link', { name: /Live Demo/ })).toHaveAttribute(
+  const medichartLiveLink = medichartCard.getByRole('link', { name: /Live Demo/ })
+  await expect(medichartLiveLink).toHaveAttribute(
     'href',
     'https://medichart-lite.vercel.app',
   )
+  await expect(medichartLiveLink).toHaveAttribute('target', '_blank')
+  await expect(medichartLiveLink).toHaveAttribute('rel', /noopener/)
+  await expect(medichartLiveLink).toHaveAttribute('rel', /noreferrer/)
   await expect(medichartCard.getByRole('link', { name: /GitHub/ })).toHaveAttribute(
     'href',
     'https://github.com/aicmode/medichart-lite',
@@ -113,6 +122,105 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
     await expect(link).toHaveAttribute('href', /^https:\/\//)
     await expect(link).toHaveAttribute('rel', /noopener/)
     await expect(link).toHaveAttribute('rel', /noreferrer/)
+  }
+
+  expect(consoleErrors).toEqual([])
+  expect(pageErrors).toEqual([])
+})
+
+test('MediChart Lite card stays contained across desktop, tablet, and mobile', async ({ page }) => {
+  test.setTimeout(120_000)
+
+  const consoleErrors: string[] = []
+  const pageErrors: string[] = []
+  page.on('console', (message) => {
+    if (message.type() === 'error') consoleErrors.push(message.text())
+  })
+  page.on('pageerror', (error) => pageErrors.push(error.message))
+
+  for (const viewport of [
+    { width: 1440, height: 900 },
+    { width: 768, height: 1024 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await page.goto('http://localhost:3000/', { waitUntil: 'networkidle' })
+
+    const card = page.locator('#works article', {
+      has: page.getByRole('heading', { name: 'MediChart Lite', exact: true }),
+    })
+    await card.scrollIntoViewIfNeeded()
+
+    const layout = await card.evaluate((element) => {
+      const cardBox = element.getBoundingClientRect()
+      const shell = element.querySelector<HTMLElement>('.editorial-poster-shell')
+      const image = element.querySelector<HTMLImageElement>('img')
+      const badges = [...element.querySelectorAll<HTMLElement>('.editorial-poster-shell > div')]
+      return {
+        cardLeft: cardBox.left,
+        cardRight: cardBox.right,
+        cardContained: element.scrollWidth <= element.clientWidth,
+        imageLoaded: Boolean(image?.complete && image.naturalWidth > 0 && image.naturalHeight > 0),
+        imageSource: image?.currentSrc ?? '',
+        imageObjectFit: image ? getComputedStyle(image).objectFit : '',
+        shellRatio: shell ? shell.clientWidth / shell.clientHeight : 0,
+        badgesContained: badges.every((badge) => {
+          const badgeBox = badge.getBoundingClientRect()
+          const shellBox = shell?.getBoundingClientRect()
+          return Boolean(shellBox && badgeBox.left >= shellBox.left && badgeBox.right <= shellBox.right)
+        }),
+      }
+    })
+
+    expect(layout.cardLeft).toBeGreaterThanOrEqual(0)
+    expect(layout.cardRight).toBeLessThanOrEqual(viewport.width)
+    expect(layout.cardContained).toBe(true)
+    expect(layout.imageLoaded).toBe(true)
+    expect(layout.imageSource).toContain('medichart-lite-clinical-dashboard.jpg')
+    expect(layout.imageObjectFit).toBe('cover')
+    expect(layout.shellRatio).toBeGreaterThan(1.45)
+    expect(layout.badgesContained).toBe(true)
+
+    const pageWidth = await page.evaluate(() => ({
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth,
+    }))
+    expect(pageWidth.scrollWidth).toBeLessThanOrEqual(pageWidth.clientWidth)
+
+    /*
+     * The card carries the densest meta in the grid, so it is the one that can
+     * pull every other card taller (`auto-rows-fr` hands the tallest card's
+     * height to the whole section). Assert the finished geometry — same height
+     * and bottom edge as its row neighbours, action row on the bottom, nothing
+     * clipped — rather than any single CSS value.
+     */
+    const grid = await page.evaluate(() => {
+      const cards = [...document.querySelectorAll<HTMLElement>('#works article')]
+      const read = (card: HTMLElement) => {
+        const box = card.getBoundingClientRect()
+        const meta = card.querySelector<HTMLElement>('.editorial-work-meta > div')!
+        const actions = card.querySelector<HTMLElement>('.work-card-actions')!
+        return {
+          title: card.querySelector('h3')?.textContent ?? '',
+          top: Math.round(box.top),
+          bottom: Math.round(box.bottom),
+          height: Math.round(box.height),
+          gapBelowActions: Math.round(box.bottom - actions.getBoundingClientRect().bottom),
+          clipped: meta.scrollHeight - meta.clientHeight,
+        }
+      }
+      const all = cards.map(read)
+      const medichart = all.find((entry) => entry.title === 'MediChart Lite')!
+      const row = all.filter((entry) => entry.top === medichart.top && entry.title !== medichart.title)
+      return { medichart, row }
+    })
+
+    expect(grid.medichart.clipped).toBe(0)
+    for (const neighbour of grid.row) {
+      expect(neighbour.height).toBe(grid.medichart.height)
+      expect(neighbour.bottom).toBe(grid.medichart.bottom)
+      expect(neighbour.gapBelowActions).toBe(grid.medichart.gapBelowActions)
+    }
   }
 
   expect(consoleErrors).toEqual([])

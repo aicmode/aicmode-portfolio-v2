@@ -127,6 +127,13 @@ export default function WorkPoster({
 }) {
   const variant = project.variant
   const typePrefix = variant ? VARIANT_TYPE_CLASS[variant] : undefined
+  /*
+   * MediChart Lite carries more meta than any other card (five tags, a longer
+   * stack line). The grid is `auto-rows-fr`, so whatever this card needs every
+   * card gets — the tag row is trimmed to the six that matter and kept to the
+   * same two rows as its neighbours.
+   */
+  const isMediChart = project.id === 'medichart-lite'
   const primaryUrl = hasLiveDemo(project.status) ? project.liveUrl : project.githubUrl
   const primaryLabel = project.ctaLabel ?? STATUS_CTA[project.status]
   const tags = project.tags ?? []
@@ -142,6 +149,7 @@ export default function WorkPoster({
     <motion.article
       className={[
         'work-card editorial-work-card group relative overflow-hidden bg-[#030303]',
+        isMediChart ? 'medichart-work-card' : '',
         project.wide ? 'featured-work-card' : '',
         variant ? VARIANT_CLASS[variant] : '',
       ]
@@ -163,9 +171,15 @@ export default function WorkPoster({
           transition={{ duration: 1.15, ease }}
         >
           <div className="editorial-poster-shell relative overflow-hidden">
-            {showFeaturedBadge && !project.wide ? (
+            {(showFeaturedBadge || isMediChart) && !project.wide ? (
               <div className="pointer-events-none absolute left-4 top-4 z-10 border border-white/18 bg-black/70 px-3 py-2 text-[8px] font-bold uppercase leading-none tracking-[0.34em] text-white/58 backdrop-blur-md">
                 FEATURED
+              </div>
+            ) : null}
+
+            {isMediChart ? (
+              <div className="medichart-updated-badge pointer-events-none absolute right-4 top-4 z-10 px-3 py-2 text-[8px] font-bold uppercase leading-none tracking-[0.3em] backdrop-blur-md">
+                UPDATED
               </div>
             ) : null}
 
@@ -217,9 +231,11 @@ export default function WorkPoster({
               <span className="border border-[color:var(--work-accent)]/45 bg-[color:var(--work-accent)]/[0.08] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.28em] text-[color:var(--work-accent)]">
                 {project.group}
               </span>
-              <span className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.24em] text-white/56">
-                {project.projectType}
-              </span>
+              {isMediChart ? null : (
+                <span className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.24em] text-white/56">
+                  {project.projectType}
+                </span>
+              )}
               {tags.map((tag) => (
                 <span
                   key={tag}
