@@ -120,8 +120,9 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
     meddoseCard.getByRole('link', { name: /App Store|Live Demo|Open Site|Open Demo/ }),
   ).toHaveCount(0)
   const meddosePoster = meddoseCard.locator('img')
-  // Next's optimizer URL-encodes the path, so the separator is %2F, not "/".
-  await expect(meddosePoster).toHaveAttribute('src', /meddose(%2F|\/)01-home\.png/)
+  // The card now uses the dedicated landscape product visual, not a gallery capture.
+  await expect(meddosePoster).toHaveAttribute('src', /meddose-card\.png/)
+  await expect(meddosePoster).toHaveCSS('object-fit', 'cover')
   await expect
     .poll(() => meddosePoster.evaluate((image) => (image as HTMLImageElement).naturalWidth))
     .toBeGreaterThan(0)
@@ -196,7 +197,7 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
    */
   const dialogImages = meddoseDialog.locator('img')
   await expect(dialogImages).toHaveCount(6)
-  await expect(dialogImages.first()).toHaveAttribute('src', /meddose(%2F|\/)01-home\.png/)
+  await expect(dialogImages.first()).toHaveAttribute('src', /meddose-card\.png/)
   const dialogFlow = await meddoseDialog.locator('ol li').evaluateAll((items) =>
     items.map((item) => {
       const frame = item.querySelector<HTMLElement>('div')!
@@ -393,6 +394,70 @@ test('MedDose detail page across desktop, tablet, and mobile', async ({ page, re
   expect(consoleErrors).toEqual([])
   expect(pageErrors).toEqual([])
   expect(errorResponses).toEqual([])
+})
+
+test('MedDose card keeps its product visual contained across desktop, tablet, and mobile', async ({ page }) => {
+  test.setTimeout(120_000)
+
+  const consoleErrors: string[] = []
+  const pageErrors: string[] = []
+  page.on('console', (message) => {
+    if (message.type() === 'error') consoleErrors.push(message.text())
+  })
+  page.on('pageerror', (error) => pageErrors.push(error.message))
+
+  for (const viewport of [
+    { width: 1440, height: 900 },
+    { width: 768, height: 1024 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await page.goto('http://localhost:3000/', { waitUntil: 'networkidle' })
+
+    const card = page.locator('#works article', {
+      has: page.getByRole('heading', { name: 'MedDose', exact: true }),
+    })
+    await card.scrollIntoViewIfNeeded()
+    await expect
+      .poll(() => card.locator('img').evaluate((image) => (image as HTMLImageElement).naturalWidth))
+      .toBeGreaterThan(0)
+
+    const layout = await card.evaluate((element) => {
+      const cardBox = element.getBoundingClientRect()
+      const shell = element.querySelector<HTMLElement>('.editorial-poster-shell')!
+      const image = element.querySelector<HTMLImageElement>('img')!
+      return {
+        cardLeft: cardBox.left,
+        cardRight: cardBox.right,
+        cardHeight: Math.round(cardBox.height),
+        imageLoaded: image.complete && image.naturalWidth > 0 && image.naturalHeight > 0,
+        imageSource: image.currentSrc,
+        imageObjectFit: getComputedStyle(image).objectFit,
+        imageObjectPosition: getComputedStyle(image).objectPosition,
+        shellRatio: shell.clientWidth / shell.clientHeight,
+      }
+    })
+
+    expect(layout.cardLeft).toBeGreaterThanOrEqual(0)
+    expect(layout.cardRight).toBeLessThanOrEqual(viewport.width)
+    expect(layout.imageLoaded).toBe(true)
+    expect(layout.imageSource).toContain('meddose-card.png')
+    expect(layout.imageObjectFit).toBe('cover')
+    expect(layout.imageObjectPosition).toBe('50% 50%')
+    expect(Math.abs(layout.shellRatio - (viewport.width < 768 ? 16 / 10.5 : 16 / 10))).toBeLessThan(0.02)
+
+    const rowHeights = await page.locator('#works article').evaluateAll((cards, medDoseTop) => {
+      const sameRow = cards.filter(
+        (card) => Math.round(card.getBoundingClientRect().top) === Math.round(Number(medDoseTop)),
+      )
+      return sameRow.map((card) => Math.round(card.getBoundingClientRect().height))
+    }, await card.evaluate((element) => element.getBoundingClientRect().top))
+    expect(rowHeights.length).toBeGreaterThan(0)
+    expect(rowHeights.every((height) => height === layout.cardHeight)).toBe(true)
+  }
+
+  expect(consoleErrors).toEqual([])
+  expect(pageErrors).toEqual([])
 })
 
 test('MediChart Lite card stays contained across desktop, tablet, and mobile', async ({ page }) => {

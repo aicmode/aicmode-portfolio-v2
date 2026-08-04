@@ -138,10 +138,9 @@ export const projects: readonly Project[] = [
     colorLabel: 'Swift / SwiftUI / watchOS / Clinical Workflow',
     accent: '#5ad2b0',
     tint: '#04140f',
-    image: '/works/images/meddose/01-home.png',
+    image: '/works/images/meddose-card.png',
     imageAlt:
-      'MedDoseの処方内容入力画面。1日総錠数、1日服用回数、処方日数の3項目が並んでいる',
-    imageFit: 'contain',
+      '臨時薬計算画面を表示した黒いスマートウォッチと、朝・昼・夕・就の服薬スケジュールを組み合わせたMedDoseのプロダクトビジュアル',
     galleryNote:
       'Apple Watch Series 11 の実機で撮影した画面です。入力から結果表示までの操作順に並べています。',
     gallery: [
