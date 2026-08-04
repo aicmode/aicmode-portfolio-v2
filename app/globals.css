@@ -68,9 +68,21 @@ a { -webkit-tap-highlight-color: transparent; }
 /* ─────────────────────────────────────
    Page load
 ───────────────────────────────────── */
+/*
+ * Opacity only, and deliberately so: this animation runs on <body> with
+ * `animation-fill-mode: both`, which retains the final keyframe forever. A
+ * transform in that keyframe is retained as an identity matrix — Chrome keeps
+ * the matrix even when the keyframe says `none` — and an element with a
+ * transform is the containing block for every `position: fixed` descendant.
+ * That silently re-anchored the film grain, the vignette and the detail dialog
+ * to the whole document instead of the viewport, which parked the dialog
+ * thousands of pixels above whatever the reader was looking at. The page-load
+ * fade is worth keeping; the 10px rise that came with it is not worth breaking
+ * `position: fixed` across the entire site.
+ */
 @keyframes pageFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* ─────────────────────────────────────
@@ -1201,6 +1213,33 @@ a { -webkit-tap-highlight-color: transparent; }
   .medichart-work-card .work-card-actions > button {
     padding-inline: 0.8125rem;
   }
+}
+
+/*
+ * Portrait captures in the shared landscape frame (`imageFit: 'contain'`).
+ *
+ * The poster frame stays exactly the size every other card uses — only the fit
+ * changes — so a watch or phone screen keeps its real proportions instead of
+ * being cropped to 16/10, and the grid's rhythm is untouched. The selector
+ * carries two classes on purpose: the shared `object-fit: cover` rule is itself
+ * two-class, and a single utility would lose to it.
+ */
+.editorial-work-card .editorial-poster-image.poster-image-contain,
+.featured-work-card .editorial-poster-image.poster-image-contain {
+  object-fit: contain;
+  padding-block: 0.75rem;
+}
+
+/* The letterbox reads as a stage rather than as empty frame. */
+.contain-poster-card .editorial-poster-shell {
+  background:
+    radial-gradient(circle at 50% 46%, color-mix(in srgb, var(--work-accent) 12%, transparent), transparent 62%),
+    #020204;
+}
+
+/* Scaling a contained image on hover would push it past the frame's edges. */
+.contain-poster-card:hover .editorial-poster-image {
+  transform: none;
 }
 
 /* ─────────────────────────────────────

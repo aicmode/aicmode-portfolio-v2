@@ -40,6 +40,17 @@ function ArrowIcon() {
   )
 }
 
+/**
+ * Poster frames are one shared 16/10 size for every card. A capture that is not
+ * landscape — a phone or watch screen — declares `imageFit: 'contain'` so it
+ * keeps its own proportions inside that frame instead of being cropped to fill
+ * it. The class, not a Tailwind utility, is what does it: `.editorial-poster-image`
+ * sets `object-fit: cover` from a two-class selector that a utility cannot outrank.
+ */
+function isContainFit(project: Project) {
+  return project.imageFit === 'contain'
+}
+
 function ProjectImage({
   project,
   className,
@@ -134,8 +145,16 @@ export default function WorkPoster({
    * same two rows as its neighbours.
    */
   const isMediChart = project.id === 'medichart-lite'
+  const containFit = isContainFit(project)
+  /*
+   * One rule for every card, with no per-project exceptions: the poster and the
+   * primary button both hand off to where the work itself lives — the
+   * deployment if there is one, the repository otherwise — in a new tab. The
+   * detail read stays inside the page, in the dialog `Details` opens.
+   */
   const primaryUrl = hasLiveDemo(project.status) ? project.liveUrl : project.githubUrl
   const primaryLabel = project.ctaLabel ?? STATUS_CTA[project.status]
+  const externalLinkProps = { target: '_blank', rel: 'noopener noreferrer' } as const
   const tags = project.tags ?? []
   const revealProps = revealOnMount
     ? { variants: MOUNT_REVEAL_VARIANTS, initial: 'hidden' }
@@ -150,6 +169,7 @@ export default function WorkPoster({
       className={[
         'work-card editorial-work-card group relative overflow-hidden bg-[#030303]',
         isMediChart ? 'medichart-work-card' : '',
+        containFit ? 'contain-poster-card' : '',
         project.wide ? 'featured-work-card' : '',
         variant ? VARIANT_CLASS[variant] : '',
       ]
@@ -164,8 +184,7 @@ export default function WorkPoster({
       <div className="work-card-body">
         <motion.a
           href={primaryUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+          {...externalLinkProps}
           className="editorial-poster-link block"
           variants={{ rest: { y: 0 }, hover: { y: -10 } }}
           transition={{ duration: 1.15, ease }}
@@ -188,6 +207,7 @@ export default function WorkPoster({
               sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 92vw"
               className={[
                 'editorial-poster-image',
+                containFit ? 'poster-image-contain' : '',
                 variant === 'special' ? 'bakery-poster-image' : '',
                 variant === 'kissa' ? 'kissa-poster-image' : '',
               ]
@@ -266,14 +286,22 @@ export default function WorkPoster({
                 <span className="text-white/50">Status</span> {STATUS_LABEL[project.status]}
               </p>
             </div>
+
+            {/* Japanese, at reading size: a status word alone ("Prototype") can
+                understate what was actually verified, and the qualifier is the
+                part a client needs. */}
+            {project.statusNote ? (
+              <p className="mt-2.5 max-w-[30rem] text-[11.5px] font-normal normal-case leading-5 tracking-normal text-white/48">
+                {project.statusNote}
+              </p>
+            ) : null}
           </div>
         </div>
 
         <div className="work-card-actions flex flex-wrap items-center gap-2.5 px-1 pb-1 pt-5">
           <motion.a
             href={primaryUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            {...externalLinkProps}
             className="editorial-work-button inline-flex h-11 items-center justify-center gap-2 border border-white/18 px-4 text-white/72"
             variants={{
               rest: { borderColor: 'rgba(255,255,255,0.18)', color: 'rgba(255,255,255,0.72)' },
@@ -284,7 +312,7 @@ export default function WorkPoster({
             <span className="text-[8px] font-semibold tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">
               {primaryLabel}
             </span>
-            <span className="sr-only">（{project.title} を新しいタブで開きます）</span>
+            <span className="sr-only">（{project.title} のページを新しいタブで開きます）</span>
             <ArrowIcon />
           </motion.a>
 
@@ -300,6 +328,9 @@ export default function WorkPoster({
             </a>
           ) : null}
 
+          {/* `Details` is the same control on every card: a button that opens
+              the dialog in place. It never navigates, so the visitor never
+              loses the grid, and no card is an exception to the rule. */}
           <button
             type="button"
             onClick={onOpenDetail}
@@ -311,6 +342,56 @@ export default function WorkPoster({
         </div>
       </div>
     </motion.article>
+  )
+}
+
+/**
+ * Ordered screen flow, shown in the dialog under the hero image when a project
+ * has one. It is an addition to the dialog's shared layout, never a replacement
+ * for part of it: every dialog opens with the same header and the same hero
+ * frame, so no project's detail view is shaped differently from the rest.
+ *
+ * Each frame takes its aspect ratio from the file's own pixel size, so nothing
+ * is stretched and nothing is cropped — `object-contain` inside a box of the
+ * image's exact ratio is a no-op, and stays one if a different device with
+ * different proportions is added later.
+ */
+function ScreenFlow({ project, gallery }: { project: Project; gallery: NonNullable<Project['gallery']> }) {
+  return (
+    <section className="border-b border-white/[0.07] px-6 py-7 sm:px-9 sm:py-8">
+      <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Screen Flow</h4>
+      {project.galleryNote ? (
+        <p className="mt-2.5 text-[12px] leading-6 text-white/48">{project.galleryNote}</p>
+      ) : null}
+      <ol className="mt-5 grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3">
+        {gallery.map((shot, index) => (
+          <li key={shot.src}>
+            <div
+              className="relative w-full overflow-hidden rounded-[16px] border border-white/10 bg-black"
+              style={{ aspectRatio: `${shot.width} / ${shot.height}` }}
+            >
+              <Image
+                src={shot.src}
+                alt={shot.alt}
+                fill
+                sizes="(min-width: 640px) 220px, 44vw"
+                className="object-contain"
+              />
+            </div>
+            <p className="mt-2.5 flex gap-2 text-[11.5px] leading-5 text-white/52">
+              <span
+                aria-hidden="true"
+                className="font-mono text-[10px] leading-5"
+                style={{ color: project.accent, opacity: 0.75 }}
+              >
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              {shot.caption}
+            </p>
+          </li>
+        ))}
+      </ol>
+    </section>
   )
 }
 
@@ -349,9 +430,11 @@ export function WorkDetail({ project }: { project: Project }) {
         <ProjectImage
           project={project}
           sizes="(min-width: 768px) 640px, 92vw"
-          className="object-cover"
+          className={isContainFit(project) ? 'object-contain' : 'object-cover'}
         />
       </div>
+
+      {project.gallery ? <ScreenFlow project={project} gallery={project.gallery} /> : null}
 
       <div className="space-y-5 p-6 sm:p-9">
         <section>
@@ -373,6 +456,25 @@ export function WorkDetail({ project }: { project: Project }) {
             ))}
           </ul>
         </section>
+        {/* Conditional, like Safety and Role below it: what a project actually
+            verified, for the projects that have verified something. */}
+        {project.outcome ? (
+          <section className="border-t border-white/[0.06] pt-5">
+            <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Outcome</h4>
+            <ul className="mt-3 space-y-2">
+              {project.outcome.map((item) => (
+                <li key={item} className="flex gap-3 text-[13px] leading-6 text-white/52">
+                  <span
+                    aria-hidden="true"
+                    className="mt-[9px] h-[3px] w-[3px] flex-shrink-0"
+                    style={{ background: project.accent, opacity: 0.7 }}
+                  />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
         {project.safety ? (
           <section className="border-t border-white/[0.06] pt-5">
             <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Safety</h4>
@@ -398,6 +500,11 @@ export function WorkDetail({ project }: { project: Project }) {
           <p className="mt-3 text-[13px] leading-7 text-white/52">
             {STATUS_LABEL[project.status]} — {project.projectType}。実在クライアントの受託案件ではありません。
           </p>
+          {project.statusNote ? (
+            <p className="mt-3 border-l border-white/12 pl-4 text-[12.5px] leading-6 text-white/56">
+              {project.statusNote}
+            </p>
+          ) : null}
           <div className="mt-5 flex flex-wrap gap-2.5">
             {project.liveUrl ? (
               <a

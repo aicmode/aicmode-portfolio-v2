@@ -28,12 +28,12 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
   )
   await expect(page.locator('h1')).toHaveCount(1)
   await expect(page.locator('#top')).toContainText('業務の課題を整理し、')
-  await expect(page.locator('#top dl dd')).toHaveText(['06', '27'])
+  await expect(page.locator('#top dl dd')).toHaveText(['06', '28'])
   await expect(page.locator('#case-studies article')).toHaveCount(6)
   await expect(page.locator('#case-studies')).not.toContainText('MediChart Lite')
   await expect(page.locator('#healthcare')).toContainText('看護師として約9年間')
-  await expect(page.locator('#works')).toContainText('27 Portfolio Projects · 6 AI Case Studies')
-  await expect(page.locator('#works article')).toHaveCount(8)
+  await expect(page.locator('#works')).toContainText('28 Portfolio Projects · 6 AI Case Studies')
+  await expect(page.locator('#works article')).toHaveCount(9)
 
   const servicesCta = page.getByRole('link', { name: '相談できることを見る' })
   const worksCta = page.getByRole('link', { name: '制作事例を見る' })
@@ -102,6 +102,153 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
   await page.keyboard.press('Escape')
   await expect(medichartDialog).toBeHidden()
 
+  /*
+   * MedDose is the one piece with no deployment of any kind. The assertions
+   * below are as much about what must NOT be on the card as what must: a store
+   * listing and a hosted demo do not exist, so no control may offer either.
+   */
+  const meddoseCard = page.locator('#works article', {
+    has: page.getByRole('heading', { name: 'MedDose', exact: true }),
+  })
+  await expect(meddoseCard).toHaveCount(1)
+  await expect(meddoseCard).toContainText('APPLE WATCH MEDICATION CALCULATOR')
+  await expect(meddoseCard).toContainText('Prototype')
+  await expect(meddoseCard).toContainText('Apple Watch Series 11 の実機')
+  await expect(meddoseCard).toContainText('App Storeでは未公開')
+  await expect(meddoseCard).not.toContainText('App Store公開済み')
+  await expect(
+    meddoseCard.getByRole('link', { name: /App Store|Live Demo|Open Site|Open Demo/ }),
+  ).toHaveCount(0)
+  const meddosePoster = meddoseCard.locator('img')
+  // Next's optimizer URL-encodes the path, so the separator is %2F, not "/".
+  await expect(meddosePoster).toHaveAttribute('src', /meddose(%2F|\/)01-home\.png/)
+  await expect
+    .poll(() => meddosePoster.evaluate((image) => (image as HTMLImageElement).naturalWidth))
+    .toBeGreaterThan(0)
+  /*
+   * `View Project` and the poster both hand off to the repository in a new tab,
+   * which is the rule every other card follows.
+   */
+  const meddoseProject = meddoseCard.getByRole('link', { name: /View Project/ })
+  await expect(meddoseProject).toHaveCount(1)
+  await expect(meddoseProject).toHaveAttribute('href', 'https://github.com/aicmode/MedDose')
+  await expect(meddoseProject).toHaveAttribute('target', '_blank')
+  await expect(meddoseProject).toHaveAttribute('rel', /noopener/)
+  await expect(meddoseCard.locator('a.editorial-poster-link')).toHaveAttribute(
+    'href',
+    'https://github.com/aicmode/MedDose',
+  )
+
+  /*
+   * `Details` is a button, never a link: it opens the shared dialog in place.
+   * The URL, the tab count and the scroll position all have to survive it — the
+   * visitor must come back to exactly the card they left.
+   */
+  await expect(meddoseCard.getByRole('link', { name: /Details/ })).toHaveCount(0)
+  const urlBeforeDialog = page.url()
+  const tabsBeforeDialog = page.context().pages().length
+  await meddoseCard.scrollIntoViewIfNeeded()
+  const scrollBeforeDialog = await page.evaluate(() => window.scrollY)
+  await meddoseCard.getByRole('button', { name: /Details/ }).click()
+  const meddoseDialog = page.getByRole('dialog', { name: 'MedDose' })
+  await expect(meddoseDialog).toBeVisible()
+  expect(page.url()).toBe(urlBeforeDialog)
+  expect(page.context().pages().length).toBe(tabsBeforeDialog)
+
+  /*
+   * The overlay has to cover the viewport and nothing else. It is `position:
+   * fixed`, but a transform anywhere up the ancestor chain (an animation on
+   * <body> retaining one, say) silently re-anchors it to the whole document and
+   * parks the panel far above the reader — which the page then papers over by
+   * scrolling. Measuring the overlay catches that at the cause.
+   */
+  const overlayBox = await page.locator('.detail-modal-overlay').evaluate((overlay) => {
+    const box = overlay.getBoundingClientRect()
+    return { top: Math.round(box.top), left: Math.round(box.left), height: Math.round(box.height) }
+  })
+  expect(overlayBox).toEqual({ top: 0, left: 0, height: page.viewportSize()!.height })
+  await expect(meddoseDialog).toBeInViewport({ ratio: 0.9 })
+  const scrollWithDialogOpen = await page.evaluate(() => window.scrollY)
+  // Opening must not move the page behind the dialog either.
+  expect(scrollWithDialogOpen).toBe(scrollBeforeDialog)
+
+  // Header, exactly the fields every other work dialog prints.
+  await expect(meddoseDialog.getByRole('heading', { name: 'MedDose', exact: true })).toBeVisible()
+  await expect(meddoseDialog).toContainText('Automation')
+  await expect(meddoseDialog).toContainText('Personal Project')
+  await expect(meddoseDialog).toContainText('Prototype')
+  await expect(meddoseDialog).toContainText('watchOS Clinical Calculation Prototype · 2026')
+  await expect(meddoseDialog).toContainText('臨時薬は開始日と朝・昼・夕・就')
+  await expect(meddoseDialog).toContainText('Apple Watch上で処方内容と開始条件を選ぶだけで')
+  await expect(meddoseDialog).toContainText('Apple Watch Series 11 の実機へXcodeからインストール')
+  await expect(meddoseDialog).toContainText('医療判断・処方決定・投薬指示を行うアプリではありません')
+  await expect(meddoseDialog).toContainText('Swift · SwiftUI · watchOS · Xcode · Git · GitHub')
+  await expect(meddoseDialog.getByRole('link', { name: /View Source on GitHub/ })).toHaveAttribute(
+    'href',
+    'https://github.com/aicmode/MedDose',
+  )
+  await expect(meddoseDialog.getByRole('link', { name: /Open Site|Live Demo|App Store/ })).toHaveCount(0)
+
+  /*
+   * Hero first, then the five captures in operation order — the hero is the
+   * frame every dialog opens with, so the gallery adds to the shared layout
+   * rather than standing in for part of it.
+   */
+  const dialogImages = meddoseDialog.locator('img')
+  await expect(dialogImages).toHaveCount(6)
+  await expect(dialogImages.first()).toHaveAttribute('src', /meddose(%2F|\/)01-home\.png/)
+  const dialogFlow = await meddoseDialog.locator('ol li').evaluateAll((items) =>
+    items.map((item) => {
+      const frame = item.querySelector<HTMLElement>('div')!
+      const image = item.querySelector<HTMLImageElement>('img')!
+      const box = frame.getBoundingClientRect()
+      return {
+        src: image.getAttribute('src') ?? '',
+        objectFit: getComputedStyle(image).objectFit,
+        ratio: box.width / box.height,
+      }
+    }),
+  )
+  expect(dialogFlow).toHaveLength(5)
+  dialogFlow.forEach((frame, index) => {
+    expect(frame.src).toContain(
+      ['01-home', '02-select-time', '03-start-date', '04-result-top', '05-result-bottom'][index],
+    )
+    // The watch is portrait: its real 374 × 446 ratio, never stretched.
+    expect(frame.objectFit).toBe('contain')
+    expect(frame.ratio).toBeCloseTo(374 / 446, 2)
+  })
+  await expect
+    .poll(() => dialogImages.last().evaluate((image) => (image as HTMLImageElement).naturalWidth))
+    .toBeGreaterThan(0)
+
+  /*
+   * Same dialog component as every other card, so the panel it renders is the
+   * same panel — measured against AI Prompt Manager's rather than described.
+   */
+  const panelOf = (dialog: typeof meddoseDialog) =>
+    dialog.evaluate((panel) => ({
+      className: panel.className,
+      width: Math.round(panel.getBoundingClientRect().width),
+      background: getComputedStyle(panel).backgroundColor,
+      border: `${getComputedStyle(panel).borderWidth} ${getComputedStyle(panel).borderColor}`,
+    }))
+  const meddosePanel = await panelOf(meddoseDialog)
+  await meddoseDialog.getByRole('button', { name: '閉じる' }).click()
+  await expect(meddoseDialog).toBeHidden()
+  // Closing leaves the grid exactly where it was.
+  expect(await page.evaluate(() => window.scrollY)).toBe(scrollWithDialogOpen)
+
+  const apmCard = page.locator('#works article', {
+    has: page.getByRole('heading', { name: 'AI Prompt Manager', exact: true }),
+  })
+  await apmCard.getByRole('button', { name: /Details/ }).click()
+  const apmDialog = page.getByRole('dialog', { name: 'AI Prompt Manager' })
+  await expect(apmDialog).toBeVisible()
+  expect(meddosePanel).toEqual(await panelOf(apmDialog))
+  await page.keyboard.press('Escape')
+  await expect(apmDialog).toBeHidden()
+
   const archive = page.locator('#archive')
   await archive.locator('.works-tabs button', { hasText: /^Web Applications/ }).click()
   await expect(archive.locator('article')).toHaveCount(6)
@@ -126,6 +273,126 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
 
   expect(consoleErrors).toEqual([])
   expect(pageErrors).toEqual([])
+})
+
+/**
+ * The MedDose detail page.
+ *
+ * Two things are being protected here. One is completeness: the seven sections
+ * a visitor was promised, the five captures in operation order, and the GitHub
+ * link. The other is restraint — nothing on this page may claim a store
+ * listing, a workplace rollout, or any other thing that has not happened.
+ */
+test('MedDose detail page across desktop, tablet, and mobile', async ({ page, request }) => {
+  test.setTimeout(120_000)
+
+  const consoleErrors: string[] = []
+  const pageErrors: string[] = []
+  const errorResponses: string[] = []
+  page.on('console', (message) => {
+    if (message.type() === 'error') consoleErrors.push(message.text())
+  })
+  page.on('pageerror', (error) => pageErrors.push(error.message))
+  page.on('response', (response) => {
+    if (response.status() >= 400) errorResponses.push(`${response.status()} ${response.url()}`)
+  })
+
+  const expectedOrder = ['01-home', '02-select-time', '03-start-date', '04-result-top', '05-result-bottom']
+
+  for (const viewport of [
+    { width: 1440, height: 900 },
+    { width: 1024, height: 768 },
+    { width: 768, height: 1024 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await page.goto('http://localhost:3000/works/meddose', { waitUntil: 'networkidle' })
+
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('MedDose')
+    await expect(page.locator('h1')).toHaveCount(1)
+
+    // Every required section, by its Japanese label.
+    for (const section of ['操作フロー', '課題', '解決策', '主な機能', '担当範囲', '使用技術', '成果', '注意事項']) {
+      await expect(page.locator('main')).toContainText(section)
+    }
+
+    await expect(page.locator('main')).toContainText('Prototype')
+    await expect(page.locator('main')).toContainText('Apple Watch 実機動作確認済み')
+    await expect(page.locator('main')).toContainText('Apple Watch Series 11 の実機')
+    await expect(page.locator('main')).toContainText('医療判断・処方決定・投薬指示を行うアプリではありません')
+    await expect(page.locator('main')).toContainText('処方箋、電子カルテ、医師の指示を必ず確認')
+
+    // Claims that would be false.
+    for (const forbidden of ['App Store公開済み', '職場導入済み', '導入実績', 'ダウンロード数']) {
+      await expect(page.locator('main')).not.toContainText(forbidden)
+    }
+    await expect(page.getByRole('link', { name: /App Store|Live Demo|Open Site|Open Demo/ })).toHaveCount(0)
+
+    // GitHub, reachable from the page, opening the right repository safely.
+    const githubLinks = page.getByRole('link', { name: /GitHub/ })
+    expect(await githubLinks.count()).toBeGreaterThan(0)
+    for (let index = 0; index < (await githubLinks.count()); index += 1) {
+      const link = githubLinks.nth(index)
+      await expect(link).toHaveAttribute('href', 'https://github.com/aicmode/MedDose')
+      await expect(link).toHaveAttribute('target', '_blank')
+      await expect(link).toHaveAttribute('rel', /noopener/)
+      await expect(link).toHaveAttribute('rel', /noreferrer/)
+    }
+
+    // Five captures, in operation order, at the watch's real 374 × 446 ratio.
+    const frames = page.locator('main ol li')
+    await expect(frames).toHaveCount(5)
+    await frames.first().scrollIntoViewIfNeeded()
+    await expect
+      .poll(() =>
+        frames.last().locator('img').evaluate((image) => (image as HTMLImageElement).naturalWidth),
+      )
+      .toBeGreaterThan(0)
+
+    const flow = await frames.evaluateAll((items) =>
+      items.map((item) => {
+        const frame = item.querySelector<HTMLElement>('div')!
+        const image = item.querySelector<HTMLImageElement>('img')!
+        const box = frame.getBoundingClientRect()
+        return {
+          src: image.getAttribute('src') ?? '',
+          alt: image.alt,
+          caption: item.querySelector('p')?.textContent ?? '',
+          ratio: box.width / box.height,
+          objectFit: getComputedStyle(image).objectFit,
+          loaded: image.complete && image.naturalWidth > 0,
+          right: box.right,
+        }
+      }),
+    )
+    flow.forEach((frame, index) => {
+      expect(frame.src).toContain(expectedOrder[index])
+      expect(frame.alt.length).toBeGreaterThan(0)
+      expect(frame.caption.length).toBeGreaterThan(0)
+      expect(frame.objectFit).toBe('contain')
+      expect(frame.ratio).toBeCloseTo(374 / 446, 2)
+      expect(frame.loaded).toBe(true)
+      expect(frame.right).toBeLessThanOrEqual(viewport.width + 1)
+    })
+
+    const doc = await page.evaluate(() => ({
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth,
+    }))
+    expect(doc.scrollWidth).toBeLessThanOrEqual(doc.clientWidth)
+
+    // Back to the works grid, in-site.
+    const back = page.getByRole('link', { name: /Back to Works/ }).first()
+    await expect(back).toHaveAttribute('href', '/#works')
+  }
+
+  // The page is a real, crawlable route rather than a client-side redirect.
+  const response = await request.get('http://localhost:3000/works/meddose')
+  expect(response.status()).toBe(200)
+
+  expect(consoleErrors).toEqual([])
+  expect(pageErrors).toEqual([])
+  expect(errorResponses).toEqual([])
 })
 
 test('MediChart Lite card stays contained across desktop, tablet, and mobile', async ({ page }) => {
@@ -272,7 +539,7 @@ for (const viewport of viewports) {
 
     const archive = page.locator('#archive')
     const archiveCards = archive.locator('article')
-    const expandButton = page.getByRole('button', { name: 'VIEW ALL 27 WORKS' })
+    const expandButton = page.getByRole('button', { name: 'VIEW ALL 28 WORKS' })
 
     await expect(expandButton).toHaveAttribute('aria-expanded', 'false')
     await expect(expandButton).toHaveAttribute('aria-controls', 'works-archive-projects')
@@ -286,7 +553,7 @@ for (const viewport of viewports) {
 
     await expandButton.click()
     await expect(page.getByRole('button', { name: 'SHOW LESS' }).first()).toHaveAttribute('aria-expanded', 'true')
-    await expect(archiveCards).toHaveCount(27)
+    await expect(archiveCards).toHaveCount(28)
 
     const expandedHeight = await page.evaluate(() => document.documentElement.scrollHeight)
     expect(expandedHeight).toBeGreaterThan(initialHeight)
@@ -345,7 +612,7 @@ for (const viewport of viewports) {
     }
 
     await categoryButtons.first().click()
-    await expect(archiveCards).toHaveCount(27)
+    await expect(archiveCards).toHaveCount(28)
 
     const pageWidth = await page.evaluate(() => ({
       scrollWidth: document.documentElement.scrollWidth,
@@ -360,7 +627,7 @@ for (const viewport of viewports) {
 
     await page.reload({ waitUntil: 'networkidle' })
     await expect(page.locator('#archive article')).toHaveCount(0)
-    await expect(page.getByRole('button', { name: 'VIEW ALL 27 WORKS' })).toHaveAttribute('aria-expanded', 'false')
+    await expect(page.getByRole('button', { name: 'VIEW ALL 28 WORKS' })).toHaveAttribute('aria-expanded', 'false')
 
     expect(consoleErrors).toEqual([])
     expect(failedRequests).toEqual([])
@@ -370,19 +637,20 @@ for (const viewport of viewports) {
 
 /**
  * Counting cards in the DOM is not enough: the archive regressed once with all
- * 27 articles mounted but left at `opacity: 0` by a scroll-triggered reveal,
+ * 28 articles mounted but left at `opacity: 0` by a scroll-triggered reveal,
  * which reads to a visitor as an empty archive. These assertions are about what
  * is actually on screen, without scrolling first.
  */
 const EXPECTED_CATEGORY_COUNTS = [
   ['AI Systems', 1],
+  ['Automation', 1],
   ['Web Applications', 6],
   ['Websites', 4],
   ['Landing Pages', 11],
   ['EC', 5],
 ] as const
 
-const ARCHIVE_TOTAL = 27
+const ARCHIVE_TOTAL = 28
 
 for (const viewport of [
   { width: 390, height: 844 },
@@ -419,7 +687,7 @@ for (const viewport of [
           }).length,
       )
 
-    const expandButton = page.getByRole('button', { name: 'VIEW ALL 27 WORKS' })
+    const expandButton = page.getByRole('button', { name: 'VIEW ALL 28 WORKS' })
     const showLessButton = page.getByRole('button', { name: 'SHOW LESS' }).first()
     const tab = (name: string) =>
       archive.locator('.works-tabs button', { hasText: new RegExp(`^${name}`) }).first()
@@ -440,7 +708,7 @@ for (const viewport of [
       await expect(showLessButton).toHaveAttribute('aria-expanded', 'true')
     }
 
-    // Returning to All from a category must restore all 27, still on screen.
+    // Returning to All from a category must restore all 28, still on screen.
     await tab('All').click()
     await expect(cards).toHaveCount(ARCHIVE_TOTAL)
     await expect.poll(shownCards).toBe(ARCHIVE_TOTAL)

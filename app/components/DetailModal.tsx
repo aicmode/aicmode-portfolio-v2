@@ -41,13 +41,30 @@ export default function DetailModal({
     if (!open) return
     restoreFocusRef.current = document.activeElement as HTMLElement | null
     const panel = panelRef.current
-    if (panel) panel.focus()
+    /*
+     * `preventScroll`, both here and on the way out. `overflow: hidden` stops
+     * the user from scrolling the page but not the browser: moving focus into
+     * a fixed overlay still scrolls the document to "reveal" it, and with
+     * `scroll-behavior: smooth` on <html> that reads as the page gliding to the
+     * top behind the dialog — and closing then leaves the visitor somewhere
+     * they never scrolled to. Focus still moves; only the scrolling is dropped,
+     * which is what keeps the grid exactly where it was.
+     */
+    if (panel) panel.focus({ preventScroll: true })
 
+    /*
+     * Locking the page also means putting it back. Releasing `overflow` drops
+     * the viewport's scroll offset, so the position is captured on open and
+     * written back on close — instantly, because <html> scrolls smoothly and an
+     * animated jump on close is exactly what this is here to avoid.
+     */
+    const restoreScrollY = window.scrollY
     const { overflow } = document.body.style
     document.body.style.overflow = 'hidden'
     return () => {
       document.body.style.overflow = overflow
-      restoreFocusRef.current?.focus?.()
+      window.scrollTo({ top: restoreScrollY, behavior: 'instant' })
+      restoreFocusRef.current?.focus?.({ preventScroll: true })
     }
   }, [open])
 

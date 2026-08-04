@@ -24,6 +24,13 @@ export type ProjectStatus =
   | 'deployment-required'
   /** Runs locally / needs its own API keys; only the source is public. */
   | 'source-only'
+  /**
+   * A working build that runs on real hardware but is not distributed: no store
+   * listing, no hosted demo. Kept separate from `source-only` so a device app
+   * that has actually been installed and used is not read as untested code, and
+   * separate from `released` so it can never be mistaken for a shipped product.
+   */
+  | 'prototype'
 
 /**
  * How the work came about. Deliberately has no "Client Project" member: every
@@ -63,6 +70,7 @@ export const STATUS_LABEL: Record<ProjectStatus, string> = {
   'temporary-unavailable': 'Demo Temporarily Unavailable',
   'deployment-required': 'Deployment Required',
   'source-only': 'Source Code Available',
+  prototype: 'Prototype',
 }
 
 /**
@@ -77,11 +85,30 @@ export const STATUS_CTA: Record<ProjectStatus, string> = {
   'temporary-unavailable': 'View Source',
   'deployment-required': 'View Source',
   'source-only': 'View Source',
+  prototype: 'View Source',
 }
 
 /** True when the status means there is something live to open. */
 export function hasLiveDemo(status: ProjectStatus) {
   return status === 'released' || status === 'training'
+}
+
+/**
+ * One capture in a project's screen-flow gallery.
+ *
+ * `width` / `height` are the file's real pixel size and are required, not
+ * decorative: the frame derives its aspect ratio from them, so a capture from a
+ * device with its own proportions (a watch, a phone) is never stretched or
+ * cropped to fit a ratio the layout happens to prefer.
+ */
+export type GalleryImage = {
+  src: string
+  /** Alt text — describes what the screen shows, not that it is a screenshot. */
+  alt: string
+  /** Caption printed under the frame, in the site's language. */
+  caption: string
+  width: number
+  height: number
 }
 
 /** A portfolio piece in Selected Works / Works Archive. */
@@ -101,11 +128,18 @@ export type Project = {
   features: readonly string[]
   /** Optional safety boundary for demos in regulated or sensitive domains. */
   safety?: string
+  /**
+   * What was actually verified — never a projected or quantified business
+   * result, which nothing here has earned the right to claim.
+   */
+  outcome?: readonly string[]
   /** Work personally completed for this project. */
   role?: readonly string[]
   group: Category
   projectType: ProjectType
   status: ProjectStatus
+  /** Shown beside the status when the plain label leaves out something material. */
+  statusNote?: string
   stack: readonly string[]
   tags?: readonly string[]
   /** Design label kept from the original cards (palette / build notes). */
@@ -115,6 +149,16 @@ export type Project = {
   image: string
   imageAlt?: string
   imagePosition?: string
+  /**
+   * How the poster image sits in the shared 16/10 frame. Cards are one size for
+   * everything, so a capture that is not landscape gets `contain` and keeps its
+   * own proportions inside that frame rather than being cropped to fill it.
+   */
+  imageFit?: 'cover' | 'contain'
+  /** Ordered screen flow shown in the detail dialog instead of the single hero. */
+  gallery?: readonly GalleryImage[]
+  /** Intro line above the gallery, e.g. where the captures were taken. */
+  galleryNote?: string
   liveUrl?: string
   githubUrl?: string
   /** Optional primary-card CTA copy when the default status label is too generic. */

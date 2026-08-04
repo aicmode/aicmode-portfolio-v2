@@ -8,8 +8,11 @@ import { projects, selectedProjects } from '../data/projects'
 import { caseStudies } from '../data/caseStudies'
 
 /**
- * The curated first read: eight pieces, ordered so an AI / web-app client sees
- * relevant work immediately. The full set stays available in Works Archive.
+ * The curated first read: every `featured` piece, ordered so an AI / web-app
+ * client sees relevant work immediately. The count is read from the data rather
+ * than written into the copy, so featuring one more piece can never leave the
+ * sentence claiming a number the grid does not show. The full set stays
+ * available in Works Archive.
  */
 export default function SelectedWorks() {
   const [openId, setOpenId] = useState<string | null>(null)
@@ -39,7 +42,8 @@ export default function SelectedWorks() {
               </p>
             </div>
             <p className="max-w-xl text-sm leading-8 text-white/58 lg:text-right">
-              Webアプリ、API連携、医療・ブランドサイトから、まず見ていただきたい8件を掲載しています。
+              Webアプリ、業務効率化ツール、API連携、医療・ブランドサイトから、まず見ていただきたい
+              {selectedProjects.length}件を掲載しています。
               各カードには使用した技術スタックと公開状況を記載し、Detailsから課題・実装内容まで確認できます。
             </p>
           </div>
