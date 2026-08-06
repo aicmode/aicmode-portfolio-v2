@@ -1,4 +1,5 @@
 'use client'
+import type { CSSProperties, ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import AnimateIn from './AnimateIn'
 
@@ -10,15 +11,67 @@ function GitHubIcon() {
   )
 }
 
-const github = {
+function LineIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 flex-shrink-0" aria-hidden="true">
+      <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314" />
+    </svg>
+  )
+}
+
+/**
+ * One reachable contact route. Rendered by `ContactCard`, which is the single
+ * place the card treatment is defined — a new channel is added to
+ * `contactChannels` below and inherits the exact same size, spacing and hover
+ * motion as every other card.
+ */
+type ContactChannel = {
+  href: string
+  icon: ReactNode
+  /** Small uppercase eyebrow: the platform. */
+  label: string
+  /** The line a visitor actually reads first. */
+  title: string
+  desc: string
+  /** Brand colour, used for the icon and border on hover only. */
+  accent: string
+  glow: string
+  border: string
+  /** Full sentence for screen readers — the card opens a new tab. */
+  ariaLabel: string
+}
+
+/**
+ * The sales LINE official account (@862povmk). Placed first because it is the
+ * lowest-friction route: no GitHub account, and nothing written into a public
+ * issue thread.
+ */
+const lineOfficial: ContactChannel = {
+  href: 'https://line.me/R/ti/p/@862povmk',
+  icon: <LineIcon />,
+  label: 'LINE',
+  title: 'LINEでお問い合わせ',
+  desc: '案件のご相談・AIシステム開発・業務自動化・お見積もりなど、お気軽にお問い合わせください。',
+  accent: '#06C755',
+  glow: 'rgba(6,199,85,0.14)',
+  border: 'rgba(6,199,85,0.42)',
+  ariaLabel: 'LINE公式アカウントの友だち追加を新しいタブで開く',
+}
+
+const github: ContactChannel = {
   href: 'https://github.com/aicmode',
   icon: <GitHubIcon />,
   label: 'GitHub',
-  handle: 'aicmode',
+  title: 'aicmode',
   desc: 'Code · Web Applications · AI Systems',
+  accent: '#ffffff',
   glow: 'rgba(255,255,255,0.07)',
   border: 'rgba(255,255,255,0.12)',
+  ariaLabel: 'GitHubプロフィールを新しいタブで開く',
 }
+
+/** Display order. LINE first — see the note on `lineOfficial`. */
+const contactChannels: ContactChannel[] = [lineOfficial, github]
 
 const disciplines = [
   'AI Systems',
@@ -73,21 +126,23 @@ const inquiries = [
   },
 ]
 
-function SocialCard({
+function ContactCard({
   href,
   icon,
   label,
-  handle,
+  title,
   desc,
+  accent,
   glow,
   border,
-}: typeof github) {
+  ariaLabel,
+}: ContactChannel) {
   return (
     <motion.a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`${label}プロフィールを新しいタブで開く`}
+      aria-label={ariaLabel}
       className="group flex w-full flex-col items-center gap-4 px-6 py-9 text-center"
       style={{
         border: `1px solid rgba(255,255,255,0.07)`,
@@ -95,7 +150,10 @@ function SocialCard({
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
         textDecoration: 'none',
-      }}
+        // Read back by the icon and title on hover, so the brand colour lives
+        // in the data rather than in a class name per channel.
+        '--contact-accent': accent,
+      } as CSSProperties}
       whileHover={{
         borderColor: border,
         y: -6,
@@ -108,7 +166,10 @@ function SocialCard({
         className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full"
         style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', color: '#8a8a8a', transition: 'color 0.3s ease, border-color 0.3s ease' }}
       >
-        <span className="group-hover:text-white" style={{ color: 'inherit', transition: 'color 0.3s ease' }}>
+        <span
+          className="group-hover:text-[var(--contact-accent)]"
+          style={{ color: 'inherit', transition: 'color 0.3s ease' }}
+        >
           {icon}
         </span>
       </div>
@@ -117,9 +178,9 @@ function SocialCard({
           {label}
         </p>
         <p className="mb-1.5 text-sm font-semibold tracking-wide text-white">
-          {handle}
+          {title}
         </p>
-        <p className="text-[10px] tracking-wide" style={{ color: '#7a7a7a' }}>
+        <p className="text-[10px] leading-5 tracking-wide" style={{ color: '#7a7a7a' }}>
           {desc}
         </p>
       </div>
@@ -324,16 +385,16 @@ export default function Contact() {
             </div>
 
             {/*
-              GitHub is currently the only contact route that exists. No email
-              address or social handle is invented here — and because a GitHub
-              Issue is public, that has to be said out loud before someone pastes
-              business details into one.
+              GitHub and the LINE official account are the only two contact
+              routes that exist. No email address or social handle is invented
+              here — and because a GitHub Issue is public, that has to be said
+              out loud before someone pastes business details into one.
             */}
             <div className="mt-6 max-w-3xl border-l border-[rgba(212,175,55,0.32)] pl-4 text-[12.5px] leading-6 text-white/58">
               <p className="font-semibold text-white/76">GitHubをお持ちでない方へ</p>
               <p className="mt-2">
-                現在、正式な問い合わせフォームを準備中です。商工会議所などで直接ご案内した方には、
-                個別に非公開の連絡方法をお伝えします。
+                下のLINE公式アカウントからそのままご相談いただけます。やり取りは非公開のため、
+                詳しい内容もこちらでお伺いします。
               </p>
               <p className="mt-2">
                 GitHub Issueは公開されるため、社名、患者情報、個人情報、APIキー、社内資料などは記載しないでください。
@@ -351,10 +412,12 @@ export default function Contact() {
           </div>
         </AnimateIn>
 
-        {/* ── Social card ── */}
+        {/* ── Contact cards ── */}
         <AnimateIn delay={420}>
-          <div className="mx-auto w-full max-w-lg">
-            <SocialCard {...github} />
+          <div className="mx-auto flex w-full max-w-lg flex-col gap-4">
+            {contactChannels.map((channel) => (
+              <ContactCard key={channel.label} {...channel} />
+            ))}
           </div>
         </AnimateIn>
       </div>
