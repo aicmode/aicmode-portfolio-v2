@@ -101,6 +101,53 @@ function ProjectImage({
   )
 }
 
+/** Shared poster artwork so published and unpublished projects keep identical framing and hover behavior. */
+function WorkPosterVisual({
+  project,
+  containFit,
+  variant,
+  priority,
+  showFeaturedBadge,
+  isMediChart,
+}: {
+  project: Project
+  containFit: boolean
+  variant: Project['variant']
+  priority: boolean
+  showFeaturedBadge: boolean
+  isMediChart: boolean
+}) {
+  return (
+    <div className="editorial-poster-shell relative overflow-hidden">
+      {(showFeaturedBadge || isMediChart) && !project.wide ? (
+        <div className="pointer-events-none absolute left-4 top-4 z-10 border border-white/18 bg-black/70 px-3 py-2 text-[8px] font-bold uppercase leading-none tracking-[0.34em] text-white/58 backdrop-blur-md">
+          FEATURED
+        </div>
+      ) : null}
+
+      {isMediChart ? (
+        <div className="medichart-updated-badge pointer-events-none absolute right-4 top-4 z-10 px-3 py-2 text-[8px] font-bold uppercase leading-none tracking-[0.3em] backdrop-blur-md">
+          UPDATED
+        </div>
+      ) : null}
+
+      <ProjectImage
+        project={project}
+        sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 92vw"
+        className={[
+          'editorial-poster-image',
+          containFit ? 'poster-image-contain' : '',
+          variant === 'special' ? 'bakery-poster-image' : '',
+          variant === 'kissa' ? 'kissa-poster-image' : '',
+        ]
+          .filter(Boolean)
+          .join(' ')}
+        preload={priority}
+      />
+    </div>
+  )
+}
+
 /**
  * Scroll reveal is the right default for a grid that is on the page from the
  * start, but wrong for one the user just asked to see: content mounted below
@@ -147,13 +194,12 @@ export default function WorkPoster({
   const isMediChart = project.id === 'medichart-lite'
   const containFit = isContainFit(project)
   /*
-   * One rule for every card, with no per-project exceptions: the poster and the
-   * primary button both hand off to where the work itself lives — the
-   * deployment if there is one, the repository otherwise — in a new tab. The
-   * detail read stays inside the page, in the dialog `Details` opens.
+   * Published work hands off to its deployment or repository in a new tab.
+   * Work with neither stays visibly unpublished instead of inventing a target.
+   * The detail read always stays inside the page, in the shared dialog.
    */
   const primaryUrl = hasLiveDemo(project.status) ? project.liveUrl : project.githubUrl
-  const primaryLabel = project.ctaLabel ?? STATUS_CTA[project.status]
+  const primaryLabel = primaryUrl ? (project.ctaLabel ?? STATUS_CTA[project.status]) : 'Not Published'
   const externalLinkProps = { target: '_blank', rel: 'noopener noreferrer' } as const
   const tags = project.tags ?? []
   const revealProps = revealOnMount
@@ -182,42 +228,40 @@ export default function WorkPoster({
       animate="rest"
     >
       <div className="work-card-body">
-        <motion.a
-          href={primaryUrl}
-          {...externalLinkProps}
-          className="editorial-poster-link block"
-          variants={{ rest: { y: 0 }, hover: { y: -10 } }}
-          transition={{ duration: 1.15, ease }}
-        >
-          <div className="editorial-poster-shell relative overflow-hidden">
-            {(showFeaturedBadge || isMediChart) && !project.wide ? (
-              <div className="pointer-events-none absolute left-4 top-4 z-10 border border-white/18 bg-black/70 px-3 py-2 text-[8px] font-bold uppercase leading-none tracking-[0.34em] text-white/58 backdrop-blur-md">
-                FEATURED
-              </div>
-            ) : null}
-
-            {isMediChart ? (
-              <div className="medichart-updated-badge pointer-events-none absolute right-4 top-4 z-10 px-3 py-2 text-[8px] font-bold uppercase leading-none tracking-[0.3em] backdrop-blur-md">
-                UPDATED
-              </div>
-            ) : null}
-
-            <ProjectImage
+        {primaryUrl ? (
+          <motion.a
+            href={primaryUrl}
+            {...externalLinkProps}
+            className="editorial-poster-link block"
+            variants={{ rest: { y: 0 }, hover: { y: -10 } }}
+            transition={{ duration: 1.15, ease }}
+          >
+            <WorkPosterVisual
               project={project}
-              sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 92vw"
-              className={[
-                'editorial-poster-image',
-                containFit ? 'poster-image-contain' : '',
-                variant === 'special' ? 'bakery-poster-image' : '',
-                variant === 'kissa' ? 'kissa-poster-image' : '',
-              ]
-                .filter(Boolean)
-                .join(' ')}
-              preload={priority}
+              containFit={containFit}
+              variant={variant}
+              priority={priority}
+              showFeaturedBadge={showFeaturedBadge}
+              isMediChart={isMediChart}
             />
-          </div>
-          <span className="sr-only">{project.title} を新しいタブで開く</span>
-        </motion.a>
+            <span className="sr-only">{project.title} を新しいタブで開く</span>
+          </motion.a>
+        ) : (
+          <motion.div
+            className="editorial-poster-link block"
+            variants={{ rest: { y: 0 }, hover: { y: -10 } }}
+            transition={{ duration: 1.15, ease }}
+          >
+            <WorkPosterVisual
+              project={project}
+              containFit={containFit}
+              variant={variant}
+              priority={priority}
+              showFeaturedBadge={showFeaturedBadge}
+              isMediChart={isMediChart}
+            />
+          </motion.div>
+        )}
 
         <div className="editorial-work-meta flex gap-5 px-1 pt-5 sm:pt-6">
           <div className="min-w-0">
@@ -299,22 +343,33 @@ export default function WorkPoster({
         </div>
 
         <div className="work-card-actions flex flex-wrap items-center gap-2.5 px-1 pb-1 pt-5">
-          <motion.a
-            href={primaryUrl}
-            {...externalLinkProps}
-            className="editorial-work-button inline-flex h-11 items-center justify-center gap-2 border border-white/18 px-4 text-white/72"
-            variants={{
-              rest: { borderColor: 'rgba(255,255,255,0.18)', color: 'rgba(255,255,255,0.72)' },
-              hover: { borderColor: project.accent, color: project.accent },
-            }}
-            transition={{ duration: 0.9, ease }}
-          >
-            <span className="text-[8px] font-semibold tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">
-              {primaryLabel}
+          {primaryUrl ? (
+            <motion.a
+              href={primaryUrl}
+              {...externalLinkProps}
+              className="editorial-work-button inline-flex h-11 items-center justify-center gap-2 border border-white/18 px-4 text-white/72"
+              variants={{
+                rest: { borderColor: 'rgba(255,255,255,0.18)', color: 'rgba(255,255,255,0.72)' },
+                hover: { borderColor: project.accent, color: project.accent },
+              }}
+              transition={{ duration: 0.9, ease }}
+            >
+              <span className="text-[8px] font-semibold tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">
+                {primaryLabel}
+              </span>
+              <span className="sr-only">（{project.title} のページを新しいタブで開きます）</span>
+              <ArrowIcon />
+            </motion.a>
+          ) : (
+            <span
+              aria-disabled="true"
+              className="editorial-work-button inline-flex h-11 cursor-not-allowed items-center justify-center border border-white/10 px-4 text-white/38"
+            >
+              <span className="text-[8px] font-semibold uppercase tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">
+                {primaryLabel}
+              </span>
             </span>
-            <span className="sr-only">（{project.title} のページを新しいタブで開きます）</span>
-            <ArrowIcon />
-          </motion.a>
+          )}
 
           {project.showGithubOnCard && project.githubUrl ? (
             <a
@@ -437,7 +492,13 @@ export function WorkDetail({ project }: { project: Project }) {
       {project.gallery ? <ScreenFlow project={project} gallery={project.gallery} /> : null}
 
       <div className="space-y-5 p-6 sm:p-9">
-        <section>
+        {project.overview ? (
+          <section>
+            <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Overview</h4>
+            <p className="mt-3 text-[13px] leading-7 text-white/52">{project.overview}</p>
+          </section>
+        ) : null}
+        <section className={project.overview ? 'border-t border-white/[0.06] pt-5' : undefined}>
           <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Problem</h4>
           <p className="mt-3 text-[13px] leading-7 text-white/52">{project.problem}</p>
         </section>
@@ -446,7 +507,9 @@ export function WorkDetail({ project }: { project: Project }) {
           <p className="mt-3 text-[13px] leading-7 text-white/52">{project.solution}</p>
         </section>
         <section className="border-t border-white/[0.06] pt-5">
-          <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Implemented</h4>
+          <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">
+            {project.detailSections ? 'Main Features' : 'Implemented'}
+          </h4>
           <ul className="mt-3 space-y-2">
             {project.features.map((feature) => (
               <li key={feature} className="flex gap-3 text-[13px] leading-6 text-white/52">
@@ -456,6 +519,28 @@ export function WorkDetail({ project }: { project: Project }) {
             ))}
           </ul>
         </section>
+        {project.detailSections?.map((section) => (
+          <section key={section.title} className="border-t border-white/[0.06] pt-5">
+            <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">
+              {section.title}
+            </h4>
+            {section.body ? <p className="mt-3 text-[13px] leading-7 text-white/52">{section.body}</p> : null}
+            {section.items ? (
+              <ul className="mt-3 space-y-2">
+                {section.items.map((item) => (
+                  <li key={item} className="flex gap-3 text-[13px] leading-6 text-white/52">
+                    <span
+                      aria-hidden="true"
+                      className="mt-[9px] h-[3px] w-[3px] flex-shrink-0"
+                      style={{ background: project.accent, opacity: 0.7 }}
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </section>
+        ))}
         {/* Conditional, like Safety and Role below it: what a project actually
             verified, for the projects that have verified something. */}
         {project.outcome ? (

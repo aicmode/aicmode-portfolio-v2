@@ -111,6 +111,13 @@ export type GalleryImage = {
   height: number
 }
 
+/** An optional section appended to the shared work-detail dialog. */
+export type ProjectDetailSection = {
+  title: string
+  body?: string
+  items?: readonly string[]
+}
+
 /** A portfolio piece in Selected Works / Works Archive. */
 export type Project = {
   id: string
@@ -159,6 +166,10 @@ export type Project = {
   gallery?: readonly GalleryImage[]
   /** Intro line above the gallery, e.g. where the captures were taken. */
   galleryNote?: string
+  /** Optional introduction shown before Problem in the shared detail dialog. */
+  overview?: string
+  /** Project-specific explanations rendered with the dialog's shared section UI. */
+  detailSections?: readonly ProjectDetailSection[]
   liveUrl?: string
   githubUrl?: string
   /** Optional primary-card CTA copy when the default status label is too generic. */

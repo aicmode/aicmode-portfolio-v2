@@ -28,11 +28,11 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
   )
   await expect(page.locator('h1')).toHaveCount(1)
   await expect(page.locator('#top')).toContainText('業務の課題を整理し、')
-  await expect(page.locator('#top dl dd')).toHaveText(['06', '28'])
+  await expect(page.locator('#top dl dd')).toHaveText(['06', '29'])
   await expect(page.locator('#case-studies article')).toHaveCount(6)
   await expect(page.locator('#case-studies')).not.toContainText('MediChart Lite')
   await expect(page.locator('#healthcare')).toContainText('看護師として約9年間')
-  await expect(page.locator('#works')).toContainText('28 Portfolio Projects · 6 AI Case Studies')
+  await expect(page.locator('#works')).toContainText('29 Portfolio Projects · 6 AI Case Studies')
   await expect(page.locator('#works article')).toHaveCount(9)
 
   const servicesCta = page.getByRole('link', { name: '相談できることを見る' })
@@ -559,6 +559,116 @@ test('MediChart Lite card stays contained across desktop, tablet, and mobile', a
   expect(pageErrors).toEqual([])
 })
 
+test('Handover AI card, AI Systems filter, details, and image across responsive viewports', async ({ page }) => {
+  test.setTimeout(120_000)
+
+  const consoleErrors: string[] = []
+  const pageErrors: string[] = []
+  page.on('console', (message) => {
+    if (message.type() === 'error') consoleErrors.push(message.text())
+  })
+  page.on('pageerror', (error) => pageErrors.push(error.message))
+
+  for (const viewport of [
+    { width: 1440, height: 900 },
+    { width: 768, height: 1024 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await page.goto('http://localhost:3000/', { waitUntil: 'networkidle' })
+
+    const archive = page.locator('#archive')
+    const aiSystemsTab = archive.locator('.works-tabs button', { hasText: /^AI Systems/ })
+    await expect(aiSystemsTab.locator('span')).toHaveText('2')
+    await aiSystemsTab.click()
+    await expect(archive.locator('article')).toHaveCount(2)
+
+    const card = archive.locator('article', {
+      has: page.getByRole('heading', { name: 'Handover AI', exact: true }),
+    })
+    await expect(card).toHaveCount(1)
+    await expect(card).toContainText('AI NURSING HANDOVER ASSISTANT')
+    await expect(card).toContainText('AI Systems')
+    await expect(card).toContainText('Healthcare')
+    await expect(card).toContainText('AI Powered')
+    await expect(card).toContainText('Voice Input')
+    await expect(card).toContainText('Released')
+    await expect(card.getByRole('link', { name: /Open Site/ })).toHaveAttribute(
+      'href',
+      'https://handover-ai-chi.vercel.app',
+    )
+
+    const image = card.locator('img')
+    await expect(image).toHaveAttribute('src', /handover-ai\.webp/)
+    await expect
+      .poll(() => image.evaluate((element) => (element as HTMLImageElement).naturalWidth))
+      .toBeGreaterThan(0)
+
+    const layout = await card.evaluate((element) => {
+      const cardBox = element.getBoundingClientRect()
+      const shell = element.querySelector<HTMLElement>('.editorial-poster-shell')!
+      const poster = element.querySelector<HTMLImageElement>('img')!
+      return {
+        left: cardBox.left,
+        right: cardBox.right,
+        contained: element.scrollWidth <= element.clientWidth,
+        shellRatio: shell.clientWidth / shell.clientHeight,
+        objectFit: getComputedStyle(poster).objectFit,
+      }
+    })
+    expect(layout.left).toBeGreaterThanOrEqual(0)
+    expect(layout.right).toBeLessThanOrEqual(viewport.width)
+    expect(layout.contained).toBe(true)
+    expect(layout.objectFit).toBe('cover')
+    expect(Math.abs(layout.shellRatio - (viewport.width < 768 ? 16 / 10.5 : 16 / 10))).toBeLessThan(0.02)
+
+    const imageTransformBeforeHover = await image.evaluate((element) => getComputedStyle(element).transform)
+    await card.hover()
+    await expect
+      .poll(() => image.evaluate((element) => getComputedStyle(element).transform))
+      .not.toBe(imageTransformBeforeHover)
+
+    await card.getByRole('button', { name: /Details/ }).click()
+    const dialog = page.getByRole('dialog', { name: 'Handover AI' })
+    await expect(dialog).toBeVisible()
+    for (const heading of [
+      'Overview',
+      'Problem',
+      'Solution',
+      'Main Features',
+      'AI Workflow',
+      'Voice Input / Text-to-Speech',
+      'SBAR',
+      'Confirmation Priority',
+      'Human Review Flow',
+      'Safety Design',
+      'Technology',
+      'Prototype Notice',
+    ]) {
+      await expect(dialog.getByRole('heading', { name: heading, exact: true })).toBeVisible()
+    }
+    await expect(dialog).toContainText('実患者データは使用していません')
+    await expect(dialog).toContainText('AIは診断・治療・看護判断を行わず')
+    await expect(dialog).toContainText('Next.js · TypeScript · Web Speech API · AI API')
+    await expect(dialog.getByRole('link', { name: /Open Site/ })).toHaveAttribute(
+      'href',
+      'https://handover-ai-chi.vercel.app',
+    )
+    await expect(dialog.getByRole('link', { name: /View Source|GitHub/ })).toHaveCount(0)
+    await page.keyboard.press('Escape')
+    await expect(dialog).toBeHidden()
+
+    const pageWidth = await page.evaluate(() => ({
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth,
+    }))
+    expect(pageWidth.scrollWidth).toBeLessThanOrEqual(pageWidth.clientWidth)
+  }
+
+  expect(consoleErrors).toEqual([])
+  expect(pageErrors).toEqual([])
+})
+
 test('mobile menu reaches the requested sales sections', async ({ page }) => {
   test.setTimeout(120_000)
   await page.setViewportSize({ width: 390, height: 844 })
@@ -593,7 +703,10 @@ for (const viewport of viewports) {
       if (message.type() === 'error') consoleErrors.push(message.text())
     })
     page.on('requestfailed', (failedRequest) => {
-      failedRequests.push(`${failedRequest.url()} — ${failedRequest.failure()?.errorText ?? 'unknown error'}`)
+      const errorText = failedRequest.failure()?.errorText ?? 'unknown error'
+      const isCancelledLazyImage =
+        errorText === 'net::ERR_ABORTED' && failedRequest.url().includes('/_next/image?')
+      if (!isCancelledLazyImage) failedRequests.push(`${failedRequest.url()} — ${errorText}`)
     })
     page.on('response', (response) => {
       if (response.status() >= 400) errorResponses.push(`${response.status()} ${response.url()}`)
@@ -604,7 +717,7 @@ for (const viewport of viewports) {
 
     const archive = page.locator('#archive')
     const archiveCards = archive.locator('article')
-    const expandButton = page.getByRole('button', { name: 'VIEW ALL 28 WORKS' })
+    const expandButton = page.getByRole('button', { name: 'VIEW ALL 29 WORKS' })
 
     await expect(expandButton).toHaveAttribute('aria-expanded', 'false')
     await expect(expandButton).toHaveAttribute('aria-controls', 'works-archive-projects')
@@ -618,7 +731,7 @@ for (const viewport of viewports) {
 
     await expandButton.click()
     await expect(page.getByRole('button', { name: 'SHOW LESS' }).first()).toHaveAttribute('aria-expanded', 'true')
-    await expect(archiveCards).toHaveCount(28)
+    await expect(archiveCards).toHaveCount(29)
 
     const expandedHeight = await page.evaluate(() => document.documentElement.scrollHeight)
     expect(expandedHeight).toBeGreaterThan(initialHeight)
@@ -677,7 +790,7 @@ for (const viewport of viewports) {
     }
 
     await categoryButtons.first().click()
-    await expect(archiveCards).toHaveCount(28)
+    await expect(archiveCards).toHaveCount(29)
 
     const pageWidth = await page.evaluate(() => ({
       scrollWidth: document.documentElement.scrollWidth,
@@ -690,9 +803,9 @@ for (const viewport of viewports) {
     await expect(expandButton).toHaveAttribute('aria-expanded', 'false')
     await expect(expandButton).toBeFocused()
 
-    await page.reload({ waitUntil: 'networkidle' })
+    await page.reload({ waitUntil: 'load' })
     await expect(page.locator('#archive article')).toHaveCount(0)
-    await expect(page.getByRole('button', { name: 'VIEW ALL 28 WORKS' })).toHaveAttribute('aria-expanded', 'false')
+    await expect(page.getByRole('button', { name: 'VIEW ALL 29 WORKS' })).toHaveAttribute('aria-expanded', 'false')
 
     expect(consoleErrors).toEqual([])
     expect(failedRequests).toEqual([])
@@ -702,12 +815,12 @@ for (const viewport of viewports) {
 
 /**
  * Counting cards in the DOM is not enough: the archive regressed once with all
- * 28 articles mounted but left at `opacity: 0` by a scroll-triggered reveal,
+ * 29 articles mounted but left at `opacity: 0` by a scroll-triggered reveal,
  * which reads to a visitor as an empty archive. These assertions are about what
  * is actually on screen, without scrolling first.
  */
 const EXPECTED_CATEGORY_COUNTS = [
-  ['AI Systems', 1],
+  ['AI Systems', 2],
   ['Automation', 1],
   ['Web Applications', 6],
   ['Websites', 4],
@@ -715,7 +828,7 @@ const EXPECTED_CATEGORY_COUNTS = [
   ['EC', 5],
 ] as const
 
-const ARCHIVE_TOTAL = 28
+const ARCHIVE_TOTAL = 29
 
 for (const viewport of [
   { width: 390, height: 844 },
@@ -752,7 +865,7 @@ for (const viewport of [
           }).length,
       )
 
-    const expandButton = page.getByRole('button', { name: 'VIEW ALL 28 WORKS' })
+    const expandButton = page.getByRole('button', { name: 'VIEW ALL 29 WORKS' })
     const showLessButton = page.getByRole('button', { name: 'SHOW LESS' }).first()
     const tab = (name: string) =>
       archive.locator('.works-tabs button', { hasText: new RegExp(`^${name}`) }).first()
@@ -773,7 +886,7 @@ for (const viewport of [
       await expect(showLessButton).toHaveAttribute('aria-expanded', 'true')
     }
 
-    // Returning to All from a category must restore all 28, still on screen.
+    // Returning to All from a category must restore all 29, still on screen.
     await tab('All').click()
     await expect(cards).toHaveCount(ARCHIVE_TOTAL)
     await expect.poll(shownCards).toBe(ARCHIVE_TOTAL)
