@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import AnimateIn from './AnimateIn'
 
@@ -22,12 +23,20 @@ export default function HomeAbout() {
         </AnimateIn>
 
         <AnimateIn delay={120}>
-          <div className="mt-8 grid gap-6 border border-white/[0.08] bg-[#090909] p-5 sm:grid-cols-[9rem_1fr] sm:p-7 md:grid-cols-[11rem_1fr_auto] md:items-center">
-            <div
-              aria-hidden="true"
-              className="min-h-32 border border-dashed border-white/10 bg-gradient-to-br from-white/[0.025] to-transparent sm:min-h-40"
-            />
+          <div className="mt-8 grid gap-6 border border-white/[0.08] bg-[#090909] p-5 sm:grid-cols-[11rem_minmax(0,1fr)] sm:p-7 md:grid-cols-[14rem_minmax(0,1fr)] md:items-center lg:grid-cols-[14rem_minmax(0,1fr)_auto]">
+            <div className="relative aspect-[16/9] min-h-32 overflow-hidden border border-white/10 sm:aspect-auto sm:min-h-48">
+              <Image
+                src="/images/profile/profile-aicmode.jpg"
+                alt="AICMODEのプロフィール写真"
+                fill
+                sizes="(max-width: 639px) calc(100vw - 80px), (max-width: 767px) 11rem, 14rem"
+                className="object-cover object-[center_38%] sm:object-center"
+              />
+            </div>
             <div className="space-y-3">
+              <p className="text-[17px] font-semibold leading-7 tracking-[0.04em] text-white/90">
+                幸野 魁飛
+              </p>
               <p className="text-[15px] leading-8 text-white/72">
                 看護師として約9年間勤務した経験を活かし、仕事の困りごとを整理して、AIやWebアプリで解決します。
               </p>
@@ -37,7 +46,7 @@ export default function HomeAbout() {
             </div>
             <Link
               href="/about"
-              className="inline-flex min-h-12 w-full items-center justify-center border border-white/14 px-5 py-3 text-[12px] font-semibold tracking-[0.08em] text-white/68 transition hover:border-[rgba(212,175,55,0.45)] hover:text-white md:w-auto"
+              className="inline-flex min-h-12 w-full items-center justify-center border border-white/14 px-5 py-3 text-[12px] font-semibold tracking-[0.08em] text-white/68 transition hover:border-[rgba(212,175,55,0.45)] hover:text-white sm:col-start-2 md:w-auto lg:col-start-auto"
             >
               自己紹介を詳しく見る
             </Link>

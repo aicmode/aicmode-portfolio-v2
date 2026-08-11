@@ -1,9 +1,22 @@
-import { expect, test } from 'playwright/test'
+import { expect, test, type Page } from 'playwright/test'
 
 const BASE_URL = 'http://localhost:3000'
 
+function collectRuntimeErrors(page: Page) {
+  const errors: string[] = []
+
+  page.on('console', (message) => {
+    if (message.type() === 'error') errors.push(message.text())
+  })
+  page.on('pageerror', (error) => errors.push(error.message))
+
+  return errors
+}
+
 test.describe('short sales landing page', () => {
   test('shows only the six sales sections and keeps the primary routes clear', async ({ page }) => {
+    const runtimeErrors = collectRuntimeErrors(page)
+
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' })
 
@@ -56,7 +69,18 @@ test.describe('short sales landing page', () => {
     const profile = page.locator('#about')
     await expect(profile).toContainText('看護師として約9年')
     await expect(profile).toContainText('ご相談から制作、公開まで一人で担当します。')
-    await expect(profile.locator('img')).toHaveCount(0)
+    const profileImage = profile.getByAltText('AICMODEのプロフィール写真')
+    await expect(profileImage).toBeVisible()
+    await profileImage.scrollIntoViewIfNeeded()
+    await expect.poll(() => profileImage.evaluate((image: HTMLImageElement) => image.complete)).toBe(true)
+    const profileImageState = await profileImage.evaluate((image: HTMLImageElement) => ({
+      naturalWidth: image.naturalWidth,
+      naturalHeight: image.naturalHeight,
+      objectFit: getComputedStyle(image).objectFit,
+    }))
+    expect(profileImageState.naturalWidth).toBeGreaterThan(0)
+    expect(profileImageState.naturalHeight).toBeGreaterThan(0)
+    expect(profileImageState.objectFit).toBe('cover')
     await expect(profile.getByRole('link', { name: '自己紹介を詳しく見る' })).toHaveAttribute('href', '/about')
 
     await expect(page.locator('#contact')).toContainText('まずは困っていることを教えてください。')
@@ -91,9 +115,12 @@ test.describe('short sales landing page', () => {
     await page.evaluate(() => window.scrollTo(0, 0))
     await page.waitForTimeout(300)
     await page.screenshot({ path: '/tmp/aicmode-home-pc.png', fullPage: true })
+    expect(runtimeErrors).toEqual([])
   })
 
   test('fits a phone viewport without horizontal overflow', async ({ page }) => {
+    const runtimeErrors = collectRuntimeErrors(page)
+
     await page.setViewportSize({ width: 390, height: 844 })
     await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' })
 
@@ -112,6 +139,7 @@ test.describe('short sales landing page', () => {
     await expect(page.locator('#contact')).toBeInViewport()
     await page.waitForTimeout(1200)
     await page.screenshot({ path: '/tmp/aicmode-home-mobile.png', fullPage: true })
+    expect(runtimeErrors).toEqual([])
   })
 })
 
