@@ -28,7 +28,7 @@ export default function HomeHealthcare() {
         <AnimateIn delay={140}>
           <div>
             <p className="text-[15px] leading-8 text-white/68 md:text-[16px]">
-              看護師として約9年間働いた経験を活かし、医療・介護現場の仕事を理解したうえでご相談できます。
+              看護師として約9年間働いた経験を活かし、現場の仕事を理解したうえで、業務をラクにする仕組みを提案します。
             </p>
             <Link
               href="/healthcare"

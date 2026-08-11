@@ -1,8 +1,6 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { caseStudies } from '../data/caseStudies'
-import { projects } from '../data/projects'
 
 const cityLights = [
   { top: '24%', right: '14%', width: 2, height: 26, opacity: 0.28, delay: 0 },
@@ -233,10 +231,9 @@ export default function Hero() {
         }}
       />
 
-      {/* Content — the achievement card scrolls naturally so its text is never clipped.
-          Bottom padding below lg keeps the scroll indicator clear of the card footer. */}
+      {/* The first view stays focused on the offer and two next actions. */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-5 md:px-8 lg:px-12 pt-28 pb-32 lg:py-0">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center select-none">
+        <div className="max-w-3xl select-none">
 
           {/* Left: branding — subtle parallax + fade out on scroll */}
           <motion.div className="text-center lg:text-left" style={{ opacity: contentOpacity, y: contentY }}>
@@ -373,98 +370,6 @@ export default function Hero() {
                 </svg>
               </motion.a>
             </motion.div>
-          </motion.div>
-
-          {/* Right: Achievement card */}
-          <motion.div
-            className="flex justify-center lg:justify-end"
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.5, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {/*
-              Two real counts instead of one rounded "20+". Nothing here says
-              "delivered" or "clients": none of this portfolio was commissioned,
-              and the line under the numbers says exactly that.
-            */}
-            <div
-              className="relative flex w-full max-w-[26rem] flex-col items-center justify-center rounded-2xl px-8 py-10 sm:px-14 sm:py-14"
-              style={{
-                border: '1px solid rgba(212,175,55,0.18)',
-                background:
-                  'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,175,55,0.07) 0%, transparent 70%), rgba(255,255,255,0.018)',
-                backdropFilter: 'blur(12px)',
-                boxShadow:
-                  '0 0 90px rgba(212,175,55,0.07), 0 50px 130px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06)',
-                minWidth: '240px',
-              }}
-            >
-              <dl className="w-full">
-                <div className="flex items-baseline justify-center gap-4 sm:gap-5">
-                  <dd
-                    className="font-black leading-none text-white"
-                    style={{
-                      fontSize: 'clamp(3.4rem, 8vw, 5.6rem)',
-                      letterSpacing: '-0.045em',
-                      textShadow: '0 0 50px rgba(212,175,55,0.22), 0 0 100px rgba(212,175,55,0.10)',
-                    }}
-                  >
-                    {String(caseStudies.length).padStart(2, '0')}
-                  </dd>
-                  <dt className="text-left">
-                    <span
-                      className="block text-[11px] tracking-[0.14em]"
-                      style={{ color: 'rgba(212,175,55,0.78)' }}
-                    >
-                      AI・自動化
-                    </span>
-                    <span className="mt-1 block text-[14px] font-bold tracking-[0.02em] text-white sm:text-[16px]">
-                      のしくみ
-                    </span>
-                  </dt>
-                </div>
-
-                <div
-                  className="mx-auto my-5 sm:my-6"
-                  style={{ width: '40px', height: '1px', background: 'rgba(212,175,55,0.35)' }}
-                />
-
-                <div className="flex items-baseline justify-center gap-4 sm:gap-5">
-                  <dd
-                    className="font-black leading-none text-white"
-                    style={{
-                      fontSize: 'clamp(3.4rem, 8vw, 5.6rem)',
-                      letterSpacing: '-0.045em',
-                      textShadow: '0 0 50px rgba(212,175,55,0.16)',
-                    }}
-                  >
-                    {String(projects.length).padStart(2, '0')}
-                  </dd>
-                  <dt className="text-left">
-                    <span
-                      className="block text-[11px] tracking-[0.14em]"
-                      style={{ color: 'rgba(212,175,55,0.78)' }}
-                    >
-                      サイト・アプリ
-                    </span>
-                    <span className="mt-1 block text-[14px] font-bold tracking-[0.02em] text-white sm:text-[16px]">
-                      の制作実績
-                    </span>
-                  </dt>
-                </div>
-              </dl>
-
-              <div className="mt-7 flex items-center gap-2">
-                <div
-                  className="h-1.5 w-1.5 rounded-full animate-pulse-glow"
-                  style={{ background: 'rgba(212,175,55,0.55)' }}
-                  aria-hidden="true"
-                />
-                <p className="text-[11px] tracking-[0.08em]" style={{ color: 'rgba(255,255,255,0.56)' }}>
-                  すべて自分で企画・制作したものです
-                </p>
-              </div>
-            </div>
           </motion.div>
 
         </div>

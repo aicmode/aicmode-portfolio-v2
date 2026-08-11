@@ -1,13 +1,14 @@
 'use client'
+import Link from 'next/link'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 
 const links = [
   { label: 'できること', href: '#services' },
-  { label: '医療・介護', href: '#healthcare' },
   { label: '制作実績', href: '#works' },
-  { label: 'ご相談の流れ', href: '#process' },
+  { label: '医療・介護', href: '#healthcare' },
   { label: '自己紹介', href: '#about' },
+  { label: 'よくある質問', href: '/faq' },
   { label: 'お問い合わせ', href: '#contact' },
 ]
 
@@ -43,8 +44,9 @@ export default function Nav() {
    * `scroll-margin-top` so the heading clears the fixed nav.
    */
   const onNavigate = useCallback((event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    const target = document.querySelector(href)
     setMenuOpen(false)
+    if (!href.startsWith('#')) return
+    const target = document.querySelector(href)
     if (!target) return
     event.preventDefault()
     history.pushState(null, '', href)
@@ -88,22 +90,22 @@ export default function Nav() {
       }}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-12">
-        <a
+        <Link
           href="#top"
           className="text-sm font-bold tracking-[0.3em] text-white transition-opacity duration-300 hover:opacity-70"
         >
           AICMODE
-        </a>
+        </Link>
 
         <div className="hidden items-center gap-6 lg:flex xl:gap-8">
           {links.map(({ label, href }) => (
-            <a
+            <Link
               key={label}
               href={href}
               className="whitespace-nowrap text-[12px] tracking-[0.08em] text-zinc-400 transition-colors duration-300 hover:text-white"
             >
               {label}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -142,13 +144,13 @@ export default function Nav() {
             <ul className="px-6 pb-5 pt-2">
               {links.map(({ label, href }) => (
                 <li key={label}>
-                  <a
+                  <Link
                     href={href}
                     onClick={(event) => onNavigate(event, href)}
                     className="block border-b border-white/[0.05] py-3.5 text-[14px] tracking-[0.06em] text-zinc-400 transition-colors duration-300 hover:text-white"
                   >
                     {label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -3,7 +3,7 @@ import Hero from "./components/Hero";
 import HomeServices from "./components/HomeServices";
 import HomeHealthcare from "./components/HomeHealthcare";
 import FeaturedWorks from "./components/FeaturedWorks";
-import HomeProcess from "./components/HomeProcess";
+import HomeAbout from "./components/HomeAbout";
 import HomeContact from "./components/HomeContact";
 import Footer from "./components/Footer";
 import { services } from "./data/services";
@@ -171,7 +171,7 @@ export default function Home() {
         <HomeServices />
         <HomeHealthcare />
         <FeaturedWorks />
-        <HomeProcess />
+        <HomeAbout />
         <HomeContact />
       </main>
       <Footer />

@@ -16,7 +16,7 @@ test.describe('short sales landing page', () => {
       'services',
       'healthcare',
       'works',
-      'process',
+      'about',
       'contact',
     ])
 
@@ -26,7 +26,6 @@ test.describe('short sales landing page', () => {
     await expect(hero).toContainText('作業の自動化')
     await expect(hero).toContainText('AIを使ったツール')
     await expect(hero).toContainText('仕事用のWebアプリ')
-    await expect(hero.locator('dl dd')).toHaveText(['06', '29'])
 
     await expect(page.locator('#services article')).toHaveCount(3)
     await expect(page.locator('#services')).toContainText('面倒な仕事を自動化する')
@@ -38,19 +37,27 @@ test.describe('short sales landing page', () => {
     await expect(page.getByRole('link', { name: '医療・介護について詳しく見る' })).toHaveAttribute('href', '/healthcare')
 
     const featured = page.locator('#works article')
-    await expect(featured).toHaveCount(3)
-    await expect(featured).toContainText(['MediBrief', 'MediChart Lite', '連絡まとめ通知ツール'])
+    await expect(featured).toHaveCount(6)
+    for (const title of [
+      'MediBrief',
+      'MediChart Lite',
+      'Meeting Minutes Automation',
+      'Dify AI Chat',
+      'Smart Expense Tracker',
+      'MedDose',
+    ]) {
+      await expect(featured.getByRole('heading', { name: title, exact: true })).toBeVisible()
+    }
+    await expect(page.locator('#works').getByText(/自主制作/).first()).toBeVisible()
+    await expect(page.locator('#works').getByText(/学習のための制作/).first()).toBeVisible()
+    await expect(page.locator('#works').getByText(/試作品（実機で動作確認済み）/)).toBeVisible()
     await expect(page.getByRole('link', { name: 'すべての制作実績を見る（29件）' })).toHaveAttribute('href', '/works')
 
-    await expect(page.locator('#process article')).toHaveCount(4)
-    await expect(page.locator('#process')).toContainText('01相談')
-    await expect(page.locator('#process')).toContainText('02内容・費用を確認')
-    await expect(page.locator('#process')).toContainText('03制作')
-    await expect(page.locator('#process')).toContainText('04確認・公開')
     const profile = page.locator('#about')
     await expect(profile).toContainText('看護師として約9年')
+    await expect(profile).toContainText('ご相談から制作、公開まで一人で担当します。')
     await expect(profile.locator('img')).toHaveCount(0)
-    await expect(profile.getByRole('link', { name: '詳しい自己紹介を見る' })).toHaveAttribute('href', '/about')
+    await expect(profile.getByRole('link', { name: '自己紹介を詳しく見る' })).toHaveAttribute('href', '/about')
 
     await expect(page.locator('#contact')).toContainText('まずは困っていることを教えてください。')
     const line = page.getByRole('link', { name: /LINEで相談する/ })
@@ -70,10 +77,10 @@ test.describe('short sales landing page', () => {
     expect(navLabels.map((label) => label.trim())).toEqual([
       'AICMODE',
       'できること',
-      '医療・介護',
       '制作実績',
-      'ご相談の流れ',
+      '医療・介護',
       '自己紹介',
+      'よくある質問',
       'お問い合わせ',
     ])
 
@@ -97,7 +104,7 @@ test.describe('short sales landing page', () => {
     }))
     expect(dimensions.scrollWidth).toBe(dimensions.clientWidth)
     expect(dimensions.height).toBeLessThan(12000)
-    await expect(page.locator('#works article')).toHaveCount(3)
+    await expect(page.locator('#works article')).toHaveCount(6)
 
     await page.getByRole('button', { name: 'メニューを開く' }).click()
     await expect(page.getByRole('link', { name: 'お問い合わせ', exact: true })).toBeVisible()
@@ -147,6 +154,8 @@ test.describe('detail pages retain the removed information', () => {
 
   test('contact retains inquiry examples and checklist', async ({ page }) => {
     await page.goto(`${BASE_URL}/contact`)
+    await expect(page.locator('#process')).toContainText('ご相談から公開まで')
+    await expect(page.locator('#process h3')).toHaveCount(5)
     await expect(page.getByText('こんなご相談が多いです')).toBeVisible()
     await expect(page.getByText('お伝えいただきたいこと')).toBeVisible()
     await expect(page.getByRole('link', { name: /LINE公式アカウント/ })).toHaveAttribute(

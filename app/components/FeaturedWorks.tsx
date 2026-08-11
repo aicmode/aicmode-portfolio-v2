@@ -5,20 +5,46 @@ import Link from 'next/link'
 import AnimateIn from './AnimateIn'
 import { caseStudies } from '../data/caseStudies'
 import { projects } from '../data/projects'
+import {
+  PROJECT_TYPE_LABEL,
+  STATUS_LABEL,
+  type ProjectStatus,
+  type ProjectType,
+} from '../types/project'
 
 const medibrief = caseStudies.find((study) => study.id === 'medibrief-ai')!
 const medichart = projects.find((project) => project.id === 'medichart-lite')!
-const summaryTool = caseStudies.find((study) => study.id === 'slack-line-summary')!
+const meetingMinutes = caseStudies.find((study) => study.id === 'google-meet-minutes')!
+const difyChat = caseStudies.find((study) => study.id === 'dify-ai-chat')!
+const expenseTracker = caseStudies.find((study) => study.id === 'smart-expense-tracker')!
+const medDose = projects.find((project) => project.id === 'meddose')!
 
-const featuredWorks = [
+type FeaturedWork = {
+  id: string
+  title: string
+  label: string
+  description: string
+  accent: string
+  projectType: ProjectType
+  status: ProjectStatus
+  image?: string
+  imageAlt?: string
+  liveUrl?: string
+  githubUrl?: string
+  diagram?: readonly [string, string, string]
+}
+
+const featuredWorks: readonly FeaturedWork[] = [
   {
     id: medibrief.id,
     title: 'MediBrief',
     label: '医療 × AI',
-    description: medibrief.plainSummary,
+    description: '話したいことを、診察で伝えやすいメモに自動で整理します。',
     image: medibrief.screenshot,
     imageAlt: medibrief.screenshotAlt,
     accent: medibrief.accent,
+    projectType: medibrief.projectType,
+    status: medibrief.status,
     liveUrl: medibrief.liveUrl,
     githubUrl: medibrief.githubUrl,
   },
@@ -26,20 +52,63 @@ const featuredWorks = [
     id: medichart.id,
     title: medichart.title,
     label: '医療向けWebアプリ',
-    description: medichart.plainSummary,
+    description: '患者さんの情報や記録を、一つの画面で確認しやすくします。',
     image: medichart.image,
     imageAlt: medichart.imageAlt,
     accent: medichart.accent,
+    projectType: medichart.projectType,
+    status: medichart.status,
     liveUrl: medichart.liveUrl,
     githubUrl: medichart.githubUrl,
   },
   {
-    id: summaryTool.id,
-    title: summaryTool.title,
-    label: 'AI・自動化',
-    description: summaryTool.plainSummary,
-    accent: summaryTool.accent,
-    githubUrl: summaryTool.githubUrl,
+    id: meetingMinutes.id,
+    title: 'Meeting Minutes Automation',
+    label: '議事録の自動化',
+    description: '会議の録音から議事録を作り、共有先へ自動で保存します。',
+    accent: meetingMinutes.accent,
+    projectType: meetingMinutes.projectType,
+    status: meetingMinutes.status,
+    githubUrl: meetingMinutes.githubUrl,
+    diagram: ['録音', '議事録', '保存'],
+  },
+  {
+    id: difyChat.id,
+    title: 'Dify AI Chat',
+    label: '問い合わせ対応',
+    description: 'よくある質問に自動で答え、問い合わせ対応の負担を減らします。',
+    image: difyChat.screenshot,
+    imageAlt: difyChat.screenshotAlt,
+    accent: difyChat.accent,
+    projectType: difyChat.projectType,
+    status: difyChat.status,
+    liveUrl: difyChat.liveUrl,
+    githubUrl: difyChat.githubUrl,
+  },
+  {
+    id: expenseTracker.id,
+    title: 'Smart Expense Tracker',
+    label: '集計Webアプリ',
+    description: '支出を記録するだけで、合計やグラフを自動で表示します。',
+    image: expenseTracker.screenshot,
+    imageAlt: expenseTracker.screenshotAlt,
+    accent: expenseTracker.accent,
+    projectType: expenseTracker.projectType,
+    status: expenseTracker.status,
+    liveUrl: expenseTracker.liveUrl,
+    githubUrl: expenseTracker.githubUrl,
+  },
+  {
+    id: medDose.id,
+    title: medDose.title,
+    label: '医療 × 自動計算',
+    description: '薬をいつまで飲むのか、腕時計の上で自動計算します。',
+    image: medDose.image,
+    imageAlt: medDose.imageAlt,
+    accent: medDose.accent,
+    projectType: medDose.projectType,
+    status: medDose.status,
+    githubUrl: medDose.githubUrl,
   },
 ] as const
 
@@ -62,11 +131,11 @@ export default function FeaturedWorks() {
           </div>
         </AnimateIn>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {featuredWorks.map((work, index) => (
             <AnimateIn key={work.id} delay={100 + index * 80}>
               <article className="group flex h-full flex-col overflow-hidden border border-white/[0.09] bg-white/[0.018]">
-                {'image' in work && work.image ? (
+                {work.image ? (
                   <div className="relative aspect-[16/10] overflow-hidden border-b border-white/[0.08] bg-[#080808]">
                     <Image
                       src={work.image}
@@ -83,11 +152,11 @@ export default function FeaturedWorks() {
                     aria-hidden="true"
                   >
                     <div className="flex w-full items-center justify-center gap-3 text-center text-[11px] font-semibold tracking-[0.08em] text-white/60 sm:gap-5">
-                      <span className="border border-white/12 px-3 py-3">連絡</span>
+                      <span className="border border-white/12 px-3 py-3">{work.diagram?.[0]}</span>
                       <span className="text-white/25">→</span>
-                      <span className="border px-3 py-3" style={{ borderColor: `${work.accent}66`, color: work.accent }}>要約</span>
+                      <span className="border px-3 py-3" style={{ borderColor: `${work.accent}66`, color: work.accent }}>{work.diagram?.[1]}</span>
                       <span className="text-white/25">→</span>
-                      <span className="border border-white/12 px-3 py-3">通知</span>
+                      <span className="border border-white/12 px-3 py-3">{work.diagram?.[2]}</span>
                     </div>
                   </div>
                 )}
@@ -97,8 +166,11 @@ export default function FeaturedWorks() {
                   </p>
                   <h3 className="mt-3 text-xl font-semibold leading-7 text-white">{work.title}</h3>
                   <p className="mt-4 text-[14px] leading-7 text-white/60">{work.description}</p>
+                  <p className="mt-4 text-[10px] leading-5 tracking-[0.08em] text-white/38">
+                    {PROJECT_TYPE_LABEL[work.projectType]} ・ {STATUS_LABEL[work.status]}
+                  </p>
                   <div className="mt-auto flex flex-wrap gap-2 pt-6">
-                    {'liveUrl' in work && work.liveUrl ? (
+                    {work.liveUrl ? (
                       <a
                         href={work.liveUrl}
                         target="_blank"
@@ -108,14 +180,16 @@ export default function FeaturedWorks() {
                         実際に見る<span className="sr-only">（新しいタブで開きます）</span>
                       </a>
                     ) : null}
-                    <a
-                      href={work.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex min-h-11 items-center justify-center border border-white/10 px-4 text-[11px] font-semibold tracking-[0.06em] text-white/50 transition hover:border-white/28 hover:text-white"
-                    >
-                      GitHubで見る<span className="sr-only">（新しいタブで開きます）</span>
-                    </a>
+                    {work.githubUrl ? (
+                      <a
+                        href={work.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-11 items-center justify-center border border-white/10 px-4 text-[11px] font-semibold tracking-[0.06em] text-white/50 transition hover:border-white/28 hover:text-white"
+                      >
+                        GitHubで見る<span className="sr-only">（新しいタブで開きます）</span>
+                      </a>
+                    ) : null}
                   </div>
                 </div>
               </article>
