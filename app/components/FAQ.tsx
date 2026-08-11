@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import Link from 'next/link'
 import AnimateIn from './AnimateIn'
 import { faqs } from '../data/faqs'
 
@@ -200,8 +201,8 @@ export default function FAQ() {
             <p className="text-[14px] tracking-[0.06em]" style={{ color: '#8a8a8a' }}>
               ほかにも気になることがあれば、お気軽にどうぞ。
             </p>
-            <motion.a
-              href="#contact"
+            <Link
+              href="/#contact"
               className="inline-flex items-center justify-center border px-7 py-4 text-[13px] font-semibold tracking-[0.1em] text-[#080808]"
               style={{
                 borderColor: 'rgba(212,175,55,0.5)',
@@ -210,15 +211,9 @@ export default function FAQ() {
                 boxShadow:
                   '0 0 44px rgba(212,175,55,0.12), inset 0 1px 0 rgba(255,255,255,0.5)',
               }}
-              whileHover={{
-                y: -2,
-                boxShadow:
-                  '0 0 72px rgba(212,175,55,0.22), 0 0 110px rgba(109,40,217,0.10)',
-                transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
-              }}
             >
               お問い合わせ
-            </motion.a>
+            </Link>
           </div>
         </AnimateIn>
       </div>

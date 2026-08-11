@@ -5,10 +5,9 @@ import { AnimatePresence, motion } from 'framer-motion'
 const links = [
   { label: 'できること', href: '#services' },
   { label: '医療・介護', href: '#healthcare' },
-  { label: '制作実績', href: '#case-studies' },
+  { label: '制作実績', href: '#works' },
   { label: 'ご相談の流れ', href: '#process' },
   { label: '自己紹介', href: '#about' },
-  { label: 'よくある質問', href: '#faq' },
   { label: 'お問い合わせ', href: '#contact' },
 ]
 
@@ -152,15 +151,6 @@ export default function Nav() {
                   </a>
                 </li>
               ))}
-              <li>
-                <a
-                  href="#archive"
-                  onClick={(event) => onNavigate(event, '#archive')}
-                  className="block py-3.5 text-[14px] tracking-[0.06em] text-zinc-400 transition-colors duration-300 hover:text-white"
-                >
-                  すべての実績を見る
-                </a>
-              </li>
             </ul>
           </motion.div>
         ) : null}

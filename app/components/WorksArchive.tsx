@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useRef, useState } from 'react'
+import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 import AnimateIn from './AnimateIn'
 import DetailModal from './DetailModal'
@@ -17,9 +18,9 @@ const ARCHIVE_PROJECTS_ID = 'works-archive-projects'
  * the curated sections so the sales-critical work is not buried, while nothing
  * is removed from the portfolio.
  */
-export default function WorksArchive() {
+export default function WorksArchive({ defaultExpanded = false }: { defaultExpanded?: boolean }) {
   const [activeCategory, setActiveCategory] = useState<Filter>(ALL_FILTER)
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded)
   const [openId, setOpenId] = useState<string | null>(null)
   const archiveHeadingRef = useRef<HTMLDivElement>(null)
   const archiveToggleRef = useRef<HTMLButtonElement>(null)
@@ -191,12 +192,12 @@ export default function WorksArchive() {
                     <div className="h-px flex-1 bg-gradient-to-r from-white/[0.07] to-transparent" />
                     <span className="font-mono text-[9px] tracking-[0.3em] text-white/18">2026</span>
                   </div>
-                  <a
-                    href="#contact"
+                  <Link
+                    href="/#contact"
                     className="inline-flex w-full items-center justify-center border border-white/14 px-6 py-4 text-[12px] font-semibold tracking-[0.12em] text-white/70 transition duration-500 hover:border-[rgba(212,175,55,0.45)] hover:text-white hover:shadow-[0_0_44px_rgba(212,175,55,0.08)] sm:w-auto"
                   >
                     相談してみる
-                  </a>
+                  </Link>
                 </div>
               </AnimateIn>
             </>

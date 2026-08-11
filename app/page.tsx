@@ -1,18 +1,11 @@
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
-import CaseStudies from "./components/CaseStudies";
-import HealthcareAI from "./components/HealthcareAI";
-import SelectedWorks from "./components/SelectedWorks";
-import Services from "./components/Services";
-import About from "./components/About";
-import Process from "./components/Process";
-import Trust from "./components/Trust";
-import Skills from "./components/Skills";
-import FAQ from "./components/FAQ";
-import Contact from "./components/Contact";
-import WorksArchive from "./components/WorksArchive";
+import HomeServices from "./components/HomeServices";
+import HomeHealthcare from "./components/HomeHealthcare";
+import FeaturedWorks from "./components/FeaturedWorks";
+import HomeProcess from "./components/HomeProcess";
+import HomeContact from "./components/HomeContact";
 import Footer from "./components/Footer";
-import { faqs } from "./data/faqs";
 import { services } from "./data/services";
 import { caseStudies } from "./data/caseStudies";
 import { projects } from "./data/projects";
@@ -160,15 +153,6 @@ const jsonLd = {
         },
       })),
     },
-    {
-      "@type": "FAQPage",
-      "@id": `${SITE_URL}/#faq`,
-      mainEntity: faqs.map((faq) => ({
-        "@type": "Question",
-        name: faq.question,
-        acceptedAnswer: { "@type": "Answer", text: faq.answer },
-      })),
-    },
   ],
 };
 
@@ -182,26 +166,13 @@ export default function Home() {
         }}
       />
       <Nav />
-      {/*
-        Order answers the visitor's questions in the order they ask them: what
-        can I ask for (Services), does this person understand my field
-        (Healthcare), has it been done (case studies, then the web work), how
-        would it go (Process), who is this (About). The full archive sits after
-        Contact so it can't bury the sales-critical sections.
-      */}
       <main id="main">
         <Hero />
-        <Services />
-        <HealthcareAI />
-        <CaseStudies />
-        <SelectedWorks />
-        <Process />
-        <About />
-        <Trust />
-        <Skills />
-        <FAQ />
-        <Contact />
-        <WorksArchive />
+        <HomeServices />
+        <HomeHealthcare />
+        <FeaturedWorks />
+        <HomeProcess />
+        <HomeContact />
       </main>
       <Footer />
     </>

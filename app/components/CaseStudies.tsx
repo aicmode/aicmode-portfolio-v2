@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 import type { CSSProperties } from 'react'
 import { motion } from 'framer-motion'
@@ -264,12 +265,12 @@ function CaseStudyDetail({ study }: { study: CaseStudy }) {
                 <span className="sr-only">（新しいタブで開きます）</span>
               </a>
             ) : null}
-            <a
-              href="#contact"
+            <Link
+              href="/#contact"
               className="inline-flex items-center gap-2 border border-[rgba(212,175,55,0.4)] px-5 py-3 text-[11px] font-semibold tracking-[0.08em] text-[rgba(212,175,55,0.9)] transition-colors duration-500 hover:border-[rgba(212,175,55,0.7)] hover:text-white"
             >
               似た仕組みを相談する
-            </a>
+            </Link>
           </div>
         </section>
       </div>
@@ -324,12 +325,12 @@ export default function CaseStudies() {
             <p className="text-[13px] leading-7 text-white/58">
               「うちだとどうなる？」という段階で大丈夫です。今のやり方を教えていただければ、合う形をご提案します。
             </p>
-            <a
-              href="#contact"
+            <Link
+              href="/#contact"
               className="inline-flex w-full items-center justify-center border border-white/14 px-6 py-4 text-[12px] font-semibold tracking-[0.12em] text-white/70 transition duration-500 hover:border-[rgba(212,175,55,0.45)] hover:text-white sm:w-auto"
             >
               相談してみる
-            </a>
+            </Link>
           </div>
         </AnimateIn>
       </div>
