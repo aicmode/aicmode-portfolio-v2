@@ -4,24 +4,24 @@ import AnimateIn from './AnimateIn'
 
 const trustPoints = [
   {
-    title: 'Business First',
-    description: '作る機能より先に、目的・利用者・解決すべき課題を確認します。',
+    title: '目的から確認します',
+    description: '機能の話より先に、何のために、誰が使うのかを確かめます。',
   },
   {
-    title: 'Start Small',
-    description: '最初から大規模にせず、必要な機能に絞ったMVPから始めます。',
+    title: '小さく始めます',
+    description: 'はじめから大きく作らず、いちばん困っているところから作ります。',
   },
   {
-    title: 'Clear Limitations',
-    description: 'AIの精度、対応範囲、運用コスト、できないことも事前に共有します。',
+    title: 'できないことも言います',
+    description: 'AIが得意でないこと、費用がかかること、向いていないことも先にお伝えします。',
   },
   {
-    title: 'Tested Before Launch',
-    description: 'Type Check、Lint、Build、主要操作、レスポンシブ、Console Errorを確認してから公開します。',
+    title: '公開前に必ず確認します',
+    description: '主な操作、スマホでの見え方、表示の崩れがないかを確認してから公開します。',
   },
   {
-    title: 'Security Awareness',
-    description: 'APIキーは環境変数で管理し、個人情報や権限の扱いを要件定義時に確認します。',
+    title: '情報の扱いに気をつけます',
+    description: '大事な情報が外に出ない作りにし、個人情報の扱いは事前に相談して決めます。',
   },
 ] as const
 
@@ -32,18 +32,18 @@ export default function Trust() {
         <AnimateIn>
           <div className="mb-12 grid gap-6 md:grid-cols-[0.8fr_1.2fr] md:items-end">
             <div>
-              <p className="mb-4 text-[10px] uppercase tracking-[0.55em] text-zinc-400">How I Work</p>
-              <h2 className="text-[clamp(2.2rem,5.5vw,4.5rem)] font-black leading-none tracking-[-0.02em] text-white">
-                Built for
+              <p className="mb-4 text-[12px] tracking-[0.24em] text-zinc-400">大切にしていること</p>
+              <h2 className="text-[clamp(1.9rem,4.6vw,3.6rem)] font-black leading-[1.2] tracking-[-0.02em] text-white">
+                使い続けられる
                 <br />
                 <span style={{ color: 'transparent', WebkitTextStroke: '1px rgba(255,255,255,0.22)' }}>
-                  Real Operation.
+                  ものを作ります。
                 </span>
               </h2>
             </div>
-            <p className="max-w-xl text-sm leading-8 text-white/58 md:justify-self-end">
-              導入することより、現場で無理なく使い続けられることを重視します。
-              進め方、制約、確認項目を先に共有し、判断できる状態を保ちます。
+            <p className="max-w-xl text-[15px] leading-8 text-white/58 md:justify-self-end">
+              作って終わりではなく、現場で無理なく使い続けられることを大切にしています。
+              進め方や決めごとは、先にお伝えします。
             </p>
           </div>
         </AnimateIn>
@@ -52,10 +52,10 @@ export default function Trust() {
           {trustPoints.map((point, index) => (
             <AnimateIn key={point.title} delay={100 + index * 70}>
               <article className="h-full border-t border-white/[0.09] py-6">
-                <p className="text-[11px] font-semibold uppercase leading-5 tracking-[0.2em] text-white/80">
+                <p className="text-[15px] font-semibold leading-7 tracking-[0.02em] text-white/85">
                   {point.title}
                 </p>
-                <p className="mt-3 text-[13px] leading-7 text-white/58">{point.description}</p>
+                <p className="mt-3 text-[13.5px] leading-7 text-white/58">{point.description}</p>
               </article>
             </AnimateIn>
           ))}

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useState } from 'react'
 import type { CSSProperties } from 'react'
-import { STATUS_CTA, STATUS_LABEL, hasLiveDemo } from '../types/project'
+import { CATEGORY_LABEL, PROJECT_TYPE_LABEL, STATUS_CTA, STATUS_LABEL, hasLiveDemo } from '../types/project'
 import type { Project } from '../types/project'
 
 const ease = [0.13, 0.86, 0.18, 1] as const
@@ -88,10 +88,10 @@ function ProjectImage({
           className="absolute inset-0 z-[4] flex items-center justify-center bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.045),transparent_68%),#050505] px-6 text-center"
         >
           <div>
-            <span className="block text-[8px] font-semibold uppercase tracking-[0.34em] text-white/38">
-              Preview unavailable
+            <span className="block text-[10px] font-semibold tracking-[0.18em] text-white/38">
+              画像を読み込めませんでした
             </span>
-            <span className="mt-3 block text-[10px] font-semibold uppercase tracking-[0.2em] text-white/56">
+            <span className="mt-3 block text-[11px] font-semibold tracking-[0.12em] text-white/56">
               {project.title}
             </span>
           </div>
@@ -120,14 +120,14 @@ function WorkPosterVisual({
   return (
     <div className="editorial-poster-shell relative overflow-hidden">
       {(showFeaturedBadge || isMediChart) && !project.wide ? (
-        <div className="pointer-events-none absolute left-4 top-4 z-10 border border-white/18 bg-black/70 px-3 py-2 text-[8px] font-bold uppercase leading-none tracking-[0.34em] text-white/58 backdrop-blur-md">
-          FEATURED
+        <div className="pointer-events-none absolute left-4 top-4 z-10 border border-white/18 bg-black/70 px-3 py-2 text-[9px] font-bold leading-none tracking-[0.2em] text-white/58 backdrop-blur-md">
+          注目
         </div>
       ) : null}
 
       {isMediChart ? (
-        <div className="medichart-updated-badge pointer-events-none absolute right-4 top-4 z-10 px-3 py-2 text-[8px] font-bold uppercase leading-none tracking-[0.3em] backdrop-blur-md">
-          UPDATED
+        <div className="medichart-updated-badge pointer-events-none absolute right-4 top-4 z-10 px-3 py-2 text-[9px] font-bold leading-none tracking-[0.2em] backdrop-blur-md">
+          更新
         </div>
       ) : null}
 
@@ -185,12 +185,7 @@ export default function WorkPoster({
 }) {
   const variant = project.variant
   const typePrefix = variant ? VARIANT_TYPE_CLASS[variant] : undefined
-  /*
-   * MediChart Lite carries more meta than any other card (five tags, a longer
-   * stack line). The grid is `auto-rows-fr`, so whatever this card needs every
-   * card gets — the tag row is trimmed to the six that matter and kept to the
-   * same two rows as its neighbours.
-   */
+  /* Carries the "更新" badge; the card treatment is otherwise identical. */
   const isMediChart = project.id === 'medichart-lite'
   const containFit = isContainFit(project)
   /*
@@ -199,9 +194,8 @@ export default function WorkPoster({
    * The detail read always stays inside the page, in the shared dialog.
    */
   const primaryUrl = hasLiveDemo(project.status) ? project.liveUrl : project.githubUrl
-  const primaryLabel = primaryUrl ? (project.ctaLabel ?? STATUS_CTA[project.status]) : 'Not Published'
+  const primaryLabel = primaryUrl ? (project.ctaLabel ?? STATUS_CTA[project.status]) : '未公開'
   const externalLinkProps = { target: '_blank', rel: 'noopener noreferrer' } as const
-  const tags = project.tags ?? []
   const revealProps = revealOnMount
     ? { variants: MOUNT_REVEAL_VARIANTS, initial: 'hidden' }
     : {
@@ -263,12 +257,17 @@ export default function WorkPoster({
           </motion.div>
         )}
 
+        {/*
+          Plain Japanese first, and only what a non-technical visitor needs to
+          decide whether to look closer: what the thing is, what it does, and
+          whether it is live. The stack, the tags and the design notes are one
+          click away in the dialog rather than crowding the card.
+        */}
         <div className="editorial-work-meta flex gap-5 px-1 pt-5 sm:pt-6">
           <div className="min-w-0">
             <p
               className={[
-                typePrefix ? '' : 'uppercase',
-                'text-[10px] font-semibold tracking-[0.34em] text-[color:var(--work-accent)]',
+                'text-[11px] font-semibold tracking-[0.16em] text-[color:var(--work-accent)]',
                 typePrefix ? `${typePrefix}-subtitle` : '',
               ]
                 .filter(Boolean)
@@ -289,56 +288,16 @@ export default function WorkPoster({
               {project.title}
             </h3>
 
-            <p className="mt-2 max-w-[30rem] text-sm leading-6 text-white/58">{project.summary}</p>
+            <p className="mt-2.5 max-w-[30rem] text-[15px] leading-7 text-white/72">{project.plainSummary}</p>
 
             <div className="mt-4 flex flex-wrap gap-2">
-              <span className="border border-[color:var(--work-accent)]/45 bg-[color:var(--work-accent)]/[0.08] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.28em] text-[color:var(--work-accent)]">
-                {project.group}
+              <span className="border border-[color:var(--work-accent)]/45 bg-[color:var(--work-accent)]/[0.08] px-2.5 py-1 text-[10px] font-semibold tracking-[0.12em] text-[color:var(--work-accent)]">
+                {CATEGORY_LABEL[project.group]}
               </span>
-              {isMediChart ? null : (
-                <span className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.24em] text-white/56">
-                  {project.projectType}
-                </span>
-              )}
-              {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.24em] text-white/56"
-                >
-                  {tag}
-                </span>
-              ))}
+              <span className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[10px] font-semibold tracking-[0.12em] text-white/56">
+                {STATUS_LABEL[project.status]}
+              </span>
             </div>
-
-            <p
-              className={[
-                'mt-3 space-y-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.26em] text-white/55',
-                typePrefix ? `${typePrefix}-tags` : '',
-              ]
-                .filter(Boolean)
-                .join(' ')}
-            >
-              <span className="block">{project.category}</span>
-              <span className="block text-[color:var(--work-accent)] opacity-70">{project.colorLabel}</span>
-            </p>
-
-            <div className="mt-3 space-y-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.26em]">
-              <p className="break-words text-white/56">
-                <span className="text-white/50">Stack</span> {project.stack.join(' · ')}
-              </p>
-              <p className="break-words text-white/56">
-                <span className="text-white/50">Status</span> {STATUS_LABEL[project.status]}
-              </p>
-            </div>
-
-            {/* Japanese, at reading size: a status word alone ("Prototype") can
-                understate what was actually verified, and the qualifier is the
-                part a client needs. */}
-            {project.statusNote ? (
-              <p className="mt-2.5 max-w-[30rem] text-[11.5px] font-normal normal-case leading-5 tracking-normal text-white/48">
-                {project.statusNote}
-              </p>
-            ) : null}
           </div>
         </div>
 
@@ -354,7 +313,7 @@ export default function WorkPoster({
               }}
               transition={{ duration: 0.9, ease }}
             >
-              <span className="text-[8px] font-semibold tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">
+              <span className="text-[10px] font-semibold tracking-[0.1em] sm:text-[11px]">
                 {primaryLabel}
               </span>
               <span className="sr-only">（{project.title} のページを新しいタブで開きます）</span>
@@ -365,7 +324,7 @@ export default function WorkPoster({
               aria-disabled="true"
               className="editorial-work-button inline-flex h-11 cursor-not-allowed items-center justify-center border border-white/10 px-4 text-white/38"
             >
-              <span className="text-[8px] font-semibold uppercase tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]">
+              <span className="text-[10px] font-semibold tracking-[0.1em] sm:text-[11px]">
                 {primaryLabel}
               </span>
             </span>
@@ -376,22 +335,22 @@ export default function WorkPoster({
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-11 items-center justify-center border border-white/10 px-4 text-[8px] font-semibold uppercase tracking-[0.18em] text-white/58 transition-colors duration-500 hover:border-white/28 hover:text-white/85 sm:text-[9px] sm:tracking-[0.22em]"
+              className="inline-flex h-11 items-center justify-center border border-white/10 px-4 text-[10px] font-semibold tracking-[0.1em] text-white/58 transition-colors duration-500 hover:border-white/28 hover:text-white/85 sm:text-[11px]"
             >
-              GitHub
+              GitHubで見る
               <span className="sr-only">（{project.title} のソースを新しいタブで開きます）</span>
             </a>
           ) : null}
 
-          {/* `Details` is the same control on every card: a button that opens
-              the dialog in place. It never navigates, so the visitor never
-              loses the grid, and no card is an exception to the rule. */}
+          {/* 「詳しく見る」 is the same control on every card: a button that
+              opens the dialog in place. It never navigates, so the visitor
+              never loses the grid, and no card is an exception to the rule. */}
           <button
             type="button"
             onClick={onOpenDetail}
-            className="inline-flex h-11 items-center justify-center gap-2 border border-white/10 px-4 text-[8px] font-semibold uppercase tracking-[0.18em] text-white/58 transition-colors duration-500 hover:border-white/28 hover:text-white/85 sm:text-[9px] sm:tracking-[0.22em]"
+            className="inline-flex h-11 items-center justify-center gap-2 border border-white/10 px-4 text-[10px] font-semibold tracking-[0.1em] text-white/58 transition-colors duration-500 hover:border-white/28 hover:text-white/85 sm:text-[11px]"
           >
-            Details
+            詳しく見る
             <span className="sr-only">（{project.title} の詳細を開きます）</span>
           </button>
         </div>
@@ -414,7 +373,7 @@ export default function WorkPoster({
 function ScreenFlow({ project, gallery }: { project: Project; gallery: NonNullable<Project['gallery']> }) {
   return (
     <section className="border-b border-white/[0.07] px-6 py-7 sm:px-9 sm:py-8">
-      <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Screen Flow</h4>
+      <h4 className="text-[13px] font-semibold tracking-[0.12em] text-white/78">画面の流れ</h4>
       {project.galleryNote ? (
         <p className="mt-2.5 text-[12px] leading-6 text-white/48">{project.galleryNote}</p>
       ) : null}
@@ -452,33 +411,48 @@ function ScreenFlow({ project, gallery }: { project: Project; gallery: NonNullab
 
 /** Body of the work detail dialog. Kept here so card and dialog share one source. */
 export function WorkDetail({ project }: { project: Project }) {
+  const tags = project.tags ?? []
+
   return (
     <div>
       <div className="border-b border-white/[0.07] px-6 pb-6 pt-14 sm:px-9 sm:pt-16">
         <div className="flex flex-wrap items-center gap-2">
           <span
-            className="border px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.26em]"
+            className="border px-2.5 py-1 text-[10px] font-semibold tracking-[0.12em]"
             style={{
               borderColor: `${project.accent}66`,
               background: `${project.accent}14`,
               color: project.accent,
             }}
           >
-            {project.group}
+            {CATEGORY_LABEL[project.group]}
           </span>
-          <span className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.22em] text-white/58">
-            {project.projectType}
+          <span className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[10px] font-semibold tracking-[0.12em] text-white/58">
+            {PROJECT_TYPE_LABEL[project.projectType]}
           </span>
-          <span className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.22em] text-white/58">
+          <span className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[10px] font-semibold tracking-[0.12em] text-white/58">
             {STATUS_LABEL[project.status]}
           </span>
         </div>
         <h3 className="mt-4 text-[1.6rem] font-semibold leading-[1.1] tracking-[-0.02em] text-white sm:text-[2.1rem]">
           {project.title}
         </h3>
-        <p className="mt-2 text-[9px] font-semibold uppercase tracking-[0.3em]" style={{ color: project.accent, opacity: 0.8 }}>
-          {project.category} · {project.year}
+        <p className="mt-2 text-[11px] font-semibold tracking-[0.12em]" style={{ color: project.accent, opacity: 0.8 }}>
+          {project.category}（{project.year}年）
         </p>
+        <p className="mt-4 text-[15px] leading-7 text-white/72">{project.plainSummary}</p>
+        {tags.length > 0 ? (
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <li
+                key={tag}
+                className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[10px] font-semibold tracking-[0.1em] text-white/56"
+              >
+                {tag}
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
 
       <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-white/[0.07] bg-[#050505]">
@@ -492,24 +466,26 @@ export function WorkDetail({ project }: { project: Project }) {
       {project.gallery ? <ScreenFlow project={project} gallery={project.gallery} /> : null}
 
       <div className="space-y-5 p-6 sm:p-9">
+        <section>
+          <h4 className="text-[13px] font-semibold tracking-[0.12em] text-white/78">概要</h4>
+          <p className="mt-3 text-[13px] leading-7 text-white/52">{project.summary}</p>
+        </section>
         {project.overview ? (
-          <section>
-            <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Overview</h4>
+          <section className="border-t border-white/[0.06] pt-5">
+            <h4 className="text-[13px] font-semibold tracking-[0.12em] text-white/78">このプロジェクトについて</h4>
             <p className="mt-3 text-[13px] leading-7 text-white/52">{project.overview}</p>
           </section>
         ) : null}
-        <section className={project.overview ? 'border-t border-white/[0.06] pt-5' : undefined}>
-          <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Problem</h4>
+        <section className="border-t border-white/[0.06] pt-5">
+          <h4 className="text-[13px] font-semibold tracking-[0.12em] text-white/78">こまっていたこと</h4>
           <p className="mt-3 text-[13px] leading-7 text-white/52">{project.problem}</p>
         </section>
         <section className="border-t border-white/[0.06] pt-5">
-          <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Solution</h4>
+          <h4 className="text-[13px] font-semibold tracking-[0.12em] text-white/78">つくったもの</h4>
           <p className="mt-3 text-[13px] leading-7 text-white/52">{project.solution}</p>
         </section>
         <section className="border-t border-white/[0.06] pt-5">
-          <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">
-            {project.detailSections ? 'Main Features' : 'Implemented'}
-          </h4>
+          <h4 className="text-[13px] font-semibold tracking-[0.12em] text-white/78">できること</h4>
           <ul className="mt-3 space-y-2">
             {project.features.map((feature) => (
               <li key={feature} className="flex gap-3 text-[13px] leading-6 text-white/52">
@@ -521,7 +497,7 @@ export function WorkDetail({ project }: { project: Project }) {
         </section>
         {project.detailSections?.map((section) => (
           <section key={section.title} className="border-t border-white/[0.06] pt-5">
-            <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">
+            <h4 className="text-[13px] font-semibold tracking-[0.12em] text-white/78">
               {section.title}
             </h4>
             {section.body ? <p className="mt-3 text-[13px] leading-7 text-white/52">{section.body}</p> : null}
@@ -545,7 +521,7 @@ export function WorkDetail({ project }: { project: Project }) {
             verified, for the projects that have verified something. */}
         {project.outcome ? (
           <section className="border-t border-white/[0.06] pt-5">
-            <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Outcome</h4>
+            <h4 className="text-[13px] font-semibold tracking-[0.12em] text-white/78">確認できたこと</h4>
             <ul className="mt-3 space-y-2">
               {project.outcome.map((item) => (
                 <li key={item} className="flex gap-3 text-[13px] leading-6 text-white/52">
@@ -562,28 +538,25 @@ export function WorkDetail({ project }: { project: Project }) {
         ) : null}
         {project.safety ? (
           <section className="border-t border-white/[0.06] pt-5">
-            <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Safety</h4>
+            <h4 className="text-[13px] font-semibold tracking-[0.12em] text-white/78">安全のための決めごと</h4>
             <p className="mt-3 text-[13px] leading-7 text-white/52">{project.safety}</p>
           </section>
         ) : null}
         {project.role ? (
           <section className="border-t border-white/[0.06] pt-5">
-            <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Role</h4>
-            <p className="mt-3 text-[12px] font-semibold uppercase leading-6 tracking-[0.2em] text-white/58">
-              {project.role.join(' / ')}
-            </p>
+            <h4 className="text-[13px] font-semibold tracking-[0.12em] text-white/78">担当した範囲</h4>
+            <p className="mt-3 text-[13px] leading-7 text-white/58">{project.role.join('・')}</p>
           </section>
         ) : null}
         <section className="border-t border-white/[0.06] pt-5">
-          <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Tech Stack</h4>
-          <p className="mt-3 text-[12px] font-semibold uppercase leading-6 tracking-[0.2em] text-white/58">
-            {project.stack.join(' · ')}
-          </p>
+          <h4 className="text-[13px] font-semibold tracking-[0.12em] text-white/78">使った技術</h4>
+          <p className="mt-3 text-[13px] leading-7 text-white/58">{project.stack.join(' · ')}</p>
+          <p className="mt-2 text-[12px] leading-6 text-white/45">{project.colorLabel}</p>
         </section>
         <section className="border-t border-white/[0.06] pt-5">
-          <h4 className="text-[10px] font-semibold uppercase tracking-[0.32em] text-white/70">Project Status</h4>
+          <h4 className="text-[13px] font-semibold tracking-[0.12em] text-white/78">公開状況</h4>
           <p className="mt-3 text-[13px] leading-7 text-white/52">
-            {STATUS_LABEL[project.status]} — {project.projectType}。実在クライアントの受託案件ではありません。
+            {STATUS_LABEL[project.status]} ／ {PROJECT_TYPE_LABEL[project.projectType]}。実際の企業から依頼を受けて作ったものではありません。
           </p>
           {project.statusNote ? (
             <p className="mt-3 border-l border-white/12 pl-4 text-[12.5px] leading-6 text-white/56">
@@ -596,9 +569,9 @@ export function WorkDetail({ project }: { project: Project }) {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border border-white/16 px-5 py-3 text-[9px] font-semibold uppercase tracking-[0.26em] text-white/78 transition-colors duration-500 hover:border-white/35 hover:text-white"
+                className="inline-flex items-center gap-2 border border-white/16 px-5 py-3 text-[11px] font-semibold tracking-[0.1em] text-white/78 transition-colors duration-500 hover:border-white/35 hover:text-white"
               >
-                Open Site
+                実際に見る
                 <span className="sr-only">（新しいタブで開きます）</span>
               </a>
             ) : null}
@@ -607,9 +580,9 @@ export function WorkDetail({ project }: { project: Project }) {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border border-white/16 px-5 py-3 text-[9px] font-semibold uppercase tracking-[0.26em] text-white/78 transition-colors duration-500 hover:border-white/35 hover:text-white"
+                className="inline-flex items-center gap-2 border border-white/16 px-5 py-3 text-[11px] font-semibold tracking-[0.1em] text-white/78 transition-colors duration-500 hover:border-white/35 hover:text-white"
               >
-                View Source on GitHub
+                GitHubで中身を見る
                 <span className="sr-only">（新しいタブで開きます）</span>
               </a>
             ) : null}

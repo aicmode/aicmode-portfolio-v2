@@ -6,7 +6,7 @@ import AnimateIn from './AnimateIn'
 import DetailModal from './DetailModal'
 import WorkPoster, { WorkDetail } from './WorkPoster'
 import { archiveCategories, archiveProjects, projectCountByCategory, projects } from '../data/projects'
-import { ALL_FILTER } from '../types/project'
+import { ALL_FILTER, filterLabel } from '../types/project'
 import type { Filter } from '../types/project'
 
 const ease = [0.13, 0.86, 0.18, 1] as const
@@ -46,10 +46,10 @@ export default function WorksArchive() {
   const displayedProjects = isExpanded ? filteredProjects : []
 
   const toggleLabel = isExpanded
-    ? 'SHOW LESS'
+    ? '閉じる'
     : activeCategory === ALL_FILTER
-      ? `VIEW ALL ${counts[ALL_FILTER]} WORKS`
-      : `VIEW ${counts[activeCategory]} ${activeCategory} WORKS`
+      ? `すべての実績を見る（${counts[ALL_FILTER]}件）`
+      : `${filterLabel(activeCategory)}を見る（${counts[activeCategory]}件）`
 
   function handleCategoryChange(category: Filter) {
     setActiveCategory(category)
@@ -87,20 +87,17 @@ export default function WorksArchive() {
             className="mb-8 flex scroll-mt-20 flex-col gap-7 border-b border-white/[0.08] pb-7 md:mb-10 lg:flex-row lg:items-end lg:justify-between"
           >
             <div>
-              <p className="mb-5 text-[10px] uppercase tracking-[0.48em] text-white/56">Works Archive</p>
-              <h2 className="text-[clamp(2.4rem,8vw,6rem)] font-black uppercase leading-[0.86] tracking-[-0.02em] text-white">
-                Archive
+              <p className="mb-5 text-[12px] tracking-[0.2em] text-white/56">すべての制作実績</p>
+              <h2 className="text-[clamp(1.9rem,5.5vw,3.6rem)] font-black leading-[1.2] tracking-[-0.02em] text-white">
+                これまでに作ったもの
               </h2>
-              <p
-                className="mt-4 text-[10px] uppercase tracking-[0.44em] md:text-[11px]"
-                style={{ color: 'rgba(212,175,55,0.82)' }}
-              >
-                Portfolio Projects: {archiveProjects.length}
+              <p className="mt-4 text-[13px] tracking-[0.08em]" style={{ color: 'rgba(212,175,55,0.82)' }}>
+                全{archiveProjects.length}件
               </p>
             </div>
-            <p className="max-w-xl text-sm leading-7 text-white/58 lg:text-right">
-              All {archiveProjects.length} projects are preserved here. Choose a category to explore a focused set,
-              or expand the complete archive.
+            <p className="max-w-xl text-[15px] leading-8 text-white/58 lg:text-right">
+              これまでに作ったものを、すべてこちらに残しています。
+              種類を選ぶと、その分だけを見られます。
             </p>
           </div>
         </AnimateIn>
@@ -115,13 +112,13 @@ export default function WorksArchive() {
                   type="button"
                   onClick={() => handleCategoryChange(category)}
                   aria-pressed={isActive}
-                  className={`group/tab inline-flex items-center gap-2 whitespace-nowrap border px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.26em] transition-all duration-500 ${
+                  className={`group/tab inline-flex items-center gap-2 whitespace-nowrap border px-4 py-2.5 text-[12.5px] font-semibold tracking-[0.06em] transition-all duration-500 ${
                     isActive
                       ? 'border-[rgba(212,175,55,0.5)] bg-[rgba(212,175,55,0.07)] text-[rgba(212,175,55,0.95)] shadow-[0_0_30px_rgba(212,175,55,0.08)]'
                       : 'border-white/10 text-white/58 hover:border-white/25 hover:text-white/80'
                   }`}
                 >
-                  {category}
+                  {filterLabel(category)}
                   <span
                     className={`text-[8px] font-semibold tabular-nums tracking-[0.1em] transition-colors duration-500 ${
                       isActive ? 'text-[rgba(212,175,55,0.85)]' : 'text-white/55'
@@ -142,7 +139,7 @@ export default function WorksArchive() {
             onClick={handleArchiveToggle}
             aria-expanded={isExpanded}
             aria-controls={ARCHIVE_PROJECTS_ID}
-            className="inline-flex min-h-12 w-full max-w-full items-center justify-center border border-[rgba(212,175,55,0.34)] bg-[rgba(212,175,55,0.04)] px-5 py-3 text-center text-[9px] font-semibold uppercase tracking-[0.24em] text-[rgba(232,204,113,0.9)] transition duration-500 hover:border-[rgba(212,175,55,0.62)] hover:bg-[rgba(212,175,55,0.08)] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[rgba(232,204,113,0.95)] sm:w-auto sm:px-8 sm:text-[10px] sm:tracking-[0.32em]"
+            className="inline-flex min-h-12 w-full max-w-full items-center justify-center border border-[rgba(212,175,55,0.34)] bg-[rgba(212,175,55,0.04)] px-5 py-3 text-center text-[12px] font-semibold tracking-[0.08em] text-[rgba(232,204,113,0.9)] transition duration-500 hover:border-[rgba(212,175,55,0.62)] hover:bg-[rgba(212,175,55,0.08)] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[rgba(232,204,113,0.95)] sm:w-auto sm:px-8 sm:text-[13px]"
           >
             {toggleLabel}
           </button>
@@ -152,7 +149,7 @@ export default function WorksArchive() {
           id={ARCHIVE_PROJECTS_ID}
           hidden={!isExpanded}
           role="region"
-          aria-label={`${activeCategory} works`}
+          aria-label={`${filterLabel(activeCategory)}の制作実績`}
         >
           {isExpanded ? (
             <>
@@ -181,24 +178,24 @@ export default function WorksArchive() {
                   onClick={handleArchiveToggle}
                   aria-expanded={isExpanded}
                   aria-controls={ARCHIVE_PROJECTS_ID}
-                  className="inline-flex min-h-12 w-full items-center justify-center border border-white/14 px-6 py-3 text-[9px] font-semibold uppercase tracking-[0.28em] text-white/68 transition duration-500 hover:border-[rgba(212,175,55,0.45)] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[rgba(232,204,113,0.95)] sm:w-auto sm:px-8 sm:text-[10px] sm:tracking-[0.34em]"
+                  className="inline-flex min-h-12 w-full items-center justify-center border border-white/14 px-6 py-3 text-[12px] font-semibold tracking-[0.08em] text-white/68 transition duration-500 hover:border-[rgba(212,175,55,0.45)] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[rgba(232,204,113,0.95)] sm:w-auto sm:px-8 sm:text-[13px]"
                 >
-                  SHOW LESS
+                  閉じる
                 </button>
               </div>
 
               <AnimateIn delay={200}>
                 <div className="mt-10 flex flex-col gap-6 border-t border-white/[0.07] pt-8 lg:flex-row lg:items-center lg:justify-between">
                   <div className="flex items-center gap-4">
-                    <span className="font-mono text-[8px] uppercase tracking-[0.5em] text-white/18">AICMODE</span>
+                    <span className="font-mono text-[9px] tracking-[0.4em] text-white/18">AICMODE</span>
                     <div className="h-px flex-1 bg-gradient-to-r from-white/[0.07] to-transparent" />
-                    <span className="font-mono text-[8px] uppercase tracking-[0.4em] text-white/18">2026</span>
+                    <span className="font-mono text-[9px] tracking-[0.3em] text-white/18">2026</span>
                   </div>
                   <a
                     href="#contact"
-                    className="inline-flex w-full items-center justify-center border border-white/14 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.34em] text-white/70 transition duration-500 hover:border-[rgba(212,175,55,0.45)] hover:text-white hover:shadow-[0_0_44px_rgba(212,175,55,0.08)] sm:w-auto"
+                    className="inline-flex w-full items-center justify-center border border-white/14 px-6 py-4 text-[12px] font-semibold tracking-[0.12em] text-white/70 transition duration-500 hover:border-[rgba(212,175,55,0.45)] hover:text-white hover:shadow-[0_0_44px_rgba(212,175,55,0.08)] sm:w-auto"
                   >
-                    Start a Project
+                    相談してみる
                   </a>
                 </div>
               </AnimateIn>

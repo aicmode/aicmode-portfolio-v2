@@ -163,22 +163,18 @@ export default function FAQ() {
         {/* Heading */}
         <AnimateIn>
           <div className="mb-12 md:mb-16">
-            <p className="mb-4 text-[10px] uppercase tracking-[0.55em] text-zinc-400">
-              FAQ
-            </p>
+            <p className="mb-4 text-[12px] tracking-[0.24em] text-zinc-400">よくある質問</p>
             <h2
-              className="font-black leading-none text-white"
+              className="font-black leading-[1.2] text-white"
               style={{
-                fontSize: 'clamp(2.4rem, 6vw, 4.5rem)',
+                fontSize: 'clamp(1.9rem, 4.6vw, 3.6rem)',
                 letterSpacing: '-0.02em',
               }}
             >
-              Before You Ask
+              ご相談前によくいただく質問
             </h2>
-            <p className="mt-6 text-sm leading-7 text-white/58 md:text-[15px] md:leading-8">
-              AIシステム開発・業務自動化・API連携・Web制作について、依頼前によくいただく質問をまとめました。
-              <br className="hidden sm:block" />
-              回答は一般的な進め方です。実際の対応内容は案件ごとに要件を確認したうえで決めます。
+            <p className="mt-6 text-[15px] leading-8 text-white/58">
+              実際の進め方は内容によって変わります。ここに書いていないことも、お気軽にお尋ねください。
             </p>
           </div>
         </AnimateIn>
@@ -201,15 +197,12 @@ export default function FAQ() {
         {/* CTA */}
         <AnimateIn delay={120}>
           <div className="mt-12 flex flex-col items-center gap-5 text-center md:mt-16">
-            <p
-              className="text-[11px] uppercase tracking-[0.4em]"
-              style={{ color: '#8a8a8a' }}
-            >
-              Still have a question?
+            <p className="text-[14px] tracking-[0.06em]" style={{ color: '#8a8a8a' }}>
+              ほかにも気になることがあれば、お気軽にどうぞ。
             </p>
             <motion.a
               href="#contact"
-              className="inline-flex items-center justify-center border px-7 py-4 text-[10px] font-semibold uppercase tracking-[0.34em] text-[#080808]"
+              className="inline-flex items-center justify-center border px-7 py-4 text-[13px] font-semibold tracking-[0.1em] text-[#080808]"
               style={{
                 borderColor: 'rgba(212,175,55,0.5)',
                 background:
@@ -224,7 +217,7 @@ export default function FAQ() {
                 transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
               }}
             >
-              CONTACT
+              お問い合わせ
             </motion.a>
           </div>
         </AnimateIn>

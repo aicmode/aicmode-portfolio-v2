@@ -93,10 +93,10 @@ const BOOT_SCRIPT = `
        JS bundle failed, so a real document request is what is needed. */
     var retry=document.createElement('a');
     retry.href='/';
-    retry.style.cssText='padding:0.875rem 2.5rem;font-size:10px;letter-spacing:0.3em;'+
+    retry.style.cssText='padding:0.875rem 2.5rem;font-size:13px;font-weight:600;letter-spacing:0.08em;'+
       'text-decoration:none;color:#080808;border:1px solid rgba(212,175,55,0.48);'+
       'background:linear-gradient(135deg, rgba(255,255,255,0.96), rgba(212,175,55,0.82))';
-    retry.textContent='RELOAD';
+    retry.textContent='再読み込み';
     box.appendChild(brand);box.appendChild(title);box.appendChild(body);box.appendChild(retry);
     document.body.appendChild(box);
   }

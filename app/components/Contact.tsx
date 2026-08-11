@@ -28,7 +28,7 @@ function LineIcon() {
 type ContactChannel = {
   href: string
   icon: ReactNode
-  /** Small uppercase eyebrow: the platform. */
+  /** Small eyebrow: the platform. */
   label: string
   /** The line a visitor actually reads first. */
   title: string
@@ -51,7 +51,7 @@ const lineOfficial: ContactChannel = {
   icon: <LineIcon />,
   label: 'LINE',
   title: 'LINEでお問い合わせ',
-  desc: '案件のご相談・AIシステム開発・業務自動化・お見積もりなど、お気軽にお問い合わせください。',
+  desc: 'ご相談、お見積もり、「こんなことできますか？」の確認まで、お気軽にどうぞ。',
   accent: '#06C755',
   glow: 'rgba(6,199,85,0.14)',
   border: 'rgba(6,199,85,0.42)',
@@ -62,8 +62,8 @@ const github: ContactChannel = {
   href: 'https://github.com/aicmode',
   icon: <GitHubIcon />,
   label: 'GitHub',
-  title: 'aicmode',
-  desc: 'Code · Web Applications · AI Systems',
+  title: 'GitHubで中身を見る',
+  desc: 'これまでに作ったものの中身を公開しています。',
   accent: '#ffffff',
   glow: 'rgba(255,255,255,0.07)',
   border: 'rgba(255,255,255,0.12)',
@@ -73,14 +73,7 @@ const github: ContactChannel = {
 /** Display order. LINE first — see the note on `lineOfficial`. */
 const contactChannels: ContactChannel[] = [lineOfficial, github]
 
-const disciplines = [
-  'AI Systems',
-  'Business Automation',
-  'Web Applications',
-  'API Integration',
-  'Dashboard Development',
-  'Creative Web Design',
-]
+const disciplines = ['作業の自動化', 'AIを使ったツール', '仕事用のWebアプリ', '医療・介護の業務改善']
 
 const GITHUB_ISSUE_URL =
   'https://github.com/aicmode/portfolio/issues/new?title=%E3%80%90%E3%81%94%E7%9B%B8%E8%AB%87%E3%80%91'
@@ -93,36 +86,36 @@ const GITHUB_ISSUE_URL =
 const inquiryChecklist = [
   { label: '現在困っていること', hint: '手作業になっている業務、対応が追いつかない場面など' },
   { label: '利用する人', hint: '社内スタッフ / 顧客 / 自分だけ、想定人数' },
-  { label: '希望する機能', hint: '決まっていなければ「やりたいこと」だけでも構いません' },
+  { label: 'やりたいこと', hint: '決まっていなければ「こうなったら助かる」だけで構いません' },
   { label: '希望時期', hint: '公開したい時期、動かしたいタイミング' },
   { label: '予算の目安', hint: '範囲でも構いません。範囲に合わせて構成を調整します' },
-  { label: '参考サービス', hint: '似ていると感じたサイト・ツールのURL' },
+  { label: '参考にしたいもの', hint: '似ていると感じたサイトやアプリがあればURLを' },
 ]
 
 const inquiries = [
   {
-    title: 'AI Systems',
-    text: '対応や文章作成が追いつかない業務を、AIに任せられる形にします。',
+    title: 'AIに任せたい',
+    text: '問い合わせ対応や文章作成が追いつかない仕事を、AIに任せられる形にします。',
   },
   {
-    title: 'Business Automation',
-    text: '毎日の手作業・集計・通知・共有を、自動で回る仕組みに変えます。',
+    title: '手作業をなくしたい',
+    text: '毎日の集計・お知らせ・共有を、自動で回る仕組みに変えます。',
   },
   {
-    title: 'API Integration',
-    text: 'ツール間の転記や二重入力をなくし、今の環境のままつなぎます。',
+    title: '同じ入力を何度もしている',
+    text: 'サービス同士をつないで、二度入力する手間をなくします。',
   },
   {
-    title: 'Web Applications',
-    text: '既存ツールでは業務に合わない部分を、専用アプリで埋めます。',
+    title: '今のソフトが合わない',
+    text: '仕事のやり方に合わない部分を、専用のアプリで埋めます。',
   },
   {
-    title: 'Website / LP',
-    text: '問い合わせが増えない、信頼されない。その原因から整理して作り直します。',
+    title: 'サイトから問い合わせが来ない',
+    text: '来ない原因を整理したうえで、伝わるサイトに作り直します。',
   },
   {
-    title: 'Creative Direction',
-    text: '何を、誰に、どう見せるか。伝わる方向性から一緒に決めます。',
+    title: '見せ方から相談したい',
+    text: '何を、誰に、どう見せるか。方向性から一緒に決めます。',
   },
 ]
 
@@ -174,13 +167,13 @@ function ContactCard({
         </span>
       </div>
       <div className="min-w-0">
-        <p className="mb-1.5 text-[9px] uppercase tracking-[0.4em]" style={{ color: '#7a7a7a' }}>
+        <p className="mb-1.5 text-[11px] tracking-[0.24em]" style={{ color: '#7a7a7a' }}>
           {label}
         </p>
-        <p className="mb-1.5 text-sm font-semibold tracking-wide text-white">
+        <p className="mb-1.5 text-[15px] font-semibold tracking-wide text-white">
           {title}
         </p>
-        <p className="text-[10px] leading-5 tracking-wide" style={{ color: '#7a7a7a' }}>
+        <p className="text-[12.5px] leading-6 tracking-wide" style={{ color: '#7a7a7a' }}>
           {desc}
         </p>
       </div>
@@ -219,7 +212,7 @@ export default function Contact() {
         <AnimateIn delay={0}>
           <div className="mb-10 md:mb-14 flex items-center gap-3">
             <span
-              className="flex items-center gap-2 text-[9px] tracking-[0.45em] uppercase px-3.5 py-1.5"
+              className="flex items-center gap-2 text-[12px] tracking-[0.06em] px-3.5 py-1.5"
               style={{
                 border: '1px solid rgba(109,217,109,0.25)',
                 color: '#6bcb6b',
@@ -231,7 +224,7 @@ export default function Contact() {
                 className="w-1.5 h-1.5 rounded-full animate-available flex-shrink-0"
                 style={{ background: '#6bcb6b', boxShadow: '0 0 8px rgba(107,203,107,0.6)' }}
               />
-              Available for Freelance Projects
+              お仕事のご相談を受け付けています
             </span>
           </div>
         </AnimateIn>
@@ -239,12 +232,10 @@ export default function Contact() {
         {/* ── Headline ── */}
         <AnimateIn delay={80}>
           <div className="mb-6 md:mb-8">
-            <p className="text-[10px] tracking-[0.55em] text-zinc-400 mb-5 uppercase">
-              Contact
-            </p>
+            <p className="text-[12px] tracking-[0.24em] text-zinc-400 mb-5">お問い合わせ</p>
             <h2
-              className="font-black text-white leading-tight"
-              style={{ fontSize: 'clamp(2.4rem, 6.5vw, 5.5rem)', letterSpacing: '-0.025em' }}
+              className="font-black text-white leading-[1.25]"
+              style={{ fontSize: 'clamp(2rem, 5.2vw, 4rem)', letterSpacing: '-0.025em' }}
             >
               相談から、使える<br />
               <span style={{
@@ -257,11 +248,11 @@ export default function Contact() {
               </span>
             </h2>
 
-            <ul className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2.5">
+            <ul className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2.5">
               {disciplines.map((discipline) => (
                 <li
                   key={discipline}
-                  className="text-[9px] uppercase tracking-[0.3em] text-white/56 md:text-[10px]"
+                  className="border border-white/12 px-3 py-1.5 text-[12px] tracking-[0.04em] text-white/70"
                 >
                   {discipline}
                 </li>
@@ -273,15 +264,12 @@ export default function Contact() {
         {/* ── Copy ── */}
         <AnimateIn delay={160}>
           <div className="mb-10 max-w-3xl md:mb-16">
-            <p className="mb-5 text-sm leading-7 text-white/58 md:text-base md:leading-8">
-              まだ仕様が決まっていなくても問題ありません。現在の課題、手作業になっている業務、作りたいサービスのイメージをお聞かせください。
-              内容を整理し、Webサイト・AIシステム・業務自動化・API連携のどれが適しているかをご提案します。
+            <p className="mb-5 text-[15px] leading-8 text-white/58 md:text-[17px]">
+              何を作るか決まっていなくても大丈夫です。今困っていること、手作業になっている仕事、
+              「こうなったら助かる」というイメージをお聞かせください。
             </p>
-            <p className="text-sm md:text-base leading-relaxed mb-2" style={{ color: '#8a8a8a' }}>
-              Business First × Technology × Creative Direction
-            </p>
-            <p className="text-[11px] tracking-[0.2em] uppercase" style={{ color: '#7a7a7a' }}>
-              AI Development · Web Design · Business Automation
+            <p className="text-[14px] leading-8" style={{ color: '#8a8a8a' }}>
+              内容を整理して、いちばん合う方法をご提案します。
             </p>
           </div>
         </AnimateIn>
@@ -290,9 +278,7 @@ export default function Contact() {
         <AnimateIn delay={240}>
           <div className="mb-12 md:mb-16">
             <div className="mb-6 flex items-center justify-between gap-6">
-              <p className="text-[10px] uppercase tracking-[0.5em] text-white/58">
-                Project Inquiry
-              </p>
+              <p className="text-[13px] font-semibold tracking-[0.16em] text-white/70">こんなご相談が多いです</p>
               <div className="h-px flex-1 bg-gradient-to-l from-white/[0.07] to-transparent" />
             </div>
             <div className="grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-4">
@@ -307,10 +293,10 @@ export default function Contact() {
                     transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
                   }}
                 >
-                  <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.34em] text-white/76">
+                  <p className="mb-3 text-[15px] font-semibold leading-7 tracking-[0.02em] text-white/85">
                     {item.title}
                   </p>
-                  <p className="text-sm leading-7 text-white/58">
+                  <p className="text-[14px] leading-7 text-white/58">
                     {item.text}
                   </p>
                 </motion.div>
@@ -323,11 +309,11 @@ export default function Contact() {
         <AnimateIn delay={280}>
           <div className="mb-12 md:mb-16">
             <div className="mb-6 flex items-center justify-between gap-6">
-              <p className="text-[10px] uppercase tracking-[0.5em] text-white/58">What To Include</p>
+              <p className="text-[13px] font-semibold tracking-[0.16em] text-white/70">お伝えいただきたいこと</p>
               <div className="h-px flex-1 bg-gradient-to-l from-white/[0.07] to-transparent" />
             </div>
-            <p className="mb-7 max-w-3xl text-sm leading-7 text-white/58">
-              初回のご連絡では、以下のうち分かる範囲だけで構いません。すべて埋まっていなくても、こちらから必要な点を伺いながら整理します。
+            <p className="mb-7 max-w-3xl text-[15px] leading-8 text-white/58">
+              最初のご連絡では、分かる範囲だけで大丈夫です。足りない部分は、こちらから順番にお尋ねします。
             </p>
             <ul className="grid grid-cols-1 gap-x-8 gap-y-0 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-12">
               {inquiryChecklist.map((item, index) => (
@@ -344,11 +330,11 @@ export default function Contact() {
                     >
                       {String(index + 1).padStart(2, '0')}
                     </span>
-                    <span className="text-[12px] font-semibold uppercase tracking-[0.16em] text-white/78">
+                    <span className="text-[14px] font-semibold tracking-[0.04em] text-white/80">
                       {item.label}
                     </span>
                   </span>
-                  <span className="pl-[1.7rem] text-[12px] leading-6 text-white/56">{item.hint}</span>
+                  <span className="pl-[1.7rem] text-[13px] leading-6 text-white/56">{item.hint}</span>
                 </li>
               ))}
             </ul>
@@ -358,7 +344,7 @@ export default function Contact() {
                 href={GITHUB_ISSUE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center border px-7 py-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#080808]"
+                className="inline-flex items-center justify-center border px-7 py-4 text-[13px] font-semibold tracking-[0.08em] text-[#080808]"
                 style={{
                   borderColor: 'rgba(212,175,55,0.5)',
                   background: 'linear-gradient(135deg, rgba(255,255,255,0.96), rgba(212,175,55,0.82))',
@@ -377,7 +363,7 @@ export default function Contact() {
                 href={github.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center border border-white/14 px-7 py-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-white/70 transition duration-500 hover:border-white/32 hover:text-white"
+                className="inline-flex items-center justify-center border border-white/14 px-7 py-4 text-[13px] font-semibold tracking-[0.08em] text-white/70 transition duration-500 hover:border-white/32 hover:text-white"
               >
                 GitHubプロフィールを見る
                 <span className="sr-only">（GitHubを新しいタブで開きます）</span>
@@ -397,7 +383,8 @@ export default function Contact() {
                 詳しい内容もこちらでお伺いします。
               </p>
               <p className="mt-2">
-                GitHub Issueは公開されるため、社名、患者情報、個人情報、APIキー、社内資料などは記載しないでください。
+                GitHubに書いた内容は誰でも見られる状態になります。会社名、患者さんの情報、
+                個人情報、社内資料などは書かないようご注意ください。
               </p>
             </div>
           </div>
@@ -407,7 +394,7 @@ export default function Contact() {
         <AnimateIn delay={360}>
           <div className="mb-8 md:mb-10 flex items-center gap-6">
             <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to right, rgba(255,255,255,0.06), transparent)' }} />
-            <span className="text-[9px] tracking-[0.45em] text-zinc-400 uppercase whitespace-nowrap">Connect</span>
+            <span className="whitespace-nowrap text-[12px] tracking-[0.16em] text-zinc-400">連絡先</span>
             <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to left, rgba(255,255,255,0.06), transparent)' }} />
           </div>
         </AnimateIn>

@@ -3,13 +3,13 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 
 const links = [
-  { label: 'AI CASE STUDIES', href: '#case-studies' },
-  { label: 'HEALTHCARE', href: '#healthcare' },
-  { label: 'WORKS', href: '#works' },
-  { label: 'SERVICES', href: '#services' },
-  { label: 'ABOUT', href: '#about' },
-  { label: 'FAQ', href: '#faq' },
-  { label: 'CONTACT', href: '#contact' },
+  { label: 'できること', href: '#services' },
+  { label: '医療・介護', href: '#healthcare' },
+  { label: '制作実績', href: '#case-studies' },
+  { label: 'ご相談の流れ', href: '#process' },
+  { label: '自己紹介', href: '#about' },
+  { label: 'よくある質問', href: '#faq' },
+  { label: 'お問い合わせ', href: '#contact' },
 ]
 
 const PANEL_ID = 'mobile-nav-panel'
@@ -96,12 +96,12 @@ export default function Nav() {
           AICMODE
         </a>
 
-        <div className="hidden items-center gap-8 lg:flex">
+        <div className="hidden items-center gap-6 lg:flex xl:gap-8">
           {links.map(({ label, href }) => (
             <a
               key={label}
               href={href}
-              className="text-[10px] uppercase tracking-[0.22em] text-zinc-400 transition-colors duration-300 hover:text-white"
+              className="whitespace-nowrap text-[12px] tracking-[0.08em] text-zinc-400 transition-colors duration-300 hover:text-white"
             >
               {label}
             </a>
@@ -146,7 +146,7 @@ export default function Nav() {
                   <a
                     href={href}
                     onClick={(event) => onNavigate(event, href)}
-                    className="block border-b border-white/[0.05] py-3.5 text-[11px] uppercase tracking-[0.26em] text-zinc-400 transition-colors duration-300 hover:text-white"
+                    className="block border-b border-white/[0.05] py-3.5 text-[14px] tracking-[0.06em] text-zinc-400 transition-colors duration-300 hover:text-white"
                   >
                     {label}
                   </a>
@@ -156,9 +156,9 @@ export default function Nav() {
                 <a
                   href="#archive"
                   onClick={(event) => onNavigate(event, '#archive')}
-                  className="block py-3.5 text-[11px] uppercase tracking-[0.26em] text-zinc-400 transition-colors duration-300 hover:text-white"
+                  className="block py-3.5 text-[14px] tracking-[0.06em] text-zinc-400 transition-colors duration-300 hover:text-white"
                 >
-                  WORKS ARCHIVE
+                  すべての実績を見る
                 </a>
               </li>
             </ul>

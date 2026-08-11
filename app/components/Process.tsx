@@ -30,11 +30,11 @@ function ProcessCard({ step, title, desc }: { step: string; title: string; desc:
       </span>
       {/* h3, not h4: the section heading above is an h2, and jumping a level
           breaks the document outline for screen-reader navigation. */}
-      <h3 className="mt-1 text-base font-semibold tracking-wide md:text-lg" style={{ color: '#e8e8e8' }}>
+      <h3 className="mt-1 text-[16px] font-semibold leading-7 tracking-wide md:text-lg" style={{ color: '#e8e8e8' }}>
         <span className="sr-only">{step}. </span>
         {title}
       </h3>
-      <p className="text-[13px] leading-relaxed" style={{ color: '#8a8a8a' }}>
+      <p className="text-[13.5px] leading-7" style={{ color: '#8a8a8a' }}>
         {desc}
       </p>
     </div>
@@ -47,16 +47,17 @@ export default function Process() {
       <div className="mx-auto max-w-7xl">
         <AnimateIn>
           <div className="mb-4">
-            <p className="mb-4 text-[10px] uppercase tracking-[0.55em] text-zinc-400">How It Works</p>
+            <p className="mb-4 text-[12px] tracking-[0.24em] text-zinc-400">ご相談の流れ</p>
             <h2
-              className="font-black leading-none text-white"
-              style={{ fontSize: 'clamp(2.2rem, 5.5vw, 4.5rem)', letterSpacing: '-0.02em' }}
+              className="font-black leading-[1.2] text-white"
+              style={{ fontSize: 'clamp(1.9rem, 4.6vw, 3.6rem)', letterSpacing: '-0.02em' }}
             >
-              Process
+              ご相談から公開まで
             </h2>
           </div>
-          <p className="mb-12 max-w-2xl text-sm leading-relaxed md:mb-16 md:text-base" style={{ color: '#7a7a7a' }}>
-            要件が固まっていない状態からでも進められる順番にしています。02で範囲・期間・費用に合意してから着手します。
+          <p className="mb-12 max-w-2xl text-[15px] leading-8 md:mb-16" style={{ color: '#7a7a7a' }}>
+            何を作るか決まっていない状態からでも進められる順番です。
+            02で内容・期間・費用に納得いただいてから作りはじめます。
           </p>
         </AnimateIn>
 
@@ -90,7 +91,7 @@ export default function Process() {
                 {processFollowUp.step}
               </span>
               <h3
-                className="text-base font-semibold tracking-wide md:text-lg"
+                className="text-[16px] font-semibold leading-7 tracking-wide md:text-lg"
                 style={{ color: 'rgba(240,240,240,0.92)' }}
               >
                 <span className="sr-only">{processFollowUp.step}. </span>

@@ -10,11 +10,8 @@ export default function Footer() {
         </span>
         {/* #404040 on #080808 was 1.93:1 — below the 4.5:1 minimum for body
             text. #8a8a8a keeps the muted look at ~6.4:1. */}
-        <span
-          className="text-[11px] tracking-[0.3em]"
-          style={{ color: '#8a8a8a' }}
-        >
-          AICMODE © 2026
+        <span className="text-[11px] tracking-[0.2em]" style={{ color: '#8a8a8a' }}>
+          © 2026 AICMODE
         </span>
       </div>
     </footer>

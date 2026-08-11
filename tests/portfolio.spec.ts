@@ -21,41 +21,42 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
   await page.setViewportSize({ width: 1440, height: 900 })
   await page.goto('http://localhost:3000/', { waitUntil: 'networkidle' })
 
-  await expect(page).toHaveTitle('AICMODE | AI Systems, Business Automation & Web Applications')
+  await expect(page).toHaveTitle('AICMODE｜AIを使って、面倒な仕事をラクにします。')
   await expect(page.locator('meta[name="description"]')).toHaveAttribute(
     'content',
-    /鹿児島を拠点に、AIシステム、業務自動化/,
+    /時間のかかる仕事をAIやシステムを使って効率化します/,
   )
   await expect(page.locator('h1')).toHaveCount(1)
-  await expect(page.locator('#top')).toContainText('業務の課題を整理し、')
+  await expect(page.locator('#top')).toContainText('AIを使って、')
+  await expect(page.locator('#top')).toContainText('看護師として約9年間働いた経験')
   await expect(page.locator('#top dl dd')).toHaveText(['06', '29'])
   await expect(page.locator('#case-studies article')).toHaveCount(6)
   await expect(page.locator('#case-studies')).not.toContainText('MediChart Lite')
   await expect(page.locator('#healthcare')).toContainText('看護師として約9年間')
-  await expect(page.locator('#works')).toContainText('29 Portfolio Projects · 6 AI Case Studies')
+  await expect(page.locator('#works')).toContainText('サイト・アプリ 29件 ／ AI・自動化 6件')
   await expect(page.locator('#works article')).toHaveCount(9)
 
-  const servicesCta = page.getByRole('link', { name: '相談できることを見る' })
-  const worksCta = page.getByRole('link', { name: '制作事例を見る' })
+  const servicesCta = page.getByRole('link', { name: 'できることを見る' })
+  const worksCta = page.getByRole('link', { name: '制作実績を見る' })
   await expect(servicesCta).toHaveAttribute('href', '#services')
   await expect(worksCta).toHaveAttribute('href', '#works')
 
   const firstCase = page.locator('#case-studies article').first()
-  await expect(firstCase).toContainText('Role')
-  await expect(firstCase).toContainText('Project Type')
-  await expect(firstCase).toContainText('Status')
-  const caseTrigger = firstCase.getByRole('button', { name: 'View Case Study' })
+  await expect(firstCase).toContainText('担当')
+  await expect(firstCase).toContainText('種類')
+  await expect(firstCase).toContainText('公開中')
+  const caseTrigger = firstCase.getByRole('button', { name: '詳しく見る' })
   await caseTrigger.click()
-  const caseDialog = page.getByRole('dialog', { name: 'MediBrief' })
+  const caseDialog = page.getByRole('dialog', { name: '受診メモ作成ツール' })
   await expect(caseDialog).toBeVisible()
-  await expect(caseDialog).toContainText('Self-directed Project')
+  await expect(caseDialog).toContainText('自主制作')
   await page.keyboard.press('Escape')
   await expect(caseDialog).toBeHidden()
   await expect(caseTrigger).toBeFocused()
 
   const firstWork = page.locator('#works article').first()
   const workName = await firstWork.getByRole('heading').textContent()
-  await firstWork.getByRole('button', { name: /Details/ }).click()
+  await firstWork.getByRole('button', { name: /詳しく見る/ }).click()
   const workDialog = page.getByRole('dialog', { name: workName ?? '' })
   await expect(workDialog).toBeVisible()
   await page.keyboard.press('Escape')
@@ -65,16 +66,18 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
     has: page.getByRole('heading', { name: 'MediChart Lite', exact: true }),
   })
   await expect(medichartCard).toHaveCount(1)
-  await expect(medichartCard).toContainText('HEALTHCARE WEB APPLICATION')
-  await expect(medichartCard).toContainText(/Clinical Record Management Demo/i)
-  await expect(medichartCard).toContainText(/Recharts/i)
-  await expect(medichartCard).toContainText(/Dark Mode/i)
-  await expect(medichartCard).toContainText('UPDATED')
+  await expect(medichartCard).toContainText('医療記録の管理アプリ')
+  await expect(medichartCard).toContainText('患者さんの情報や記録を、ひとつの画面で管理できるアプリ。')
+  await expect(medichartCard).toContainText('仕事用アプリ')
+  await expect(medichartCard).toContainText('公開中')
+  await expect(medichartCard).toContainText('更新')
+  // The card leads with plain language: nothing technical belongs on it.
+  await expect(medichartCard).not.toContainText(/Recharts/i)
   const medichartImage = medichartCard.locator('img')
   await expect(medichartImage).toHaveAttribute('src', /medichart-lite-clinical-dashboard\.jpg/)
   await expect(medichartImage).not.toHaveAttribute('src', /medichart-lite\.webp/)
   await expect.poll(() => medichartImage.evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
-  const medichartLiveLink = medichartCard.getByRole('link', { name: /Live Demo/ })
+  const medichartLiveLink = medichartCard.getByRole('link', { name: /実際に見る/ })
   await expect(medichartLiveLink).toHaveAttribute(
     'href',
     'https://medichart-lite.vercel.app',
@@ -82,20 +85,21 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
   await expect(medichartLiveLink).toHaveAttribute('target', '_blank')
   await expect(medichartLiveLink).toHaveAttribute('rel', /noopener/)
   await expect(medichartLiveLink).toHaveAttribute('rel', /noreferrer/)
-  await expect(medichartCard.getByRole('link', { name: /GitHub/ })).toHaveAttribute(
+  await expect(medichartCard.getByRole('link', { name: /GitHubで見る/ })).toHaveAttribute(
     'href',
     'https://github.com/aicmode/medichart-lite',
   )
-  await medichartCard.getByRole('button', { name: /Details/ }).click()
+  await medichartCard.getByRole('button', { name: /詳しく見る/ }).click()
   const medichartDialog = page.getByRole('dialog', { name: 'MediChart Lite' })
-  await expect(medichartDialog).toContainText('Safety')
+  await expect(medichartDialog).toContainText('安全のための決めごと')
   await expect(medichartDialog).toContainText('実在患者情報は扱わず')
-  await expect(medichartDialog).toContainText('Frontend Development')
-  await expect(medichartDialog.getByRole('link', { name: /Open Site/ })).toHaveAttribute(
+  await expect(medichartDialog).toContainText('画面の開発')
+  await expect(medichartDialog).toContainText('Recharts')
+  await expect(medichartDialog.getByRole('link', { name: /実際に見る/ })).toHaveAttribute(
     'href',
     'https://medichart-lite.vercel.app',
   )
-  await expect(medichartDialog.getByRole('link', { name: /View Source on GitHub/ })).toHaveAttribute(
+  await expect(medichartDialog.getByRole('link', { name: /GitHubで中身を見る/ })).toHaveAttribute(
     'href',
     'https://github.com/aicmode/medichart-lite',
   )
@@ -111,13 +115,12 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
     has: page.getByRole('heading', { name: 'MedDose', exact: true }),
   })
   await expect(meddoseCard).toHaveCount(1)
-  await expect(meddoseCard).toContainText('APPLE WATCH MEDICATION CALCULATOR')
-  await expect(meddoseCard).toContainText('Prototype')
-  await expect(meddoseCard).toContainText('Apple Watch Series 11 の実機')
-  await expect(meddoseCard).toContainText('App Storeでは未公開')
+  await expect(meddoseCard).toContainText('Apple Watchのアプリ')
+  await expect(meddoseCard).toContainText('試作品')
+  await expect(meddoseCard).toContainText('薬をいつまで飲むのかを、腕時計の上で自動計算してくれるアプリ。')
   await expect(meddoseCard).not.toContainText('App Store公開済み')
   await expect(
-    meddoseCard.getByRole('link', { name: /App Store|Live Demo|Open Site|Open Demo/ }),
+    meddoseCard.getByRole('link', { name: /App Store|実際に見る/ }),
   ).toHaveCount(0)
   const meddosePoster = meddoseCard.locator('img')
   // The card now uses the dedicated landscape product visual, not a gallery capture.
@@ -130,7 +133,7 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
    * `View Project` and the poster both hand off to the repository in a new tab,
    * which is the rule every other card follows.
    */
-  const meddoseProject = meddoseCard.getByRole('link', { name: /View Project/ })
+  const meddoseProject = meddoseCard.getByRole('link', { name: /中身を見る/ })
   await expect(meddoseProject).toHaveCount(1)
   await expect(meddoseProject).toHaveAttribute('href', 'https://github.com/aicmode/MedDose')
   await expect(meddoseProject).toHaveAttribute('target', '_blank')
@@ -141,16 +144,16 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
   )
 
   /*
-   * `Details` is a button, never a link: it opens the shared dialog in place.
+   * 「詳しく見る」 is a button, never a link: it opens the shared dialog in place.
    * The URL, the tab count and the scroll position all have to survive it — the
    * visitor must come back to exactly the card they left.
    */
-  await expect(meddoseCard.getByRole('link', { name: /Details/ })).toHaveCount(0)
+  await expect(meddoseCard.getByRole('link', { name: /詳しく見る/ })).toHaveCount(0)
   const urlBeforeDialog = page.url()
   const tabsBeforeDialog = page.context().pages().length
   await meddoseCard.scrollIntoViewIfNeeded()
   const scrollBeforeDialog = await page.evaluate(() => window.scrollY)
-  await meddoseCard.getByRole('button', { name: /Details/ }).click()
+  await meddoseCard.getByRole('button', { name: /詳しく見る/ }).click()
   const meddoseDialog = page.getByRole('dialog', { name: 'MedDose' })
   await expect(meddoseDialog).toBeVisible()
   expect(page.url()).toBe(urlBeforeDialog)
@@ -175,20 +178,20 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
 
   // Header, exactly the fields every other work dialog prints.
   await expect(meddoseDialog.getByRole('heading', { name: 'MedDose', exact: true })).toBeVisible()
-  await expect(meddoseDialog).toContainText('Automation')
-  await expect(meddoseDialog).toContainText('Personal Project')
-  await expect(meddoseDialog).toContainText('Prototype')
-  await expect(meddoseDialog).toContainText('watchOS Clinical Calculation Prototype · 2026')
+  await expect(meddoseDialog).toContainText('作業の自動化')
+  await expect(meddoseDialog).toContainText('自主制作')
+  await expect(meddoseDialog).toContainText('試作品')
+  await expect(meddoseDialog).toContainText('腕時計で使う服薬スケジュール計算アプリ（2026年）')
   await expect(meddoseDialog).toContainText('臨時薬は開始日と朝・昼・夕・就')
   await expect(meddoseDialog).toContainText('Apple Watch上で処方内容と開始条件を選ぶだけで')
   await expect(meddoseDialog).toContainText('Apple Watch Series 11 の実機へXcodeからインストール')
   await expect(meddoseDialog).toContainText('医療判断・処方決定・投薬指示を行うアプリではありません')
   await expect(meddoseDialog).toContainText('Swift · SwiftUI · watchOS · Xcode · Git · GitHub')
-  await expect(meddoseDialog.getByRole('link', { name: /View Source on GitHub/ })).toHaveAttribute(
+  await expect(meddoseDialog.getByRole('link', { name: /GitHubで中身を見る/ })).toHaveAttribute(
     'href',
     'https://github.com/aicmode/MedDose',
   )
-  await expect(meddoseDialog.getByRole('link', { name: /Open Site|Live Demo|App Store/ })).toHaveCount(0)
+  await expect(meddoseDialog.getByRole('link', { name: /実際に見る|App Store/ })).toHaveCount(0)
 
   /*
    * Hero first, then the five captures in operation order — the hero is the
@@ -243,7 +246,7 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
   const apmCard = page.locator('#works article', {
     has: page.getByRole('heading', { name: 'AI Prompt Manager', exact: true }),
   })
-  await apmCard.getByRole('button', { name: /Details/ }).click()
+  await apmCard.getByRole('button', { name: /詳しく見る/ }).click()
   const apmDialog = page.getByRole('dialog', { name: 'AI Prompt Manager' })
   await expect(apmDialog).toBeVisible()
   expect(meddosePanel).toEqual(await panelOf(apmDialog))
@@ -251,7 +254,7 @@ test('sales content, navigation, dialogs, FAQ, and external-link safety', async 
   await expect(apmDialog).toBeHidden()
 
   const archive = page.locator('#archive')
-  await archive.locator('.works-tabs button', { hasText: /^Web Applications/ }).click()
+  await archive.locator('.works-tabs button', { hasText: /^仕事用アプリ/ }).click()
   await expect(archive.locator('article')).toHaveCount(6)
   await expect(
     archive.locator('article', { has: page.getByRole('heading', { name: 'MediChart Lite', exact: true }) }),
@@ -313,11 +316,20 @@ test('MedDose detail page across desktop, tablet, and mobile', async ({ page, re
     await expect(page.locator('h1')).toHaveCount(1)
 
     // Every required section, by its Japanese label.
-    for (const section of ['操作フロー', '課題', '解決策', '主な機能', '担当範囲', '使用技術', '成果', '注意事項']) {
+    for (const section of [
+      '操作の流れ',
+      'こまっていたこと',
+      'つくったもの',
+      '主な機能',
+      '担当した範囲',
+      '使った技術',
+      '確認できたこと',
+      'ご注意ください',
+    ]) {
       await expect(page.locator('main')).toContainText(section)
     }
 
-    await expect(page.locator('main')).toContainText('Prototype')
+    await expect(page.locator('main')).toContainText('試作品')
     await expect(page.locator('main')).toContainText('Apple Watch 実機動作確認済み')
     await expect(page.locator('main')).toContainText('Apple Watch Series 11 の実機')
     await expect(page.locator('main')).toContainText('医療判断・処方決定・投薬指示を行うアプリではありません')
@@ -327,7 +339,7 @@ test('MedDose detail page across desktop, tablet, and mobile', async ({ page, re
     for (const forbidden of ['App Store公開済み', '職場導入済み', '導入実績', 'ダウンロード数']) {
       await expect(page.locator('main')).not.toContainText(forbidden)
     }
-    await expect(page.getByRole('link', { name: /App Store|Live Demo|Open Site|Open Demo/ })).toHaveCount(0)
+    await expect(page.getByRole('link', { name: /App Store|実際に見る/ })).toHaveCount(0)
 
     // GitHub, reachable from the page, opening the right repository safely.
     const githubLinks = page.getByRole('link', { name: /GitHub/ })
@@ -383,7 +395,7 @@ test('MedDose detail page across desktop, tablet, and mobile', async ({ page, re
     expect(doc.scrollWidth).toBeLessThanOrEqual(doc.clientWidth)
 
     // Back to the works grid, in-site.
-    const back = page.getByRole('link', { name: /Back to Works/ }).first()
+    const back = page.getByRole('link', { name: /制作実績にもどる/ }).first()
     await expect(back).toHaveAttribute('href', '/#works')
   }
 
@@ -578,7 +590,7 @@ test('Handover AI card, AI Systems filter, details, and image across responsive 
     await page.goto('http://localhost:3000/', { waitUntil: 'networkidle' })
 
     const archive = page.locator('#archive')
-    const aiSystemsTab = archive.locator('.works-tabs button', { hasText: /^AI Systems/ })
+    const aiSystemsTab = archive.locator('.works-tabs button', { hasText: /^AIのしくみ/ })
     await expect(aiSystemsTab.locator('span')).toHaveText('2')
     await aiSystemsTab.click()
     await expect(archive.locator('article')).toHaveCount(2)
@@ -587,13 +599,11 @@ test('Handover AI card, AI Systems filter, details, and image across responsive 
       has: page.getByRole('heading', { name: 'Handover AI', exact: true }),
     })
     await expect(card).toHaveCount(1)
-    await expect(card).toContainText('AI NURSING HANDOVER ASSISTANT')
-    await expect(card).toContainText('AI Systems')
-    await expect(card).toContainText('Healthcare')
-    await expect(card).toContainText('AI Powered')
-    await expect(card).toContainText('Voice Input')
-    await expect(card).toContainText('Released')
-    await expect(card.getByRole('link', { name: /Open Site/ })).toHaveAttribute(
+    await expect(card).toContainText('看護の申し送り支援アプリ')
+    await expect(card).toContainText('AIのしくみ')
+    await expect(card).toContainText('公開中')
+    await expect(card).toContainText('申し送り内容を整理して、伝えやすくするツール。')
+    await expect(card.getByRole('link', { name: /実際に見る/ })).toHaveAttribute(
       'href',
       'https://handover-ai-chi.vercel.app',
     )
@@ -628,33 +638,34 @@ test('Handover AI card, AI Systems filter, details, and image across responsive 
       .poll(() => image.evaluate((element) => getComputedStyle(element).transform))
       .not.toBe(imageTransformBeforeHover)
 
-    await card.getByRole('button', { name: /Details/ }).click()
+    await card.getByRole('button', { name: /詳しく見る/ }).click()
     const dialog = page.getByRole('dialog', { name: 'Handover AI' })
     await expect(dialog).toBeVisible()
     for (const heading of [
-      'Overview',
-      'Problem',
-      'Solution',
-      'Main Features',
-      'AI Workflow',
-      'Voice Input / Text-to-Speech',
-      'SBAR',
-      'Confirmation Priority',
-      'Human Review Flow',
-      'Safety Design',
-      'Technology',
-      'Prototype Notice',
+      '概要',
+      'このプロジェクトについて',
+      'こまっていたこと',
+      'つくったもの',
+      'できること',
+      'AIが行う流れ',
+      '音声入力と読み上げ',
+      '申し送りの型（SBAR）',
+      '確認の優先度',
+      '人が確認してから完了する流れ',
+      '安全のための設計',
+      '使っている技術',
+      'ご注意（試作品です）',
     ]) {
       await expect(dialog.getByRole('heading', { name: heading, exact: true })).toBeVisible()
     }
     await expect(dialog).toContainText('実患者データは使用していません')
     await expect(dialog).toContainText('AIは診断・治療・看護判断を行わず')
     await expect(dialog).toContainText('Next.js · TypeScript · Web Speech API · AI API')
-    await expect(dialog.getByRole('link', { name: /Open Site/ })).toHaveAttribute(
+    await expect(dialog.getByRole('link', { name: /実際に見る/ })).toHaveAttribute(
       'href',
       'https://handover-ai-chi.vercel.app',
     )
-    await expect(dialog.getByRole('link', { name: /View Source|GitHub/ })).toHaveCount(0)
+    await expect(dialog.getByRole('link', { name: /GitHub/ })).toHaveCount(0)
     await page.keyboard.press('Escape')
     await expect(dialog).toBeHidden()
 
@@ -679,7 +690,7 @@ test('mobile menu reaches the requested sales sections', async ({ page }) => {
   await menuButton.click()
   await expect(page.getByRole('button', { name: 'メニューを閉じる' })).toHaveAttribute('aria-expanded', 'true')
 
-  await page.getByRole('link', { name: 'HEALTHCARE', exact: true }).click()
+  await page.getByRole('link', { name: '医療・介護', exact: true }).click()
   await expect(page).toHaveURL(/#healthcare$/)
   await expect(page.locator('#healthcare')).toBeInViewport()
   await expect(page.getByRole('button', { name: 'メニューを開く' })).toHaveAttribute('aria-expanded', 'false')
@@ -717,7 +728,7 @@ for (const viewport of viewports) {
 
     const archive = page.locator('#archive')
     const archiveCards = archive.locator('article')
-    const expandButton = page.getByRole('button', { name: 'VIEW ALL 29 WORKS' })
+    const expandButton = page.getByRole('button', { name: 'すべての実績を見る（29件）' })
 
     await expect(expandButton).toHaveAttribute('aria-expanded', 'false')
     await expect(expandButton).toHaveAttribute('aria-controls', 'works-archive-projects')
@@ -730,7 +741,7 @@ for (const viewport of viewports) {
     expect(buttonBox!.x + buttonBox!.width).toBeLessThanOrEqual(viewport.width)
 
     await expandButton.click()
-    await expect(page.getByRole('button', { name: 'SHOW LESS' }).first()).toHaveAttribute('aria-expanded', 'true')
+    await expect(page.getByRole('button', { name: '閉じる' }).first()).toHaveAttribute('aria-expanded', 'true')
     await expect(archiveCards).toHaveCount(29)
 
     const expandedHeight = await page.evaluate(() => document.documentElement.scrollHeight)
@@ -774,7 +785,7 @@ for (const viewport of viewports) {
     )
     expect(titleFits).toBe(true)
 
-    await pizzaCard.getByRole('button', { name: /Details/ }).click()
+    await pizzaCard.getByRole('button', { name: /詳しく見る/ }).click()
     await expect(page.getByRole('dialog', { name: 'NEW YORK PIZZA HOUSE' })).toBeVisible()
     await page.keyboard.press('Escape')
     await expect(page.getByRole('dialog', { name: 'NEW YORK PIZZA HOUSE' })).toBeHidden()
@@ -786,7 +797,7 @@ for (const viewport of viewports) {
       const expectedCount = Number(await categoryButton.locator('span').textContent())
       await categoryButton.click()
       await expect(archiveCards).toHaveCount(expectedCount)
-      await expect(page.getByRole('button', { name: 'SHOW LESS' }).first()).toHaveAttribute('aria-expanded', 'true')
+      await expect(page.getByRole('button', { name: '閉じる' }).first()).toHaveAttribute('aria-expanded', 'true')
     }
 
     await categoryButtons.first().click()
@@ -798,14 +809,14 @@ for (const viewport of viewports) {
     }))
     expect(pageWidth.scrollWidth).toBeLessThanOrEqual(pageWidth.clientWidth)
 
-    await page.getByRole('button', { name: 'SHOW LESS' }).last().click()
+    await page.getByRole('button', { name: '閉じる' }).last().click()
     await expect(archiveCards).toHaveCount(0)
     await expect(expandButton).toHaveAttribute('aria-expanded', 'false')
     await expect(expandButton).toBeFocused()
 
     await page.reload({ waitUntil: 'load' })
     await expect(page.locator('#archive article')).toHaveCount(0)
-    await expect(page.getByRole('button', { name: 'VIEW ALL 29 WORKS' })).toHaveAttribute('aria-expanded', 'false')
+    await expect(page.getByRole('button', { name: 'すべての実績を見る（29件）' })).toHaveAttribute('aria-expanded', 'false')
 
     expect(consoleErrors).toEqual([])
     expect(failedRequests).toEqual([])
@@ -820,12 +831,12 @@ for (const viewport of viewports) {
  * is actually on screen, without scrolling first.
  */
 const EXPECTED_CATEGORY_COUNTS = [
-  ['AI Systems', 2],
-  ['Automation', 1],
-  ['Web Applications', 6],
-  ['Websites', 4],
-  ['Landing Pages', 11],
-  ['EC', 5],
+  ['AIのしくみ', 2],
+  ['作業の自動化', 1],
+  ['仕事用アプリ', 6],
+  ['ホームページ', 4],
+  ['1ページの紹介サイト', 11],
+  ['ネットショップ', 5],
 ] as const
 
 const ARCHIVE_TOTAL = 29
@@ -865,8 +876,8 @@ for (const viewport of [
           }).length,
       )
 
-    const expandButton = page.getByRole('button', { name: 'VIEW ALL 29 WORKS' })
-    const showLessButton = page.getByRole('button', { name: 'SHOW LESS' }).first()
+    const expandButton = page.getByRole('button', { name: 'すべての実績を見る（29件）' })
+    const showLessButton = page.getByRole('button', { name: '閉じる' }).first()
     const tab = (name: string) =>
       archive.locator('.works-tabs button', { hasText: new RegExp(`^${name}`) }).first()
 
@@ -887,7 +898,7 @@ for (const viewport of [
     }
 
     // Returning to All from a category must restore all 29, still on screen.
-    await tab('All').click()
+    await tab('すべて').click()
     await expect(cards).toHaveCount(ARCHIVE_TOTAL)
     await expect.poll(shownCards).toBe(ARCHIVE_TOTAL)
 

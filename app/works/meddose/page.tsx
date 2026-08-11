@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import AnimateIn from '../../components/AnimateIn'
 import Footer from '../../components/Footer'
 import { projects } from '../../data/projects'
-import { STATUS_LABEL } from '../../types/project'
+import { CATEGORY_LABEL, PROJECT_TYPE_LABEL, STATUS_LABEL } from '../../types/project'
 
 /**
  * MedDose, at full length.
@@ -26,9 +26,9 @@ const PATH = '/works/meddose'
 
 const project = projects.find((entry) => entry.id === PROJECT_ID)
 
-const title = 'MedDose | Apple Watch Medication Calculator — AICMODE'
+const title = 'MedDose｜薬をいつまで飲むかを腕時計で自動計算するアプリ — AICMODE'
 const description =
-  '看護師としての実務経験から設計した、臨時薬の服用スケジュールを自動計算するApple Watchアプリ。Swift / SwiftUI / watchOSで実装し、Apple Watch Series 11の実機で動作確認まで行ったプロトタイプです。'
+  '看護師としての経験から作った、臨時薬の服用スケジュールを自動で計算するApple Watchアプリです。Apple Watch Series 11の実機で動作確認まで行った試作品です。'
 
 export const metadata: Metadata = {
   title,
@@ -47,14 +47,13 @@ export const metadata: Metadata = {
 }
 
 /** Section label + rule, shared by every block below the hero. */
-function SectionHeading({ no, en, ja, accent }: { no: string; en: string; ja: string; accent: string }) {
+function SectionHeading({ no, ja, accent }: { no: string; ja: string; accent: string }) {
   return (
     <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2 border-b border-white/[0.08] pb-4">
       <span aria-hidden="true" className="font-mono text-[10px] tracking-[0.2em]" style={{ color: accent, opacity: 0.75 }}>
         {no}
       </span>
-      <h2 className="text-[13px] font-semibold uppercase tracking-[0.34em] text-white/78 sm:text-[15px]">{en}</h2>
-      <p className="text-[11px] tracking-[0.14em] text-white/50">{ja}</p>
+      <h2 className="text-[16px] font-semibold tracking-[0.1em] text-white/85 sm:text-[18px]">{ja}</h2>
     </div>
   )
 }
@@ -116,25 +115,25 @@ export default function MedDosePage() {
           <AnimateIn>
             <Link
               href="/#works"
-              className="inline-flex items-center gap-2.5 text-[10px] font-semibold uppercase tracking-[0.3em] text-white/50 transition-colors duration-500 hover:text-white"
+              className="inline-flex items-center gap-2.5 text-[13px] font-semibold tracking-[0.08em] text-white/50 transition-colors duration-500 hover:text-white"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-3 w-3" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
               </svg>
-              Back to Works
+              制作実績にもどる
             </Link>
 
             <div className="mt-9 flex flex-wrap items-center gap-2">
               <span
-                className="border px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.26em]"
+                className="border px-2.5 py-1 text-[10px] font-semibold tracking-[0.1em]"
                 style={{ borderColor: `${accent}66`, background: `${accent}14`, color: accent }}
               >
-                {project.group}
+                {CATEGORY_LABEL[project.group]}
               </span>
-              <span className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.22em] text-white/58">
-                {project.projectType}
+              <span className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[10px] font-semibold tracking-[0.1em] text-white/58">
+                {PROJECT_TYPE_LABEL[project.projectType]}
               </span>
-              <span className="inline-flex items-center gap-1.5 border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.22em] text-white/58">
+              <span className="inline-flex items-center gap-1.5 border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[10px] font-semibold tracking-[0.1em] text-white/58">
                 <span
                   aria-hidden="true"
                   className="inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full"
@@ -142,18 +141,19 @@ export default function MedDosePage() {
                 />
                 {STATUS_LABEL[project.status]}
               </span>
-              <span className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.22em] text-white/58">
+              <span className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[10px] font-semibold tracking-[0.1em] text-white/58">
                 Apple Watch 実機動作確認済み
               </span>
             </div>
 
-            <p className="mt-7 text-[10px] uppercase tracking-[0.44em]" style={{ color: accent, opacity: 0.85 }}>
+            <p className="mt-7 text-[13px] tracking-[0.14em]" style={{ color: accent, opacity: 0.85 }}>
               {project.subtitle}
             </p>
-            <h1 className="mt-4 text-[clamp(3rem,11vw,7rem)] font-black uppercase leading-[0.86] tracking-[-0.02em] text-white">
+            <h1 className="mt-4 text-[clamp(3rem,11vw,7rem)] font-black leading-[0.86] tracking-[-0.02em] text-white">
               MedDose
             </h1>
-            <p className="mt-6 max-w-2xl text-sm leading-8 text-white/60">{project.summary}</p>
+            <p className="mt-6 max-w-2xl text-[16px] leading-8 text-white/72">{project.plainSummary}</p>
+            <p className="mt-4 max-w-2xl text-[14px] leading-8 text-white/55">{project.summary}</p>
 
             {statusNote ? (
               <p className="mt-6 max-w-2xl border-l border-white/12 pl-5 text-[12.5px] leading-7 text-white/52">
@@ -167,21 +167,21 @@ export default function MedDosePage() {
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center gap-2.5 border border-white/16 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-white/78 transition duration-500 hover:border-white/38 hover:text-white sm:w-auto"
+                  className="inline-flex w-full items-center justify-center gap-2.5 border border-white/16 px-6 py-4 text-[13px] font-semibold tracking-[0.08em] text-white/78 transition duration-500 hover:border-white/38 hover:text-white sm:w-auto"
                 >
                   <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
                     <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
                   </svg>
-                  View Source on GitHub
+                  GitHubで中身を見る
                   <span className="sr-only">（新しいタブで開きます）</span>
                   <ExternalArrow />
                 </a>
               ) : null}
               <Link
                 href="/#contact"
-                className="inline-flex w-full items-center justify-center border border-[rgba(212,175,55,0.4)] px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-[rgba(212,175,55,0.9)] transition duration-500 hover:border-[rgba(212,175,55,0.7)] hover:text-white sm:w-auto"
+                className="inline-flex w-full items-center justify-center border border-[rgba(212,175,55,0.4)] px-6 py-4 text-[13px] font-semibold tracking-[0.08em] text-[rgba(212,175,55,0.9)] transition duration-500 hover:border-[rgba(212,175,55,0.7)] hover:text-white sm:w-auto"
               >
-                Discuss a Similar Build
+                似たものを相談する
               </Link>
             </div>
           </AnimateIn>
@@ -190,7 +190,7 @@ export default function MedDosePage() {
           {gallery ? (
             <AnimateIn delay={80}>
               <section className="mt-20 md:mt-28">
-                <SectionHeading no="01" en="Screen Flow" ja="操作フロー" accent={accent} />
+                <SectionHeading no="01" ja="操作の流れ" accent={accent} />
                 {project.galleryNote ? (
                   <p className="mt-6 max-w-2xl text-[13px] leading-7 text-white/55">{project.galleryNote}</p>
                 ) : null}
@@ -236,14 +236,14 @@ export default function MedDosePage() {
           {/* ── Problem / Solution ─────────────────────────────────── */}
           <AnimateIn delay={80}>
             <section className="mt-20 md:mt-28">
-              <SectionHeading no="02" en="Problem" ja="課題" accent={accent} />
+              <SectionHeading no="02" ja="こまっていたこと" accent={accent} />
               <p className="mt-6 max-w-3xl text-[14px] leading-8 text-white/60">{project.problem}</p>
             </section>
           </AnimateIn>
 
           <AnimateIn delay={80}>
             <section className="mt-16 md:mt-20">
-              <SectionHeading no="03" en="Solution" ja="解決策" accent={accent} />
+              <SectionHeading no="03" ja="つくったもの" accent={accent} />
               <p className="mt-6 max-w-3xl text-[14px] leading-8 text-white/60">{project.solution}</p>
             </section>
           </AnimateIn>
@@ -251,7 +251,7 @@ export default function MedDosePage() {
           {/* ── Features ───────────────────────────────────────────── */}
           <AnimateIn delay={80}>
             <section className="mt-16 md:mt-20">
-              <SectionHeading no="04" en="Key Features" ja="主な機能" accent={accent} />
+              <SectionHeading no="04" ja="主な機能" accent={accent} />
               <Bullets items={project.features} accent={accent} />
             </section>
           </AnimateIn>
@@ -260,19 +260,20 @@ export default function MedDosePage() {
           {role ? (
             <AnimateIn delay={80}>
               <section className="mt-16 md:mt-20">
-                <SectionHeading no="05" en="Role" ja="担当範囲" accent={accent} />
+                <SectionHeading no="05" ja="担当した範囲" accent={accent} />
                 <ul className="mt-6 flex flex-wrap gap-2.5">
                   {role.map((item) => (
                     <li
                       key={item}
-                      className="border border-white/10 bg-white/[0.02] px-3.5 py-2.5 text-[9px] font-semibold uppercase tracking-[0.22em] text-white/60"
+                      className="border border-white/10 bg-white/[0.02] px-3.5 py-2.5 text-[12px] font-semibold tracking-[0.06em] text-white/60"
                     >
                       {item}
                     </li>
                   ))}
                 </ul>
-                <p className="mt-5 max-w-3xl text-[13px] leading-7 text-white/48">
-                  現場課題の発見から要件整理、計算ロジック設計、watchOS向けUI設計、SwiftUI実装、画面遷移、実機テスト、Git / GitHubでのバージョン管理、READMEの作成まで、すべて個人で担当しています。
+                <p className="mt-5 max-w-3xl text-[13.5px] leading-7 text-white/48">
+                  課題の発見から、必要な機能の整理、計算のしくみづくり、腕時計向けの画面設計、
+                  アプリの開発、実機での動作確認、説明書の作成まで、すべて一人で行いました。
                 </p>
               </section>
             </AnimateIn>
@@ -281,12 +282,12 @@ export default function MedDosePage() {
           {/* ── Stack ──────────────────────────────────────────────── */}
           <AnimateIn delay={80}>
             <section className="mt-16 md:mt-20">
-              <SectionHeading no="06" en="Tech Stack" ja="使用技術" accent={accent} />
+              <SectionHeading no="06" ja="使った技術" accent={accent} />
               <ul className="mt-6 flex flex-wrap gap-2.5">
                 {project.stack.map((item) => (
                   <li
                     key={item}
-                    className="border px-3.5 py-2.5 text-[9px] font-semibold uppercase tracking-[0.22em]"
+                    className="border px-3.5 py-2.5 text-[12px] font-semibold tracking-[0.06em]"
                     style={{ borderColor: `${accent}3d`, background: `${accent}0f`, color: accent }}
                   >
                     {item}
@@ -300,7 +301,7 @@ export default function MedDosePage() {
           {outcome ? (
             <AnimateIn delay={80}>
               <section className="mt-16 md:mt-20">
-                <SectionHeading no="07" en="Outcome" ja="成果" accent={accent} />
+                <SectionHeading no="07" ja="確認できたこと" accent={accent} />
                 <Bullets items={outcome} accent={accent} />
               </section>
             </AnimateIn>
@@ -310,10 +311,10 @@ export default function MedDosePage() {
           {safety ? (
             <AnimateIn delay={80}>
               <section className="mt-16 md:mt-20">
-                <SectionHeading no="08" en="Notice" ja="注意事項" accent={accent} />
+                <SectionHeading no="08" ja="ご注意ください" accent={accent} />
                 <div className="mt-6 border border-[rgba(212,175,55,0.28)] bg-[rgba(212,175,55,0.04)] p-6 sm:p-8">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[rgba(212,175,55,0.85)]">
-                    Medical Disclaimer
+                  <p className="text-[14px] font-semibold tracking-[0.1em] text-[rgba(212,175,55,0.85)]">
+                    医療に関する注意
                   </p>
                   <p className="mt-4 text-[13.5px] leading-8 text-white/64">{safety}</p>
                   <p className="mt-4 text-[13.5px] leading-8 text-white/64">
@@ -328,7 +329,7 @@ export default function MedDosePage() {
           <AnimateIn delay={80}>
             <div className="mt-20 flex flex-col gap-6 border-t border-white/[0.08] pt-8 md:mt-28 lg:flex-row lg:items-center lg:justify-between">
               <p className="max-w-xl text-[11.5px] leading-6 tracking-[0.04em] text-white/55">
-                自主開発のプロトタイプです。App Storeでは公開しておらず、実在クライアントの受託案件でもありません。ソースコードはGitHubで確認できます。
+自分で企画・制作した試作品です。App Storeでは公開しておらず、企業から依頼を受けて作ったものでもありません。中身はGitHubで公開しています。
               </p>
               <div className="flex flex-col gap-3 sm:flex-row">
                 {project.githubUrl ? (
@@ -336,18 +337,18 @@ export default function MedDosePage() {
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex w-full items-center justify-center gap-2 border border-white/14 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-white/70 transition duration-500 hover:border-white/32 hover:text-white sm:w-auto"
+                    className="inline-flex w-full items-center justify-center gap-2 border border-white/14 px-6 py-4 text-[13px] font-semibold tracking-[0.08em] text-white/70 transition duration-500 hover:border-white/32 hover:text-white sm:w-auto"
                   >
-                    GitHub Repository
+                    GitHubで中身を見る
                     <span className="sr-only">（新しいタブで開きます）</span>
                     <ExternalArrow />
                   </a>
                 ) : null}
                 <Link
                   href="/#works"
-                  className="inline-flex w-full items-center justify-center border border-white/14 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-white/70 transition duration-500 hover:border-white/32 hover:text-white sm:w-auto"
+                  className="inline-flex w-full items-center justify-center border border-white/14 px-6 py-4 text-[13px] font-semibold tracking-[0.08em] text-white/70 transition duration-500 hover:border-white/32 hover:text-white sm:w-auto"
                 >
-                  Back to Works
+                  制作実績にもどる
                 </Link>
               </div>
             </div>

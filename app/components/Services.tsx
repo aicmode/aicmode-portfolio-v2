@@ -3,12 +3,12 @@ import AnimateIn from './AnimateIn'
 import { capabilities, serviceEntrances, services } from '../data/services'
 
 /**
- * Two lists, two jobs.
+ * Three things, then the detail.
  *
- * `Services` is problem-first: the client recognises their own situation in the
- * left-hand line and reads what I would do about it. `Capabilities` is
- * deliverable-first: the concrete artefact that gets handed over. Previously
- * these two sections said the same thing twice under different headings.
+ * The three cards at the top are the whole answer to "what can I ask this
+ * person for". The problem list and the deliverable list underneath are for the
+ * visitor who wants to check that their own situation is covered — they are
+ * never the first thing read.
  */
 
 function ProblemRow({
@@ -42,10 +42,7 @@ function ProblemRow({
         <span aria-hidden="true" className="text-[10px]" style={{ color: 'rgba(212,175,55,0.8)' }}>
           →
         </span>
-        <span
-          className="text-[11px] font-semibold uppercase tracking-[0.22em]"
-          style={{ color: '#d8d8d8' }}
-        >
+        <span className="text-[13px] font-semibold tracking-[0.04em]" style={{ color: '#d8d8d8' }}>
           {name}
         </span>
       </div>
@@ -74,7 +71,7 @@ function CapabilityCard({ id, title, desc }: { id: string; title: string; desc: 
       >
         {id}
       </span>
-      <h4 className="text-base font-semibold tracking-wide md:text-lg" style={{ color: '#e8e8e8' }}>
+      <h4 className="text-[15px] font-semibold leading-7 tracking-wide md:text-base" style={{ color: '#e8e8e8' }}>
         {title}
       </h4>
       <p className="text-[13px] leading-relaxed" style={{ color: '#8a8a8a' }}>
@@ -88,18 +85,17 @@ function ServiceEntrance({
   no,
   title,
   audience,
+  body,
   items,
 }: (typeof serviceEntrances)[number]) {
   return (
     <article className="flex h-full flex-col border border-white/[0.08] bg-white/[0.018] p-6 md:p-7">
       <p className="font-mono text-[10px] tracking-[0.3em] text-[rgba(212,175,55,0.78)]">{no}</p>
-      <h3 className="mt-4 text-lg font-semibold tracking-[-0.01em] text-white md:text-xl">{title}</h3>
-      <p className="mt-4 text-[13px] leading-7 text-white/58">
-        <span className="mb-1 block text-[9px] font-semibold uppercase tracking-[0.28em] text-white/50">
-          こういう悩みの方へ
-        </span>
-        {audience}
-      </p>
+      <h3 className="mt-4 text-xl font-semibold leading-[1.4] tracking-[-0.01em] text-white md:text-2xl">
+        {title}
+      </h3>
+      <p className="mt-4 text-[14.5px] leading-7 text-white/72">{body}</p>
+      <p className="mt-3 text-[12.5px] leading-6 text-white/50">{audience}</p>
       <ul className="mt-5 space-y-2 border-t border-white/[0.07] pt-5">
         {items.map((item) => (
           <li key={item} className="flex gap-3 text-[13px] leading-6 text-white/58">
@@ -122,23 +118,24 @@ export default function Services() {
         {/* ── Services: problem-first ── */}
         <div className="max-w-4xl">
           <AnimateIn>
-            <p className="mb-8 text-[10px] uppercase tracking-[0.55em] text-zinc-400 md:mb-10">Services</p>
+            <p className="mb-8 text-[12px] tracking-[0.24em] text-zinc-400 md:mb-10">できること</p>
             <h2
-              className="font-black leading-[1.05] text-white"
-              style={{ fontSize: 'clamp(2rem, 5vw, 4.25rem)', letterSpacing: '-0.025em' }}
+              className="font-black leading-[1.2] text-white"
+              style={{ fontSize: 'clamp(1.9rem, 4.6vw, 3.6rem)', letterSpacing: '-0.025em' }}
             >
-              Start From
+              おもに、この3つを
               <br />
               <span style={{ color: 'transparent', WebkitTextStroke: '1px rgba(255,255,255,0.22)' }}>
-                The Problem.
+                お手伝いします。
               </span>
             </h2>
           </AnimateIn>
 
           <AnimateIn delay={150}>
             <div className="mt-10 max-w-2xl space-y-6 md:mt-14">
-              <p className="text-base leading-relaxed md:text-lg" style={{ color: '#c0c0c0' }}>
-                作りたいものではなく、解決したいことから始めます。下の左側にご自身の状況に近いものがあれば、そこからご相談ください。
+              <p className="text-[15px] leading-8 md:text-[17px]" style={{ color: '#c0c0c0' }}>
+                「何を作るか」ではなく、「何に困っているか」からお聞きします。
+                やり方が決まっていなくても大丈夫です。
               </p>
               <div
                 style={{
@@ -147,17 +144,10 @@ export default function Services() {
                   background: 'linear-gradient(to right, rgba(124,58,237,0.6), rgba(37,99,235,0.3))',
                 }}
               />
-              <p className="text-sm leading-relaxed md:text-base" style={{ color: '#7a7a7a' }}>
-                どの手段が適しているかは、業務の流れ・利用者・運用体制・予算によって変わります。
-                ヒアリングの結果、AIを使わないほうが早い場合はそのようにお伝えします。
+              <p className="text-[14px] leading-8 md:text-[15px]" style={{ color: '#7a7a7a' }}>
+                お話をうかがって、AIを使わないほうが早い場合は、そのままお伝えします。
               </p>
             </div>
-          </AnimateIn>
-
-          <AnimateIn delay={200}>
-            <p className="mt-10 text-[9px] uppercase tracking-[0.4em]" style={{ color: '#7a7a7a' }}>
-              Your Problem → What I Build
-            </p>
           </AnimateIn>
         </div>
 
@@ -171,9 +161,9 @@ export default function Services() {
 
         <AnimateIn delay={180}>
           <div className="mt-20 border-t border-white/[0.08] pt-10 md:mt-28 md:pt-14">
-            <p className="text-[10px] uppercase tracking-[0.5em] text-zinc-400">Detailed Services</p>
+            <p className="text-[12px] tracking-[0.24em] text-zinc-400">お困りごとから探す</p>
             <h3 className="mt-4 text-2xl font-black tracking-[-0.02em] text-white md:text-4xl">
-              課題から探す
+              こんなときに、ご相談ください
             </h3>
           </div>
         </AnimateIn>
@@ -190,16 +180,16 @@ export default function Services() {
         <div className="mt-28 md:mt-44">
           <AnimateIn>
             <div className="mb-4">
-              <p className="mb-4 text-[10px] uppercase tracking-[0.55em] text-zinc-400">Capabilities</p>
+              <p className="mb-4 text-[12px] tracking-[0.24em] text-zinc-400">お渡しできるもの</p>
               <h3
-                className="font-black leading-none text-white"
-                style={{ fontSize: 'clamp(2.2rem, 5.5vw, 4.5rem)', letterSpacing: '-0.02em' }}
+                className="font-black leading-[1.2] text-white"
+                style={{ fontSize: 'clamp(1.9rem, 4.6vw, 3.6rem)', letterSpacing: '-0.02em' }}
               >
-                What Gets Delivered
+                作ってお渡しするもの
               </h3>
             </div>
-            <p className="mb-12 max-w-2xl text-sm leading-relaxed md:mb-16 md:text-base" style={{ color: '#7a7a7a' }}>
-              納品物として渡せる成果物の一覧です。どれも上のWorks・Case Studiesで実装例を確認できます。
+            <p className="mb-12 max-w-2xl text-[14px] leading-8 md:mb-16 md:text-[15px]" style={{ color: '#7a7a7a' }}>
+              実際にお渡しできるものの一覧です。どれも上の制作実績で、動くものを見ていただけます。
             </p>
           </AnimateIn>
 

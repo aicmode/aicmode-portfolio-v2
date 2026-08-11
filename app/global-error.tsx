@@ -47,16 +47,16 @@ export default function GlobalError({
             onClick={() => unstable_retry()}
             style={{
               padding: '0.875rem 2.5rem',
-              fontSize: '10px',
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
+              fontSize: '13px',
+              fontWeight: 600,
+              letterSpacing: '0.08em',
               color: '#080808',
               cursor: 'pointer',
               border: '1px solid rgba(212,175,55,0.48)',
               background: 'linear-gradient(135deg, rgba(255,255,255,0.96), rgba(212,175,55,0.82))',
             }}
           >
-            Reload
+            再読み込み
           </button>
         </main>
       </body>

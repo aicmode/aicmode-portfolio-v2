@@ -38,9 +38,9 @@ const jsonLd = {
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
       name: "AICMODE",
-      alternateName: "AICMODE | AI Systems, Business Automation & Web Applications",
+      alternateName: "AICMODE｜AIを使って、面倒な仕事をラクにします。",
       description:
-        "鹿児島を拠点に、AIシステム、業務自動化、API連携、Webアプリを設計・開発。医療現場の業務理解を生かし、要件整理からMVP、テスト、公開まで一貫して対応するポートフォリオ。",
+        "毎日の繰り返し作業、情報整理、問い合わせ対応など、時間のかかる仕事をAIやシステムで効率化します。看護師として約9年間働いた経験を活かし、医療・介護分野の業務改善にも対応します。",
       inLanguage: "ja-JP",
       publisher: { "@id": `${SITE_URL}/#aicmode` },
       about: { "@id": `${SITE_URL}/#service` },
@@ -51,9 +51,9 @@ const jsonLd = {
       name: "AICMODE",
       alternateName: "AIC",
       url: SITE_URL,
-      jobTitle: "AI Developer / Web Developer",
+      jobTitle: "AI・システム開発",
       description:
-        "医療現場で約9年間培った業務理解を生かし、AIシステム開発、業務自動化、API連携、Webアプリ開発を要件整理から公開まで一貫して担当するフリーランス開発者。",
+        "看護師として約9年間働いた経験を生かし、業務の自動化、AIを使ったツール、仕事用のWebアプリを、相談から公開まで一人で担当します。",
       knowsAbout: [
         "AI Systems Development",
         "Business Automation",
@@ -97,7 +97,7 @@ const jsonLd = {
       "@id": `${SITE_URL}/#service`,
       name: "AICMODE",
       description:
-        "AIシステム開発、業務自動化、API連携、ダッシュボード構築、Webアプリ開発、医療・介護分野の業務整理、Webサイト・LP制作を提供します。",
+        "面倒な仕事の自動化、AIを使ったツールの制作、仕事に合わせたWebアプリの開発、医療・介護分野の業務改善、ホームページ制作を行います。",
       url: SITE_URL,
       areaServed: "JP",
       availableLanguage: ["ja", "en"],
@@ -183,18 +183,20 @@ export default function Home() {
       />
       <Nav />
       {/*
-        Order is deliberate for an AI / automation brief: the case studies come
-        before the web work, and the full archive sits after Contact so it can't
-        bury the sales-critical sections.
+        Order answers the visitor's questions in the order they ask them: what
+        can I ask for (Services), does this person understand my field
+        (Healthcare), has it been done (case studies, then the web work), how
+        would it go (Process), who is this (About). The full archive sits after
+        Contact so it can't bury the sales-critical sections.
       */}
       <main id="main">
         <Hero />
-        <CaseStudies />
-        <HealthcareAI />
-        <SelectedWorks />
         <Services />
-        <About />
+        <HealthcareAI />
+        <CaseStudies />
+        <SelectedWorks />
         <Process />
+        <About />
         <Trust />
         <Skills />
         <FAQ />

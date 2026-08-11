@@ -14,21 +14,10 @@ const cityLights = [
 ]
 
 /**
- * Ordered so an AI / automation client sees themselves in the first three
- * words. "Creative Web Design" stays — it is a real differentiator — but sits
- * after the AI capabilities rather than competing with them.
- *
- * RAG / vector search is deliberately not listed: there is no implementation to
- * point at yet, and a tag here reads as a claim.
+ * Three words a visitor can repeat to a colleague after one look. Anything that
+ * needs the industry's vocabulary to make sense does not belong here.
  */
-const disciplines = [
-  'AI Systems',
-  'Business Automation',
-  'Web Applications',
-  'API Integration',
-  'Dashboard Development',
-  'Creative Web Design',
-]
+const disciplines = ['作業の自動化', 'AIを使ったツール', '仕事用のWebアプリ']
 
 const skylineDots = [
   { top: '28%', left: '66%', size: 2, opacity: 0.24, delay: 0.2 },
@@ -251,84 +240,78 @@ export default function Hero() {
 
           {/* Left: branding — subtle parallax + fade out on scroll */}
           <motion.div className="text-center lg:text-left" style={{ opacity: contentOpacity, y: contentY }}>
+            {/* The AIC wordmark stays the brand, but it is no longer the first
+                thing read: the sentence below it is what tells a visitor, in
+                one second and without any jargon, what can be asked for here. */}
             <motion.p
-              className="text-[9px] md:text-[10px] tracking-[0.85em] text-zinc-400 mb-6 md:mb-8 uppercase"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            >
-              Portfolio · 2026
-            </motion.p>
-
-            <motion.h1
-              className="font-black leading-none text-[5.5rem] sm:text-[7rem] md:text-[8.5rem] lg:text-[9rem] xl:text-[10.5rem]"
+              className="mb-5 text-[2.4rem] font-black leading-none sm:text-[3rem] md:mb-7 md:text-[3.4rem]"
               style={{
-                letterSpacing: '0',
+                letterSpacing: '0.02em',
                 background: 'linear-gradient(160deg, #ffffff 0%, rgba(255,255,255,0.82) 45%, rgba(200,200,220,0.6) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
               }}
-              initial={{ opacity: 0, y: 52 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 1.2, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
               AIC
+            </motion.p>
+
+            <motion.p
+              className="mb-5 inline-flex items-center gap-3 border-y border-[rgba(212,175,55,0.28)] py-2.5 text-[clamp(1.15rem,2.8vw,1.65rem)] font-bold leading-relaxed tracking-[-0.01em] text-[rgba(232,204,113,0.96)] md:mb-6"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.1, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span
+                className="h-1.5 w-1.5 shrink-0 rotate-45 bg-[rgba(212,175,55,0.78)]"
+                aria-hidden="true"
+              />
+              医療・介護にも対応できます。
+            </motion.p>
+
+            <motion.h1
+              className="font-black leading-[1.3] tracking-[-0.02em] text-white"
+              style={{ fontSize: 'clamp(1.9rem, 5vw, 3.4rem)' }}
+              initial={{ opacity: 0, y: 32 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            >
+              AIを使って、
+              <br />
+              面倒な仕事を
+              <br />
+              <span className="text-[rgba(232,204,113,0.95)]">ラク</span>
+              にします。
             </motion.h1>
 
-            {/* The AIC wordmark stays the brand; this line is what tells a
-                visitor within one second that the discipline is AI systems. */}
-            <motion.p
-              className="mt-4 text-[13px] font-black uppercase leading-[1.15] tracking-[0.06em] text-white/88 sm:text-[17px] md:mt-6 md:text-[20px]"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.62, ease: [0.22, 1, 0.36, 1] }}
-            >
-              AI Systems
-              <span className="mx-2 text-[rgba(212,175,55,0.75)]" aria-hidden="true">
-                ×
-              </span>
-              Business Automation
-            </motion.p>
-
-            <motion.p
-              className="mt-4 text-[9px] uppercase tracking-[0.42em] text-zinc-400 md:mt-5 md:text-[11px]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.72, ease: 'easeOut' }}
-            >
-              Web Applications · API Integration · Healthcare
-            </motion.p>
-
             <motion.div
-              className="mx-auto mt-6 max-w-[34rem] lg:mx-0"
+              className="mx-auto mt-7 max-w-[34rem] lg:mx-0"
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.82, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
-              <p className="text-lg font-semibold leading-8 tracking-[-0.01em] text-white/88 md:text-[1.35rem] md:leading-9">
-                業務の課題を整理し、
-                <br />
-                AI・自動化・Webアプリで
-                <br />
-                現場で使える仕組みに変えます。
+              <p className="text-[15px] leading-8 text-white/78 md:text-[17px] md:leading-9">
+                毎日の繰り返し作業、情報整理、問い合わせ対応など、
+                時間のかかる仕事をAIやシステムを使って効率化します。
               </p>
-              <p className="mt-4 text-sm leading-7 text-white/58 md:text-[15px] md:leading-8">
-                医療現場で培った業務理解と、AI・API連携・Web開発の技術を生かし、
-                ヒアリング、要件定義、MVP設計、実装、テスト、公開まで一貫して対応します。
+              <p className="mt-4 border-l border-[rgba(212,175,55,0.45)] pl-4 text-[14px] leading-7 text-white/62 md:text-[15px] md:leading-8">
+                看護師として約9年間働いた経験を活かし、医療・介護分野の業務改善にも対応できます。
               </p>
             </motion.div>
 
             <motion.ul
-              className="mx-auto mt-6 flex max-w-[34rem] flex-wrap items-center justify-center gap-x-6 gap-y-2.5 lg:mx-0 lg:justify-start"
+              className="mx-auto mt-7 flex max-w-[34rem] flex-wrap items-center justify-center gap-x-3 gap-y-2.5 lg:mx-0 lg:justify-start"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.88, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
               {disciplines.map((discipline) => (
                 <li
                   key={discipline}
-                  className="text-[9px] uppercase tracking-[0.3em] text-white/56 md:text-[10px]"
+                  className="border border-white/12 px-3 py-1.5 text-[12px] tracking-[0.04em] text-white/70"
                 >
                   {discipline}
                 </li>
@@ -344,7 +327,7 @@ export default function Hero() {
               {/* Primary answers what can be discussed; secondary proves it. */}
               <motion.a
                 href="#services"
-                className="group inline-flex items-center justify-center gap-3 whitespace-nowrap px-6 py-3.5 text-[10px] uppercase tracking-[0.22em] text-[#080808] sm:px-8 md:px-9 md:py-4 md:text-[11px] md:tracking-[0.26em]"
+                className="group inline-flex items-center justify-center gap-3 whitespace-nowrap px-6 py-3.5 text-[13px] font-semibold tracking-[0.06em] text-[#080808] sm:px-8 md:px-9 md:py-4 md:text-[14px]"
                 style={{
                   border: '1px solid rgba(212,175,55,0.48)',
                   background: 'linear-gradient(135deg, rgba(255,255,255,0.96), rgba(212,175,55,0.82))',
@@ -356,7 +339,7 @@ export default function Hero() {
                   transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
                 }}
               >
-                相談できることを見る
+                できることを見る
                 <svg
                   className="h-3 w-3 transition-transform duration-300 group-hover:translate-y-0.5 md:h-3.5 md:w-3.5"
                   fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -367,7 +350,7 @@ export default function Hero() {
               </motion.a>
               <motion.a
                 href="#works"
-                className="group inline-flex items-center justify-center gap-3 whitespace-nowrap px-6 py-3.5 text-[10px] uppercase tracking-[0.24em] text-white sm:px-8 md:px-9 md:py-4 md:text-[11px] md:tracking-[0.28em]"
+                className="group inline-flex items-center justify-center gap-3 whitespace-nowrap px-6 py-3.5 text-[13px] font-semibold tracking-[0.06em] text-white sm:px-8 md:px-9 md:py-4 md:text-[14px]"
                 style={{
                   border: '1px solid rgba(255,255,255,0.18)',
                   background: 'transparent',
@@ -380,7 +363,7 @@ export default function Hero() {
                   transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
                 }}
               >
-                制作事例を見る
+                制作実績を見る
                 <svg
                   className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 md:h-3.5 md:w-3.5"
                   fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -400,10 +383,9 @@ export default function Hero() {
             transition={{ duration: 1.5, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
             {/*
-              Two real counts instead of one rounded "20+". "Projects Completed"
-              is gone on purpose: it reads as delivered client work, and none of
-              this portfolio was commissioned. The footer line says what these
-              actually are.
+              Two real counts instead of one rounded "20+". Nothing here says
+              "delivered" or "clients": none of this portfolio was commissioned,
+              and the line under the numbers says exactly that.
             */}
             <div
               className="relative flex w-full max-w-[26rem] flex-col items-center justify-center rounded-2xl px-8 py-10 sm:px-14 sm:py-14"
@@ -431,13 +413,13 @@ export default function Hero() {
                   </dd>
                   <dt className="text-left">
                     <span
-                      className="block text-[10px] uppercase tracking-[0.32em]"
+                      className="block text-[11px] tracking-[0.14em]"
                       style={{ color: 'rgba(212,175,55,0.78)' }}
                     >
-                      AI &amp; Automation
+                      AI・自動化
                     </span>
-                    <span className="mt-1 block text-[13px] font-bold tracking-[-0.01em] text-white sm:text-[15px]">
-                      Case Studies
+                    <span className="mt-1 block text-[14px] font-bold tracking-[0.02em] text-white sm:text-[16px]">
+                      のしくみ
                     </span>
                   </dt>
                 </div>
@@ -460,13 +442,13 @@ export default function Hero() {
                   </dd>
                   <dt className="text-left">
                     <span
-                      className="block text-[10px] uppercase tracking-[0.32em]"
+                      className="block text-[11px] tracking-[0.14em]"
                       style={{ color: 'rgba(212,175,55,0.78)' }}
                     >
-                      Web &amp; App
+                      サイト・アプリ
                     </span>
-                    <span className="mt-1 block text-[13px] font-bold tracking-[-0.01em] text-white sm:text-[15px]">
-                      Portfolio Projects
+                    <span className="mt-1 block text-[14px] font-bold tracking-[0.02em] text-white sm:text-[16px]">
+                      の制作実績
                     </span>
                   </dt>
                 </div>
@@ -478,8 +460,8 @@ export default function Hero() {
                   style={{ background: 'rgba(212,175,55,0.55)' }}
                   aria-hidden="true"
                 />
-                <p className="text-[9px] uppercase tracking-[0.26em]" style={{ color: 'rgba(255,255,255,0.56)' }}>
-                  Self-directed &amp; Training Builds
+                <p className="text-[11px] tracking-[0.08em]" style={{ color: 'rgba(255,255,255,0.56)' }}>
+                  すべて自分で企画・制作したものです
                 </p>
               </div>
             </div>
@@ -495,7 +477,7 @@ export default function Hero() {
         animate={{ opacity: 0.45 }}
         transition={{ delay: 1.5, duration: 1.2 }}
       >
-        <span className="text-[9px] tracking-[0.65em] text-zinc-400 uppercase">Scroll</span>
+        <span className="text-[10px] tracking-[0.3em] text-zinc-400">下へスクロール</span>
         <div className="w-[1px] h-10 md:h-12 overflow-hidden">
           <div className="w-full h-full bg-gradient-to-b from-zinc-500 to-transparent animate-scroll-line" />
         </div>

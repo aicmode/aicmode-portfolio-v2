@@ -20,9 +20,9 @@ const geistMono = Geist_Mono({
 
 const SITE_URL = "https://aicmode-portfolio.vercel.app";
 
-const title = "AICMODE | AI Systems, Business Automation & Web Applications";
+const title = "AICMODE｜AIを使って、面倒な仕事をラクにします。";
 const description =
-  "鹿児島を拠点に、AIシステム、業務自動化、API連携、Webアプリを設計・開発。医療現場の業務理解を生かし、要件整理からMVP、テスト、公開まで一貫して対応します。";
+  "毎日の繰り返し作業、情報整理、問い合わせ対応など、時間のかかる仕事をAIやシステムを使って効率化します。看護師として約9年間働いた経験を活かし、医療・介護分野の業務改善にも対応できます。鹿児島を拠点に活動しています。";
 
 export const metadata: Metadata = {
   // Required for relative OG / canonical URLs to resolve to absolute ones.
@@ -30,32 +30,20 @@ export const metadata: Metadata = {
   title,
   description,
   applicationName: "AICMODE",
+  // Search keywords, not page copy: these are the words people type, so the
+  // industry terms stay here even though none of them appear on the page.
   keywords: [
-    "AIシステム開発",
+    "AI 業務効率化",
     "業務自動化",
-    "AI自動化",
-    "業務効率化",
-    "API連携",
+    "AI 導入 相談",
+    "AIシステム開発",
     "Webアプリ開発",
-    "ダッシュボード開発",
-    "AI開発",
+    "業務システム 開発",
+    "医療 業務改善",
+    "介護 業務改善",
     "フリーランス エンジニア",
-    "Web制作",
     "ホームページ制作",
-    "LP制作",
-    "AI Developer",
-    "Business Automation",
-    "Workflow Automation",
-    "Next.js",
-    "React",
-    "TypeScript",
-    "Python",
-    "OpenAI API",
-    "Dify API",
-    "LINE Messaging API",
-    "Slack API",
-    "Google APIs",
-    "Vercel",
+    "鹿児島 Web制作",
     "AICMODE",
   ],
   authors: [{ name: "AICMODE", url: SITE_URL }],

@@ -22,8 +22,9 @@ export const projects: readonly Project[] = [
   {
     id: 'weather-calendar',
     title: 'Weather Calendar',
-    subtitle: 'WEATHER FORECAST WEB APP',
-    category: 'Weather Forecast & Calendar Web App',
+    subtitle: '天気予報アプリ',
+    category: '天気予報とカレンダーのアプリ',
+    plainSummary: '日付と場所を選ぶだけで、知りたい天気だけが一画面で見られるアプリ。',
     summary:
       '出張や屋外業務の予定を天気から決めたい人向け。OpenWeather APIと連携し、都市検索・現在地取得・日付選択で必要な予報だけを1画面に出します。',
     problem: '予定を立てるとき、天気アプリとカレンダーを行き来して情報を突き合わせる手間がかかる。',
@@ -39,7 +40,7 @@ export const projects: readonly Project[] = [
     projectType: 'Personal Project',
     status: 'released',
     stack: ['Next.js', 'TypeScript', 'OpenWeather API', 'Vercel'],
-    tags: ['API Integration', 'Responsive'],
+    tags: ['外部サービス連携', 'スマホ対応'],
     colorLabel: 'Next.js / TypeScript / OpenWeather API',
     accent: '#55a7ff',
     tint: '#0b1730',
@@ -55,8 +56,9 @@ export const projects: readonly Project[] = [
   {
     id: 'medichart-lite',
     title: 'MediChart Lite',
-    subtitle: 'HEALTHCARE WEB APPLICATION',
-    category: 'Clinical Record Management Demo',
+    subtitle: '医療記録の管理アプリ',
+    category: '患者情報と記録をまとめる医療向けアプリ',
+    plainSummary: '患者さんの情報や記録を、ひとつの画面で管理できるアプリ。',
     summary:
       '看護師経験を活かして設計した、患者情報・バイタル・看護記録・内服薬を一元管理できる医療業務デモアプリ。',
     problem: '患者情報、疾患、バイタル、看護記録、内服薬が別々に管理されると、患者状態の把握や記録確認の流れが分断される。',
@@ -72,12 +74,12 @@ export const projects: readonly Project[] = [
     ],
     safety:
       '学習・デモ用途として設計し、実在患者情報は扱わず、診断・治療提案・医療判断を行わない。',
-    role: ['Planning', 'UI Design', 'Frontend Development', 'Data Modeling', 'Testing', 'Deployment'],
+    role: ['企画', '画面デザイン', '画面の開発', 'データ設計', '動作確認', '公開作業'],
     group: 'Web Applications',
     projectType: 'Personal Project',
     status: 'released',
     stack: ['React', 'TypeScript', 'Vite', 'Recharts', 'Local Storage'],
-    tags: ['React', 'TypeScript', 'Healthcare', 'Recharts', 'Dark Mode'],
+    tags: ['医療', 'グラフ表示', 'ダークモード対応', 'スマホ対応'],
     colorLabel: 'React / TypeScript / Recharts / Clinical Workflow',
     accent: '#43a6ff',
     tint: '#06182a',
@@ -86,7 +88,7 @@ export const projects: readonly Project[] = [
     imagePosition: 'center',
     liveUrl: 'https://medichart-lite.vercel.app',
     githubUrl: 'https://github.com/aicmode/medichart-lite',
-    ctaLabel: 'Live Demo',
+    ctaLabel: '実際に見る',
     showGithubOnCard: true,
     order: 1.5,
     featured: true,
@@ -95,8 +97,9 @@ export const projects: readonly Project[] = [
   {
     id: 'meddose',
     title: 'MedDose',
-    subtitle: 'APPLE WATCH MEDICATION CALCULATOR',
-    category: 'watchOS Clinical Calculation Prototype',
+    subtitle: 'Apple Watchのアプリ',
+    category: '腕時計で使う服薬スケジュール計算アプリ',
+    plainSummary: '薬をいつまで飲むのかを、腕時計の上で自動計算してくれるアプリ。',
     summary:
       '看護師としての実務経験から設計した、臨時薬の服用スケジュールを手元で自動計算するApple Watchアプリ。処方内容と開始条件を選ぶだけで、最終服用日時と1回量まで算出します。',
     problem:
@@ -119,14 +122,14 @@ export const projects: readonly Project[] = [
       '看護師としての現場経験を、要件整理から計算ロジック設計・watchOS実装まで一貫して形にできることを検証',
     ],
     role: [
-      'Problem Discovery',
-      'Requirements',
-      'Calculation Logic',
-      'watchOS UI Design',
-      'SwiftUI Development',
-      'Navigation Flow',
-      'Device Testing',
-      'Documentation',
+      '課題の発見',
+      '要件整理',
+      '計算のしくみ設計',
+      '腕時計向けの画面デザイン',
+      'アプリの開発',
+      '画面のつながりの設計',
+      '実機での動作確認',
+      '説明書づくり',
     ],
     group: 'Automation',
     projectType: 'Personal Project',
@@ -134,7 +137,7 @@ export const projects: readonly Project[] = [
     statusNote:
       'Apple Watch Series 11 の実機へインストールし、入力から結果表示・再計算までの動作確認を完了しています。App Storeでは未公開のため、公開デモは用意していません。',
     stack: ['Swift', 'SwiftUI', 'watchOS', 'Xcode', 'Git', 'GitHub'],
-    tags: ['watchOS', 'SwiftUI', 'Healthcare', 'MVP'],
+    tags: ['Apple Watch', '医療', '試作品'],
     colorLabel: 'Swift / SwiftUI / watchOS / Clinical Workflow',
     accent: '#5ad2b0',
     tint: '#04140f',
@@ -181,7 +184,7 @@ export const projects: readonly Project[] = [
       },
     ],
     githubUrl: 'https://github.com/aicmode/MedDose',
-    ctaLabel: 'View Project',
+    ctaLabel: '中身を見る',
     order: 1.7,
     featured: true,
     year: 2026,
@@ -189,8 +192,9 @@ export const projects: readonly Project[] = [
   {
     id: 'ai-prompt-manager',
     title: 'AI Prompt Manager',
-    subtitle: 'AI PRODUCTIVITY WEB APP',
-    category: 'AI Prompt Management Web App',
+    subtitle: 'AIの指示文の管理アプリ',
+    category: 'AIへの指示文をためて再利用するアプリ',
+    plainSummary: 'AIへの指示文をためておき、すぐ探して使い回せるアプリ。',
     summary:
       'AIを日常業務で使うチーム・個人向け。プロンプトを検索・分類・お気に入り登録して再利用でき、JSONで持ち出せるため属人化を防げます。',
     problem: 'ChatGPTやClaudeで使うプロンプトがチャット履歴に埋もれ、毎回書き直しになる。',
@@ -206,7 +210,7 @@ export const projects: readonly Project[] = [
     projectType: 'Personal Project',
     status: 'released',
     stack: ['TypeScript', 'JavaScript', 'LocalStorage'],
-    tags: ['AI Workflow', 'Responsive'],
+    tags: ['AI活用', 'スマホ対応'],
     colorLabel: 'Web App / Responsive / AI Workflow',
     accent: '#a78bfa',
     tint: '#12101f',
@@ -221,8 +225,9 @@ export const projects: readonly Project[] = [
   {
     id: 'night-shift-care',
     title: 'NIGHT SHIFT CARE',
-    subtitle: 'NURSE SHIFT WEB APP',
-    category: 'Nurse Shift & Payroll Web App',
+    subtitle: '勤務と給与の管理アプリ',
+    category: '看護職向けのシフト・給与管理アプリ',
+    plainSummary: '夜勤の回数と給料の見込みを、スマホでまとめて管理できるアプリ。',
     summary:
       '夜勤のある看護職を想定した勤務管理アプリ。シフトと夜勤回数を記録し、給与の見込みまで同じ画面で確認できます。',
     problem: '夜勤回数と手当の計算を手帳と電卓でやっており、月末にまとめて突き合わせる負担が大きい。',
@@ -238,7 +243,7 @@ export const projects: readonly Project[] = [
     projectType: 'Personal Project',
     status: 'released',
     stack: ['HTML', 'CSS', 'JavaScript', 'LocalStorage'],
-    tags: ['Healthcare', 'Responsive'],
+    tags: ['医療', 'スマホ対応'],
     colorLabel: 'Web App / Dashboard UI / Responsive',
     accent: '#5fd2c2',
     tint: '#08201d',
@@ -253,8 +258,9 @@ export const projects: readonly Project[] = [
   {
     id: 'qr-code-bulk-generator',
     title: 'QR Code Bulk Generator',
-    subtitle: 'UTILITY WEB APP',
-    category: 'QR Code Bulk Generation Web App',
+    subtitle: 'QRコード作成ツール',
+    category: 'QRコードをまとめて作るツール',
+    plainSummary: 'たくさんのQRコードを一度に作って、まとめて保存できるツール。',
     summary:
       'イベント・店舗・SNS運用の担当者向け。複数URLからQRコードを一括生成し、PNGとZIPでまとめて配布できます。',
     problem: 'QRコードを1件ずつ生成サイトで作り、名前を付けて保存する作業が数十件分繰り返し発生する。',
@@ -270,7 +276,7 @@ export const projects: readonly Project[] = [
     projectType: 'Personal Project',
     status: 'released',
     stack: ['JavaScript', 'QRCode.js', 'JSZip'],
-    tags: ['Automation', 'Responsive'],
+    tags: ['自動化', 'スマホ対応'],
     colorLabel: 'Web App / Responsive / Bulk Processing',
     accent: '#3b82f6',
     tint: '#0b1220',
@@ -285,8 +291,9 @@ export const projects: readonly Project[] = [
   {
     id: 'date-calculator-tool',
     title: 'Date Calculator Tool',
-    subtitle: 'UTILITY WEB APP',
-    category: 'Date Calculation Utility Web App',
+    subtitle: '日付の計算ツール',
+    category: '日付の計算に使う業務ツール',
+    plainSummary: '「30日後は何曜日か」を、その場ですぐ計算できるツール。',
     summary:
       '納期や期限を毎日数える業務向け。基準日と日数から「○日後・○日前」を曜日付きで即算出し、結果をそのままコピーできます。',
     problem: '「発注から14営業日後は何曜日か」をカレンダーで数え直す作業が日常的に発生する。',
@@ -302,7 +309,7 @@ export const projects: readonly Project[] = [
     projectType: 'Personal Project',
     status: 'released',
     stack: ['HTML', 'CSS', 'JavaScript'],
-    tags: ['Utility', 'Responsive'],
+    tags: ['便利ツール', 'スマホ対応'],
     colorLabel: 'Web App / Utility Tool / Responsive',
     accent: '#8fb7e8',
     tint: '#0a1420',
@@ -317,8 +324,9 @@ export const projects: readonly Project[] = [
   {
     id: 'luxe-members',
     title: 'LUXE MEMBERS',
-    subtitle: 'REACT APP',
-    category: 'Luxury Members Experience / React App',
+    subtitle: '会員制ブランドのサイト',
+    category: '会員向けの閲覧と予約ができるサイト',
+    plainSummary: '会員だけが見られる商品ページと、予約までの流れを作ったサイト。',
     summary:
       '会員制ブランドを想定したReactアプリ。非公開コレクションの閲覧から予約までを、会員向けの導線として組み立てています。',
     problem: '一般公開したくないコレクションと予約導線を、同じサイト上でどう分けて見せるかが難しい。',
@@ -334,7 +342,7 @@ export const projects: readonly Project[] = [
     projectType: 'Concept Project',
     status: 'released',
     stack: ['React', 'Vite', 'CSS', 'Vercel'],
-    tags: ['React', 'Membership'],
+    tags: ['会員制', 'スマホ対応'],
     colorLabel: 'React / Vite / CSS / Vercel',
     accent: '#d7b878',
     tint: '#20130f',
@@ -349,8 +357,9 @@ export const projects: readonly Project[] = [
   {
     id: 'velvet-cream',
     title: 'VELVET CREAM',
-    subtitle: 'Luxury Ice Cream Brand Website',
-    category: 'Luxury Ice Cream Brand Website',
+    subtitle: 'アイスクリームブランドのサイト',
+    category: '複数ページのブランドサイト',
+    plainSummary: 'ブランドの世界観と商品を、順番に見せていく複数ページのサイト。',
     summary:
       '食品ブランドを想定した複数ページのブランドサイト。フレーバー紹介からギフト・ショップ導線まで、世界観と販売動線を両立させています。',
     problem: '商品の質は高いのに、Web上では世界観が伝わらず「ただの商品一覧」になってしまう。',
@@ -366,7 +375,7 @@ export const projects: readonly Project[] = [
     projectType: 'Concept Project',
     status: 'released',
     stack: ['HTML', 'CSS', 'JavaScript', 'Multi Page'],
-    tags: ['Brand Site', 'Food', 'Gift', 'Luxury', 'Multi Page'],
+    tags: ['ブランドサイト', '食品', 'ギフト', '複数ページ'],
     colorLabel: 'Black / Cream / Gold / Luxury',
     accent: '#d8bd7c',
     tint: '#120d08',
@@ -381,8 +390,9 @@ export const projects: readonly Project[] = [
   {
     id: 'evergreen-medical-center',
     title: 'Evergreen Medical Center',
-    subtitle: 'HEALTHCARE / MEDICAL',
-    category: 'Healthcare / Medical Website',
+    subtitle: 'クリニックのサイト',
+    category: '医療機関のホームページ',
+    plainSummary: '診療時間や予約方法が、初めての人でもすぐ分かるクリニックのサイト。',
     summary:
       'クリニックを想定した医療サイト。診療案内・医師紹介・予約導線を、初診の人が迷わない順番で並べています。',
     problem: '医療機関のサイトは情報量が多く、初診の人が診療時間と予約方法を見つけられない。',
@@ -398,7 +408,7 @@ export const projects: readonly Project[] = [
     projectType: 'Concept Project',
     status: 'released',
     stack: ['HTML', 'CSS', 'JavaScript', 'Medical UI'],
-    tags: ['Healthcare', 'Responsive'],
+    tags: ['医療', 'スマホ対応'],
     colorLabel: 'HTML / CSS / JavaScript / Medical UI',
     accent: '#7ac4dc',
     tint: '#0d1e2e',
@@ -413,8 +423,9 @@ export const projects: readonly Project[] = [
   {
     id: 'dify-ai-chat',
     title: 'Dify AI Chat',
-    subtitle: 'AI CHATBOT WEB APP',
-    category: 'Dify API Chatbot Web Application',
+    subtitle: 'AIチャット窓口',
+    category: 'サイトに置けるAIチャット窓口',
+    plainSummary: 'サイト上でAIが質問に答えてくれる、問い合わせ窓口。',
     summary:
       'AI窓口を試したい事業者向け。Dify APIとNode.js・Expressを連携し、ブラウザで会話できるチャットUIを公開しています。APIキーはサーバー側のみで扱います。',
     problem: 'AIチャットを自社サイトに置きたいが、APIキーの扱いと会話の継続方法が分からない。',
@@ -430,7 +441,7 @@ export const projects: readonly Project[] = [
     projectType: 'Training Project',
     status: 'released',
     stack: ['Node.js', 'Express', 'Dify API', 'Render'],
-    tags: ['AI Powered', 'Responsive'],
+    tags: ['AI活用', 'スマホ対応'],
     colorLabel: 'Web App / Node.js / Express',
     accent: '#5b8cff',
     tint: '#0a1122',
@@ -445,8 +456,9 @@ export const projects: readonly Project[] = [
   {
     id: 'handover-ai',
     title: 'Handover AI',
-    subtitle: 'AI NURSING HANDOVER ASSISTANT',
-    category: 'AI Nursing Handover Assistant',
+    subtitle: '看護の申し送り支援アプリ',
+    category: '申し送りの内容を整理するアプリ',
+    plainSummary: '申し送り内容を整理して、伝えやすくするツール。',
     summary:
       '看護師の申し送り業務を支援するAI Webアプリ。音声・テキストで入力した勤務中の情報をAIが整理し、Brief Summary・SBAR・確認優先度・次勤務への確認候補を生成。音声読み上げにも対応しています。',
     problem:
@@ -466,7 +478,7 @@ export const projects: readonly Project[] = [
       'Handover AIは、看護師の申し送り情報を入力・整理・確認するポートフォリオ用AI Webアプリのプロトタイプです。AIは判断主体ではなく、勤務中の情報を次勤務者が確認しやすい形へ整える支援役として設計しています。',
     detailSections: [
       {
-        title: 'AI Workflow',
+        title: 'AIが行う流れ',
         items: [
           '看護師が自由記載・音声・構造化フォームから勤務中の情報を入力',
           '入力内容をAI APIへ送り、Brief SummaryとSBARへ整理',
@@ -475,27 +487,27 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        title: 'Voice Input / Text-to-Speech',
+        title: '音声入力と読み上げ',
         body:
           'Web Speech APIによる日本語音声入力に対応し、キーボード入力が難しい場面でも情報を追加できます。生成したBrief SummaryとSBARは音声で読み上げられ、画面と音声の両方から内容を確認できます。',
       },
       {
-        title: 'SBAR',
+        title: '申し送りの型（SBAR）',
         body:
           '入力された事実をSituation・Background・Assessment・Recommendationの4区分へ整理します。AIが看護判断を代行するものではなく、入力情報を既定の枠組みに配置した確認用ドラフトです。',
       },
       {
-        title: 'Confirmation Priority',
+        title: '確認の優先度',
         body:
           '申し送り時に再確認したい項目をHIGH・MEDIUM・LOWで整理します。優先度は確定的な臨床評価ではなく、見落としを防ぐための確認順候補として提示します。',
       },
       {
-        title: 'Human Review Flow',
+        title: '人が確認してから完了する流れ',
         body:
           'AIの生成直後には申し送りを完了扱いにせず、看護師が原文とドラフトを見比べ、修正・コピー・読み上げ確認を行ってから完了するHuman-in-the-loopの導線を採用しています。',
       },
       {
-        title: 'Safety Design',
+        title: '安全のための設計',
         items: [
           'AIは診断・治療・看護判断を行わず、入力された情報の整理と確認候補の提示に限定',
           '優先度やRecommendationを確定指示として扱わない表現設計',
@@ -504,7 +516,7 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        title: 'Technology',
+        title: '使っている技術',
         items: [
           'Next.jsとTypeScriptによるレスポンシブなWebアプリ構成',
           'Web Speech APIによる日本語音声入力と音声読み上げ',
@@ -513,7 +525,7 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        title: 'Prototype Notice',
+        title: 'ご注意（試作品です）',
         body:
           '本作品はポートフォリオ用プロトタイプです。表示データはすべて架空で、実患者データは使用していません。医療現場での運用・診断・治療・看護判断を目的とした製品ではありません。',
       },
@@ -522,7 +534,7 @@ export const projects: readonly Project[] = [
     projectType: 'Personal Project',
     status: 'released',
     stack: ['Next.js', 'TypeScript', 'Web Speech API', 'AI API'],
-    tags: ['Healthcare', 'AI Powered', 'Voice Input'],
+    tags: ['医療', 'AI活用', '音声入力'],
     colorLabel: 'Next.js / TypeScript / Voice AI / Clinical Workflow',
     accent: '#58b9ff',
     tint: '#061523',
@@ -537,8 +549,9 @@ export const projects: readonly Project[] = [
   {
     id: 'blackline-detailing',
     title: 'BLACKLINE DETAILING',
-    subtitle: 'Premium Auto Care / Landing Page',
-    category: 'Premium Auto Care / Landing Page',
+    subtitle: 'カーケア店の紹介ページ',
+    category: '1ページの紹介サイト',
+    plainSummary: '洗車やコーティングの内容と料金が伝わる、1ページの紹介サイト。',
     summary:
       '高単価のカーケア店を想定したLP。洗車・コーティング・内装クリーニングを、光沢と質感で「安くない理由」が伝わる見せ方にしています。',
     problem: '同じ洗車メニューが並ぶだけでは、高単価のコーティングとの違いが伝わらない。',
@@ -566,8 +579,9 @@ export const projects: readonly Project[] = [
   {
     id: 'greenroot-energy',
     title: 'GREENROOT ENERGY',
-    subtitle: 'Renewable Energy Corporate Website',
-    category: 'Renewable Energy Corporate Website',
+    subtitle: '企業のホームページ',
+    category: '企業向けの複数ページサイト',
+    plainSummary: '何をしている会社なのかが、初めての人にも伝わるホームページ。',
     summary:
       '再生可能エネルギー企業を想定したコーポレートサイト。事業内容と技術を、環境配慮と信頼感の両方が伝わる構成にまとめています。',
     problem: 'BtoBの環境事業は説明が抽象的になりやすく、何を提供している会社か伝わらない。',
@@ -596,8 +610,9 @@ export const projects: readonly Project[] = [
   {
     id: 'kissa-matcha',
     title: 'KISSA MATCHA',
-    subtitle: 'Kyoto Uji Luxury Matcha Brand Site',
-    category: 'Luxury Matcha Brand',
+    subtitle: '抹茶ブランドの紹介ページ',
+    category: '1ページのブランド紹介サイト',
+    plainSummary: '産地と作り方の物語で、値段の理由が伝わる紹介ページ。',
     summary:
       '京都・宇治の高級抹茶ブランドを想定したLP。和モダンな配色と静かな動きで、価格に見合う品格を1ページで表現しています。',
     problem: '伝統素材の価値は、写真と価格を並べるだけでは高価格の理由として伝わらない。',
@@ -625,8 +640,9 @@ export const projects: readonly Project[] = [
   {
     id: 'luna-restaurant',
     title: 'LUNA Restaurant',
-    subtitle: 'RESTAURANT / FINE DINING',
-    category: 'Restaurant / Fine Dining',
+    subtitle: 'レストランのサイト',
+    category: '飲食店の紹介と予約導線',
+    plainSummary: '料理と店の雰囲気を見せてから、予約につなげるサイト。',
     summary:
       'ファインダイニングを想定したレストランサイト。料理・シェフ・空間を見せてから予約に進む、特別な食体験向けの導線です。',
     problem: '高価格帯の店ほど、メニュー表だけでは「その日の体験」を想像してもらえない。',
@@ -655,8 +671,9 @@ export const projects: readonly Project[] = [
   {
     id: 'sunset-bagel',
     title: 'SUNSET BAGEL',
-    subtitle: 'BAKERY / CAFÉ BRAND WEBSITE',
-    category: 'Bakery / Café Brand Website',
+    subtitle: 'ベーグル店のサイト',
+    category: '飲食店のブランドサイト',
+    plainSummary: '写真と余白で、お店の空気感を伝えるサイト。',
     summary:
       'ベーグル専門店を想定したブランドサイト。商品・コーヒー・朝の時間帯を軸に、写真と余白で店の空気感を伝えます。',
     problem: '個人店のサイトは情報を詰め込みがちで、店の雰囲気という一番の決め手が伝わらない。',
@@ -684,8 +701,9 @@ export const projects: readonly Project[] = [
   {
     id: 'brooklyn-bread-co',
     title: 'BROOKLYN BREAD CO.',
-    subtitle: 'BAKERY WEBSITE CONCEPT',
-    category: 'Bakery Website Concept',
+    subtitle: 'パン屋のサイト',
+    category: '6ページ構成のブランドサイト',
+    plainSummary: '情報量が多いお店向けに、6ページに分けて作ったサイト。',
     summary:
       'ベーカリーを想定した6ページ構成のサイト。ブランドストーリーからメニュー・アクセスまで、実案件の情報量を想定して制作しました。',
     problem: '1ページに収まらない情報量の店では、どのページに何を置くかの設計が必要になる。',
@@ -713,8 +731,9 @@ export const projects: readonly Project[] = [
   {
     id: 'core-45',
     title: 'CORE 45',
-    subtitle: 'Premium Fitness Studio',
-    category: 'Premium Fitness Studio',
+    subtitle: 'ジムの紹介ページ',
+    category: '1ページの紹介サイト',
+    plainSummary: 'どのプランを選べばいいかが、すぐ分かるジムの紹介ページ。',
     summary:
       'ブティックジムを想定したLP。45分という制約を軸に、パーソナル・ピラティス・コンディショニングを比較しやすく並べています。',
     problem: 'ジムの料金表は複数プランが並ぶだけで、自分がどれを選ぶべきか分からない。',
@@ -742,8 +761,9 @@ export const projects: readonly Project[] = [
   {
     id: 'urbn-hair-studio',
     title: 'URBN Hair Studio',
-    subtitle: 'BEAUTY / HAIR SALON',
-    category: 'Beauty / Hair Salon',
+    subtitle: '美容室のサイト',
+    category: '美容室の紹介と予約導線',
+    plainSummary: '担当者とヘアスタイルを見てから予約できる、美容室のサイト。',
     summary:
       '高級ヘアサロンを想定したサイト。サービス・スタイリスト・スタイル集を見せてから予約に進む構成です。',
     problem: 'サロン選びは「誰が担当するか」で決まるのに、多くのサイトは料金表止まりになっている。',
@@ -771,8 +791,9 @@ export const projects: readonly Project[] = [
   {
     id: 'new-york-pizza-house',
     title: 'NEW YORK PIZZA HOUSE',
-    subtitle: 'PIZZA EC WEBSITE',
-    category: 'Pizza EC Website',
+    subtitle: 'ピザ店のネット注文ページ',
+    category: '買い物カゴ付きの注文ページ',
+    plainSummary: 'メニューを選んでカゴに入れ、合計金額まで確認できる注文ページ。',
     summary:
       'ピザ店を想定したカート機能付きECデモ。商品選択から数量変更・合計表示までを、フロントエンドのみで実装しています。',
     problem: '飲食店のテイクアウト注文が電話のみで、ピーク時に対応しきれない。',
@@ -800,8 +821,9 @@ export const projects: readonly Project[] = [
   {
     id: 'tsuki-usagi-wagashi',
     title: 'Tsuki Usagi Wagashi',
-    subtitle: 'WAGASHI STORE',
-    category: 'Wagashi EC Site',
+    subtitle: '和菓子のネットショップ',
+    category: 'ギフト対応のオンラインストア',
+    plainSummary: '贈り物の選び方まで案内する、和菓子のネットショップ。',
     summary:
       '和菓子ブランドを想定したオンラインストア。商品一覧・ギフトボックス・カート導線をブランドの世界観の中に収めています。',
     problem: 'ギフト需要のある商材ほど、贈答用の選び方まで案内しないと購入前に離脱する。',
@@ -829,8 +851,9 @@ export const projects: readonly Project[] = [
   {
     id: 'saint-ave',
     title: 'SAINT AVE',
-    subtitle: 'LUXURY STREET EC',
-    category: 'Luxury Street EC Site',
+    subtitle: 'アパレルのネットショップ',
+    category: '着こなしを見せるオンラインストア',
+    plainSummary: '着こなし全体を見せて雰囲気を伝える、洋服のネットショップ。',
     summary:
       'ラグジュアリーストリート系のECデザイン。ルックブックを軸に、商品単体ではなくスタイル全体を見せる構成です。',
     problem: 'アパレルは商品単体の写真だけでは、着用イメージとブランドの温度感が伝わらない。',
@@ -858,8 +881,9 @@ export const projects: readonly Project[] = [
   {
     id: 'sweet-memories',
     title: 'SWEET MEMORIES',
-    subtitle: 'VINTAGE BAKERY',
-    category: 'Vintage Bakery / Nostalgic Dessert Brand',
+    subtitle: '焼き菓子ブランドのサイト',
+    category: 'ギフト向けブランドサイト',
+    plainSummary: '贈り物としての価値が伝わる、焼き菓子ブランドのサイト。',
     summary:
       '焼き菓子ブランドを想定したサイト。ヴィンテージ写真の質感で、贈り物としての情緒を前面に出しています。',
     problem: '焼き菓子は味の違いを写真で説明しづらく、価格だけで比較されてしまう。',
@@ -887,8 +911,9 @@ export const projects: readonly Project[] = [
   {
     id: 'noir-cafe',
     title: 'NOIR CAFÉ',
-    subtitle: 'CAFÉ BRANDING',
-    category: 'Hospitality Identity',
+    subtitle: 'カフェのサイト',
+    category: '飲食店の紹介サイト',
+    plainSummary: '夜の落ち着いた時間帯の雰囲気を伝える、カフェのサイト。',
     summary:
       '夜営業のカフェを想定したサイト。落ち着いた大人向けの時間帯を、余白と光の演出で伝えています。',
     problem: '昼と夜で客層が変わる店では、どちらの空気感を出すかでサイトの印象が決まってしまう。',
@@ -916,8 +941,9 @@ export const projects: readonly Project[] = [
   {
     id: 'aura',
     title: 'AURA',
-    subtitle: 'BEAUTY WELLNESS',
-    category: 'Beauty Ritual',
+    subtitle: '美容サロンの紹介ページ',
+    category: '1ページの紹介サイト',
+    plainSummary: '施術の流れを見せて、行く前の不安をなくす紹介ページ。',
     summary:
       'ビューティーウェルネスブランドを想定したLP。施術を「儀式」として見せ、体験前の期待値を作る構成です。',
     problem: '美容メニューは名前だけでは何をされるのか分からず、単価が高いほど不安が残る。',
@@ -945,8 +971,9 @@ export const projects: readonly Project[] = [
   {
     id: 'lumi-grooming',
     title: 'LUMI Grooming',
-    subtitle: 'GROOMING STUDIO',
-    category: 'Premium Pet Care',
+    subtitle: 'ペットサロンのサイト',
+    category: 'サービス紹介と予約導線',
+    plainSummary: 'サービス内容と料金を丁寧に見せ、安心して預けられるサイト。',
     summary:
       'ペットグルーミングサロンを想定したサイト。清潔感と丁寧さを、料金とサービス内容の見せ方で伝えています。',
     problem: 'ペットを預ける判断は不安が大きく、料金表だけでは信頼につながらない。',
@@ -974,8 +1001,9 @@ export const projects: readonly Project[] = [
   {
     id: 'deerify',
     title: 'DEERIFY',
-    subtitle: 'WILDLIFE PHOTOGRAPHY',
-    category: 'Wildlife Photography / Luxury Outdoor Experience',
+    subtitle: '写真ブランドの紹介ページ',
+    category: '1ページの紹介サイト',
+    plainSummary: '写真と物語で、撮影体験の価値を伝えるサイト。',
     summary:
       'ワイルドライフフォトブランドを想定したLP。足跡を追う構成で、作品と体験を物語として見せています。',
     problem: '写真作品は並べるだけでは印象が流れてしまい、体験の価値として残らない。',
@@ -1002,8 +1030,9 @@ export const projects: readonly Project[] = [
   {
     id: 'pulse',
     title: 'PULSE',
-    subtitle: 'FESTIVAL UI',
-    category: 'Music Festival Site',
+    subtitle: '音楽イベントのサイト',
+    category: 'イベントの案内サイト',
+    plainSummary: '出演者と時間割がすぐ分かる、音楽イベントのサイト。',
     summary:
       'DJ・音楽イベント向けのサイト。ラインナップとタイムテーブルを、高揚感のあるレイアウトで見せています。',
     problem: 'イベントサイトは出演者・日程・チケットが散らばり、行くかどうかの判断に時間がかかる。',

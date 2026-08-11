@@ -17,16 +17,22 @@ import type { CaseStudy } from '../types/project'
 export const caseStudies: readonly CaseStudy[] = [
   {
     id: 'medibrief-ai',
-    title: 'MediBrief',
-    subtitle: 'AI SYSTEM / HEALTHCARE',
+    title: '受診メモ作成ツール',
+    subtitle: 'MediBrief',
+    plainSummary: '話したいことを書くだけで、病院で伝えやすいメモに整理してくれるツール。',
     group: 'AI Systems',
     projectType: 'Self-directed Project',
-    role: ['Planning', 'Requirements', 'Design', 'Development', 'Testing'],
+    role: ['企画', '要件整理', '設計', '開発', '動作確認'],
     status: 'released',
     problem:
       '診察時間は短く、患者は緊張して伝えたいことを忘れるため、医師が判断に必要な情報が揃わない。',
     solution:
       '話し言葉の自由入力を、診察で伝えやすい7項目の受診メモへ自動で整理するWebアプリを設計・実装しました。',
+    plainFeatures: [
+      '話し言葉で書いた内容を、伝わる順番に整理',
+      'いつから、どんな症状かを時系列でまとめる',
+      '医師に聞きたいことを質問文にする',
+    ],
     features: [
       '自由入力から7項目の受診メモを生成',
       '時期と症状を組にした経過の整理',
@@ -87,17 +93,23 @@ export const caseStudies: readonly CaseStudy[] = [
   },
   {
     id: 'slack-line-summary',
-    title: 'Slack → AI Summary → LINE',
-    subtitle: 'AUTOMATION / MULTI-CHANNEL',
+    title: '連絡まとめ通知ツール',
+    subtitle: 'Slack / LINE 連携',
+    plainSummary: '大事な連絡をAIがまとめて、LINEへ届ける仕組み。',
     group: 'Automation',
     projectType: 'Training Project',
-    role: ['Development', 'Testing', 'Documentation'],
+    role: ['開発', '動作確認', '説明書づくり'],
     status: 'source-only',
     statusNote: 'Slack / OpenAI / LINE の各APIキーを設定して実行する構成のため、公開デモは用意していません。',
     problem:
       'Slackの流量が多い現場では重要な連絡が流れてしまい、期限や対応依頼の見落としが起きる。',
     solution:
       '指定チャンネルの最新メッセージをAIで日本語要約し、LINEへ自動送信するツールをPythonで実装しました。',
+    plainFeatures: [
+      'たくさんの連絡から大事な部分だけを抜き出す',
+      '「対応すること」「期限」に絞ってまとめる',
+      'まとめた内容をLINEに自動で送る',
+    ],
     features: [
       'Slack Web APIによるチャンネル履歴の取得',
       'OpenAI APIで「重要事項・対応事項・期限」に絞った要約',
@@ -155,11 +167,12 @@ export const caseStudies: readonly CaseStudy[] = [
   },
   {
     id: 'dify-ai-chat',
-    title: 'Dify AI Chat',
-    subtitle: 'AI SYSTEM / CHAT INTERFACE',
+    title: 'AIチャット窓口',
+    subtitle: 'Dify AI Chat',
+    plainSummary: 'よくある質問にAIが自動で答える、サイト用のチャット窓口。',
     group: 'AI Systems',
     projectType: 'Training Project',
-    role: ['Requirements', 'Design', 'Development', 'Testing'],
+    role: ['要件整理', '設計', '開発', '動作確認'],
     status: 'released',
     statusNote:
       '無料プランのホスティングを使用しているため、アクセスがない時間帯は初回表示に起動待ちが発生する場合があります。',
@@ -167,6 +180,11 @@ export const caseStudies: readonly CaseStudy[] = [
       '問い合わせ対応をAIで補助したいが、APIキーの扱いと会話の継続方法が分からず自社サイトに置けない。',
     solution:
       'Dify Chat APIをサーバー側で中継し、ブラウザから会話できるチャットUIをNode.js・Expressで実装・公開しました。',
+    plainFeatures: [
+      'サイト上でAIと会話できる',
+      '前の質問を覚えたまま会話が続く',
+      '話をリセットして最初から聞き直せる',
+    ],
     features: [
       'Dify Chat APIとの連携（blockingモード）',
       'conversation_idによる会話の継続',
@@ -227,16 +245,22 @@ export const caseStudies: readonly CaseStudy[] = [
   },
   {
     id: 'smart-expense-tracker',
-    title: 'Smart Expense Tracker',
-    subtitle: 'DASHBOARD / DATA VISUALIZATION',
+    title: '支出まとめ画面',
+    subtitle: 'Smart Expense Tracker',
+    plainSummary: 'お金の使い方を記録すると、合計やグラフが自動で出てくるツール。',
     group: 'Web Applications',
     projectType: 'Self-directed Project',
-    role: ['Planning', 'Design', 'Development', 'Testing'],
+    role: ['企画', '設計', '開発', '動作確認'],
     status: 'released',
     problem:
       '支出の記録と分析が別々のツールに分かれているため、合計や偏りを知るのに毎回集計し直すことになる。',
     solution:
       '記録・検索・集計・グラフ・CSV出力を1画面にまとめたダッシュボード型Webアプリを設計・実装しました。',
+    plainFeatures: [
+      '合計・件数・平均を自動で計算',
+      '何にいくら使ったかをグラフで表示',
+      '記録をまとめて書き出せる',
+    ],
     features: [
       '合計額・件数・平均額・最大カテゴリの自動集計',
       'Rechartsによるカテゴリ別円グラフと月別推移グラフ',
@@ -298,11 +322,12 @@ export const caseStudies: readonly CaseStudy[] = [
   },
   {
     id: 'google-meet-minutes',
-    title: 'Meeting Minutes Automation',
-    subtitle: 'AUTOMATION / SPEECH TO DOCUMENT',
+    title: '議事録の自動作成ツール',
+    subtitle: 'Meeting Minutes Automation',
+    plainSummary: '会議の録音から、議事録を自動で作る仕組み。',
     group: 'Automation',
     projectType: 'Training Project',
-    role: ['Development', 'Testing', 'Documentation'],
+    role: ['開発', '動作確認', '説明書づくり'],
     status: 'source-only',
     statusNote:
       'OpenAIとGoogleの認証情報を設定してローカル実行する構成のため、公開デモは用意していません。',
@@ -310,6 +335,11 @@ export const caseStudies: readonly CaseStudy[] = [
       '会議のあとに録音を聞き直して議事録を書き起こす作業が、毎回1件ごとに発生している。',
     solution:
       '録音ファイルから文字起こし・議事録生成・Googleドキュメント作成までを1コマンドで通すツールをPythonで実装しました。',
+    plainFeatures: [
+      '録音した会議の音声を文字にする',
+      '文字を読みやすい議事録にまとめる',
+      'Googleドキュメントに自動で保存',
+    ],
     features: [
       'Whisper APIによる音声の文字起こし',
       'OpenAI APIによる議事録の生成',
@@ -366,17 +396,23 @@ export const caseStudies: readonly CaseStudy[] = [
   },
   {
     id: 'ai-subscription-doctor',
-    title: 'AI Subscription Doctor',
-    subtitle: 'ARCHITECTURE STUDY / LINE BOT',
+    title: '固定費チェックツール',
+    subtitle: 'AI Subscription Doctor',
+    plainSummary: '毎月の固定費をLINEに送ると、AIが年間いくらか計算して見直し案を返す仕組み。',
     group: 'AI Systems',
     projectType: 'Architecture Study',
-    role: ['Planning', 'Requirements', 'Architecture'],
+    role: ['企画', '要件整理', '全体設計'],
     status: 'case-study',
     statusNote: '設計完了・実装準備中の案件です。設計書のみ公開しており、稼働中のBotはありません。',
     problem:
       'サブスクや固定費は1件が少額なため増えても気づきにくく、年間でいくら払っているかが把握できない。',
     solution:
       'LINEに固定費一覧を送るだけでAIが分類・年額換算・見直し提案を返し、スプレッドシートへ蓄積する仕組みを設計しました。',
+    plainFeatures: [
+      '送った内容から金額と項目を読み取る',
+      '1年でいくら払うかを自動で計算',
+      '見直したほうがよいものを順番に提案',
+    ],
     features: [
       'テキストからサービス名と金額を分解',
       'カテゴリの自動分類',

@@ -63,29 +63,60 @@ export const ALL_FILTER = 'All'
 /** A tab in the Works Archive: every category, plus "All". */
 export type Filter = typeof ALL_FILTER | Category
 
+/**
+ * Everything a visitor reads is Japanese, and plain: the enum member stays in
+ * English because it is a key in the code, never something shown on screen.
+ */
 export const STATUS_LABEL: Record<ProjectStatus, string> = {
-  released: 'Released',
-  'case-study': 'Case Study',
-  training: 'Training Project',
-  'temporary-unavailable': 'Demo Temporarily Unavailable',
-  'deployment-required': 'Deployment Required',
-  'source-only': 'Source Code Available',
-  prototype: 'Prototype',
+  released: '公開中',
+  'case-study': '設計のみ（企画書を公開）',
+  training: '公開中',
+  'temporary-unavailable': '公開を一時停止中',
+  'deployment-required': '完成済み・未公開',
+  'source-only': '手元で動かす形（内容を公開）',
+  prototype: '試作品（実機で動作確認済み）',
 }
 
 /**
  * Default label for the primary button. A project may override it, but the
  * default already keeps the promise honest: nothing that has no reachable
- * deployment can end up offering "Open Site".
+ * deployment can end up offering "実際に見る".
  */
 export const STATUS_CTA: Record<ProjectStatus, string> = {
-  released: 'Open Site',
-  'case-study': 'View Case Study',
-  training: 'Open Site',
-  'temporary-unavailable': 'View Source',
-  'deployment-required': 'View Source',
-  'source-only': 'View Source',
-  prototype: 'View Source',
+  released: '実際に見る',
+  'case-study': '内容を見る',
+  training: '実際に見る',
+  'temporary-unavailable': '中身を見る',
+  'deployment-required': '中身を見る',
+  'source-only': '中身を見る',
+  prototype: '中身を見る',
+}
+
+/** Japanese label for a category, used wherever a visitor reads one. */
+export const CATEGORY_LABEL: Record<Category, string> = {
+  'AI Systems': 'AIのしくみ',
+  Automation: '作業の自動化',
+  'Web Applications': '仕事用アプリ',
+  Websites: 'ホームページ',
+  'Landing Pages': '1ページの紹介サイト',
+  EC: 'ネットショップ',
+}
+
+/** Japanese label for how the work came about. */
+export const PROJECT_TYPE_LABEL: Record<ProjectType, string> = {
+  'Self-directed Project': '自主制作',
+  'Personal Project': '自主制作',
+  'Training Project': '学習のための制作',
+  'Concept Project': 'デザイン提案として制作',
+  'Architecture Study': '設計のみ',
+}
+
+/** Japanese label for the archive's "show everything" tab. */
+export const ALL_FILTER_LABEL = 'すべて'
+
+/** One place that turns any filter value into the word a visitor reads. */
+export function filterLabel(filter: Filter) {
+  return filter === ALL_FILTER ? ALL_FILTER_LABEL : CATEGORY_LABEL[filter]
 }
 
 /** True when the status means there is something live to open. */
@@ -122,10 +153,15 @@ export type ProjectDetailSection = {
 export type Project = {
   id: string
   title: string
-  /** Short uppercase kicker above the title. */
+  /** Small line above the title. Holds the original product name, if any. */
   subtitle: string
   /** Longer descriptor line, kept from the original cards. */
   category: string
+  /**
+   * One plain sentence, shown on the card before anything technical: what the
+   * thing does, in words someone outside the industry already uses.
+   */
+  plainSummary: string
   /** 2–3 lines: who it is for, what was built, how it is used. */
   summary: string
   /** One sentence: the situation the work addresses. */
@@ -189,8 +225,13 @@ export type Project = {
 export type CaseStudy = {
   id: string
   title: string
-  /** Uppercase kicker, e.g. "AI SYSTEM / HEALTHCARE". */
+  /** Small line above the title. Holds the original product name, if any. */
   subtitle: string
+  /**
+   * One plain sentence, shown on the card before anything technical: what the
+   * thing does, in words someone outside the industry already uses.
+   */
+  plainSummary: string
   group: Category
   projectType: ProjectType
   /** Work personally completed for this project; kept factual per repository documentation. */
@@ -201,6 +242,12 @@ export type CaseStudy = {
   problem: string
   solution: string
   features: readonly string[]
+  /**
+   * The three things the card lists, in plain Japanese. `features` keeps the
+   * precise wording for the detail dialog, where the technical vocabulary is
+   * what a reader has asked for.
+   */
+  plainFeatures: readonly string[]
   stack: readonly string[]
   accent: string
   detail: {

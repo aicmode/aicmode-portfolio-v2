@@ -8,11 +8,10 @@ import { projects, selectedProjects } from '../data/projects'
 import { caseStudies } from '../data/caseStudies'
 
 /**
- * The curated first read: every `featured` piece, ordered so an AI / web-app
- * client sees relevant work immediately. The count is read from the data rather
- * than written into the copy, so featuring one more piece can never leave the
- * sentence claiming a number the grid does not show. The full set stays
- * available in Works Archive.
+ * The curated first read. The count is taken from the data rather than written
+ * into the copy, so featuring one more piece can never leave the sentence
+ * claiming a number the grid does not show. The full set stays below, in the
+ * archive.
  */
 export default function SelectedWorks() {
   const [openId, setOpenId] = useState<string | null>(null)
@@ -30,21 +29,20 @@ export default function SelectedWorks() {
         <AnimateIn>
           <div className="mb-12 flex flex-col gap-8 border-b border-white/[0.08] pb-8 md:mb-16 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <p className="mb-5 text-[10px] uppercase tracking-[0.48em] text-white/56">Selected Works</p>
-              <h2 className="text-[clamp(3.4rem,13vw,10rem)] font-black uppercase leading-[0.82] text-white">
-                Works
+              <p className="mb-5 text-[12px] tracking-[0.2em] text-white/56">制作実績</p>
+              <h2 className="text-[clamp(2.2rem,7vw,4.6rem)] font-black leading-[1.15] tracking-[-0.02em] text-white">
+                サイトとアプリの
+                <br />
+                制作実績
               </h2>
-              <p
-                className="mt-4 text-[10px] uppercase tracking-[0.44em] md:text-[11px]"
-                style={{ color: 'rgba(212,175,55,0.82)' }}
-              >
-                {projects.length} Portfolio Projects · {caseStudies.length} AI Case Studies
+              <p className="mt-4 text-[13px] tracking-[0.08em]" style={{ color: 'rgba(212,175,55,0.82)' }}>
+                サイト・アプリ {projects.length}件 ／ AI・自動化 {caseStudies.length}件
               </p>
             </div>
-            <p className="max-w-xl text-sm leading-8 text-white/58 lg:text-right">
-              Webアプリ、業務効率化ツール、API連携、医療・ブランドサイトから、まず見ていただきたい
-              {selectedProjects.length}件を掲載しています。
-              各カードには使用した技術スタックと公開状況を記載し、Detailsから課題・実装内容まで確認できます。
+            <p className="max-w-xl text-[15px] leading-8 text-white/58 lg:text-right">
+              仕事に使うアプリ、便利ツール、お店や会社のサイトなどを作っています。
+              まず見ていただきたい{selectedProjects.length}件です。
+              「詳しく見る」から、作った理由や中身まで確認できます。
             </p>
           </div>
         </AnimateIn>
@@ -63,21 +61,22 @@ export default function SelectedWorks() {
 
         <AnimateIn delay={200}>
           <div className="mt-14 flex flex-col gap-6 border-t border-white/[0.07] pt-8 md:mt-20 lg:flex-row lg:items-center lg:justify-between">
-            <p className="max-w-xl text-[11.5px] leading-6 tracking-[0.04em] text-white/58">
-              掲載作品は自主制作および学習目的の制作物です。実在クライアントの受託案件ではないため、企業名・売上・利用者数は記載していません。
+            <p className="max-w-xl text-[12.5px] leading-7 text-white/58">
+              すべて自分で企画・制作したものです。実際の企業から依頼を受けて作ったものではないため、
+              企業名や売上、利用者数は記載していません。
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <a
                 href="#archive"
-                className="inline-flex w-full items-center justify-center border border-white/14 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.34em] text-white/70 transition duration-500 hover:border-white/32 hover:text-white sm:w-auto"
+                className="inline-flex w-full items-center justify-center border border-white/14 px-6 py-4 text-[12px] font-semibold tracking-[0.12em] text-white/70 transition duration-500 hover:border-white/32 hover:text-white sm:w-auto"
               >
-                View All {projects.length} Works
+                すべての実績を見る（{projects.length}件）
               </a>
               <a
                 href="#contact"
-                className="inline-flex w-full items-center justify-center border border-white/14 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.34em] text-white/70 transition duration-500 hover:border-[rgba(212,175,55,0.45)] hover:text-white hover:shadow-[0_0_44px_rgba(212,175,55,0.08)] sm:w-auto"
+                className="inline-flex w-full items-center justify-center border border-white/14 px-6 py-4 text-[12px] font-semibold tracking-[0.12em] text-white/70 transition duration-500 hover:border-[rgba(212,175,55,0.45)] hover:text-white hover:shadow-[0_0_44px_rgba(212,175,55,0.08)] sm:w-auto"
               >
-                Start a Project
+                相談してみる
               </a>
             </div>
           </div>

@@ -73,17 +73,17 @@ export default function Skills() {
       <div className="mx-auto max-w-7xl">
         <AnimateIn>
           <div className="mb-4">
-            <p className="mb-4 text-[10px] uppercase tracking-[0.55em] text-zinc-400">Capabilities</p>
+            <p className="mb-4 text-[12px] tracking-[0.24em] text-zinc-400">使える技術</p>
             <h2
-              className="font-black leading-none text-white"
-              style={{ fontSize: 'clamp(3rem, 7vw, 6rem)', letterSpacing: '-0.02em' }}
+              className="font-black leading-[1.2] text-white"
+              style={{ fontSize: 'clamp(1.9rem, 4.6vw, 3.6rem)', letterSpacing: '-0.02em' }}
             >
-              Skills
+              使える技術の一覧
             </h2>
           </div>
-          <p className="mb-12 max-w-2xl text-sm leading-relaxed md:mb-20 md:text-base" style={{ color: '#7a7a7a' }}>
-            実際に制作・公開したプロジェクトで使用した技術のみを記載しています。
-            使用例はWorksおよびAI &amp; Automation Case Studiesの各カードから確認できます。
+          <p className="mb-12 max-w-2xl text-[15px] leading-8 md:mb-20" style={{ color: '#7a7a7a' }}>
+            実際に作って公開したもので使った技術だけを載せています。
+            技術の名前が分からなくても問題ありません。やりたいことをお伝えください。
           </p>
         </AnimateIn>
 
@@ -92,10 +92,10 @@ export default function Skills() {
             <div key={group.title}>
               <AnimateIn delay={groupIndex * 60}>
                 <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <h3 className="text-[9px] uppercase tracking-[0.45em]" style={{ color: '#8a8a8a' }}>
+                  <h3 className="text-[13px] font-semibold tracking-[0.16em]" style={{ color: '#c0c0c0' }}>
                     {group.title}
                   </h3>
-                  <span className="text-[10px] tracking-[0.1em]" style={{ color: '#7a7a7a' }}>
+                  <span className="text-[12px] tracking-[0.04em]" style={{ color: '#7a7a7a' }}>
                     {group.note}
                   </span>
                 </div>
@@ -115,11 +115,11 @@ export default function Skills() {
           <div>
             <AnimateIn>
               <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <h3 className="text-[9px] uppercase tracking-[0.45em]" style={{ color: '#8a8a8a' }}>
-                  Creative &amp; Thinking
+                <h3 className="text-[13px] font-semibold tracking-[0.16em]" style={{ color: '#c0c0c0' }}>
+                  考え方・進め方
                 </h3>
-                <span className="text-[10px] tracking-[0.1em]" style={{ color: '#7a7a7a' }}>
-                  コードを書く前の部分
+                <span className="text-[12px] tracking-[0.04em]" style={{ color: '#7a7a7a' }}>
+                  作りはじめる前に考える部分
                 </span>
               </div>
             </AnimateIn>
