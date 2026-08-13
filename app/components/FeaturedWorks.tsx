@@ -17,6 +17,7 @@ const medichart = projects.find((project) => project.id === 'medichart-lite')!
 const meetingMinutes = caseStudies.find((study) => study.id === 'google-meet-minutes')!
 const difyChat = caseStudies.find((study) => study.id === 'dify-ai-chat')!
 const expenseTracker = caseStudies.find((study) => study.id === 'smart-expense-tracker')!
+const handoverMaker = projects.find((project) => project.id === 'handover-maker')!
 const medDose = projects.find((project) => project.id === 'meddose')!
 
 type FeaturedWork = {
@@ -60,6 +61,19 @@ const featuredWorks: readonly FeaturedWork[] = [
     status: medichart.status,
     liveUrl: medichart.liveUrl,
     githubUrl: medichart.githubUrl,
+  },
+  {
+    id: handoverMaker.id,
+    title: handoverMaker.title,
+    label: '医療・介護 × 業務効率化',
+    description: '申し送りを入居者ごとに整理し、記録から印刷まで一つの画面で行えます。',
+    image: handoverMaker.image,
+    imageAlt: handoverMaker.imageAlt,
+    accent: handoverMaker.accent,
+    projectType: handoverMaker.projectType,
+    status: handoverMaker.status,
+    liveUrl: handoverMaker.liveUrl,
+    githubUrl: handoverMaker.githubUrl,
   },
   {
     id: meetingMinutes.id,
