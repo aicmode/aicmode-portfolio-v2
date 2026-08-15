@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 import WorksArchive from '../components/WorksArchive'
 
 export const metadata: Metadata = {
-  title: '制作実績｜AICMODE',
+  title: '制作実績｜AIC',
   description: 'AI・自動化の制作事例と、サイト・アプリの全29件の制作実績をご覧いただけます。',
   alternates: { canonical: '/works' },
 }

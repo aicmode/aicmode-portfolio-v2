@@ -34,7 +34,7 @@ export default function GlobalError({
           }}
         >
           <p style={{ fontSize: '10px', letterSpacing: '0.4em', textTransform: 'uppercase', color: 'rgba(212,175,55,0.75)' }}>
-            AICMODE
+            AIC
           </p>
           <h1 style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0 }}>
             ページの読み込みに失敗しました

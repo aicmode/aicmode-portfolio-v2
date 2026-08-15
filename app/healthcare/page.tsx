@@ -4,7 +4,7 @@ import Footer from '../components/Footer'
 import HealthcareAI from '../components/HealthcareAI'
 
 export const metadata: Metadata = {
-  title: '医療・介護｜AICMODE',
+  title: '医療・介護｜AIC',
   description: '看護師として約9年間働いた経験を活かした、医療・介護分野の業務改善と安全への考え方をご紹介します。',
   alternates: { canonical: '/healthcare' },
 }

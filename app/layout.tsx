@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 
 const SITE_URL = "https://aicmode-portfolio.vercel.app";
 
-const title = "AICMODE｜AIを使って、面倒な仕事をラクにします。";
+const title = "AIC｜AIを使って、面倒な仕事をラクにします。";
 const description =
   "毎日の繰り返し作業、情報整理、問い合わせ対応など、時間のかかる仕事をAIやシステムを使って効率化します。看護師として約9年間働いた経験を活かし、医療・介護分野の業務改善にも対応できます。鹿児島を拠点に活動しています。";
 
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title,
   description,
-  applicationName: "AICMODE",
+  applicationName: "AIC",
   // Search keywords, not page copy: these are the words people type, so the
   // industry terms stay here even though none of them appear on the page.
   keywords: [
@@ -44,17 +44,17 @@ export const metadata: Metadata = {
     "フリーランス エンジニア",
     "ホームページ制作",
     "鹿児島 Web制作",
-    "AICMODE",
+    "AIC",
   ],
-  authors: [{ name: "AICMODE", url: SITE_URL }],
-  creator: "AICMODE",
+  authors: [{ name: "AIC", url: SITE_URL }],
+  creator: "AIC",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
     url: SITE_URL,
-    siteName: "AICMODE",
+    siteName: "AIC",
     locale: "ja_JP",
     title,
     description,

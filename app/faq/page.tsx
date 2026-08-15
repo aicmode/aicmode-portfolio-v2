@@ -7,7 +7,7 @@ import { faqs } from '../data/faqs'
 const SITE_URL = 'https://aicmode-portfolio.vercel.app'
 
 export const metadata: Metadata = {
-  title: 'よくある質問｜AICMODE',
+  title: 'よくある質問｜AIC',
   description: 'AI・自動化・Webアプリ制作のご相談前によくいただく質問をまとめています。',
   alternates: { canonical: '/faq' },
 }

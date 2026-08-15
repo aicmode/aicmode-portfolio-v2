@@ -6,8 +6,8 @@ import Skills from '../components/Skills'
 import Trust from '../components/Trust'
 
 export const metadata: Metadata = {
-  title: '自己紹介・スキル｜AICMODE',
-  description: 'AICMODEの詳しい自己紹介、得意なこと、制作で大切にしていること、技術・スキルをご紹介します。',
+  title: '自己紹介・スキル｜AIC',
+  description: 'AICの詳しい自己紹介、得意なこと、制作で大切にしていること、技術・スキルをご紹介します。',
   alternates: { canonical: '/about' },
 }
 

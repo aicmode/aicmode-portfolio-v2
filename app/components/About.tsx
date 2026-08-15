@@ -80,7 +80,7 @@ export default function About() {
           {/* Left */}
           <AnimateIn>
             <div>
-              <p className="mb-8 text-[12px] tracking-[0.24em] text-zinc-400 md:mb-10">AICMODE（アイシーモード）</p>
+              <p className="mb-8 text-[12px] tracking-[0.24em] text-zinc-400 md:mb-10">AIC（アイシー）</p>
 
               <div className="relative mb-10 pl-5 md:mb-14 md:pl-6">
                 <div

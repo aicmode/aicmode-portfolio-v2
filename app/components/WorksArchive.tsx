@@ -188,7 +188,7 @@ export default function WorksArchive({ defaultExpanded = false }: { defaultExpan
               <AnimateIn delay={200}>
                 <div className="mt-10 flex flex-col gap-6 border-t border-white/[0.07] pt-8 lg:flex-row lg:items-center lg:justify-between">
                   <div className="flex items-center gap-4">
-                    <span className="font-mono text-[9px] tracking-[0.4em] text-white/18">AICMODE</span>
+                    <span className="font-mono text-[9px] tracking-[0.4em] text-white/18">AIC</span>
                     <div className="h-px flex-1 bg-gradient-to-r from-white/[0.07] to-transparent" />
                     <span className="font-mono text-[9px] tracking-[0.3em] text-white/18">2026</span>
                   </div>

@@ -30,8 +30,8 @@ const jsonLd = {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "AICMODE",
-      alternateName: "AICMODE｜AIを使って、面倒な仕事をラクにします。",
+      name: "AIC",
+      alternateName: "AIC｜AIを使って、面倒な仕事をラクにします。",
       description:
         "毎日の繰り返し作業、情報整理、問い合わせ対応など、時間のかかる仕事をAIやシステムで効率化します。看護師として約9年間働いた経験を活かし、医療・介護分野の業務改善にも対応します。",
       inLanguage: "ja-JP",
@@ -41,8 +41,7 @@ const jsonLd = {
     {
       "@type": "Person",
       "@id": `${SITE_URL}/#aicmode`,
-      name: "AICMODE",
-      alternateName: "AIC",
+      name: "AIC",
       url: SITE_URL,
       jobTitle: "AI・システム開発",
       description:
@@ -88,7 +87,7 @@ const jsonLd = {
     {
       "@type": "ProfessionalService",
       "@id": `${SITE_URL}/#service`,
-      name: "AICMODE",
+      name: "AIC",
       description:
         "面倒な仕事の自動化、AIを使ったツールの制作、仕事に合わせたWebアプリの開発、医療・介護分野の業務改善、ホームページ制作を行います。",
       url: SITE_URL,

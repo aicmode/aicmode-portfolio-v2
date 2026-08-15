@@ -13,7 +13,7 @@ export default function HomeAbout() {
             <div>
               <p className="mb-4 text-[12px] tracking-[0.24em] text-zinc-400">自己紹介</p>
               <h2 className="text-[clamp(2rem,4.5vw,3.6rem)] font-black leading-[1.2] tracking-[-0.025em] text-white">
-                AICMODE
+                AIC
               </h2>
             </div>
             <p className="max-w-xl text-[15px] leading-8 text-white/58 md:justify-self-end">
@@ -27,7 +27,7 @@ export default function HomeAbout() {
             <div className="relative aspect-[16/9] min-h-32 overflow-hidden border border-white/10 sm:aspect-auto sm:min-h-48">
               <Image
                 src="/images/profile/profile-aicmode.jpg"
-                alt="AICMODEのプロフィール写真"
+                alt="AICのプロフィール写真"
                 fill
                 sizes="(max-width: 639px) calc(100vw - 80px), (max-width: 767px) 11rem, 14rem"
                 className="object-cover object-[center_38%] sm:object-center"

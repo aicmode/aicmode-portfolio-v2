@@ -26,7 +26,7 @@ const PATH = '/works/meddose'
 
 const project = projects.find((entry) => entry.id === PROJECT_ID)
 
-const title = 'MedDose｜薬をいつまで飲むかを腕時計で自動計算するアプリ — AICMODE'
+const title = 'MedDose｜薬をいつまで飲むかを腕時計で自動計算するアプリ — AIC'
 const description =
   '看護師としての経験から作った、臨時薬の服用スケジュールを自動で計算するApple Watchアプリです。Apple Watch Series 11の実機で動作確認まで行った試作品です。'
 
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'article',
     url: `${SITE_URL}${PATH}`,
-    siteName: 'AICMODE',
+    siteName: 'AIC',
     locale: 'ja_JP',
     title,
     description,

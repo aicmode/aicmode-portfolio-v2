@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 import Process from '../components/Process'
 
 export const metadata: Metadata = {
-  title: 'お問い合わせ｜AICMODE',
+  title: 'お問い合わせ｜AIC',
   description: 'ご相談から公開までの流れ、ご相談例、最初のご連絡でお伝えいただきたいことをご案内します。',
   alternates: { canonical: '/contact' },
 }

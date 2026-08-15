@@ -82,7 +82,7 @@ const BOOT_SCRIPT = `
       'font-family:system-ui,-apple-system,sans-serif';
     var brand=document.createElement('p');
     brand.style.cssText='margin:0;font-size:10px;letter-spacing:0.4em;color:rgba(212,175,55,0.75)';
-    brand.textContent='AICMODE';
+    brand.textContent='AIC';
     var title=document.createElement('h2');
     title.style.cssText='margin:0;font-size:1.125rem;font-weight:700';
     title.textContent='読み込みに失敗しました';

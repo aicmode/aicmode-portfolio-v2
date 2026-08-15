@@ -46,7 +46,7 @@ export default function HomeProcess() {
               />
               <div>
                 <p className="text-[11px] tracking-[0.18em] text-zinc-400">自己紹介</p>
-                <h2 id="home-profile-title" className="mt-3 text-xl font-semibold text-white">AICMODE</h2>
+                <h2 id="home-profile-title" className="mt-3 text-xl font-semibold text-white">AIC</h2>
                 <p className="mt-3 max-w-2xl text-[14px] leading-7 text-white/58">
                   看護師として約9年。鹿児島を拠点に、AIや業務効率化の制作をしています。オンラインで対応できます。
                 </p>

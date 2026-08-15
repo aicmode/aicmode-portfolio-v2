@@ -20,7 +20,7 @@ test.describe('short sales landing page', () => {
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' })
 
-    await expect(page).toHaveTitle('AICMODE｜AIを使って、面倒な仕事をラクにします。')
+    await expect(page).toHaveTitle('AIC｜AIを使って、面倒な仕事をラクにします。')
     const sectionIds = await page.locator('main#main > section').evaluateAll((sections) =>
       sections.map((section) => section.id),
     )
@@ -69,7 +69,7 @@ test.describe('short sales landing page', () => {
     const profile = page.locator('#about')
     await expect(profile).toContainText('看護師として約9年')
     await expect(profile).toContainText('ご相談から制作、公開まで一人で担当します。')
-    const profileImage = profile.getByAltText('AICMODEのプロフィール写真')
+    const profileImage = profile.getByAltText('AICのプロフィール写真')
     await expect(profileImage).toBeVisible()
     await profileImage.scrollIntoViewIfNeeded()
     await expect.poll(() => profileImage.evaluate((image: HTMLImageElement) => image.complete)).toBe(true)
@@ -99,7 +99,7 @@ test.describe('short sales landing page', () => {
 
     const navLabels = await page.locator('nav > div').first().getByRole('link').allTextContents()
     expect(navLabels.map((label) => label.trim())).toEqual([
-      'AICMODE',
+      'AIC',
       'できること',
       '制作実績',
       '医療・介護',

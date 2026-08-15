@@ -4,8 +4,8 @@ import Footer from '../components/Footer'
 import Services from '../components/Services'
 
 export const metadata: Metadata = {
-  title: 'できること｜AICMODE',
-  description: '業務の自動化、AIを使ったツール、仕事用Webアプリなど、AICMODEがお手伝いできることをご紹介します。',
+  title: 'できること｜AIC',
+  description: '業務の自動化、AIを使ったツール、仕事用Webアプリなど、AICがお手伝いできることをご紹介します。',
   alternates: { canonical: '/services' },
 }
 

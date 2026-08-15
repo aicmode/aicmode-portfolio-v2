@@ -94,7 +94,7 @@ export default function Nav() {
           href="#top"
           className="text-sm font-bold tracking-[0.3em] text-white transition-opacity duration-300 hover:opacity-70"
         >
-          AICMODE
+          AIC
         </Link>
 
         <div className="hidden items-center gap-6 lg:flex xl:gap-8">

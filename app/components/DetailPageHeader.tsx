@@ -19,7 +19,7 @@ export default function DetailPageHeader({
       <div className="relative mx-auto max-w-7xl">
         <nav aria-label="詳細ページナビゲーション" className="mb-14 flex items-center justify-between gap-5">
           <Link href="/" className="text-sm font-bold tracking-[0.3em] text-white transition-opacity hover:opacity-70">
-            AICMODE
+            AIC
           </Link>
           <Link
             href="/#contact"
