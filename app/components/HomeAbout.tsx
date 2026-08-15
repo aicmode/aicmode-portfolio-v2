@@ -34,9 +34,14 @@ export default function HomeAbout() {
               />
             </div>
             <div className="space-y-3">
-              <p className="text-[17px] font-semibold leading-7 tracking-[0.04em] text-white/90">
-                幸野 魁飛
-              </p>
+              <div className="space-y-1.5">
+                <p className="text-[17px] font-semibold leading-7 tracking-[0.04em] text-white/90">
+                  幸野 魁飛
+                </p>
+                <p className="text-[11px] leading-5 tracking-[0.12em] text-white/45 sm:text-[12px]">
+                  AI Engineer | Automation Developer
+                </p>
+              </div>
               <p className="text-[15px] leading-8 text-white/72">
                 看護師として約9年間勤務した経験を活かし、仕事の困りごとを整理して、AIやWebアプリで解決します。
               </p>
