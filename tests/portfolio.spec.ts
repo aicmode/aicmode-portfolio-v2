@@ -50,10 +50,11 @@ test.describe('short sales landing page', () => {
     await expect(page.getByRole('link', { name: '医療・介護について詳しく見る' })).toHaveAttribute('href', '/healthcare')
 
     const featured = page.locator('#works article')
-    await expect(featured).toHaveCount(6)
+    await expect(featured).toHaveCount(7)
     for (const title of [
       'MediBrief',
       'MediChart Lite',
+      'Handover Maker',
       'Meeting Minutes Automation',
       'Dify AI Chat',
       'Smart Expense Tracker',
@@ -64,7 +65,7 @@ test.describe('short sales landing page', () => {
     await expect(page.locator('#works').getByText(/自主制作/).first()).toBeVisible()
     await expect(page.locator('#works').getByText(/学習のための制作/).first()).toBeVisible()
     await expect(page.locator('#works').getByText(/試作品（実機で動作確認済み）/)).toBeVisible()
-    await expect(page.getByRole('link', { name: 'すべての制作実績を見る（29件）' })).toHaveAttribute('href', '/works')
+    await expect(page.getByRole('link', { name: 'すべての制作実績を見る（30件）' })).toHaveAttribute('href', '/works')
 
     const profile = page.locator('#about')
     await expect(profile).toContainText('看護師として約9年')
@@ -131,7 +132,7 @@ test.describe('short sales landing page', () => {
     }))
     expect(dimensions.scrollWidth).toBe(dimensions.clientWidth)
     expect(dimensions.height).toBeLessThan(12000)
-    await expect(page.locator('#works article')).toHaveCount(6)
+    await expect(page.locator('#works article')).toHaveCount(7)
 
     await page.getByRole('button', { name: 'メニューを開く' }).click()
     await expect(page.getByRole('link', { name: 'お問い合わせ', exact: true })).toBeVisible()
@@ -158,12 +159,61 @@ test.describe('detail pages retain the removed information', () => {
     }
   })
 
-  test('works retains six AI cases and all 29 site/app records', async ({ page }) => {
+  test('works retains six AI cases and all 30 site/app records', async ({ page }) => {
     await page.goto(`${BASE_URL}/works`, { waitUntil: 'networkidle' })
     await expect(page.locator('#case-studies article')).toHaveCount(6)
-    await expect(page.locator('#archive article')).toHaveCount(29)
-    await expect(page.locator('#archive')).toContainText('全29件')
+    await expect(page.locator('#archive article')).toHaveCount(30)
+    await expect(page.locator('#archive')).toContainText('全30件')
     await expect(page.getByRole('heading', { name: 'MediChart Lite', exact: true })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Handover Maker', exact: true })).toBeVisible()
+  })
+
+  test('Handover Maker keeps the shared card, detail, links, and responsive layout', async ({ page }) => {
+    const runtimeErrors = collectRuntimeErrors(page)
+
+    for (const width of [1440, 390, 320]) {
+      await page.setViewportSize({ width, height: width === 1440 ? 900 : 844 })
+      await page.goto(`${BASE_URL}/works`, { waitUntil: 'networkidle' })
+
+      const handoverCard = page.locator('#archive article').filter({
+        has: page.getByRole('heading', { name: 'Handover Maker', exact: true }),
+      })
+      await expect(handoverCard).toHaveCount(1)
+      await expect(handoverCard).toContainText('完全オフライン対応ツール')
+      await expect(handoverCard.getByRole('link', { name: /実際に見る/ })).toHaveAttribute(
+        'href',
+        'https://aicmode.github.io/offline-handover/',
+      )
+      await expect(handoverCard.getByRole('link', { name: /GitHubで見る/ })).toHaveAttribute(
+        'href',
+        'https://github.com/aicmode/offline-handover',
+      )
+
+      const cardImage = handoverCard.getByAltText(/申し送りメーカーVer2\.0/)
+      await expect(cardImage).toBeVisible()
+      await expect.poll(() => cardImage.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0)
+
+      await handoverCard.scrollIntoViewIfNeeded()
+      await page.screenshot({ path: `/tmp/aicmode-handover-card-${width}.png` })
+
+      await handoverCard.getByRole('button', { name: /詳しく見る/ }).click()
+      const dialog = page.getByRole('dialog', { name: 'Handover Maker' })
+      await expect(dialog).toBeVisible()
+      await expect(dialog).toContainText('Nodeテスト125件成功')
+      await expect(dialog).toContainText('公開デモには実在する個人情報を入力しないでください')
+
+      await page.waitForTimeout(500)
+      await page.screenshot({ path: `/tmp/aicmode-handover-detail-${width}.png` })
+
+      const dimensions = await page.evaluate(() => ({
+        scrollWidth: document.documentElement.scrollWidth,
+        clientWidth: document.documentElement.clientWidth,
+      }))
+      expect(dimensions.scrollWidth).toBe(dimensions.clientWidth)
+
+    }
+
+    expect(runtimeErrors).toEqual([])
   })
 
   test('about retains profile, strengths, values, and skills', async ({ page }) => {

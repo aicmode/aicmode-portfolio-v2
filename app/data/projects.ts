@@ -95,6 +95,94 @@ export const projects: readonly Project[] = [
     year: 2026,
   },
   {
+    id: 'handover-maker',
+    title: 'Handover Maker',
+    subtitle: '申し送りメーカー',
+    category: '介護・医療 × 業務効率化',
+    plainSummary: '介護・医療現場の申し送り、記録、予定、検索、印刷を一つにまとめた完全オフライン対応ツール。',
+    summary:
+      '介護・医療現場向けに、申し送り・記録・予定・検索・印刷を一画面へまとめた業務支援ツール。外部APIや外部AIを使わず、入力内容をブラウザ内だけに保存する公開デモVer2.0です。',
+    problem:
+      '介護・医療現場では、申し送り・予定・記録・印刷などが分散しやすく、確認や転記に時間がかかる。',
+    solution:
+      '看護師として現場で働いた経験をもとに業務フローを整理し、申し送りから検索、A4横印刷、バックアップまでを単一HTMLへ統合しました。',
+    features: [
+      'A〜Dの4ブロック管理（各20名・合計最大80名）',
+      '申し送り入力、前日からの引き継ぎ、文章整理',
+      '入居者管理と、日勤／夜勤・曜日別の記録項目設定',
+      '記録項目を再度ONにしたときも曜日設定を戻せる記録設定メモリー',
+      '1回予定・定期予定と、過去予定の表示切り替え',
+      '氏名・部屋番号・日付・関連語を対象にした曖昧検索と並べ替え',
+      '人数と内容量に合わせて行高を調整するA4横のAdaptive印刷',
+      'JSONバックアップの保存・復元と、公開デモの初期化',
+    ],
+    overview:
+      'Handover Maker（申し送りメーカー）は、現場で分散しやすい情報を一つの流れで扱えるように設計した、完全オフライン対応の業務支援ツールです。公開版は特定施設から切り離した汎用ポートフォリオデモVer2.0で、初回表示時に61名分の架空データを生成します。',
+    detailSections: [
+      {
+        title: '作った理由',
+        body:
+          '看護師として現場で働いた経験をもとに、確認と転記が重なりやすい申し送り・予定・記録・印刷の流れを整理し、一画面で完結する道具として設計しました。',
+      },
+      {
+        title: '完全オフライン設計',
+        items: [
+          'ビルド不要・依存パッケージなしのSingle HTML構成',
+          '外部API・外部AI・CDN・解析タグを使わず、外部通信なし',
+          '入力内容は表示中のブラウザのlocalStorageだけに保存',
+          'file://の直接起動と静的Webホスティングの両方に対応',
+        ],
+      },
+      {
+        title: 'デモの構成',
+        items: [
+          'Aブロック15名、Bブロック12名、Cブロック18名、Dブロック16名の合計61名',
+          '各ブロックは最大20名、4ブロック合計で最大80名',
+          '人物名・部屋番号・申し送り・記録・予定はすべて架空',
+        ],
+      },
+      {
+        title: 'セキュリティとプライバシー',
+        items: [
+          "Content Security Policyでdefault-srcとconnect-srcを'none'に設定",
+          '動的表示のエスケープによるXSS対策',
+          'バックアップ復元前の検証とprototype pollution対策',
+          '壊れた保存データを退避し、無言で上書きしない設計',
+        ],
+      },
+    ],
+    outcome: [
+      'Nodeテスト125件成功',
+      'ブラウザテスト468 assertion成功',
+      '公開前確認でConsole Error 0件',
+      '公開前確認で外部通信0件',
+    ],
+    safety:
+      '公開デモ内の人物名・部屋番号・記録・予定はすべて架空です。公開デモには実在する個人情報を入力しないでください。診断、治療判断、投薬判断、緊急度判定を行うツールではありません。',
+    role: ['課題整理', '要件設計', '画面デザイン', 'データ設計', '開発', '印刷レイアウト設計', 'セキュリティ対策', 'テスト', '公開作業'],
+    group: 'Web Applications',
+    projectType: 'Personal Project',
+    status: 'released',
+    statusNote:
+      '公開デモVer2.0。初期データは61名分、登録上限は80名です。デモの人物名・部屋番号・記録・予定はすべて架空です。',
+    stack: ['Single HTML', 'Vanilla JavaScript', 'localStorage', 'CSP', 'Adaptive Print Layout'],
+    tags: ['介護・医療', '業務効率化', '完全オフライン', '印刷対応'],
+    colorLabel: 'Single HTML / Vanilla JavaScript / Offline-first / Care Workflow',
+    accent: '#76b8ff',
+    tint: '#07182a',
+    image: '/works/images/handover-maker-ver2.png',
+    imageAlt:
+      '申し送りメーカーVer2.0の入力画面。Aブロック15/20、Bブロック12/20、Cブロック18/20、Dブロック16/20と、架空データの申し送り・日勤夜勤記録が表示されている',
+    imagePosition: 'center top',
+    liveUrl: 'https://aicmode.github.io/offline-handover/',
+    githubUrl: 'https://github.com/aicmode/offline-handover',
+    ctaLabel: '実際に見る',
+    showGithubOnCard: true,
+    order: 1.6,
+    featured: true,
+    year: 2026,
+  },
+  {
     id: 'meddose',
     title: 'MedDose',
     subtitle: 'Apple Watchのアプリ',

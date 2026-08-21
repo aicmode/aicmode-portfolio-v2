@@ -14,6 +14,7 @@ import {
 
 const medibrief = caseStudies.find((study) => study.id === 'medibrief-ai')!
 const medichart = projects.find((project) => project.id === 'medichart-lite')!
+const handoverMaker = projects.find((project) => project.id === 'handover-maker')!
 const meetingMinutes = caseStudies.find((study) => study.id === 'google-meet-minutes')!
 const difyChat = caseStudies.find((study) => study.id === 'dify-ai-chat')!
 const expenseTracker = caseStudies.find((study) => study.id === 'smart-expense-tracker')!
@@ -60,6 +61,19 @@ const featuredWorks: readonly FeaturedWork[] = [
     status: medichart.status,
     liveUrl: medichart.liveUrl,
     githubUrl: medichart.githubUrl,
+  },
+  {
+    id: handoverMaker.id,
+    title: handoverMaker.title,
+    label: '介護・医療 × 業務効率化',
+    description: '申し送り、記録、予定、検索、印刷を一つにまとめた完全オフライン対応ツールです。',
+    image: handoverMaker.image,
+    imageAlt: handoverMaker.imageAlt,
+    accent: handoverMaker.accent,
+    projectType: handoverMaker.projectType,
+    status: handoverMaker.status,
+    liveUrl: handoverMaker.liveUrl,
+    githubUrl: handoverMaker.githubUrl,
   },
   {
     id: meetingMinutes.id,
