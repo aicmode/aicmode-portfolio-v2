@@ -208,6 +208,17 @@ export type Project = {
   detailSections?: readonly ProjectDetailSection[]
   liveUrl?: string
   githubUrl?: string
+  /**
+   * Route of a full detail page inside this site, when the project has one.
+   *
+   * Set it and the card's primary action becomes 「詳細を見る」 pointing here,
+   * in the same tab, instead of an external target — the honest primary read
+   * for work that has no reachable deployment to offer. The in-page dialog is
+   * dropped for that card only: the page it links to is the longer version of
+   * the same content, so keeping both would be two controls for one job.
+   * Projects without the field keep the dialog and their existing CTA.
+   */
+  detailPath?: string
   /** Optional primary-card CTA copy when the default status label is too generic. */
   ctaLabel?: string
   /** Show a source link beside the primary CTA on the work card. */

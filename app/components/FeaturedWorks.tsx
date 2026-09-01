@@ -19,6 +19,7 @@ const meetingMinutes = caseStudies.find((study) => study.id === 'google-meet-min
 const difyChat = caseStudies.find((study) => study.id === 'dify-ai-chat')!
 const expenseTracker = caseStudies.find((study) => study.id === 'smart-expense-tracker')!
 const medDose = projects.find((project) => project.id === 'meddose')!
+const adLibraryMonitor = projects.find((project) => project.id === 'meta-ad-library-monitor')!
 
 type FeaturedWork = {
   id: string
@@ -32,6 +33,8 @@ type FeaturedWork = {
   imageAlt?: string
   liveUrl?: string
   githubUrl?: string
+  /** Route of the work's own page on this site, when it has one. */
+  detailPath?: string
   diagram?: readonly [string, string, string]
 }
 
@@ -124,6 +127,19 @@ const featuredWorks: readonly FeaturedWork[] = [
     status: medDose.status,
     githubUrl: medDose.githubUrl,
   },
+  {
+    id: adLibraryMonitor.id,
+    title: adLibraryMonitor.title,
+    label: '広告リサーチ × 自動化',
+    description: '登録した広告主の広告をまとめて取得し、前回から増えた分だけを見つけ出します。',
+    image: adLibraryMonitor.image,
+    imageAlt: adLibraryMonitor.imageAlt,
+    accent: adLibraryMonitor.accent,
+    projectType: adLibraryMonitor.projectType,
+    status: adLibraryMonitor.status,
+    githubUrl: adLibraryMonitor.githubUrl,
+    detailPath: adLibraryMonitor.detailPath,
+  },
 ] as const
 
 export default function FeaturedWorks() {
@@ -184,6 +200,18 @@ export default function FeaturedWorks() {
                     {PROJECT_TYPE_LABEL[work.projectType]} ・ {STATUS_LABEL[work.status]}
                   </p>
                   <div className="mt-auto flex flex-wrap gap-2 pt-6">
+                    {/* A work with no reachable deployment still has somewhere
+                        to send a visitor when it has its own page: the page,
+                        in this tab. Nothing here ever stands in for a demo
+                        that does not exist. */}
+                    {work.detailPath ? (
+                      <Link
+                        href={work.detailPath}
+                        className="inline-flex min-h-11 items-center justify-center border border-white/16 px-4 text-[11px] font-semibold tracking-[0.06em] text-white/76 transition hover:border-white/35 hover:text-white"
+                      >
+                        詳細を見る
+                      </Link>
+                    ) : null}
                     {work.liveUrl ? (
                       <a
                         href={work.liveUrl}

@@ -20,6 +20,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'yearly',
       priority: 0.8,
     },
+    {
+      url: `${SITE_URL}/works/meta-ad-library-monitor`,
+      changeFrequency: 'yearly',
+      priority: 0.8,
+    },
     ...['services', 'healthcare', 'works', 'about', 'faq', 'contact'].map((path) => ({
       url: `${SITE_URL}/${path}`,
       changeFrequency: 'monthly' as const,

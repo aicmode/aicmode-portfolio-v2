@@ -278,6 +278,136 @@ export const projects: readonly Project[] = [
     year: 2026,
   },
   {
+    id: 'meta-ad-library-monitor',
+    title: 'Meta Ad Library Monitor',
+    subtitle: '広告リサーチの監視ツール',
+    category: '登録した広告主の新規広告を検出する監視ツール',
+    plainSummary: '登録した広告主の広告をまとめて取得し、前回から増えた分だけを教えてくれるツール。',
+    summary:
+      '競合や自社の広告を継続的に追いたい人向け。公開されている広告ライブラリのURLを登録すると、実ブラウザで広告一覧を取得して保存し、前回との差分から新しく掲載された広告だけをNEWとして表示します。',
+    problem:
+      '広告の動きを追うには、広告ライブラリを毎回開いて一覧を目視で見比べ、どれが前回になかった広告かを手作業で判断する必要がある。',
+    solution:
+      '監視対象の登録から取得・保存・差分判定・一覧表示までを1つのWebアプリにまとめ、Playwrightの実ブラウザ取得とSQLiteへの保存で「前回になかった広告」だけを自動で切り出す仕組みを実装しました。',
+    features: [
+      '監視対象の登録・一覧・有効／無効の切り替え・削除',
+      '広告ライブラリURLの検証と正規化（広告主指定とキーワード検索の両形式に対応）',
+      'Playwrightの実ブラウザ（Chromium）による広告一覧の取得',
+      '取得した広告のSQLite保存と、前回との差分によるNEW判定',
+      'ダッシュボード（監視対象数・NEW件数・保存済み件数・最終チェック日時）',
+      '広告一覧のNEW／広告主フィルタ、メディアプレビュー、元広告へのリンク',
+      '外部共有用のDemo Mode（削除禁止・登録上限30件・重複登録防止・同時実行ロック・60秒クールダウン）',
+      '取得方式だけを単体検証するスクリプトと、DBへの到達性のみ確認するヘルスチェックAPI',
+    ],
+    overview:
+      'Meta Ad Library Monitorは、広告リサーチの「新しく出た広告を見つける」部分を自動化するために個人で開発した監視ツールです。特定の企業や業種に依存せず、公開されている広告ライブラリで検索できる広告主であれば登録できます。Meta社の公式ツールでも公式API連携でもなく、ログイン不要で公開されているページを取得する自主制作の試作ツールです。',
+    detailSections: [
+      {
+        title: '取得方式を先に検証した',
+        body:
+          '公式のAd Library APIは、EU圏に配信されなかった広告については政治・社会問題・選挙広告しか返さない仕様のため、日本向けの一般的な商用広告は取得できません。実際に確かめたうえで、ログイン不要で公開されている広告ライブラリのページを実ブラウザで読む方式を選び、取得できた項目・できなかった項目を検証記録としてリポジトリに残しています。',
+      },
+      {
+        title: '新規（NEW）判定のしくみ',
+        items: [
+          '広告の同一性は、Metaが払い出すライブラリIDを主キーとして判定',
+          'ライブラリIDが取れなかった場合のみ、本文・広告主名・掲載開始日・リンク先のSHA-256ハッシュで代用',
+          '監視対象ごとに一意制約を張り、初回検出はNEW、再確認された時点でNEWを外す',
+          '初回検出日時・最終確認日時・確認回数を保持し、後から検出履歴をたどれる',
+        ],
+      },
+      {
+        title: '外部共有用のDemo Mode',
+        items: [
+          '環境変数DEMO_MODEで切り替え、削除系の操作をUIとAPIの両方で拒否',
+          '監視対象の登録上限、同一URLの重複登録防止、監視対象ごとの同時実行ロック',
+          '同じ監視対象は前回チェックから60秒間再実行できないクールダウン',
+          '内部エラーの詳細・ファイルパス・SQLを画面に出さず、サーバー側のログにのみ記録',
+        ],
+      },
+      {
+        title: '公開するための構成',
+        items: [
+          'Playwright公式イメージをベースにしたDockerfile（Chromium同梱、バージョンを固定）',
+          'better-sqlite3のネイティブビルドに必要な依存をDockerfile側に明記し、再デプロイでも再現する構成に',
+          'ヘルスチェックと永続ボリュームを前提にしたRailway向け設定ファイル',
+          'ヘルスチェックAPIはPlaywrightを起動せず、プロセスとDBへの到達性だけを確認',
+        ],
+      },
+      {
+        title: '将来の差し替えを見込んだ構造',
+        body:
+          'SQLiteへのアクセスはリポジトリ層に閉じ込め、画面やAPIからSQLを直接触らない構造にしています。保存先をPostgreSQL等へ移す場合も、この層の実装だけを差し替えれば済むように設計しました。',
+      },
+    ],
+    outcome: [
+      'ローカル環境で監視対象2件・計4回の取得を実行し、すべて成功。累計132件の取得のうち66件を新規として保存',
+      '2回目の取得で、保存済みの66件すべてがNEW表示から外れることを確認（差分判定が意図どおり動作）',
+      '保存した66件すべてでライブラリIDと画像・動画情報を取得できることを確認',
+      '画面の実装だけでなく、取得処理・データ保存・Docker化・公開設定までを一人で通して形にできることを検証',
+    ],
+    safety:
+      'Meta社の公式ツールではなく、公式APIとの連携も行っていない個人開発の試作ツールです。ログイン、CAPTCHAの回避、Bot対策の突破、アクセス制限の回避は一切行わず、制限ページが返された場合はエラーとして報告します。Meta側の仕様変更で動作しなくなる可能性があるため、業務で使う場合は各組織の規約・法務方針の確認が前提です。',
+    role: [
+      '課題整理',
+      '取得方式の技術検証',
+      '要件設計',
+      '画面デザイン',
+      'データベース設計',
+      'フロントエンド開発',
+      'バックエンド開発',
+      'ブラウザ自動化の実装',
+      'Dockerイメージの作成',
+      '公開用の設定',
+      'ドキュメント作成',
+    ],
+    group: 'Automation',
+    projectType: 'Personal Project',
+    status: 'source-only',
+    statusNote:
+      'ローカルまたはDockerで動かす前提の試作ツールです。取得のたびに実ブラウザ（Chromium）を起動するため常時稼働の公開デモは用意しておらず、ソースコードと検証記録をGitHubで公開しています。',
+    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Playwright', 'SQLite', 'Docker'],
+    tags: ['広告リサーチ', '業務効率化', 'ブラウザ自動化', 'Docker'],
+    colorLabel: 'Next.js / TypeScript / Playwright / SQLite / Docker',
+    accent: '#e0a458',
+    tint: '#1c1207',
+    image: '/works/images/meta-ad-library-monitor-dashboard.png',
+    imageAlt:
+      'Meta Ad Library Monitorのダッシュボード。監視対象3件、新規広告3件、保存済み広告6件と、NEWバッジ付きの架空広告の一覧が表示されている',
+    imagePosition: 'center top',
+    galleryNote:
+      'ローカルで起動した画面です。表示している広告主名・広告本文・日付は、掲載用に用意した架空のデモデータです。',
+    gallery: [
+      {
+        src: '/works/images/meta-ad-library-monitor/01-dashboard.png',
+        alt: 'Meta Ad Library Monitorのダッシュボード。監視対象・新規広告・保存済み広告・最終チェック日時の集計と、最近の新規広告の一覧',
+        caption: '監視対象数・NEW件数・保存件数・最終チェック日時をまとめたダッシュボード',
+        width: 1600,
+        height: 1000,
+      },
+      {
+        src: '/works/images/meta-ad-library-monitor/02-monitors.png',
+        alt: 'Meta Ad Library Monitorの監視対象画面。広告主名と広告ライブラリURLの登録フォームと、登録済み3件の一覧',
+        caption: '広告ライブラリURLを検証しながら監視対象を登録し、手動チェックを実行する画面',
+        width: 1600,
+        height: 1232,
+      },
+      {
+        src: '/works/images/meta-ad-library-monitor/03-ads.png',
+        alt: 'Meta Ad Library Monitorの広告一覧画面。NEWのみ・広告主のフィルタと、NEWバッジ付きの架空広告カード',
+        caption: 'NEWと広告主で絞り込める広告一覧。初回検出日時とライブラリIDまで残す',
+        width: 1600,
+        height: 940,
+      },
+    ],
+    githubUrl: 'https://github.com/aicmode/meta-ad-library-monitor',
+    detailPath: '/works/meta-ad-library-monitor',
+    showGithubOnCard: true,
+    order: 1.8,
+    featured: true,
+    year: 2026,
+  },
+  {
     id: 'ai-prompt-manager',
     title: 'AI Prompt Manager',
     subtitle: 'AIの指示文の管理アプリ',

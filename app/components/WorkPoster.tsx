@@ -2,12 +2,21 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 import type { CSSProperties } from 'react'
 import { CATEGORY_LABEL, PROJECT_TYPE_LABEL, STATUS_CTA, STATUS_LABEL, hasLiveDemo } from '../types/project'
 import type { Project } from '../types/project'
 
 const ease = [0.13, 0.86, 0.18, 1] as const
+
+/**
+ * Internal navigation that still takes part in the card's hover choreography.
+ * A plain `Link` would drop out of the `rest` / `hover` variants the article
+ * propagates, so a card linking to a detail page would animate differently
+ * from every card linking outwards.
+ */
+const MotionLink = motion.create(Link)
 
 const VARIANT_CLASS: Record<NonNullable<Project['variant']>, string> = {
   special: 'bakery-special-card',
@@ -36,6 +45,27 @@ function ArrowIcon() {
       transition={{ duration: 0.9, ease }}
     >
       <path d="M7 17L17 7M17 7H8M17 7V16" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" />
+    </motion.svg>
+  )
+}
+
+/**
+ * The diagonal arrow above is the site's mark for leaving the page; this one
+ * stays flat because the link it sits on navigates within the site, in the same
+ * tab. Same size and same hover travel, so the two read as one family.
+ */
+function InternalArrowIcon() {
+  return (
+    <motion.svg
+      className="h-4 w-4 shrink-0"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      aria-hidden="true"
+      variants={{ rest: { x: 0 }, hover: { x: 5 } }}
+      transition={{ duration: 0.9, ease }}
+    >
+      <path d="M5 12h13M13 6l6 6-6 6" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" />
     </motion.svg>
   )
 }
@@ -191,10 +221,18 @@ export default function WorkPoster({
   /*
    * Published work hands off to its deployment or repository in a new tab.
    * Work with neither stays visibly unpublished instead of inventing a target.
-   * The detail read always stays inside the page, in the shared dialog.
+   * The detail read stays inside the page — in the shared dialog, or on the
+   * project's own page when it has one (`detailPath`), which then becomes the
+   * primary action: no deployment exists to promise, and the page is the
+   * fullest honest answer to "what is this".
    */
+  const detailPath = project.detailPath
   const primaryUrl = hasLiveDemo(project.status) ? project.liveUrl : project.githubUrl
-  const primaryLabel = primaryUrl ? (project.ctaLabel ?? STATUS_CTA[project.status]) : '未公開'
+  const primaryLabel = detailPath
+    ? '詳細を見る'
+    : primaryUrl
+      ? (project.ctaLabel ?? STATUS_CTA[project.status])
+      : '未公開'
   const externalLinkProps = { target: '_blank', rel: 'noopener noreferrer' } as const
   const revealProps = revealOnMount
     ? { variants: MOUNT_REVEAL_VARIANTS, initial: 'hidden' }
@@ -222,7 +260,24 @@ export default function WorkPoster({
       animate="rest"
     >
       <div className="work-card-body">
-        {primaryUrl ? (
+        {detailPath ? (
+          <MotionLink
+            href={detailPath}
+            className="editorial-poster-link block"
+            variants={{ rest: { y: 0 }, hover: { y: -10 } }}
+            transition={{ duration: 1.15, ease }}
+          >
+            <WorkPosterVisual
+              project={project}
+              containFit={containFit}
+              variant={variant}
+              priority={priority}
+              showFeaturedBadge={showFeaturedBadge}
+              isMediChart={isMediChart}
+            />
+            <span className="sr-only">{project.title} の詳細ページを開く</span>
+          </MotionLink>
+        ) : primaryUrl ? (
           <motion.a
             href={primaryUrl}
             {...externalLinkProps}
@@ -302,7 +357,23 @@ export default function WorkPoster({
         </div>
 
         <div className="work-card-actions flex flex-wrap items-center gap-2.5 px-1 pb-1 pt-5">
-          {primaryUrl ? (
+          {detailPath ? (
+            <MotionLink
+              href={detailPath}
+              className="editorial-work-button inline-flex h-11 items-center justify-center gap-2 border border-white/18 px-4 text-white/72"
+              variants={{
+                rest: { borderColor: 'rgba(255,255,255,0.18)', color: 'rgba(255,255,255,0.72)' },
+                hover: { borderColor: project.accent, color: project.accent },
+              }}
+              transition={{ duration: 0.9, ease }}
+            >
+              <span className="text-[10px] font-semibold tracking-[0.1em] sm:text-[11px]">
+                {primaryLabel}
+              </span>
+              <span className="sr-only">（{project.title} の詳細ページへ移動します）</span>
+              <InternalArrowIcon />
+            </MotionLink>
+          ) : primaryUrl ? (
             <motion.a
               href={primaryUrl}
               {...externalLinkProps}
@@ -342,17 +413,21 @@ export default function WorkPoster({
             </a>
           ) : null}
 
-          {/* 「詳しく見る」 is the same control on every card: a button that
-              opens the dialog in place. It never navigates, so the visitor
-              never loses the grid, and no card is an exception to the rule. */}
-          <button
-            type="button"
-            onClick={onOpenDetail}
-            className="inline-flex h-11 items-center justify-center gap-2 border border-white/10 px-4 text-[10px] font-semibold tracking-[0.1em] text-white/58 transition-colors duration-500 hover:border-white/28 hover:text-white/85 sm:text-[11px]"
-          >
-            詳しく見る
-            <span className="sr-only">（{project.title} の詳細を開きます）</span>
-          </button>
+          {/* 「詳しく見る」 opens the dialog in place: it never navigates, so
+              the visitor never loses the grid. A card that already offers
+              「詳細を見る」 leaves it out — the detail page carries the same
+              content at full length, and two controls reading almost the same
+              in Japanese would only make the visitor choose between them. */}
+          {detailPath ? null : (
+            <button
+              type="button"
+              onClick={onOpenDetail}
+              className="inline-flex h-11 items-center justify-center gap-2 border border-white/10 px-4 text-[10px] font-semibold tracking-[0.1em] text-white/58 transition-colors duration-500 hover:border-white/28 hover:text-white/85 sm:text-[11px]"
+            >
+              詳しく見る
+              <span className="sr-only">（{project.title} の詳細を開きます）</span>
+            </button>
+          )}
         </div>
       </div>
     </motion.article>
