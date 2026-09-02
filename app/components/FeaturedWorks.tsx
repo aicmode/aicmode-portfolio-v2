@@ -50,8 +50,6 @@ const AI_LEAD_ORDER: readonly string[] = [
   'medibrief-ai',
   'medichart-lite',
   'handover-maker',
-  'dify-ai-chat',
-  'smart-expense-tracker',
   'meddose',
   'meta-ad-library-monitor',
 ]
@@ -76,16 +74,6 @@ const AI_CARD_COPY: Record<string, { title?: string; label?: string; description
   'handover-maker': {
     label: '介護・医療 × 業務効率化',
     description: '申し送り、記録、予定、検索、印刷を一つにまとめた完全オフライン対応ツールです。',
-  },
-  'dify-ai-chat': {
-    title: 'Dify AI Chat',
-    label: '問い合わせ対応',
-    description: 'よくある質問に自動で答え、問い合わせ対応の負担を減らします。',
-  },
-  'smart-expense-tracker': {
-    title: 'Smart Expense Tracker',
-    label: '集計Webアプリ',
-    description: '支出を記録するだけで、合計やグラフを自動で表示します。',
   },
   meddose: {
     label: '医療 × 自動計算',
@@ -135,9 +123,9 @@ function fromCaseStudy(study: CaseStudy): FeaturedWork {
 /**
  * MAIN: every AI / automation piece the portfolio holds, from both data files.
  *
- * A case study and a project can describe the same build (Dify AI Chat does),
- * so the id decides: the case study is the fuller record and wins, and the
- * project entry for it is dropped rather than shown twice.
+ * A case study and a project can describe the same build, so the id decides:
+ * the case study is the fuller record and wins, and the project entry for it is
+ * dropped rather than shown twice.
  */
 const aiWorks: readonly FeaturedWork[] = (() => {
   const caseStudyIds = new Set(caseStudies.map((study) => study.id))

@@ -59,23 +59,14 @@ test.describe('short sales landing page', () => {
     // Every AI / automation piece lives here now — the ones that used to be
     // reachable only from the archive included, since /works is web-only.
     const featured = works.locator('article')
-    await expect(featured).toHaveCount(16)
+    await expect(featured).toHaveCount(7)
     for (const title of [
       'MediBrief',
       'MediChart Lite',
       'Handover Maker',
-      'Dify AI Chat',
-      'Smart Expense Tracker',
       'MedDose',
       'Meta Ad Library Monitor',
-      'Weather Calendar',
-      'AI Prompt Manager',
-      'NIGHT SHIFT CARE',
-      'QR Code Bulk Generator',
-      'Date Calculator Tool',
       'Handover AI',
-      '連絡まとめ通知ツール',
-      '固定費チェックツール',
       'Nurse FUKUGYO Lab',
     ]) {
       await expect(featured.getByRole('heading', { name: title, exact: true })).toBeVisible()
@@ -89,7 +80,6 @@ test.describe('short sales landing page', () => {
       'https://aicmode.github.io/NURSE-FUKUGYO-LAB/',
     )
     await expect(page.locator('#works').getByText(/自主制作/).first()).toBeVisible()
-    await expect(page.locator('#works').getByText(/学習のための制作/).first()).toBeVisible()
     await expect(page.locator('#works').getByText(/試作品（実機で動作確認済み）/)).toBeVisible()
     // /works is the web gallery, so the only link to it is the web one, and
     // its count is the web count — never the whole portfolio's.
@@ -164,7 +154,7 @@ test.describe('short sales landing page', () => {
     }))
     expect(dimensions.scrollWidth).toBe(dimensions.clientWidth)
     expect(dimensions.height).toBeLessThan(22000)
-    await expect(page.locator('#works article')).toHaveCount(16)
+    await expect(page.locator('#works article')).toHaveCount(7)
 
     await page.getByRole('button', { name: 'メニューを開く' }).click()
     await expect(page.getByRole('link', { name: 'お問い合わせ', exact: true })).toBeVisible()
@@ -206,15 +196,8 @@ test.describe('detail pages retain the removed information', () => {
       'MediChart Lite',
       'Handover Maker',
       'Handover AI',
-      'Dify AI Chat',
       'MedDose',
       'Meta Ad Library Monitor',
-      'Smart Expense Tracker',
-      'Weather Calendar',
-      'AI Prompt Manager',
-      'NIGHT SHIFT CARE',
-      'QR Code Bulk Generator',
-      'Date Calculator Tool',
     ]) {
       await expect(page.getByRole('heading', { name: title, exact: true })).toHaveCount(0)
     }
@@ -301,28 +284,16 @@ test.describe('detail pages retain the removed information', () => {
     expect(runtimeErrors).toEqual([])
   })
 
-  test('the AI works that only the archive used to carry are on the top page', async ({ page }) => {
+  test('an AI work outside AI_LEAD_ORDER still lands on the top page with its links', async ({ page }) => {
     await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' })
 
-    const weather = page.locator('#works article').filter({
-      has: page.getByRole('heading', { name: 'Weather Calendar', exact: true }),
+    const handoverAi = page.locator('#works article').filter({
+      has: page.getByRole('heading', { name: 'Handover AI', exact: true }),
     })
-    await expect(weather.getByRole('link', { name: /実際に見る/ })).toHaveAttribute(
+    await expect(handoverAi).toHaveCount(1)
+    await expect(handoverAi.getByRole('link', { name: /実際に見る/ })).toHaveAttribute(
       'href',
-      'https://weather-calendar-app-brown.vercel.app',
-    )
-    await expect(weather.getByRole('link', { name: /GitHubで見る/ })).toHaveAttribute(
-      'href',
-      'https://github.com/aicmode/weather-calendar-app',
-    )
-
-    // A piece with no capture still gets a frame, not a broken one.
-    const subscription = page.locator('#works article').filter({
-      has: page.getByRole('heading', { name: '固定費チェックツール', exact: true }),
-    })
-    await expect(subscription.getByRole('link', { name: /GitHubで見る/ })).toHaveAttribute(
-      'href',
-      'https://github.com/aicmode/AI-SUBSCRIPTION-DOCTOR',
+      'https://handover-ai-chi.vercel.app',
     )
   })
 
