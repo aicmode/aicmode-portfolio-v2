@@ -15,7 +15,6 @@ import {
 const medibrief = caseStudies.find((study) => study.id === 'medibrief-ai')!
 const medichart = projects.find((project) => project.id === 'medichart-lite')!
 const handoverMaker = projects.find((project) => project.id === 'handover-maker')!
-const meetingMinutes = caseStudies.find((study) => study.id === 'google-meet-minutes')!
 const difyChat = caseStudies.find((study) => study.id === 'dify-ai-chat')!
 const expenseTracker = caseStudies.find((study) => study.id === 'smart-expense-tracker')!
 const medDose = projects.find((project) => project.id === 'meddose')!
@@ -77,17 +76,6 @@ const featuredWorks: readonly FeaturedWork[] = [
     status: handoverMaker.status,
     liveUrl: handoverMaker.liveUrl,
     githubUrl: handoverMaker.githubUrl,
-  },
-  {
-    id: meetingMinutes.id,
-    title: 'Meeting Minutes Automation',
-    label: '議事録の自動化',
-    description: '会議の録音から議事録を作り、共有先へ自動で保存します。',
-    accent: meetingMinutes.accent,
-    projectType: meetingMinutes.projectType,
-    status: meetingMinutes.status,
-    githubUrl: meetingMinutes.githubUrl,
-    diagram: ['録音', '議事録', '保存'],
   },
   {
     id: difyChat.id,

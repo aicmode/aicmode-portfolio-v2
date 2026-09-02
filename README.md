@@ -2,7 +2,7 @@
 
 鹿児島を拠点に、AIシステム開発・業務自動化・API連携・Webアプリ開発を中心に扱う、フリーランス開発者の営業型ポートフォリオサイトです。
 
-黒を基調としたダークエディトリアルデザインで、AI・自動化のケーススタディ6件と、Webアプリ・Webサイト・LP・ECサイトの制作物27件を掲載しています。
+黒を基調としたダークエディトリアルデザインで、AI・自動化のケーススタディ5件と、Webアプリ・Webサイト・LP・ECサイトの制作物27件を掲載しています。
 
 公開URL: https://aicmode-portfolio.vercel.app/
 
@@ -115,7 +115,7 @@ app/
 │   └── ClientHealth.tsx       # 起動確認と古いキャッシュの掃除
 ├── data/
 │   ├── projects.ts            # 作品27件
-│   ├── caseStudies.ts         # ケーススタディ6件
+│   ├── caseStudies.ts         # ケーススタディ5件
 │   ├── services.ts            # Services / Capabilities / Process
 │   ├── skills.ts              # スキル一覧
 │   └── faqs.ts                # FAQ（FAQPage構造化データと共用）

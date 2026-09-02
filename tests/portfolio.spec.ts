@@ -55,7 +55,6 @@ test.describe('short sales landing page', () => {
       'MediBrief',
       'MediChart Lite',
       'Handover Maker',
-      'Meeting Minutes Automation',
       'Dify AI Chat',
       'Smart Expense Tracker',
       'MedDose',
