@@ -2,7 +2,8 @@
  * Skills, grouped so a client can find what they were looking for.
  *
  * Inclusion rule: every entry is traceable to a public repository under
- * github.com/aicmode or to this codebase. Notably NOT listed, because there is
+ * github.com/aicmode, to this codebase, or to a build actually stood up and
+ * verified in a real environment (AWS). Notably NOT listed, because there is
  * no implementation to back them yet: Supabase, vector search / RAG, and an
  * automated test suite. They can be added the moment a repo exists.
  */
@@ -14,6 +15,11 @@ export type SkillGroupData = {
   /** Why a client would care about this group. */
   note: string
   items: readonly TechSkill[]
+  /**
+   * Optional line under the cards, for a group where one card needs context the
+   * card itself has no room for (e.g. which AWS services, and to what depth).
+   */
+  caption?: string
 }
 
 export const skillGroups: readonly SkillGroupData[] = [
@@ -45,6 +51,13 @@ export const skillGroups: readonly SkillGroupData[] = [
       { label: 'Google Sheets', icon: '▦' },
       { label: 'ブラウザ内での保存', icon: '▣' },
     ],
+  },
+  {
+    title: 'クラウド・インフラ',
+    note: 'サービスを動かすためのクラウド基盤',
+    items: [{ label: 'AWS', icon: '⬢' }],
+    caption:
+      'IAM / S3 / Lambda / EC2 / RDS（PostgreSQL）/ CloudWatch / VPC / Security Group — 基礎構築とサービス間連携を実際のAWS環境で検証しました。',
   },
   {
     title: 'AIと自動化',

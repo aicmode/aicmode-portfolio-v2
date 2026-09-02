@@ -82,7 +82,7 @@ export default function Skills() {
             </h2>
           </div>
           <p className="mb-12 max-w-2xl text-[15px] leading-8 md:mb-20" style={{ color: '#7a7a7a' }}>
-            実際に作って公開したもので使った技術だけを載せています。
+            実際の制作・開発・検証で使用した技術だけを載せています。
             技術の名前が分からなくても問題ありません。やりたいことをお伝えください。
           </p>
         </AnimateIn>
@@ -107,6 +107,16 @@ export default function Skills() {
                   </AnimateIn>
                 ))}
               </div>
+              {group.caption && (
+                <AnimateIn delay={groupIndex * 60 + 80}>
+                  <p
+                    className="mt-3 max-w-4xl text-[11px] leading-6 sm:text-[12px]"
+                    style={{ color: '#6f6f6f' }}
+                  >
+                    {group.caption}
+                  </p>
+                </AnimateIn>
+              )}
             </div>
           ))}
 
