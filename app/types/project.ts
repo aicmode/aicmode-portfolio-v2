@@ -53,6 +53,43 @@ export type Category =
   | 'EC'
 
 /**
+ * The two things this portfolio is read for, in the order they should be read.
+ *
+ * `Domain` sits above `Category` rather than replacing it: the existing
+ * categories stay exactly as they are and keep driving the cards, while the
+ * domain answers the only question a first-time visitor has — is this person an
+ * AI/automation developer, or a web producer? The answer is "AI and automation
+ * first, web production as a second skill", and `DOMAIN_ORDER` is where that
+ * order is stated once for every surface that renders it.
+ */
+export type Domain = 'AI & Automation' | 'Web Production'
+
+/** MAIN before SUB. Every domain-aware list renders in this order. */
+export const DOMAIN_ORDER: readonly Domain[] = ['AI & Automation', 'Web Production']
+
+/** Japanese label for a domain, used wherever a visitor reads one. */
+export const DOMAIN_LABEL: Record<Domain, string> = {
+  'AI & Automation': 'AI・業務自動化',
+  'Web Production': 'Web制作',
+}
+
+/**
+ * Which domain a category belongs to. One map, so a category can never be
+ * counted under one heading and listed under another.
+ *
+ * `Web Applications` is deliberately on the AI/automation side: those are
+ * business tools built to remove manual work, not web production.
+ */
+export const CATEGORY_DOMAIN: Record<Category, Domain> = {
+  'AI Systems': 'AI & Automation',
+  Automation: 'AI & Automation',
+  'Web Applications': 'AI & Automation',
+  Websites: 'Web Production',
+  'Landing Pages': 'Web Production',
+  EC: 'Web Production',
+}
+
+/**
  * The archive's "show everything" tab. It is deliberately not a `Category`
  * member — no project carries it — so it lives here as one constant that both
  * the tab list and the filter compare against, and can never drift into a
@@ -62,6 +99,9 @@ export const ALL_FILTER = 'All'
 
 /** A tab in the Works Archive: every category, plus "All". */
 export type Filter = typeof ALL_FILTER | Category
+
+/** The archive's top-level tab: one domain, or everything. */
+export type DomainFilter = typeof ALL_FILTER | Domain
 
 /**
  * Everything a visitor reads is Japanese, and plain: the enum member stays in
@@ -117,6 +157,11 @@ export const ALL_FILTER_LABEL = 'すべて'
 /** One place that turns any filter value into the word a visitor reads. */
 export function filterLabel(filter: Filter) {
   return filter === ALL_FILTER ? ALL_FILTER_LABEL : CATEGORY_LABEL[filter]
+}
+
+/** The same, for the top-level domain tabs. */
+export function domainFilterLabel(filter: DomainFilter) {
+  return filter === ALL_FILTER ? ALL_FILTER_LABEL : DOMAIN_LABEL[filter]
 }
 
 /** True when the status means there is something live to open. */

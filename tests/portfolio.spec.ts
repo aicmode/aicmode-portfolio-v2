@@ -1,6 +1,7 @@
 import { expect, test, type Page } from 'playwright/test'
 
-const BASE_URL = 'http://localhost:3000'
+/** Defaults to the usual dev port; override when a dev server is already on it. */
+const BASE_URL = process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:3000'
 
 function collectRuntimeErrors(page: Page) {
   const errors: string[] = []
@@ -49,8 +50,14 @@ test.describe('short sales landing page', () => {
     await expect(page.locator('#healthcare')).toContainText('看護師として約9年間働いた経験')
     await expect(page.getByRole('link', { name: '医療・介護について詳しく見る' })).toHaveAttribute('href', '/healthcare')
 
-    const featured = page.locator('#works article')
-    await expect(featured).toHaveCount(7)
+    // AI・業務自動化 first and larger, Web制作 second: the order is the claim
+    // the page makes about what this portfolio is, so it is asserted here.
+    const works = page.locator('#works')
+    const groupHeadings = await works.locator('h3').allTextContents()
+    expect(groupHeadings).toEqual(['AI・業務自動化', 'Web制作'])
+
+    const featured = works.locator('article')
+    await expect(featured).toHaveCount(8)
     for (const title of [
       'MediBrief',
       'MediChart Lite',
@@ -58,13 +65,22 @@ test.describe('short sales landing page', () => {
       'Dify AI Chat',
       'Smart Expense Tracker',
       'MedDose',
+      'Nurse FUKUGYO Lab',
     ]) {
       await expect(featured.getByRole('heading', { name: title, exact: true })).toBeVisible()
     }
+
+    const nurseCard = featured.filter({
+      has: page.getByRole('heading', { name: 'Nurse FUKUGYO Lab', exact: true }),
+    })
+    await expect(nurseCard.getByRole('link', { name: /実際に見る/ })).toHaveAttribute(
+      'href',
+      'https://aicmode.github.io/NURSE-FUKUGYO-LAB/',
+    )
     await expect(page.locator('#works').getByText(/自主制作/).first()).toBeVisible()
     await expect(page.locator('#works').getByText(/学習のための制作/).first()).toBeVisible()
     await expect(page.locator('#works').getByText(/試作品（実機で動作確認済み）/)).toBeVisible()
-    await expect(page.getByRole('link', { name: 'すべての制作実績を見る（30件）' })).toHaveAttribute('href', '/works')
+    await expect(page.getByRole('link', { name: 'すべての制作実績を見る（32件）' })).toHaveAttribute('href', '/works')
 
     const profile = page.locator('#about')
     await expect(profile).toContainText('看護師として約9年')
@@ -131,7 +147,7 @@ test.describe('short sales landing page', () => {
     }))
     expect(dimensions.scrollWidth).toBe(dimensions.clientWidth)
     expect(dimensions.height).toBeLessThan(12000)
-    await expect(page.locator('#works article')).toHaveCount(7)
+    await expect(page.locator('#works article')).toHaveCount(8)
 
     await page.getByRole('button', { name: 'メニューを開く' }).click()
     await expect(page.getByRole('link', { name: 'お問い合わせ', exact: true })).toBeVisible()
@@ -158,13 +174,54 @@ test.describe('detail pages retain the removed information', () => {
     }
   })
 
-  test('works retains six AI cases and all 30 site/app records', async ({ page }) => {
+  test('works retains the AI cases and all 32 site/app records', async ({ page }) => {
     await page.goto(`${BASE_URL}/works`, { waitUntil: 'networkidle' })
-    await expect(page.locator('#case-studies article')).toHaveCount(6)
-    await expect(page.locator('#archive article')).toHaveCount(30)
-    await expect(page.locator('#archive')).toContainText('全30件')
+    await expect(page.locator('#case-studies article')).toHaveCount(5)
+    await expect(page.locator('#archive article')).toHaveCount(32)
+    await expect(page.locator('#archive')).toContainText('全32件')
     await expect(page.getByRole('heading', { name: 'MediChart Lite', exact: true })).toBeVisible()
     await expect(page.getByRole('heading', { name: 'Handover Maker', exact: true })).toBeVisible()
+  })
+
+  test('the archive filters by 大分類 first, then by the existing categories', async ({ page }) => {
+    await page.goto(`${BASE_URL}/works`, { waitUntil: 'networkidle' })
+
+    const domainTabs = page.getByRole('group', { name: '大きな分類で絞り込み' })
+    for (const label of ['すべて', 'AI・業務自動化', 'Web制作']) {
+      await expect(domainTabs.getByRole('button', { name: new RegExp(`^${label}`) })).toBeVisible()
+    }
+
+    // Only the top level is offered until a domain is picked.
+    await expect(page.getByRole('group', { name: /の中で絞り込み/ })).toHaveCount(0)
+
+    await domainTabs.getByRole('button', { name: /^AI・業務自動化/ }).click()
+    await expect(page.locator('#archive article')).toHaveCount(11)
+    await expect(page.getByRole('heading', { name: 'Handover Maker', exact: true })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Nurse FUKUGYO Lab', exact: true })).toHaveCount(0)
+
+    const subTabs = page.getByRole('group', { name: 'AI・業務自動化の中で絞り込み' })
+    for (const label of ['すべて', 'AIのしくみ', '作業の自動化', '仕事用アプリ']) {
+      await expect(subTabs.getByRole('button', { name: new RegExp(`^${label}`) })).toBeVisible()
+    }
+    await subTabs.getByRole('button', { name: /^作業の自動化/ }).click()
+    await expect(page.locator('#archive article')).toHaveCount(2)
+
+    await domainTabs.getByRole('button', { name: /^Web制作/ }).click()
+    await expect(page.locator('#archive article')).toHaveCount(21)
+    const nurse = page.locator('#archive article').filter({
+      has: page.getByRole('heading', { name: 'Nurse FUKUGYO Lab', exact: true }),
+    })
+    await expect(nurse).toHaveCount(1)
+    await expect(nurse.getByRole('link', { name: /実際に見る/ })).toHaveAttribute(
+      'href',
+      'https://aicmode.github.io/NURSE-FUKUGYO-LAB/',
+    )
+
+    const dimensions = await page.evaluate(() => ({
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth,
+    }))
+    expect(dimensions.scrollWidth).toBe(dimensions.clientWidth)
   })
 
   test('Handover Maker keeps the shared card, detail, links, and responsive layout', async ({ page }) => {

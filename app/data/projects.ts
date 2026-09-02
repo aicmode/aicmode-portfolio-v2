@@ -1,4 +1,5 @@
-import type { Category, Project } from '../types/project'
+import { CATEGORY_DOMAIN, DOMAIN_ORDER } from '../types/project'
+import type { Category, Domain, Project } from '../types/project'
 
 /**
  * Every portfolio piece, in one place.
@@ -536,6 +537,39 @@ export const projects: readonly Project[] = [
     liveUrl: 'https://aicmode.github.io/date-calculator-tool/',
     githubUrl: 'https://github.com/aicmode/date-calculator-tool',
     order: 5,
+    featured: true,
+    year: 2026,
+  },
+  {
+    id: 'nurse-fukugyo-lab',
+    title: 'Nurse FUKUGYO Lab',
+    subtitle: '看護師向けWebメディア',
+    category: '看護師の転職・副業を扱う情報発信サイト',
+    plainSummary: '看護師の転職・副業・新しい働き方を発信するWebメディアです。',
+    summary:
+      '看護師の転職・副業・新しい働き方をテーマにした情報発信サイトです。看護師経験を活かし、医療職のキャリア選択肢を分かりやすく届けるWebメディアとして制作しました。',
+    problem: '看護師のキャリアは病院勤務が前提になりやすく、転職や副業といった選択肢の情報が現場の言葉でまとまっている場所が少ない。',
+    solution: '働き方・転職・副業をテーマごとに整理し、読み進めながら選択肢を知れる構成のWebメディアとして制作・公開しました。',
+    features: [
+      '転職・副業・働き方をテーマ別に並べた記事一覧',
+      '医療・介護サイトの制作サンプル紹介',
+      '運営者プロフィールと発信先への導線',
+      '目的から読み始められるセクション構成',
+      'レスポンシブ対応・GitHub Pagesでの公開',
+    ],
+    group: 'Websites',
+    projectType: 'Self-directed Project',
+    status: 'released',
+    stack: ['HTML', 'CSS', 'JavaScript', 'GitHub Pages'],
+    tags: ['情報サイト', 'Webメディア', '医療・看護', 'スマホ対応'],
+    colorLabel: 'HTML / CSS / JavaScript / GitHub Pages',
+    accent: '#5b9bf0',
+    tint: '#0b1526',
+    image: '/works/images/nurse-fukugyo-lab.jpg',
+    imageAlt: 'Nurse FUKUGYO Labのトップページ。「看護師の働き方に、もっと選択肢を。」の見出しが表示されている画面',
+    imagePosition: 'center top',
+    liveUrl: 'https://aicmode.github.io/NURSE-FUKUGYO-LAB/',
+    order: 5.5,
     featured: true,
     year: 2026,
   },
@@ -1309,3 +1343,29 @@ export const projectCountByCategory = Object.fromEntries(
     projects.filter((project) => project.group === category).length,
   ]),
 ) as Record<Category, number>
+
+/**
+ * The archive's top level: AI・業務自動化 first, Web制作 second, and only
+ * domains that actually hold work. Derived from the same `group` every card
+ * already carries, so a project can never appear under a domain tab whose count
+ * does not include it.
+ */
+export const archiveDomains = DOMAIN_ORDER.filter((domain) =>
+  projects.some((project) => CATEGORY_DOMAIN[project.group] === domain),
+)
+
+const categoriesIn = (domain: Domain) =>
+  archiveCategories.filter((category) => CATEGORY_DOMAIN[category] === domain)
+
+/** The sub-categories offered inside one domain, in the existing tab order. */
+export const categoriesByDomain: Record<Domain, readonly Category[]> = {
+  'AI & Automation': categoriesIn('AI & Automation'),
+  'Web Production': categoriesIn('Web Production'),
+}
+
+export const projectCountByDomain = Object.fromEntries(
+  DOMAIN_ORDER.map((domain) => [
+    domain,
+    projects.filter((project) => CATEGORY_DOMAIN[project.group] === domain).length,
+  ]),
+) as Record<Domain, number>

@@ -2,7 +2,9 @@
 
 鹿児島を拠点に、AIシステム開発・業務自動化・API連携・Webアプリ開発を中心に扱う、フリーランス開発者の営業型ポートフォリオサイトです。
 
-黒を基調としたダークエディトリアルデザインで、AI・自動化のケーススタディ5件と、Webアプリ・Webサイト・LP・ECサイトの制作物27件を掲載しています。
+黒を基調としたダークエディトリアルデザインで、AI・自動化のケーススタディ5件と、Webアプリ・Webサイト・LP・ECサイトの制作物32件を掲載しています。
+
+制作実績は「AI・業務自動化（メイン）」と「Web制作（サブ）」の2つの大分類で構成し、トップページ・制作実績一覧のどちらもこの順で表示します。分類は [`app/types/project.ts`](app/types/project.ts) の `CATEGORY_DOMAIN` が単一の定義元です。
 
 公開URL: https://aicmode-portfolio.vercel.app/
 
@@ -36,7 +38,7 @@ Status の定義は [`app/types/project.ts`](app/types/project.ts) で一元管�
 - **Three Service Entrances** — AI・自動化、業務Webアプリ、医療デジタル支援の3分類から相談内容を選べる構成
 - **How I Work** — MVP、制約共有、公開前テスト、セキュリティ確認の方針
 - **Selected Works** — 営業上重要な8件を初期表示
-- **Works Archive** — 全27件をカテゴリー別に絞り込み表示
+- **Works Archive** — 全32件を「大分類（AI・業務自動化 / Web制作）→ 細分類」の2段階で絞り込み表示
 - **Project Detail Modal** — フォーカストラップ、Escapeで閉じる、閉じたあとのフォーカス復帰に対応
 - **Responsive Design** — 375px から 1440px 以上まで対応
 - **Accessible Interactions** — スキップリンク、`aria-expanded` / `aria-controls` 付きアコーディオン、`:focus-visible` のフォーカス表示
@@ -98,7 +100,7 @@ app/
 │   ├── CaseStudies.tsx        # AI & Automation ケーススタディ
 │   ├── HealthcareAI.tsx       # 医療現場経験と安全設計の方針
 │   ├── SelectedWorks.tsx      # 厳選8件
-│   ├── WorksArchive.tsx       # 全27件 + カテゴリー絞り込み
+│   ├── WorksArchive.tsx       # 全32件 + 大分類→細分類の2段階絞り込み
 │   ├── WorkPoster.tsx         # 作品カード + 詳細モーダルの中身
 │   ├── DetailModal.tsx        # アクセシブルなダイアログ
 │   ├── Services.tsx           # 課題起点のServices + 成果物起点のCapabilities
@@ -114,13 +116,13 @@ app/
 │   ├── BootRecovery.tsx       # バンドル読み込み失敗時の復帰処理
 │   └── ClientHealth.tsx       # 起動確認と古いキャッシュの掃除
 ├── data/
-│   ├── projects.ts            # 作品27件
+│   ├── projects.ts            # 作品32件
 │   ├── caseStudies.ts         # ケーススタディ5件
 │   ├── services.ts            # Services / Capabilities / Process
 │   ├── skills.ts              # スキル一覧
 │   └── faqs.ts                # FAQ（FAQPage構造化データと共用）
 ├── types/
-│   └── project.ts             # Status / ProjectType / カテゴリーの型とラベル
+│   └── project.ts             # Status / ProjectType / 大分類・カテゴリーの型とラベル
 ├── hooks/
 │   └── useInView.ts
 ├── layout.tsx                 # メタデータ・フォント・スキップリンク

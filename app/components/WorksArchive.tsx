@@ -6,9 +6,16 @@ import { motion, useReducedMotion } from 'framer-motion'
 import AnimateIn from './AnimateIn'
 import DetailModal from './DetailModal'
 import WorkPoster, { WorkDetail } from './WorkPoster'
-import { archiveCategories, archiveProjects, projectCountByCategory, projects } from '../data/projects'
-import { ALL_FILTER, filterLabel } from '../types/project'
-import type { Filter } from '../types/project'
+import {
+  archiveDomains,
+  archiveProjects,
+  categoriesByDomain,
+  projectCountByCategory,
+  projectCountByDomain,
+  projects,
+} from '../data/projects'
+import { ALL_FILTER, CATEGORY_DOMAIN, domainFilterLabel, filterLabel } from '../types/project'
+import type { DomainFilter, Filter } from '../types/project'
 
 const ease = [0.13, 0.86, 0.18, 1] as const
 const ARCHIVE_PROJECTS_ID = 'works-archive-projects'
@@ -19,6 +26,7 @@ const ARCHIVE_PROJECTS_ID = 'works-archive-projects'
  * is removed from the portfolio.
  */
 export default function WorksArchive({ defaultExpanded = false }: { defaultExpanded?: boolean }) {
+  const [activeDomain, setActiveDomain] = useState<DomainFilter>(ALL_FILTER)
   const [activeCategory, setActiveCategory] = useState<Filter>(ALL_FILTER)
   const [isExpanded, setIsExpanded] = useState(defaultExpanded)
   const [openId, setOpenId] = useState<string | null>(null)
@@ -27,30 +35,61 @@ export default function WorksArchive({ defaultExpanded = false }: { defaultExpan
   const prefersReducedMotion = useReducedMotion()
   const openProject = projects.find((project) => project.id === openId) ?? null
 
-  const filters = useMemo<readonly Filter[]>(() => [ALL_FILTER, ...archiveCategories], [])
+  /** Top row: the two things this portfolio is, plus everything. */
+  const domainFilters = useMemo<readonly DomainFilter[]>(() => [ALL_FILTER, ...archiveDomains], [])
 
-  const counts = useMemo<Record<Filter, number>>(
-    () => ({ [ALL_FILTER]: archiveProjects.length, ...projectCountByCategory }),
+  /**
+   * Second row: the existing fine-grained categories, narrowed to the chosen
+   * domain. Nothing is offered while "すべて" is active — one row of three is
+   * the whole choice a first-time visitor has to make.
+   */
+  const categoryFilters = useMemo<readonly Filter[]>(
+    () => (activeDomain === ALL_FILTER ? [] : [ALL_FILTER, ...categoriesByDomain[activeDomain]]),
+    [activeDomain],
+  )
+
+  const domainCounts = useMemo<Record<DomainFilter, number>>(
+    () => ({ [ALL_FILTER]: archiveProjects.length, ...projectCountByDomain }),
     [],
   )
 
-  /** What the active tab selects, independent of whether the archive is open. */
+  const categoryCounts = useMemo<Record<Filter, number>>(
+    () => ({
+      [ALL_FILTER]: activeDomain === ALL_FILTER ? archiveProjects.length : projectCountByDomain[activeDomain],
+      ...projectCountByCategory,
+    }),
+    [activeDomain],
+  )
+
+  /** What the active tabs select, independent of whether the archive is open. */
   const filteredProjects = useMemo(
     () =>
-      activeCategory === ALL_FILTER
-        ? archiveProjects
-        : archiveProjects.filter((project) => project.group === activeCategory),
-    [activeCategory],
+      archiveProjects.filter((project) => {
+        if (activeDomain !== ALL_FILTER && CATEGORY_DOMAIN[project.group] !== activeDomain) return false
+        if (activeCategory !== ALL_FILTER && project.group !== activeCategory) return false
+        return true
+      }),
+    [activeDomain, activeCategory],
   )
 
   /** What is actually rendered: nothing at all while the archive is collapsed. */
   const displayedProjects = isExpanded ? filteredProjects : []
 
+  /** The words for the current selection: 大分類, narrowed by 細分類 when set. */
+  const selectionLabel =
+    activeCategory === ALL_FILTER ? domainFilterLabel(activeDomain) : filterLabel(activeCategory)
+
   const toggleLabel = isExpanded
     ? '閉じる'
-    : activeCategory === ALL_FILTER
-      ? `すべての実績を見る（${counts[ALL_FILTER]}件）`
-      : `${filterLabel(activeCategory)}を見る（${counts[activeCategory]}件）`
+    : activeDomain === ALL_FILTER && activeCategory === ALL_FILTER
+      ? `すべての実績を見る（${domainCounts[ALL_FILTER]}件）`
+      : `${selectionLabel}を見る（${filteredProjects.length}件）`
+
+  function handleDomainChange(domain: DomainFilter) {
+    setActiveDomain(domain)
+    setActiveCategory(ALL_FILTER)
+    setIsExpanded(true)
+  }
 
   function handleCategoryChange(category: Filter) {
     setActiveCategory(category)
@@ -97,41 +136,78 @@ export default function WorksArchive({ defaultExpanded = false }: { defaultExpan
               </p>
             </div>
             <p className="max-w-xl text-[15px] leading-8 text-white/58 lg:text-right">
-              これまでに作ったものを、すべてこちらに残しています。
-              種類を選ぶと、その分だけを見られます。
+              AI・業務自動化を中心に、これまで制作してきたものを掲載しています。
+              Webサイト制作など、その他の制作実績もこちらから確認できます。
             </p>
           </div>
         </AnimateIn>
 
-        <div className="works-tabs no-scrollbar -mx-4 mb-8 overflow-x-auto px-4 sm:mx-0 sm:px-0 md:mb-10">
-          <div className="flex min-w-max items-center gap-2 sm:flex-wrap sm:gap-2.5" role="group" aria-label="作品カテゴリーの絞り込み">
-            {filters.map((category) => {
-              const isActive = activeCategory === category
+        {/* 大分類 first, on its own line: three choices, one of which is the
+            whole archive. The fine-grained categories only appear once a
+            domain is chosen, so the first read is never six tabs wide. */}
+        <div className="works-tabs no-scrollbar -mx-4 mb-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+          <div className="flex min-w-max items-center gap-2 sm:flex-wrap sm:gap-2.5" role="group" aria-label="大きな分類で絞り込み">
+            {domainFilters.map((domain) => {
+              const isActive = activeDomain === domain
               return (
                 <button
-                  key={category}
+                  key={domain}
                   type="button"
-                  onClick={() => handleCategoryChange(category)}
+                  onClick={() => handleDomainChange(domain)}
                   aria-pressed={isActive}
-                  className={`group/tab inline-flex items-center gap-2 whitespace-nowrap border px-4 py-2.5 text-[12.5px] font-semibold tracking-[0.06em] transition-all duration-500 ${
+                  className={`inline-flex items-center gap-2 whitespace-nowrap border px-4 py-2.5 text-[12.5px] font-semibold tracking-[0.06em] transition-all duration-500 ${
                     isActive
                       ? 'border-[rgba(212,175,55,0.5)] bg-[rgba(212,175,55,0.07)] text-[rgba(212,175,55,0.95)] shadow-[0_0_30px_rgba(212,175,55,0.08)]'
                       : 'border-white/10 text-white/58 hover:border-white/25 hover:text-white/80'
                   }`}
                 >
-                  {filterLabel(category)}
+                  {domainFilterLabel(domain)}
                   <span
                     className={`text-[8px] font-semibold tabular-nums tracking-[0.1em] transition-colors duration-500 ${
                       isActive ? 'text-[rgba(212,175,55,0.85)]' : 'text-white/55'
                     }`}
                   >
-                    {counts[category]}
+                    {domainCounts[domain]}
                   </span>
                 </button>
               )
             })}
           </div>
         </div>
+
+        {categoryFilters.length > 0 ? (
+          <div className="works-tabs no-scrollbar -mx-4 mb-8 overflow-x-auto px-4 sm:mx-0 sm:px-0 md:mb-10">
+            <div
+              className="flex min-w-max items-center gap-2 sm:flex-wrap sm:gap-2.5"
+              role="group"
+              aria-label={`${domainFilterLabel(activeDomain)}の中で絞り込み`}
+            >
+              {categoryFilters.map((category) => {
+                const isActive = activeCategory === category
+                return (
+                  <button
+                    key={category}
+                    type="button"
+                    onClick={() => handleCategoryChange(category)}
+                    aria-pressed={isActive}
+                    className={`inline-flex items-center gap-2 whitespace-nowrap border px-3.5 py-2 text-[11.5px] font-medium tracking-[0.06em] transition-all duration-500 ${
+                      isActive
+                        ? 'border-white/35 bg-white/[0.05] text-white'
+                        : 'border-white/[0.08] text-white/50 hover:border-white/22 hover:text-white/75'
+                    }`}
+                  >
+                    {filterLabel(category)}
+                    <span className="text-[8px] font-semibold tabular-nums tracking-[0.1em] text-white/45">
+                      {categoryCounts[category]}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        ) : (
+          <div className="mb-8 md:mb-10" />
+        )}
 
         <div className="flex justify-center">
           <button
@@ -150,12 +226,12 @@ export default function WorksArchive({ defaultExpanded = false }: { defaultExpan
           id={ARCHIVE_PROJECTS_ID}
           hidden={!isExpanded}
           role="region"
-          aria-label={`${filterLabel(activeCategory)}の制作実績`}
+          aria-label={`${selectionLabel}の制作実績`}
         >
           {isExpanded ? (
             <>
               <motion.div
-                key={activeCategory}
+                key={`${activeDomain}-${activeCategory}`}
                 initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: prefersReducedMotion ? 0 : 0.5, ease }}
