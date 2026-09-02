@@ -1369,3 +1369,27 @@ export const projectCountByDomain = Object.fromEntries(
     projects.filter((project) => CATEGORY_DOMAIN[project.group] === domain).length,
   ]),
 ) as Record<Domain, number>
+
+/**
+ * The two domain-scoped lists the site actually renders.
+ *
+ * Splitting them here, next to the data, is what keeps the top page and
+ * `/works` from ever disagreeing about where a piece belongs: the top page's
+ * MAIN group renders `aiProjects` (plus the case studies), `/works` renders
+ * `webProjects`, and a project moves between the two surfaces by changing one
+ * field — its `group` — and nothing else.
+ */
+export const aiProjects = archiveProjects.filter(
+  (project) => CATEGORY_DOMAIN[project.group] === 'AI & Automation',
+)
+
+/** `/works` is the Web production gallery, and this is everything it shows. */
+export const webProjects = archiveProjects.filter(
+  (project) => CATEGORY_DOMAIN[project.group] === 'Web Production',
+)
+
+/** The filter tabs offered on `/works`, in the existing category order. */
+export const webCategories = categoriesByDomain['Web Production']
+
+/** Counted, never typed in: every "○件" on a web surface reads this. */
+export const webProjectCount = webProjects.length

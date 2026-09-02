@@ -1,28 +1,19 @@
-'use client'
-
 import Image from 'next/image'
 import Link from 'next/link'
 import AnimateIn from './AnimateIn'
 import { caseStudies } from '../data/caseStudies'
-import { projectCountByDomain, projects } from '../data/projects'
+import { aiProjects, projects, webProjectCount } from '../data/projects'
 import {
+  CATEGORY_LABEL,
   PROJECT_TYPE_LABEL,
   STATUS_LABEL,
+  type CaseStudy,
+  type Project,
   type ProjectStatus,
   type ProjectType,
 } from '../types/project'
 
-const medibrief = caseStudies.find((study) => study.id === 'medibrief-ai')!
-const medichart = projects.find((project) => project.id === 'medichart-lite')!
-const handoverMaker = projects.find((project) => project.id === 'handover-maker')!
-const difyChat = caseStudies.find((study) => study.id === 'dify-ai-chat')!
-const expenseTracker = caseStudies.find((study) => study.id === 'smart-expense-tracker')!
-const medDose = projects.find((project) => project.id === 'meddose')!
-const adLibraryMonitor = projects.find((project) => project.id === 'meta-ad-library-monitor')!
 const nurseFukugyoLab = projects.find((project) => project.id === 'nurse-fukugyo-lab')!
-
-/** Counted, never typed in: the archive and this line can only ever agree. */
-const webProjectCount = projectCountByDomain['Web Production']
 
 type FeaturedWork = {
   id: string
@@ -38,113 +29,135 @@ type FeaturedWork = {
   githubUrl?: string
   /** Route of the work's own page on this site, when it has one. */
   detailPath?: string
-  diagram?: readonly [string, string, string]
 }
 
 /**
  * What this studio is, in the order it should be read: AI and automation first
- * and at length, web production second and briefly. The two arrays are the
+ * and at length, web production second and briefly. The two groups are the
  * whole of that hierarchy — nothing here is colour-coded or restyled to make
  * the point, the heading order and the group sizes make it.
+ *
+ * The reading order of the MAIN group's opening cards. Ids listed here come
+ * first, in this order; every other AI / automation piece follows on after
+ * them, ordered by its own `order` field.
+ *
+ * This is the whole of the curation. Adding a new AI tool, automation, agent
+ * or API integration means adding it to `projects.ts` (or `caseStudies.ts`)
+ * with an AI-domain `group` — it then appears in this section on its own, with
+ * no change to this file.
  */
-const aiWorks: readonly FeaturedWork[] = [
-  {
-    id: medibrief.id,
+const AI_LEAD_ORDER: readonly string[] = [
+  'medibrief-ai',
+  'medichart-lite',
+  'handover-maker',
+  'dify-ai-chat',
+  'smart-expense-tracker',
+  'meddose',
+  'meta-ad-library-monitor',
+]
+
+/**
+ * Card copy written for one specific piece, where the product name or a
+ * sharper one-line read is worth having. Anything absent falls back to the
+ * work's own title, category label and plain summary, so a newly added piece
+ * is never blank — it just reads in the site's default voice until someone
+ * writes it a line here.
+ */
+const AI_CARD_COPY: Record<string, { title?: string; label?: string; description?: string }> = {
+  'medibrief-ai': {
     title: 'MediBrief',
     label: '医療 × AI',
     description: '話したいことを、診察で伝えやすいメモに自動で整理します。',
-    image: medibrief.screenshot,
-    imageAlt: medibrief.screenshotAlt,
-    accent: medibrief.accent,
-    projectType: medibrief.projectType,
-    status: medibrief.status,
-    liveUrl: medibrief.liveUrl,
-    githubUrl: medibrief.githubUrl,
   },
-  {
-    id: medichart.id,
-    title: medichart.title,
+  'medichart-lite': {
     label: '医療向けWebアプリ',
     description: '患者さんの情報や記録を、一つの画面で確認しやすくします。',
-    image: medichart.image,
-    imageAlt: medichart.imageAlt,
-    accent: medichart.accent,
-    projectType: medichart.projectType,
-    status: medichart.status,
-    liveUrl: medichart.liveUrl,
-    githubUrl: medichart.githubUrl,
   },
-  {
-    id: handoverMaker.id,
-    title: handoverMaker.title,
+  'handover-maker': {
     label: '介護・医療 × 業務効率化',
     description: '申し送り、記録、予定、検索、印刷を一つにまとめた完全オフライン対応ツールです。',
-    image: handoverMaker.image,
-    imageAlt: handoverMaker.imageAlt,
-    accent: handoverMaker.accent,
-    projectType: handoverMaker.projectType,
-    status: handoverMaker.status,
-    liveUrl: handoverMaker.liveUrl,
-    githubUrl: handoverMaker.githubUrl,
   },
-  {
-    id: difyChat.id,
+  'dify-ai-chat': {
     title: 'Dify AI Chat',
     label: '問い合わせ対応',
     description: 'よくある質問に自動で答え、問い合わせ対応の負担を減らします。',
-    image: difyChat.screenshot,
-    imageAlt: difyChat.screenshotAlt,
-    accent: difyChat.accent,
-    projectType: difyChat.projectType,
-    status: difyChat.status,
-    liveUrl: difyChat.liveUrl,
-    githubUrl: difyChat.githubUrl,
   },
-  {
-    id: expenseTracker.id,
+  'smart-expense-tracker': {
     title: 'Smart Expense Tracker',
     label: '集計Webアプリ',
     description: '支出を記録するだけで、合計やグラフを自動で表示します。',
-    image: expenseTracker.screenshot,
-    imageAlt: expenseTracker.screenshotAlt,
-    accent: expenseTracker.accent,
-    projectType: expenseTracker.projectType,
-    status: expenseTracker.status,
-    liveUrl: expenseTracker.liveUrl,
-    githubUrl: expenseTracker.githubUrl,
   },
-  {
-    id: medDose.id,
-    title: medDose.title,
+  meddose: {
     label: '医療 × 自動計算',
     description: '薬をいつまで飲むのか、腕時計の上で自動計算します。',
-    image: medDose.image,
-    imageAlt: medDose.imageAlt,
-    accent: medDose.accent,
-    projectType: medDose.projectType,
-    status: medDose.status,
-    githubUrl: medDose.githubUrl,
   },
-  {
-    id: adLibraryMonitor.id,
-    title: adLibraryMonitor.title,
+  'meta-ad-library-monitor': {
     label: '広告リサーチ × 自動化',
     description: '登録した広告主の広告をまとめて取得し、前回から増えた分だけを見つけ出します。',
-    image: adLibraryMonitor.image,
-    imageAlt: adLibraryMonitor.imageAlt,
-    accent: adLibraryMonitor.accent,
-    projectType: adLibraryMonitor.projectType,
-    status: adLibraryMonitor.status,
-    githubUrl: adLibraryMonitor.githubUrl,
-    detailPath: adLibraryMonitor.detailPath,
   },
-] as const
+}
+
+function fromProject(project: Project): FeaturedWork {
+  const copy = AI_CARD_COPY[project.id]
+  return {
+    id: project.id,
+    title: copy?.title ?? project.title,
+    label: copy?.label ?? CATEGORY_LABEL[project.group],
+    description: copy?.description ?? project.plainSummary,
+    image: project.image,
+    imageAlt: project.imageAlt,
+    accent: project.accent,
+    projectType: project.projectType,
+    status: project.status,
+    liveUrl: project.liveUrl,
+    githubUrl: project.githubUrl,
+    detailPath: project.detailPath,
+  }
+}
+
+function fromCaseStudy(study: CaseStudy): FeaturedWork {
+  const copy = AI_CARD_COPY[study.id]
+  return {
+    id: study.id,
+    title: copy?.title ?? study.title,
+    label: copy?.label ?? CATEGORY_LABEL[study.group],
+    description: copy?.description ?? study.plainSummary,
+    image: study.screenshot,
+    imageAlt: study.screenshotAlt,
+    accent: study.accent,
+    projectType: study.projectType,
+    status: study.status,
+    liveUrl: study.liveUrl,
+    githubUrl: study.githubUrl,
+  }
+}
 
 /**
- * Web production: a second skill, shown so a visitor knows it is available —
- * not a second headline act. The top page keeps one representative piece and
- * sends the rest to the archive; adding another entry here is all it takes to
- * grow the group later.
+ * MAIN: every AI / automation piece the portfolio holds, from both data files.
+ *
+ * A case study and a project can describe the same build (Dify AI Chat does),
+ * so the id decides: the case study is the fuller record and wins, and the
+ * project entry for it is dropped rather than shown twice.
+ */
+const aiWorks: readonly FeaturedWork[] = (() => {
+  const caseStudyIds = new Set(caseStudies.map((study) => study.id))
+  const all = [
+    ...caseStudies.map(fromCaseStudy),
+    ...aiProjects.filter((project) => !caseStudyIds.has(project.id)).map(fromProject),
+  ]
+
+  const lead = AI_LEAD_ORDER.map((id) => all.find((work) => work.id === id)).filter(
+    (work): work is FeaturedWork => work !== undefined,
+  )
+  const rest = all.filter((work) => !AI_LEAD_ORDER.includes(work.id))
+
+  return [...lead, ...rest]
+})()
+
+/**
+ * SUB — web production: a second skill, shown so a visitor knows it is
+ * available, not a second headline act. The top page keeps one representative
+ * piece and sends the rest to `/works`, which is the web gallery in full.
  */
 const webWorks: readonly FeaturedWork[] = [
   {
@@ -179,18 +192,20 @@ function WorkCard({ work, delay }: { work: FeaturedWork; delay: number }) {
             />
           </div>
         ) : (
+          /* No capture exists for this one. The frame keeps the grid even and
+             names the work rather than standing in for a screenshot it does
+             not have. */
           <div
             className="flex aspect-[16/10] items-center justify-center border-b border-white/[0.08] px-7"
             style={{ background: `radial-gradient(circle at 50% 20%, ${work.accent}22, transparent 65%), #070707` }}
             aria-hidden="true"
           >
-            <div className="flex w-full items-center justify-center gap-3 text-center text-[11px] font-semibold tracking-[0.08em] text-white/60 sm:gap-5">
-              <span className="border border-white/12 px-3 py-3">{work.diagram?.[0]}</span>
-              <span className="text-white/25">→</span>
-              <span className="border px-3 py-3" style={{ borderColor: `${work.accent}66`, color: work.accent }}>{work.diagram?.[1]}</span>
-              <span className="text-white/25">→</span>
-              <span className="border border-white/12 px-3 py-3">{work.diagram?.[2]}</span>
-            </div>
+            <span
+              className="border px-4 py-3 text-center text-[11px] font-semibold tracking-[0.08em]"
+              style={{ borderColor: `${work.accent}55`, color: work.accent }}
+            >
+              {work.title}
+            </span>
           </div>
         )}
         <div className="flex flex-1 flex-col p-6">
@@ -336,7 +351,7 @@ export default function FeaturedWorks() {
             <AnimateIn className="lg:col-span-2" delay={100 + webWorks.length * 80}>
               <div className="flex h-full flex-col justify-center gap-4 border border-dashed border-white/[0.09] bg-white/[0.012] p-7">
                 <p className="text-[13px] leading-7 text-white/55">
-                  ホームページ、1ページの紹介サイト、ネットショップなどのWeb制作は、制作実績一覧の「Web制作」からまとめてご覧いただけます。
+                  ホームページ、1ページの紹介サイト、ネットショップなどのWeb制作は、「Web制作実績」ページでまとめてご覧いただけます。
                 </p>
                 <Link
                   href="/works#archive"
@@ -348,17 +363,6 @@ export default function FeaturedWorks() {
             </AnimateIn>
           </div>
         </div>
-
-        <AnimateIn delay={360}>
-          <div className="mt-14 flex justify-center">
-            <Link
-              href="/works"
-              className="inline-flex min-h-12 w-full items-center justify-center border border-[rgba(212,175,55,0.38)] bg-[rgba(212,175,55,0.04)] px-7 py-3 text-[12px] font-semibold tracking-[0.08em] text-[rgba(232,204,113,0.92)] transition hover:border-[rgba(212,175,55,0.65)] hover:text-white sm:w-auto"
-            >
-              すべての制作実績を見る（{projects.length}件）
-            </Link>
-          </div>
-        </AnimateIn>
       </div>
     </section>
   )

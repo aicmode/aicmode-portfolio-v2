@@ -4,7 +4,12 @@
 
 黒を基調としたダークエディトリアルデザインで、AI・自動化のケーススタディ5件と、Webアプリ・Webサイト・LP・ECサイトの制作物32件を掲載しています。
 
-制作実績は「AI・業務自動化（メイン）」と「Web制作（サブ）」の2つの大分類で構成し、トップページ・制作実績一覧のどちらもこの順で表示します。分類は [`app/types/project.ts`](app/types/project.ts) の `CATEGORY_DOMAIN` が単一の定義元です。
+制作実績は「AI・業務自動化（メイン）」と「Web制作（サブ）」の2つの大分類で構成し、掲載する場所も分けています。
+
+- **トップページ `/`** — AI・業務自動化の制作実績（AIツール・業務自動化・API連携・AIエージェント・医療AI・業務用アプリ）をすべて掲載するメインエリア。代表作の並び順だけが [`app/components/FeaturedWorks.tsx`](app/components/FeaturedWorks.tsx) の `AI_LEAD_ORDER` にあり、それ以外は自動で続きます。新しいAI作品は `projects.ts` / `caseStudies.ts` にAI側の `group` で追加するだけでここに並びます。
+- **`/works`** — Web制作実績（ホームページ / 1ページの紹介サイト / ネットショップ）専用のサブギャラリー。AI作品は掲載しません。
+
+分類は [`app/types/project.ts`](app/types/project.ts) の `CATEGORY_DOMAIN` が単一の定義元で、`group` を変えるだけで作品の掲載先が入れ替わります。件数はすべて [`app/data/projects.ts`](app/data/projects.ts) の派生値（`aiProjects` / `webProjects` / `webProjectCount`）から算出しており、ハードコードしていません。
 
 公開URL: https://aicmode-portfolio.vercel.app/
 
@@ -37,8 +42,8 @@ Status の定義は [`app/types/project.ts`](app/types/project.ts) で一元管�
 - **Healthcare × AI** — 看護師として約9年間の現場経験に基づく、医療・介護分野での要件整理と安全設計の方針
 - **Three Service Entrances** — AI・自動化、業務Webアプリ、医療デジタル支援の3分類から相談内容を選べる構成
 - **How I Work** — MVP、制約共有、公開前テスト、セキュリティ確認の方針
-- **Selected Works** — 営業上重要な8件を初期表示
-- **Works Archive** — 全32件を「大分類（AI・業務自動化 / Web制作）→ 細分類」の2段階で絞り込み表示
+- **Featured Works（トップページ）** — MAIN「AI・業務自動化」にAI作品全15件、SUB「Web制作」に代表作と `/works` への導線
+- **Works Archive（`/works`）** — Web制作全21件を「すべて / ホームページ / 1ページの紹介サイト / ネットショップ」で絞り込み表示
 - **Project Detail Modal** — フォーカストラップ、Escapeで閉じる、閉じたあとのフォーカス復帰に対応
 - **Responsive Design** — 375px から 1440px 以上まで対応
 - **Accessible Interactions** — スキップリンク、`aria-expanded` / `aria-controls` 付きアコーディオン、`:focus-visible` のフォーカス表示
@@ -97,10 +102,11 @@ app/
 ├── components/
 │   ├── Nav.tsx                # 固定ナビ + モバイルメニュー
 │   ├── Hero.tsx               # ファーストビュー
-│   ├── CaseStudies.tsx        # AI & Automation ケーススタディ
+│   ├── FeaturedWorks.tsx      # トップの MAIN AI・業務自動化 / SUB Web制作
+│   ├── CaseStudies.tsx        # AI & Automation ケーススタディ（現在は未使用）
 │   ├── HealthcareAI.tsx       # 医療現場経験と安全設計の方針
-│   ├── SelectedWorks.tsx      # 厳選8件
-│   ├── WorksArchive.tsx       # 全32件 + 大分類→細分類の2段階絞り込み
+│   ├── SelectedWorks.tsx      # 厳選8件（現在は未使用）
+│   ├── WorksArchive.tsx       # /works のWeb制作21件 + カテゴリー絞り込み
 │   ├── WorkPoster.tsx         # 作品カード + 詳細モーダルの中身
 │   ├── DetailModal.tsx        # アクセシブルなダイアログ
 │   ├── Services.tsx           # 課題起点のServices + 成果物起点のCapabilities
@@ -116,7 +122,7 @@ app/
 │   ├── BootRecovery.tsx       # バンドル読み込み失敗時の復帰処理
 │   └── ClientHealth.tsx       # 起動確認と古いキャッシュの掃除
 ├── data/
-│   ├── projects.ts            # 作品32件
+│   ├── projects.ts            # 作品32件（AI 11件 / Web制作 21件）
 │   ├── caseStudies.ts         # ケーススタディ5件
 │   ├── services.ts            # Services / Capabilities / Process
 │   ├── skills.ts              # スキル一覧

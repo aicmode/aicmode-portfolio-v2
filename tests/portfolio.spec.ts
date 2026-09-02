@@ -56,8 +56,10 @@ test.describe('short sales landing page', () => {
     const groupHeadings = await works.locator('h3').allTextContents()
     expect(groupHeadings).toEqual(['AI・業務自動化', 'Web制作'])
 
+    // Every AI / automation piece lives here now — the ones that used to be
+    // reachable only from the archive included, since /works is web-only.
     const featured = works.locator('article')
-    await expect(featured).toHaveCount(8)
+    await expect(featured).toHaveCount(16)
     for (const title of [
       'MediBrief',
       'MediChart Lite',
@@ -65,6 +67,15 @@ test.describe('short sales landing page', () => {
       'Dify AI Chat',
       'Smart Expense Tracker',
       'MedDose',
+      'Meta Ad Library Monitor',
+      'Weather Calendar',
+      'AI Prompt Manager',
+      'NIGHT SHIFT CARE',
+      'QR Code Bulk Generator',
+      'Date Calculator Tool',
+      'Handover AI',
+      '連絡まとめ通知ツール',
+      '固定費チェックツール',
       'Nurse FUKUGYO Lab',
     ]) {
       await expect(featured.getByRole('heading', { name: title, exact: true })).toBeVisible()
@@ -80,7 +91,13 @@ test.describe('short sales landing page', () => {
     await expect(page.locator('#works').getByText(/自主制作/).first()).toBeVisible()
     await expect(page.locator('#works').getByText(/学習のための制作/).first()).toBeVisible()
     await expect(page.locator('#works').getByText(/試作品（実機で動作確認済み）/)).toBeVisible()
-    await expect(page.getByRole('link', { name: 'すべての制作実績を見る（32件）' })).toHaveAttribute('href', '/works')
+    // /works is the web gallery, so the only link to it is the web one, and
+    // its count is the web count — never the whole portfolio's.
+    await expect(page.getByRole('link', { name: 'Web制作の実績を見る（21件）' })).toHaveAttribute(
+      'href',
+      '/works#archive',
+    )
+    await expect(page.getByRole('link', { name: /すべての制作実績を見る/ })).toHaveCount(0)
 
     const profile = page.locator('#about')
     await expect(profile).toContainText('看護師として約9年')
@@ -125,7 +142,7 @@ test.describe('short sales landing page', () => {
     ])
 
     const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight)
-    expect(pageHeight).toBeLessThan(9000)
+    expect(pageHeight).toBeLessThan(12000)
     await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight))
     await page.waitForTimeout(1200)
     await page.evaluate(() => window.scrollTo(0, 0))
@@ -146,8 +163,8 @@ test.describe('short sales landing page', () => {
       height: document.documentElement.scrollHeight,
     }))
     expect(dimensions.scrollWidth).toBe(dimensions.clientWidth)
-    expect(dimensions.height).toBeLessThan(12000)
-    await expect(page.locator('#works article')).toHaveCount(8)
+    expect(dimensions.height).toBeLessThan(22000)
+    await expect(page.locator('#works article')).toHaveCount(16)
 
     await page.getByRole('button', { name: 'メニューを開く' }).click()
     await expect(page.getByRole('link', { name: 'お問い合わせ', exact: true })).toBeVisible()
@@ -174,40 +191,62 @@ test.describe('detail pages retain the removed information', () => {
     }
   })
 
-  test('works retains the AI cases and all 32 site/app records', async ({ page }) => {
+  test('works is the web gallery: 21 web records and no AI work', async ({ page }) => {
     await page.goto(`${BASE_URL}/works`, { waitUntil: 'networkidle' })
-    await expect(page.locator('#case-studies article')).toHaveCount(5)
-    await expect(page.locator('#archive article')).toHaveCount(32)
-    await expect(page.locator('#archive')).toContainText('全32件')
-    await expect(page.getByRole('heading', { name: 'MediChart Lite', exact: true })).toBeVisible()
-    await expect(page.getByRole('heading', { name: 'Handover Maker', exact: true })).toBeVisible()
+
+    await expect(page).toHaveTitle('Web制作実績｜AIC')
+    // The AI case-study section belongs to the top page now.
+    await expect(page.locator('#case-studies')).toHaveCount(0)
+    await expect(page.locator('#archive article')).toHaveCount(21)
+    await expect(page.locator('#archive')).toContainText('全21件')
+
+    // None of the AI / automation work is listed here.
+    for (const title of [
+      'MediBrief',
+      'MediChart Lite',
+      'Handover Maker',
+      'Handover AI',
+      'Dify AI Chat',
+      'MedDose',
+      'Meta Ad Library Monitor',
+      'Smart Expense Tracker',
+      'Weather Calendar',
+      'AI Prompt Manager',
+      'NIGHT SHIFT CARE',
+      'QR Code Bulk Generator',
+      'Date Calculator Tool',
+    ]) {
+      await expect(page.getByRole('heading', { name: title, exact: true })).toHaveCount(0)
+    }
   })
 
-  test('the archive filters by 大分類 first, then by the existing categories', async ({ page }) => {
+  test('the archive filters by the web categories that exist in the data', async ({ page }) => {
     await page.goto(`${BASE_URL}/works`, { waitUntil: 'networkidle' })
 
-    const domainTabs = page.getByRole('group', { name: '大きな分類で絞り込み' })
-    for (const label of ['すべて', 'AI・業務自動化', 'Web制作']) {
-      await expect(domainTabs.getByRole('button', { name: new RegExp(`^${label}`) })).toBeVisible()
+    // One row of tabs, and no 大分類 row: the page is a single domain.
+    await expect(page.getByRole('group', { name: '大きな分類で絞り込み' })).toHaveCount(0)
+    const tabs = page.getByRole('group', { name: 'Web制作の種類で絞り込み' })
+    const tabLabels = await tabs.getByRole('button').allTextContents()
+    expect(tabLabels.map((label) => label.replace(/[0-9]+$/, '').trim())).toEqual([
+      'すべて',
+      'ホームページ',
+      '1ページの紹介サイト',
+      'ネットショップ',
+    ])
+    await expect(tabs.getByRole('button', { name: /AI・業務自動化/ })).toHaveCount(0)
+
+    for (const [label, count] of [
+      ['ホームページ', 5],
+      ['1ページの紹介サイト', 11],
+      ['ネットショップ', 5],
+    ] as const) {
+      await tabs.getByRole('button', { name: new RegExp(`^${label}`) }).click()
+      await expect(page.locator('#archive article')).toHaveCount(count)
     }
 
-    // Only the top level is offered until a domain is picked.
-    await expect(page.getByRole('group', { name: /の中で絞り込み/ })).toHaveCount(0)
-
-    await domainTabs.getByRole('button', { name: /^AI・業務自動化/ }).click()
-    await expect(page.locator('#archive article')).toHaveCount(11)
-    await expect(page.getByRole('heading', { name: 'Handover Maker', exact: true })).toBeVisible()
-    await expect(page.getByRole('heading', { name: 'Nurse FUKUGYO Lab', exact: true })).toHaveCount(0)
-
-    const subTabs = page.getByRole('group', { name: 'AI・業務自動化の中で絞り込み' })
-    for (const label of ['すべて', 'AIのしくみ', '作業の自動化', '仕事用アプリ']) {
-      await expect(subTabs.getByRole('button', { name: new RegExp(`^${label}`) })).toBeVisible()
-    }
-    await subTabs.getByRole('button', { name: /^作業の自動化/ }).click()
-    await expect(page.locator('#archive article')).toHaveCount(2)
-
-    await domainTabs.getByRole('button', { name: /^Web制作/ }).click()
+    await tabs.getByRole('button', { name: /^すべて/ }).click()
     await expect(page.locator('#archive article')).toHaveCount(21)
+
     const nurse = page.locator('#archive article').filter({
       has: page.getByRole('heading', { name: 'Nurse FUKUGYO Lab', exact: true }),
     })
@@ -224,14 +263,14 @@ test.describe('detail pages retain the removed information', () => {
     expect(dimensions.scrollWidth).toBe(dimensions.clientWidth)
   })
 
-  test('Handover Maker keeps the shared card, detail, links, and responsive layout', async ({ page }) => {
+  test('Handover Maker keeps its card, links, and responsive layout on the top page', async ({ page }) => {
     const runtimeErrors = collectRuntimeErrors(page)
 
     for (const width of [1440, 390, 320]) {
       await page.setViewportSize({ width, height: width === 1440 ? 900 : 844 })
-      await page.goto(`${BASE_URL}/works`, { waitUntil: 'networkidle' })
+      await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' })
 
-      const handoverCard = page.locator('#archive article').filter({
+      const handoverCard = page.locator('#works article').filter({
         has: page.getByRole('heading', { name: 'Handover Maker', exact: true }),
       })
       await expect(handoverCard).toHaveCount(1)
@@ -246,30 +285,62 @@ test.describe('detail pages retain the removed information', () => {
       )
 
       const cardImage = handoverCard.getByAltText(/申し送りメーカーVer2\.0/)
+      await handoverCard.scrollIntoViewIfNeeded()
       await expect(cardImage).toBeVisible()
       await expect.poll(() => cardImage.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0)
 
-      await handoverCard.scrollIntoViewIfNeeded()
       await page.screenshot({ path: `/tmp/aicmode-handover-card-${width}.png` })
-
-      await handoverCard.getByRole('button', { name: /詳しく見る/ }).click()
-      const dialog = page.getByRole('dialog', { name: 'Handover Maker' })
-      await expect(dialog).toBeVisible()
-      await expect(dialog).toContainText('Nodeテスト125件成功')
-      await expect(dialog).toContainText('公開デモには実在する個人情報を入力しないでください')
-
-      await page.waitForTimeout(500)
-      await page.screenshot({ path: `/tmp/aicmode-handover-detail-${width}.png` })
 
       const dimensions = await page.evaluate(() => ({
         scrollWidth: document.documentElement.scrollWidth,
         clientWidth: document.documentElement.clientWidth,
       }))
       expect(dimensions.scrollWidth).toBe(dimensions.clientWidth)
-
     }
 
     expect(runtimeErrors).toEqual([])
+  })
+
+  test('the AI works that only the archive used to carry are on the top page', async ({ page }) => {
+    await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' })
+
+    const weather = page.locator('#works article').filter({
+      has: page.getByRole('heading', { name: 'Weather Calendar', exact: true }),
+    })
+    await expect(weather.getByRole('link', { name: /実際に見る/ })).toHaveAttribute(
+      'href',
+      'https://weather-calendar-app-brown.vercel.app',
+    )
+    await expect(weather.getByRole('link', { name: /GitHubで見る/ })).toHaveAttribute(
+      'href',
+      'https://github.com/aicmode/weather-calendar-app',
+    )
+
+    // A piece with no capture still gets a frame, not a broken one.
+    const subscription = page.locator('#works article').filter({
+      has: page.getByRole('heading', { name: '固定費チェックツール', exact: true }),
+    })
+    await expect(subscription.getByRole('link', { name: /GitHubで見る/ })).toHaveAttribute(
+      'href',
+      'https://github.com/aicmode/AI-SUBSCRIPTION-DOCTOR',
+    )
+  })
+
+  test('the AI detail pages are still reachable and intact', async ({ page }) => {
+    for (const path of ['/works/meddose', '/works/meta-ad-library-monitor']) {
+      const response = await page.goto(`${BASE_URL}${path}`, { waitUntil: 'networkidle' })
+      expect(response?.status()).toBe(200)
+      await expect(page.locator('h1')).toBeVisible()
+    }
+
+    await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' })
+    const adMonitor = page.locator('#works article').filter({
+      has: page.getByRole('heading', { name: 'Meta Ad Library Monitor', exact: true }),
+    })
+    await expect(adMonitor.getByRole('link', { name: '詳細を見る' })).toHaveAttribute(
+      'href',
+      '/works/meta-ad-library-monitor',
+    )
   })
 
   test('about retains profile, strengths, values, and skills', async ({ page }) => {
