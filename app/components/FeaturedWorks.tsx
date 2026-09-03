@@ -48,6 +48,7 @@ type FeaturedWork = {
  */
 const AI_LEAD_ORDER: readonly string[] = [
   'medibrief-ai',
+  'ai-line-inquiry-assistant',
   'medichart-lite',
   'handover-maker',
   'meddose',
@@ -66,6 +67,9 @@ const AI_CARD_COPY: Record<string, { title?: string; label?: string; description
     title: 'MediBrief',
     label: '医療 × AI',
     description: '話したいことを、診察で伝えやすいメモに自動で整理します。',
+  },
+  'ai-line-inquiry-assistant': {
+    label: 'LINE × 業務自動化',
   },
   'medichart-lite': {
     label: '医療向けWebアプリ',
