@@ -59,9 +59,10 @@ test.describe('short sales landing page', () => {
     // Every AI / automation piece lives here now — the ones that used to be
     // reachable only from the archive included, since /works is web-only.
     const featured = works.locator('article')
-    await expect(featured).toHaveCount(7)
+    await expect(featured).toHaveCount(8)
     for (const title of [
       'MediBrief',
+      'AI LINE Inquiry Assistant',
       'MediChart Lite',
       'Handover Maker',
       'MedDose',
@@ -154,7 +155,7 @@ test.describe('short sales landing page', () => {
     }))
     expect(dimensions.scrollWidth).toBe(dimensions.clientWidth)
     expect(dimensions.height).toBeLessThan(22000)
-    await expect(page.locator('#works article')).toHaveCount(7)
+    await expect(page.locator('#works article')).toHaveCount(8)
 
     await page.getByRole('button', { name: 'メニューを開く' }).click()
     await expect(page.getByRole('link', { name: 'お問い合わせ', exact: true })).toBeVisible()
@@ -193,6 +194,7 @@ test.describe('detail pages retain the removed information', () => {
     // None of the AI / automation work is listed here.
     for (const title of [
       'MediBrief',
+      'AI LINE Inquiry Assistant',
       'MediChart Lite',
       'Handover Maker',
       'Handover AI',
