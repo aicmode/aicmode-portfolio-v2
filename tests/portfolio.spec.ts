@@ -59,10 +59,11 @@ test.describe('short sales landing page', () => {
     // Every AI / automation piece lives here now — the ones that used to be
     // reachable only from the archive included, since /works is web-only.
     const featured = works.locator('article')
-    await expect(featured).toHaveCount(8)
+    await expect(featured).toHaveCount(9)
     for (const title of [
       'MediBrief',
       'AI LINE Inquiry Assistant',
+      'AI Real Estate Matcher',
       'MediChart Lite',
       'Handover Maker',
       'MedDose',
@@ -72,6 +73,29 @@ test.describe('short sales landing page', () => {
     ]) {
       await expect(featured.getByRole('heading', { name: title, exact: true })).toBeVisible()
     }
+    expect((await featured.locator('h4').allTextContents()).slice(0, 3)).toEqual([
+      'MediBrief',
+      'AI LINE Inquiry Assistant',
+      'AI Real Estate Matcher',
+    ])
+
+    const matcherCard = featured.filter({
+      has: page.getByRole('heading', { name: 'AI Real Estate Matcher', exact: true }),
+    })
+    await expect(matcherCard).toContainText('不動産 × AI × 業務支援')
+    await expect(matcherCard).toContainText('自主制作 ・ 公開中')
+    await expect(matcherCard.getByRole('link', { name: '詳細を見る' })).toHaveAttribute(
+      'href',
+      '/works/ai-real-estate-matcher',
+    )
+    await expect(matcherCard.getByRole('link', { name: /実際に見る/ })).toHaveAttribute(
+      'href',
+      'https://ai-real-estate-matcher.vercel.app',
+    )
+    await expect(matcherCard.getByRole('link', { name: /GitHubで見る/ })).toHaveAttribute(
+      'href',
+      'https://github.com/aicmode/ai-real-estate-matcher',
+    )
 
     const nurseCard = featured.filter({
       has: page.getByRole('heading', { name: 'Nurse FUKUGYO Lab', exact: true }),
@@ -155,7 +179,7 @@ test.describe('short sales landing page', () => {
     }))
     expect(dimensions.scrollWidth).toBe(dimensions.clientWidth)
     expect(dimensions.height).toBeLessThan(22000)
-    await expect(page.locator('#works article')).toHaveCount(8)
+    await expect(page.locator('#works article')).toHaveCount(9)
 
     await page.getByRole('button', { name: 'メニューを開く' }).click()
     await expect(page.getByRole('link', { name: 'お問い合わせ', exact: true })).toBeVisible()
@@ -300,7 +324,7 @@ test.describe('detail pages retain the removed information', () => {
   })
 
   test('the AI detail pages are still reachable and intact', async ({ page }) => {
-    for (const path of ['/works/meddose', '/works/meta-ad-library-monitor']) {
+    for (const path of ['/works/meddose', '/works/meta-ad-library-monitor', '/works/ai-real-estate-matcher']) {
       const response = await page.goto(`${BASE_URL}${path}`, { waitUntil: 'networkidle' })
       expect(response?.status()).toBe(200)
       await expect(page.locator('h1')).toBeVisible()
@@ -314,6 +338,43 @@ test.describe('detail pages retain the removed information', () => {
       'href',
       '/works/meta-ad-library-monitor',
     )
+  })
+
+  test('AI Real Estate Matcher detail keeps the requested content and links', async ({ page }) => {
+    const runtimeErrors = collectRuntimeErrors(page)
+
+    for (const width of [1440, 390]) {
+      await page.setViewportSize({ width, height: width === 1440 ? 900 : 844 })
+      const response = await page.goto(`${BASE_URL}/works/ai-real-estate-matcher`, { waitUntil: 'networkidle' })
+      expect(response?.status()).toBe(200)
+
+      await expect(page.getByRole('heading', { name: 'AI Real Estate Matcher', exact: true })).toBeVisible()
+      await expect(page.getByRole('heading', { name: '課題', exact: true })).toBeAttached()
+      await expect(page.getByRole('heading', { name: '解決', exact: true })).toBeAttached()
+      await expect(page.getByRole('heading', { name: '特徴', exact: true })).toBeAttached()
+      await expect(page.getByRole('heading', { name: '技術的ポイント', exact: true })).toBeAttached()
+      await expect(page.getByText('36件の架空物件データベース', { exact: false })).toBeAttached()
+      await expect(page.getByText('業務ロジックを組み合わせた選定フロー')).toBeAttached()
+
+      await expect(page.getByRole('link', { name: /実際に見る/ }).first()).toHaveAttribute(
+        'href',
+        'https://ai-real-estate-matcher.vercel.app',
+      )
+      await expect(page.getByRole('link', { name: /GitHubで見る/ }).first()).toHaveAttribute(
+        'href',
+        'https://github.com/aicmode/ai-real-estate-matcher',
+      )
+      await expect(page.locator('img')).toHaveCount(2)
+
+      const dimensions = await page.evaluate(() => ({
+        scrollWidth: document.documentElement.scrollWidth,
+        clientWidth: document.documentElement.clientWidth,
+      }))
+      expect(dimensions.scrollWidth).toBe(dimensions.clientWidth)
+      await page.screenshot({ path: `/tmp/aicmode-real-estate-detail-${width}.png`, fullPage: true })
+    }
+
+    expect(runtimeErrors).toEqual([])
   })
 
   test('about retains profile, strengths, values, and skills', async ({ page }) => {
