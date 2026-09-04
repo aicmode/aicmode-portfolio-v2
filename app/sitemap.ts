@@ -21,6 +21,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${SITE_URL}/works/ai-real-estate-matcher`,
+      changeFrequency: 'yearly',
+      priority: 0.8,
+    },
+    {
       url: `${SITE_URL}/works/meddose`,
       changeFrequency: 'yearly',
       priority: 0.8,

@@ -6,7 +6,7 @@ import type { Category, Domain, Project } from '../types/project'
  *
  * Lifted out of the Works component so the copy, the delivery facts (stack,
  * status, URLs) and the card visuals live together and can be audited in one
- * read. `order` drives both Selected Works (the first eight) and the archive.
+ * read. `order` drives both the curated Selected Works list and the archive.
  *
  * Honesty rules for this file:
  *   - `status` reflects the URL as actually verified, never an assumption.
@@ -19,7 +19,7 @@ const unsplash = (id: string) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&fm=jpg&q=80&w=1600`
 
 export const projects: readonly Project[] = [
-  // ── Selected Works (order 1–8) ────────────────────────────────────────────
+  // ── Selected Works ────────────────────────────────────────────────────────
   {
     id: 'ai-line-inquiry-assistant',
     title: 'AI LINE Inquiry Assistant',
@@ -188,6 +188,130 @@ export const projects: readonly Project[] = [
     detailPath: '/works/ai-line-inquiry-assistant',
     showGithubOnCard: true,
     order: 1.4,
+    featured: true,
+    year: 2026,
+  },
+  {
+    id: 'ai-real-estate-matcher',
+    title: 'AI Real Estate Matcher',
+    subtitle: 'AI物件選定支援ツール',
+    category: '不動産 × AI × 業務支援',
+    plainSummary:
+      '希望条件と物件データを分析し、マッチ度を算出しておすすめ物件をランキングするAI物件選定支援ツール。',
+    summary:
+      '家賃・エリア・駅徒歩・間取り・面積・築年数・駐車場・ペット・在宅ワーク適性を評価し、ユーザーが選んだ重視条件に応じて配点を変えながら、登録物件とのマッチ度を0〜100%で算出します。一部条件から外れても、ほかの条件が優れていれば候補に残すソフトマッチング方式を採用しています。',
+    problem:
+      '不動産の物件選定では、家賃・立地・間取り・設備など複数条件を人が比較する必要があり、候補が多いほど判断に時間がかかります。',
+    solution:
+      '希望条件を入力すると、登録物件を複数の評価軸で採点し、ユーザーの重視条件に応じて配点を調整しながら、最適な物件をおすすめ順にランキングします。',
+    features: [
+      'Supabase PostgreSQLによる36件の架空物件データベース',
+      '家賃・エリア・駅徒歩・間取り・面積・築年数・駐車場・ペット・在宅ワーク適性の9軸スコアリング',
+      '重視条件による動的な重み付けと0〜100%のマッチ度算出',
+      '一部条件から外れた物件も総合評価で候補に残すソフトマッチング',
+      'おすすめTOP3ランキングと推薦理由の自動生成',
+      '条件に合っている点・妥協点・スコア内訳の表示',
+      '2〜3件の物件比較',
+      '物件一覧・物件詳細ページ・詳細モーダル',
+      'PC・スマートフォンのレスポンシブ対応',
+      'Vercel本番環境からSupabase PostgreSQL本番DBへ接続',
+    ],
+    overview:
+      'AI Real Estate Matcherは、条件に合う物件を絞り込むだけでなく、「なぜおすすめなのか」「どこに妥協が必要なのか」まで確認できるようにした物件選定支援ツールです。完全一致だけに頼らず、条件ごとの適合度を点数化して総合評価することで、見落としやすい候補も含めて比較できるようにしています。',
+    detailSections: [
+      {
+        title: '業務ロジックを組み合わせた選定フロー',
+        items: [
+          'DB検索',
+          '希望条件による候補の絞り込み',
+          '9評価軸でのスコアリング',
+          '重視条件に応じた動的な重み付け',
+          'マッチ度順のランキング',
+          '推薦理由とスコア根拠の生成',
+        ],
+      },
+      {
+        title: '本番環境の構成',
+        body:
+          'Vercel上のNext.jsアプリケーションからPrisma ORMを介してSupabase PostgreSQLへ接続し、本番データベースに登録した物件を検索・採点しています。入力値はZodで検証し、表示と業務ロジックを分離して実装しています。',
+      },
+      {
+        title: 'ソフトマッチング',
+        body:
+          '単純な完全一致検索ではなく、予算や駅徒歩など一部の条件から少し外れていても、エリア・広さ・設備などほかの評価が高ければ候補として残します。必須条件と妥協可能な条件を分け、候補を消しすぎない設計です。',
+      },
+      {
+        title: '説明できるランキング',
+        body:
+          'ランキングの順位だけを提示せず、条件に合っている点、妥協が必要な点、評価軸ごとのスコア内訳を表示します。比較候補を2〜3件選び、判断材料を同じ画面で見比べられます。',
+      },
+    ],
+    outcome: [
+      '36件の架空物件を対象に、希望条件の入力からTOP3ランキング表示まで一連で動作することを確認',
+      '重視条件を切り替えると、評価軸の配点・マッチ度・順位が再計算されることを確認',
+      '公開環境でVercelからSupabase PostgreSQLの本番DBへ接続できることを確認',
+      'PC・スマートフォンの両方で検索・詳細確認・物件比較が利用できることを確認',
+    ],
+    safety:
+      '公開しているのはポートフォリオ用のデモです。掲載している物件名・所在地・家賃・設備などの情報はすべて架空で、実在の物件や価格とは関係ありません。推薦結果は物件選定を支援するための参考情報です。',
+    role: [
+      '企画',
+      '要件設計',
+      '画面デザイン',
+      'データベース設計',
+      'スコアリングロジックの実装',
+      'フロントエンド開発',
+      'バックエンド開発',
+      '動作確認',
+      '本番公開',
+    ],
+    group: 'AI Systems',
+    projectType: 'Personal Project',
+    status: 'released',
+    statusNote:
+      'Vercelで公開中です。登録物件はすべて架空データですが、公開環境ではSupabase PostgreSQLの本番データベースへ接続しています。',
+    stack: [
+      'Next.js',
+      'React',
+      'TypeScript',
+      'Tailwind CSS',
+      'Prisma',
+      'Supabase PostgreSQL',
+      'Zod',
+      'Lucide React',
+      'Vercel',
+    ],
+    tags: ['不動産', 'AI', '物件マッチング', '業務支援'],
+    colorLabel: 'Next.js / TypeScript / Prisma / Supabase PostgreSQL / Vercel',
+    accent: '#6fa9d8',
+    tint: '#081624',
+    image: '/works/images/ai-real-estate-matcher-card.png',
+    imageAlt:
+      'AI Real Estate MatcherのおすすめTOP3画面。36件の物件データから選ばれた候補と、91%のマッチ度、条件に合っている点、妥協点が表示されている',
+    imagePosition: 'center top',
+    galleryNote:
+      '公開中の実画面です。条件入力と、36件の架空物件データを採点したランキング結果を掲載しています。',
+    gallery: [
+      {
+        src: '/works/images/ai-real-estate-matcher/01-conditions.png',
+        alt: 'AI Real Estate Matcherの条件入力画面。希望エリア、家賃、間取り、面積、駅徒歩、築年数、生活条件、重視条件を設定できる',
+        caption: '希望条件と重視条件を入力し、9つの評価軸に使う条件を設定する',
+        width: 1600,
+        height: 1000,
+      },
+      {
+        src: '/works/images/ai-real-estate-matcher/02-ranking.png',
+        alt: 'AI Real Estate Matcherのランキング画面。おすすめTOP3と、物件ごとのマッチ度、推薦理由、条件に合っている点、妥協点が表示されている',
+        caption: '0〜100%のマッチ度と根拠を示しながら、条件との相性が高い物件をTOP3で表示する',
+        width: 1600,
+        height: 1000,
+      },
+    ],
+    liveUrl: 'https://ai-real-estate-matcher.vercel.app',
+    githubUrl: 'https://github.com/aicmode/ai-real-estate-matcher',
+    detailPath: '/works/ai-real-estate-matcher',
+    showGithubOnCard: true,
+    order: 1.45,
     featured: true,
     year: 2026,
   },
@@ -1283,7 +1407,7 @@ export const projects: readonly Project[] = [
   },
 ]
 
-/** Selected Works: the eight highest-priority pieces for a first read. */
+/** Selected Works: the highest-priority pieces for a first read. */
 export const selectedProjects = projects
   .filter((project) => project.featured)
   .slice()
