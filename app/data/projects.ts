@@ -205,7 +205,7 @@ export const projects: readonly Project[] = [
     solution:
       '希望条件を入力すると、登録物件を複数の評価軸で採点し、ユーザーの重視条件に応じて配点を調整しながら、最適な物件をおすすめ順にランキングします。',
     features: [
-      'Supabase PostgreSQLによる36件の架空物件データベース',
+      '全国47都道府県・架空188物件のSupabase PostgreSQLデータベース',
       '家賃・エリア・駅徒歩・間取り・面積・築年数・駐車場・ペット・在宅ワーク適性の9軸スコアリング',
       '重視条件による動的な重み付けと0〜100%のマッチ度算出',
       '一部条件から外れた物件も総合評価で候補に残すソフトマッチング',
@@ -247,7 +247,7 @@ export const projects: readonly Project[] = [
       },
     ],
     outcome: [
-      '36件の架空物件を対象に、希望条件の入力からTOP3ランキング表示まで一連で動作することを確認',
+      '全国47都道府県・架空188物件を対象に、希望条件の入力からTOP3ランキング表示まで一連で動作することを確認',
       '重視条件を切り替えると、評価軸の配点・マッチ度・順位が再計算されることを確認',
       '公開環境でVercelからSupabase PostgreSQLの本番DBへ接続できることを確認',
       'PC・スマートフォンの両方で検索・詳細確認・物件比較が利用できることを確認',
@@ -287,10 +287,10 @@ export const projects: readonly Project[] = [
     tint: '#081624',
     image: '/works/images/ai-real-estate-matcher-card.png',
     imageAlt:
-      'AI Real Estate MatcherのおすすめTOP3画面。36件の物件データから選ばれた候補と、91%のマッチ度、条件に合っている点、妥協点が表示されている',
+      'AI Real Estate MatcherのおすすめTOP3画面。全国188件の架空物件データから選ばれた候補と、87%のマッチ度、条件に合っている点、妥協点が表示されている',
     imagePosition: 'center top',
     galleryNote:
-      '公開中の実画面です。条件入力と、36件の架空物件データを採点したランキング結果を掲載しています。',
+      '公開中の実画面です。条件入力と、全国47都道府県・架空188物件を採点したランキング結果を掲載しています。',
     gallery: [
       {
         src: '/works/images/ai-real-estate-matcher/01-conditions.png',

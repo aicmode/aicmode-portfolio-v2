@@ -15,7 +15,7 @@ const project = projects.find((entry) => entry.id === PROJECT_ID)
 
 const title = 'AI Real Estate Matcher｜条件に合う物件をランキングする選定支援ツール — AIC'
 const description =
-  '希望条件と36件の物件データを9軸で採点し、重視条件に応じた0〜100%のマッチ度、おすすめTOP3、推薦理由、条件に合う点と妥協点を表示する物件選定支援ツールです。'
+  '希望条件と全国47都道府県・架空188物件を9軸で採点し、重視条件に応じた0〜100%のマッチ度、おすすめTOP3、推薦理由、条件に合う点と妥協点を表示する物件選定支援ツールです。'
 
 export const metadata: Metadata = {
   title,
@@ -130,7 +130,7 @@ export default function AiRealEstateMatcherPage() {
                 {STATUS_LABEL[project.status]}
               </span>
               <span className="border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[10px] font-semibold tracking-[0.1em] text-white/58">
-                36件の架空物件データで稼働中
+                全国47都道府県・架空188物件で稼働中
               </span>
             </div>
 

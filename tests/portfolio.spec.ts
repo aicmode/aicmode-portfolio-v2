@@ -353,7 +353,7 @@ test.describe('detail pages retain the removed information', () => {
       await expect(page.getByRole('heading', { name: '解決', exact: true })).toBeAttached()
       await expect(page.getByRole('heading', { name: '特徴', exact: true })).toBeAttached()
       await expect(page.getByRole('heading', { name: '技術的ポイント', exact: true })).toBeAttached()
-      await expect(page.getByText('36件の架空物件データベース', { exact: false })).toBeAttached()
+      await expect(page.getByText('全国47都道府県・架空188物件のSupabase PostgreSQLデータベース', { exact: false })).toBeAttached()
       await expect(page.getByText('業務ロジックを組み合わせた選定フロー')).toBeAttached()
 
       await expect(page.getByRole('link', { name: /実際に見る/ }).first()).toHaveAttribute(
